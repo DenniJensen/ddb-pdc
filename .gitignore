@@ -1,6 +1,12 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
+# Compilation output
+/target
+
+# Vagrant files
+/.vagrant
+
+# IDE files
+/.idea
+/*.iml
+/.metadata
+/.project
+/nb-configuration.xml
