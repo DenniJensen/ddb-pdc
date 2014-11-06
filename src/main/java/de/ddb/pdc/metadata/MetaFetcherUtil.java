@@ -12,6 +12,6 @@ public class MetaFetcherUtil {
    * @return string with replaced match string
    */
   public static String deleteMatch(String string) {
-	return string.replace("<match>", "").replace("</match>", "");
+    return string.replace("<match>", "").replace("</match>", "");
   }
 }
