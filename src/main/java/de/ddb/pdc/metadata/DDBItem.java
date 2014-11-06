@@ -11,47 +11,47 @@ public class DDBItem {
   private String imgUrl;
   
   public DDBItem(String id) {
-	  this.id = id;
+    this.id = id;
   }
 
   public String getId() {
-	return id;
+    return id;
   }
 
   public void setId(String id) {
-	this.id = id;
+    this.id = id;
   }
 
   public String getAuthor() {
-	return author;
+    return author;
   }
 
   public void setAuthor(String author) {
-	this.author = author;
+    this.author = author;
   }
 
   public String getTitle() {
-	return title;
+    return title;
   }
 
   public void setTitle(String title) {
-	this.title = title;
+    this.title = title;
   }
 
   public String getSubtitle() {
-	return subtitle;
+    return subtitle;
   }
 
   public void setSubtitle(String subtitle) {
-	this.subtitle = subtitle;
+    this.subtitle = subtitle;
   }
 
   public String getImgUrl() {
-	return imgUrl;
+    return imgUrl;
   }
 
   public void setImgUrl(String imgUrl) {
-	this.imgUrl = imgUrl;
+    this.imgUrl = imgUrl;
   }
   
 }
