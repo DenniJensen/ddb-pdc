@@ -1,11 +1,9 @@
 package de.ddb.pdc.metadata;
 
 /**
- * 
- * utility function for the MetaFetcher
- *
+ * utility functions for the MetaFetcher
  */
-public class MetaFetcherUtil {
+class MetaFetcherUtil {
 
   /**
    * @param string
