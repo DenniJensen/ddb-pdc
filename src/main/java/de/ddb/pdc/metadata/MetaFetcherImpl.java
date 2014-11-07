@@ -3,11 +3,10 @@ package de.ddb.pdc.metadata;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 /**
- * 
- * Implementation of a {@link MetaFetcher}
- *
+ * Implementation of the MetaFetcher Interface
  */
 public class MetaFetcherImpl implements MetaFetcher {
 
@@ -22,7 +21,7 @@ public class MetaFetcherImpl implements MetaFetcher {
   private static final String QUERY = "&query=";
   private static final String EDM = "/edm?";
 
-  private String authKey = "";
+  private String authKey;
 
   /** 
    * @param authKey authentication Key for the DDB API
@@ -36,7 +35,7 @@ public class MetaFetcherImpl implements MetaFetcher {
    * @param maxCount
    * @return array of DDBItems with the search result
    */
-  public DDBItem[] getSearchResult(String query, int maxCount) {
+  public DDBItem[] searchForItems(String query, int maxCount) throws RestClientException {
     RestTemplate restTemplate = new RestTemplate();
     String modifiedQuery = query.replace(" ", "+");
     String url = APIURL + SEARCH + AUTH + authKey + SORTROWS + maxCount + QUERY
@@ -49,7 +48,7 @@ public class MetaFetcherImpl implements MetaFetcher {
   /**
    * @param ddbItem for the id to get the meta data
    */
-  public void getMetaData(DDBItem ddbItem) {
+  public void fetchMetadata(DDBItem ddbItem) throws RestClientException {
 
   }
 
@@ -70,7 +69,7 @@ public class MetaFetcherImpl implements MetaFetcher {
         .get("title")));
       ddbItem.setSubtitle(MetaFetcherUtil.deleteMatch((String) results
         .get(idx).get("subtitle")));
-      ddbItem.setImgUrl(URL + (String) results.get(idx).get("thumbnail"));
+      ddbItem.setImageUrl(URL + (String) results.get(idx).get("thumbnail"));
       ddbItems[idx] = ddbItem;
     }
 
