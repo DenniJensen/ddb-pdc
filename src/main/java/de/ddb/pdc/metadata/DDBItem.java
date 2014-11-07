@@ -8,7 +8,7 @@ public class DDBItem {
   private String author;
   private String title;
   private String subtitle;
-  private String imgUrl;
+  private String imageUrl;
   
   public DDBItem(String id) {
     this.id = id;
@@ -46,12 +46,12 @@ public class DDBItem {
     this.subtitle = subtitle;
   }
 
-  public String getImgUrl() {
-    return imgUrl;
+  public String getImageUrl() {
+    return imageUrl;
   }
 
-  public void setImgUrl(String imgUrl) {
-    this.imgUrl = imgUrl;
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
   
 }
