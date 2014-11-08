@@ -24,7 +24,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @Override
   public Set<Category> getSupportedCategories() {
@@ -42,7 +42,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @Override
   public Questionnaire startQuestionnaire(final Category category)

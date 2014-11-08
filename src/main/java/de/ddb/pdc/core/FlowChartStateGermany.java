@@ -247,7 +247,7 @@ enum FlowChartStateGermany implements FlowChartState {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @Override
   public FlowChartState getInitialState(final Category category)
@@ -275,7 +275,7 @@ enum FlowChartStateGermany implements FlowChartState {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @Override
   public Question getQuestion() throws NoSuchElementException {
@@ -289,7 +289,7 @@ enum FlowChartStateGermany implements FlowChartState {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @Override
   public FlowChartState getNextState(final Answer answer)
@@ -307,7 +307,7 @@ enum FlowChartStateGermany implements FlowChartState {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @Override
   public boolean getResult() throws CannotCalculateException {
@@ -320,7 +320,7 @@ enum FlowChartStateGermany implements FlowChartState {
   }
 
   /**
-   * @{inheritDoc
+   * @{inheritDoc}
    */
   @SuppressWarnings("nls")
   @Override
