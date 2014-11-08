@@ -1,5 +1,6 @@
 # Compilation output
 /target
+/build
 
 # Vagrant files
 /.vagrant
