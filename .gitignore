@@ -12,3 +12,4 @@
 /.project
 /nb-configuration.xml
 .classpath
+.settings/
