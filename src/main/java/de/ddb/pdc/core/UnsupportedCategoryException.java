@@ -6,7 +6,7 @@ package de.ddb.pdc.core;
  * parameter that is not supported by the implementation you are using. Call the
  * getSupportedCategories method of your public domain calculator implementation
  * to know which categories are supported and to avoid this exception.
- * 
+ *
  * @author Frank Zechert
  */
 public class UnsupportedCategoryException extends Exception {
@@ -16,21 +16,21 @@ public class UnsupportedCategoryException extends Exception {
   /**
    * The category that was unsupported and caused this exception.
    */
-  private Category unsupportedCategory;
+  private final Category unsupportedCategory;
 
   /**
    * Create a new InvalidCategoryException.
-   * 
+   *
    * @param unsupportedCategory The unsupported category that caused this
    *        exception.
    */
-  public UnsupportedCategoryException(Category unsupportedCategory) {
+  public UnsupportedCategoryException(final Category unsupportedCategory) {
     this.unsupportedCategory = unsupportedCategory;
   }
 
   /**
    * Gets the category that was unsupported and caused this exception
-   * 
+   *
    * @return the unsupported category
    */
   public Category getUnsupportedCategory() {

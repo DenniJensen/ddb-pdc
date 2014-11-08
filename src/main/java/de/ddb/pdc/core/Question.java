@@ -2,13 +2,11 @@ package de.ddb.pdc.core;
 
 /**
  * Questions that can be asked by the public domain calculator.
- * 
+ *
  * This enumeration contains all the questions that can be part of the
  * questionnaires. Not every questionnaire needs to use all of these questions
  * nor does an implementation of a public domain calculator. Instead they can
  * use a subset of these questions.
- * 
- * @author Frank Zechert
  */
 @SuppressWarnings("nls")
 public enum Question {
@@ -255,17 +253,17 @@ public enum Question {
 
   /**
    * Creates a new question.
-   * 
+   *
    * @param questionText The human readable question
    */
-  private Question(String questionText) {
+  private Question(final String questionText) {
     this.questionText = questionText;
   }
 
   /**
    * Gets the human readable text of the question that (e.g.) can be printed to
    * the user.
-   * 
+   *
    * @return the human readable text
    */
   public String getText() {

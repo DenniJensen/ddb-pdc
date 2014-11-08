@@ -6,25 +6,29 @@ import java.util.NoSuchElementException;
 
 /**
  * A Questionnaire to decide the public domain problem.
- * 
+ *
  * This Questionnaire is given to the user by the public domain calculator
  * implementation. It behaves similar to an iterator and provides the
- * hasNextQuestion, getCurrentQuestion and answerQuestion methods to do the
+ * hasNextQuestion, getQuestion() and answerQuestion() methods to do the
  * questionnaire. If all questions have been answered the public domain problem
  * can be solved by calling isPublicDomain(). Call the getTrace method to get a
  * list of answered questions with the answers given to them.
- * 
+ *
  * A Questionnaire is a stateful object. Do not reuse the same questionnaire
  * object for different cultural goods.
- * 
- * @author Frank Zechert
  */
 public class Questionnaire {
 
-  private FlowChart state;
-  private List<AnsweredQuestion> answered;
+  private FlowChartState state;
+  private final List<AnsweredQuestion> answered;
 
-  public Questionnaire(FlowChart initialState) {
+  /**
+   * Creates a new Questionnair from the initial state of the flow chart given
+   * as parameter.
+   *
+   * @param initialState The initial state of the flow chart to use.
+   */
+  public Questionnaire(final FlowChartState initialState) {
     this.state = initialState;
     this.answered = new LinkedList<AnsweredQuestion>();
   }
@@ -32,31 +36,30 @@ public class Questionnaire {
   /**
    * Are there more questions to answer? This method returns true if there are
    * more questions in this questionnaire that need to be answered.
-   * 
+   *
    * @return true if more questions need to be answered
    */
   public boolean hasQuestions() {
     try {
-      this.state.getCurrentQuestion();
+      this.state.getQuestion();
       return true;
-    }
-    catch (NoSuchElementException e) {
+    } catch (final NoSuchElementException e) {
       return false;
     }
   }
 
   /**
    * Get the current question.
-   * 
-   * This function returns the current question that needs to be answered. If no
+   *
+   * This function returns the question that needs to be answered. If no
    * questions is available to be answered a NoSuchElementException will be
    * thrown. Use the method hasNextQuestion to avoid this exception.
-   * 
+   *
    * @return the current question
    * @throws NoSuchElementException There is no current question
    */
   public Question getCurrentQuestion() throws NoSuchElementException {
-    return this.state.getCurrentQuestion();
+    return this.state.getQuestion();
   }
 
   /**
@@ -66,18 +69,17 @@ public class Questionnaire {
    * calling the getCurrentQuestion method. If there are no questions to answer
    * (i.e. you have already answered all questions) a NoSuchElementException
    * will be thrown because there is no question to answer.
-   * 
+   *
    * @param answer The answer to the current question
    * @throws NoSuchElementException There is no question that you can answer
    */
-  public void answerCurrentQuestion(Answer answer)
+  public void answerCurrentQuestion(final Answer answer)
       throws NoSuchElementException {
     try {
-      Question question = this.state.getCurrentQuestion();
+      final Question question = this.state.getQuestion();
       this.state = this.state.getNextState(answer);
       this.answered.add(new AnsweredQuestion(question, answer));
-    }
-    catch (IllegalStateException e) {
+    } catch (final IllegalStateException e) {
       throw new NoSuchElementException();
     }
   }
@@ -88,7 +90,7 @@ public class Questionnaire {
    * Return false if it does not. When information is missing because you did
    * not answer all questions, an IllegalStateException will be thrown. Make
    * sure that hasNextQuestion returns false before calling this method.
-   * 
+   *
    * @return true if the good falls into the public domain
    * @throws IllegalStateException You did not answer all the questions that are
    *         necessary
@@ -97,8 +99,7 @@ public class Questionnaire {
     if (this.state.hasResult()) {
       try {
         return this.state.getResult();
-      }
-      catch (CannotCalculateException e) {
+      } catch (final CannotCalculateException e) {
         return false;
       }
     }
@@ -109,7 +110,7 @@ public class Questionnaire {
    * Returns a list of answered questions. This method will return a list
    * containing all the questions that have been asked and the response that was
    * given to answer them.
-   * 
+   *
    * @return List of answered questions
    */
   public List<AnsweredQuestion> getTrace() {
