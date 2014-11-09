@@ -28,7 +28,7 @@ public class Questionnaire {
    *
    * @param initialState The initial state of the flow chart to use.
    */
-  public Questionnaire(final FlowChartState initialState) {
+  public Questionnaire(FlowChartState initialState) {
     this.state = initialState;
     this.answered = new LinkedList<AnsweredQuestion>();
   }
@@ -43,7 +43,7 @@ public class Questionnaire {
     try {
       this.state.getQuestion();
       return true;
-    } catch (final NoSuchElementException e) {
+    } catch (NoSuchElementException e) {
       return false;
     }
   }
@@ -73,13 +73,13 @@ public class Questionnaire {
    * @param answer The answer to the current question
    * @throws NoSuchElementException There is no question that you can answer
    */
-  public void answerCurrentQuestion(final Answer answer)
+  public void answerCurrentQuestion(Answer answer)
       throws NoSuchElementException {
     try {
-      final Question question = this.state.getQuestion();
+      Question question = this.state.getQuestion();
       this.state = this.state.getNextState(answer);
       this.answered.add(new AnsweredQuestion(question, answer));
-    } catch (final IllegalStateException e) {
+    } catch (IllegalStateException e) {
       throw new NoSuchElementException();
     }
   }
@@ -99,7 +99,7 @@ public class Questionnaire {
     if (this.state.hasResult()) {
       try {
         return this.state.getResult();
-      } catch (final CannotCalculateException e) {
+      } catch (CannotCalculateException e) {
         return false;
       }
     }

@@ -256,7 +256,7 @@ public enum Question {
    *
    * @param questionText The human readable question
    */
-  private Question(final String questionText) {
+  private Question(String questionText) {
     this.questionText = questionText;
   }
 

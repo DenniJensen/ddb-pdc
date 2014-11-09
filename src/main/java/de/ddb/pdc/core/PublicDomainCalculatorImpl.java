@@ -19,7 +19,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
    *
    * @param flowchart The country specific flow chart.
    */
-  public PublicDomainCalculatorImpl(final FlowChartState flowchart) {
+  public PublicDomainCalculatorImpl(FlowChartState flowchart) {
     this.flowchart = flowchart;
   }
 
@@ -28,12 +28,12 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
    */
   @Override
   public Set<Category> getSupportedCategories() {
-    final Set<Category> supportedCategories = new HashSet<Category>();
-    for (final Category category : Category.values()) {
+    Set<Category> supportedCategories = new HashSet<Category>();
+    for (Category category : Category.values()) {
       try {
         this.flowchart.getInitialState(category);
         supportedCategories.add(category);
-      } catch (final UnsupportedCategoryException e) {
+      } catch (UnsupportedCategoryException e) {
         // an unsupported category will not be added to the set of supported
         // categories
       }
@@ -45,7 +45,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
    * @{inheritDoc}
    */
   @Override
-  public Questionnaire startQuestionnaire(final Category category)
+  public Questionnaire startQuestionnaire(Category category)
       throws UnsupportedCategoryException {
     return new Questionnaire(this.flowchart.getInitialState(category));
   }

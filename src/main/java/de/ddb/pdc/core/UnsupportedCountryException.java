@@ -16,7 +16,7 @@ public class UnsupportedCountryException extends Exception {
    * @param country The country that was not supported.
    */
   @SuppressWarnings("nls")
-  public UnsupportedCountryException(final String country) {
+  public UnsupportedCountryException(String country) {
     super(String.format("The country with the ISO 3166-1 alpha 2 code %s "
         + "is not supported."));
   }

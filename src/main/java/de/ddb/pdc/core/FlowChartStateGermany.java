@@ -206,7 +206,7 @@ enum FlowChartStateGermany implements FlowChartState {
    *
    * @param unconditionalJump the next state to jump to
    */
-  private FlowChartStateGermany(final FlowChartStateGermany unconditionalJump) {
+  private FlowChartStateGermany(FlowChartStateGermany unconditionalJump) {
     this.unconditionalNextState = unconditionalJump;
   }
 
@@ -219,8 +219,8 @@ enum FlowChartStateGermany implements FlowChartState {
    * @param onYes jump target if question is answered yes
    * @param onNo jump target if question is answered no
    */
-  private FlowChartStateGermany(final Question question,
-      final FlowChartStateGermany onYes, final FlowChartStateGermany onNo) {
+  private FlowChartStateGermany(Question question, FlowChartStateGermany onYes,
+      FlowChartStateGermany onNo) {
     this.question = question;
     this.positiveNextState = onYes;
     this.negativeNextState = onNo;
@@ -233,7 +233,7 @@ enum FlowChartStateGermany implements FlowChartState {
    * @param result The result of the calculation. true if the work is in the
    *        public domain.
    */
-  private FlowChartStateGermany(final boolean result) {
+  private FlowChartStateGermany(boolean result) {
     this.result = result;
     this.resultReached = true;
   }
@@ -250,7 +250,7 @@ enum FlowChartStateGermany implements FlowChartState {
    * @{inheritDoc}
    */
   @Override
-  public FlowChartState getInitialState(final Category category)
+  public FlowChartState getInitialState(Category category)
       throws UnsupportedCategoryException {
     switch (category) {
       case BROADCAST:
@@ -292,7 +292,7 @@ enum FlowChartStateGermany implements FlowChartState {
    * @{inheritDoc}
    */
   @Override
-  public FlowChartState getNextState(final Answer answer)
+  public FlowChartState getNextState(Answer answer)
       throws IllegalStateException {
     if (this.unconditionalNextState != null) {
       return this.unconditionalNextState.getNextState(answer);
@@ -325,7 +325,7 @@ enum FlowChartStateGermany implements FlowChartState {
   @SuppressWarnings("nls")
   @Override
   public String toString() {
-    final StringBuilder builder = new StringBuilder();
+    StringBuilder builder = new StringBuilder();
     builder.append("{Flow chart of germany. ");
     builder.append("The current state is: ");
     builder.append(this.toConstantString());

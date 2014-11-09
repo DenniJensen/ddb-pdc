@@ -16,7 +16,7 @@ public class AnsweredQuestion {
    * @param question The question
    * @param answer The answer to the question
    */
-  public AnsweredQuestion(final Question question, final Answer answer) {
+  public AnsweredQuestion(Question question, Answer answer) {
     this.question = question;
     this.answer = answer;
   }
