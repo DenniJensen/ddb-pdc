@@ -1,8 +1,5 @@
 package de.ddb.pdc.metadata;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 /**
@@ -15,11 +12,9 @@ public class MetaFetcherImpl implements MetaFetcher {
   private static final String APIURL = 
     "https://api.deutsche-digitale-bibliothek.de";
   private static final String SEARCH = "/search?";
-  private static final String ITEMS = "/items/";
   private static final String AUTH = "oauth_consumer_key=";
   private static final String SORTROWS = "&sort=RELEVANCE&rows=";
   private static final String QUERY = "&query=";
-  private static final String EDM = "/edm?";
 
   private String authKey;
 
@@ -40,8 +35,8 @@ public class MetaFetcherImpl implements MetaFetcher {
     String modifiedQuery = query.replace(" ", "+");
     String url = APIURL + SEARCH + AUTH + authKey + SORTROWS + maxCount + QUERY
       + modifiedQuery;
-    JSONResult jsonResult = restTemplate.getForObject(url, JSONResult.class);
-    return getDDBItems(jsonResult);
+    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
+    return getDDBItems(roj);
   }
 
 
@@ -56,23 +51,32 @@ public class MetaFetcherImpl implements MetaFetcher {
    * @param jsonresult
    * @return array filled with search results
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  private DDBItem[] getDDBItems(JSONResult jsonresult) {
-    ArrayList<LinkedHashMap> results = (ArrayList<LinkedHashMap>) jsonresult
-      .getResults().get(0).get("docs");
-    int maxResults = results.size();
+  private DDBItem[] getDDBItems(ResultsOfJSON roj) {
+    int maxResults = roj.getResults().size();
     DDBItem[] ddbItems = new DDBItem[maxResults];
-    
-    for (int idx = 0; idx < maxResults; idx++) {
-      DDBItem ddbItem = new DDBItem((String) results.get(idx).get("id"));
-      ddbItem.setTitle(MetaFetcherUtil.deleteMatch((String) results.get(idx)
-        .get("title")));
-      ddbItem.setSubtitle(MetaFetcherUtil.deleteMatch((String) results
-        .get(idx).get("subtitle")));
-      ddbItem.setImageUrl(URL + (String) results.get(idx).get("thumbnail"));
+    int idx = 0;
+    for (SearchResultItem rsi : roj.getResults()) {
+      DDBItem ddbItem = new DDBItem(rsi.getId());
+      System.out.println(rsi.getId());
+      ddbItem.setTitle(deleteMatch(rsi.getTitle()));
+      ddbItem.setSubtitle(deleteMatch(rsi.getSubtitle()));
+      ddbItem.setImageUrl(URL + rsi.getThumbnail());
+      ddbItem.setCategory(rsi.getCategory());
+      ddbItem.setMedia(rsi.getMedia());
+      ddbItem.setType(rsi.getType());
       ddbItems[idx] = ddbItem;
+      idx++;
     }
 
     return ddbItems;
+  } 
+  
+  /**
+   * @param string
+   * @return string with replaced match string
+   * Method use to remove the match-tag of the search strings
+   */
+  public static String deleteMatch(String string) {
+    return string.replace("<match>", "").replace("</match>", "");
   }
 }
