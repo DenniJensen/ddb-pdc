@@ -294,13 +294,13 @@ enum FlowChartStateGermany implements FlowChartState {
   @Override
   public FlowChartState getNextState(Answer answer)
       throws IllegalStateException {
-    if (this.unconditionalNextState != null) {
-      return this.unconditionalNextState.getNextState(answer);
-    } else if (this.positiveNextState != null && this.negativeNextState != null) {
+    if (unconditionalNextState != null) {
+      return unconditionalNextState.getNextState(answer);
+    } else if (positiveNextState != null && negativeNextState != null) {
       if (answer == Answer.YES) {
-        return this.positiveNextState;
+        return positiveNextState;
       } else {
-        return this.negativeNextState;
+        return negativeNextState;
       }
     }
     throw new IllegalStateException();
