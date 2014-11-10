@@ -1,10 +1,11 @@
 /**
  * The MongoDB implementation of the StorageService.
  *
- * This class does not provide an update method as all the relevant data of the
- * record to be created is available when using the StorageService. A replace
- * method is used instead. The itemId is assumed to be globally unique. This is
- * important as MongoDB may otherwise apply changes to multiple records.
+ * This class does not use a MongoTemplate.update method as all the relevant 
+ * data of the record to be created is available when using the StorageService. 
+ * A remove-insert implementation is used instead. The itemId is assumed to be 
+ * globally unique. This is important as MongoDB may otherwise apply changes to
+ * multiple records.
  *
  * TODO include support for secure mode (connection with authentication).
  */
@@ -46,16 +47,18 @@ public class MongoStorageServiceImpl implements StorageService {
   public void store(MongoDataModel record) {
     mongoTemplate.insert(record, collectionName);
   }
-
+    
   /**
-   * Replaces a record by removing the existing record and calling the
-   * {@link #store(MongoDataModel) store()} method to store the new record. The
-   * record replaced is the first record that matches the itemId. TODO implement
-   * inspection of the WriteResult to ensure the old record was removed.
-   *
+   * Updates a record by removing the existing record and calling the
+   * {@link #store(MongoDataModel) store()} method to store the new record. 
+   * The record that is removed is the first record that matches the itemId. 
+   * TODO implement inspection of the WriteResult to ensure the old record was
+   * removed.
+   * 
    * @param newRecord
    */
-  public void replace(MongoDataModel newRecord) {
+  @Override
+  public void update(MongoDataModel newRecord) {
     Query query = new Query();
     query.addCriteria(Criteria.where("itemId").is(newRecord.getItemId()));
     mongoTemplate.remove(query, collectionName);

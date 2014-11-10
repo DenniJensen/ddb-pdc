@@ -16,6 +16,13 @@ public interface StorageService {
   public void store(MongoDataModel record);
 
   /**
+   * Update an existing MongoDataModel.
+   * 
+   * @param record 
+   */
+  public void update(MongoDataModel record);
+  
+  /**
    * Find a single MongoDataModel record by its item ID.
    *
    * @param itemId
