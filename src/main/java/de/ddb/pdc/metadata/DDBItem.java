@@ -12,48 +12,70 @@ public class DDBItem {
   private String media;
   private String category;
   private String type;
-  
+
+  /**
+   * Creates a new DDBItem.
+   *
+   * @param id item ID in the DDB databse
+   */
   public DDBItem(String id) {
     this.id = id;
   }
 
+  /**
+   * Returns the item assigned to the item by the DDB.
+   */
   public String getId() {
     return id;
   }
 
-  public void setId(String id) {
+  void setId(String id) {
     this.id = id;
   }
 
+  /**
+   * Returns the author of the work represented by the item.
+   */
   public String getAuthor() {
     return author;
   }
 
-  public void setAuthor(String author) {
+  void setAuthor(String author) {
     this.author = author;
   }
 
+  /**
+   * Returns the title of the work represented by the item.
+   */
   public String getTitle() {
     return title;
   }
 
-  public void setTitle(String title) {
+  void setTitle(String title) {
     this.title = title;
   }
 
+  /**
+   * Returns the subtitle (if any) of the work represented by the item.
+   * If the work has no subtitle, null is returned.
+   */
   public String getSubtitle() {
     return subtitle;
   }
 
-  public void setSubtitle(String subtitle) {
+  void setSubtitle(String subtitle) {
     this.subtitle = subtitle;
   }
 
+  /**
+   * Returns the URL of an thumbnail image that can be used when displaying
+   * the item in a user interface. The URL is always absolute.
+   */
   public String getImageUrl() {
     return imageUrl;
   }
 
-  public void setImageUrl(String imageUrl) {
+  void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
 
@@ -61,7 +83,7 @@ public class DDBItem {
     return media;
   }
 
-  public void setMedia(String media) {
+  void setMedia(String media) {
     this.media = media;
   }
 
@@ -69,7 +91,7 @@ public class DDBItem {
     return category;
   }
 
-  public void setCategory(String category) {
+  void setCategory(String category) {
     this.category = category;
   }
 
@@ -77,7 +99,7 @@ public class DDBItem {
     return type;
   }
 
-  public void setType(String type) {
+  void setType(String type) {
     this.type = type;
   }
 

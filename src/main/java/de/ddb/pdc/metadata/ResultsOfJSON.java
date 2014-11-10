@@ -4,21 +4,17 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * class for all JSON results
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ResultsOfJSON {
+class ResultsOfJSON {
 
   private String numberOfResults;
   private ArrayList<SearchResultList> results;
 
-  public ArrayList<SearchResultItem> getResults() {
+  ArrayList<SearchResultItem> getResults() {
     return results.get(0).getDocs();
   }
 
-  public String getNumberOfResults() {
+  String getNumberOfResults() {
     return numberOfResults;
   }
-
 }
