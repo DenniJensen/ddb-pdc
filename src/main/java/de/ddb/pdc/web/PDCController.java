@@ -1,7 +1,6 @@
 package de.ddb.pdc.web;
 
 import de.ddb.pdc.core.PublicDomainCalculatorFactory;
-import de.ddb.pdc.metadata.DDBItemFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PDCController {
   private PublicDomainCalculatorFactory calculatorFactory;
-  private DDBItemFetcher fetcher;
 
   @Autowired
   public PDCController(
-      PublicDomainCalculatorFactory calculatorFactory,
-      DDBItemFetcher fetcher) {
+      PublicDomainCalculatorFactory calculatorFactory) {
     this.calculatorFactory = calculatorFactory;
-    this.fetcher = fetcher;
   }
 
   @RequestMapping("/pdc/{itemId}")
