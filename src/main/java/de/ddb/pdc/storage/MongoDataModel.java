@@ -1,6 +1,7 @@
 /**
  * MongoDB entity representing the PDC record structure in storage.
  * TODO contemplate applying TDA (tell don't ask) principle to getter methods.
+ * TODO remove Mongo name and dependency (i.e. id) from this class.
  */
 package de.ddb.pdc.storage;
 
