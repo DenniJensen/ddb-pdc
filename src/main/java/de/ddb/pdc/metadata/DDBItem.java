@@ -7,21 +7,40 @@ package de.ddb.pdc.metadata;
  */
 public class DDBItem {
   
-  public String title = "I am a fairy";
-  public String category = "LITERARY_OR_ARTISTIC_WORK";
-  public String countryCreatedIn = "Austria";
-  public int yearOfCreation = 1940;
-  public int yearPublished = 1956;
+  public final String title;
+  public final String category;
+  public final String countryCreatedIn;
+  public final int yearOfCreation;
+  public final int yearPublished;
   
-  public String authorName = "Göthe";
-  public int authorYearOfBirth = 1930;
-  public int authorYearOfDeath = 1930;
-  public String authorCountry = "Austria";  
-  
+  public final String authorName;
+  public final int authorYearOfBirth;
+  public final int authorYearOfDeath;
+  public final String authorCountry;  
+    
   /**
    * 
-   */ 
-  public DDBItem(){
-    
+   * @param title
+   * @param category
+   * @param countryCreatedIn
+   * @param yearOfCreation
+   * @param yearPublished
+   * @param authorName
+   * @param authorYearOfBirth
+   * @param authorYearOfDeath
+   * @param authorCountry 
+   */
+  public DDBItem(String title, String category, String countryCreatedIn, 
+      int yearOfCreation, int yearPublished, String authorName,
+      int authorYearOfBirth, int authorYearOfDeath, String authorCountry) {
+    this.title = title;
+    this.category = category;
+    this.countryCreatedIn = countryCreatedIn;
+    this.yearOfCreation = yearOfCreation;
+    this.yearPublished = yearPublished;
+    this.authorName = authorName;
+    this.authorYearOfBirth = authorYearOfBirth;
+    this.authorYearOfDeath = authorYearOfDeath;
+    this.authorCountry = authorCountry;
   }  
 }

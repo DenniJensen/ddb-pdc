@@ -19,9 +19,21 @@ public class Main implements CommandLineRunner {
     SpringApplication.run(Main.class, args);
   }
 
+  /**
+   * 
+   * @param args
+   * @throws Exception 
+   */
   @Override
   public void run(String... args) throws Exception {
     AnswererService answererService = new AnswererServiceImpl();
-    answererService.getResult("de", new DDBItem());
+    
+    // test data
+    DDBItem testItem = new DDBItem(
+        "I am a fairy", "LITERARY_OR_ARTISTIC_WORK", "Austria", 1920, 1956,
+        "Göthe", 1880, 1940, "Estonia"
+    );
+    
+    answererService.getResult("de", testItem);
   }
 }
