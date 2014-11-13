@@ -52,8 +52,8 @@ public class AnswererServiceImpl implements AnswererService {
     // --- prepare and return the final result
     boolean isPublicDomain = questionnaire.isPublicDomain();
     System.out.println("Public domain:" + isPublicDomain);
-    
-    return null;
+    Result result = new Result(isPublicDomain, questionnaire.getTrace());    
+    return result;
   }
   
 }
