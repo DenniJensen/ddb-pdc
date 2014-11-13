@@ -23,7 +23,7 @@ public class Questionnaire {
   private final List<AnsweredQuestion> answered;
 
   /**
-   * Creates a new Questionnair from the initial state of the flow chart given
+   * Creates a new Questionnaire from the initial state of the flow chart given
    * as parameter.
    *
    * @param initialState The initial state of the flow chart to use.

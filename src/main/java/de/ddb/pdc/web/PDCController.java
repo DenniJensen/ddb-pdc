@@ -15,6 +15,11 @@ public class PDCController {
   private PublicDomainCalculatorFactory calculatorFactory;
   private DDBItemFetcher fetcher;
 
+  /**
+   * 
+   * @param calculatorFactory
+   * @param fetcher 
+   */
   @Autowired
   public PDCController(
       PublicDomainCalculatorFactory calculatorFactory,
@@ -23,6 +28,11 @@ public class PDCController {
     this.fetcher = fetcher;
   }
 
+  /**
+   * 
+   * @param itemId
+   * @return 
+   */ 
   @RequestMapping("/pdc/{itemId}")
   public String calculate(@PathVariable String itemId) {
     // ...
