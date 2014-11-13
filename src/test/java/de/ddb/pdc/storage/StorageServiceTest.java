@@ -4,6 +4,7 @@
  * Test behaviour is specified by the included Configuration class and
  * environment properties are loaded from a designated test file.
  * TODO Make the Configuration class available to other test classes.
+ * TODO finalize the test case for store and fetch.
  * TODO Implement the remaining test case for the update method.
  */
 package de.ddb.pdc.storage;
@@ -11,7 +12,6 @@ package de.ddb.pdc.storage;
 import com.mongodb.MongoClient;
 import java.net.UnknownHostException;
 import java.util.Date;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
