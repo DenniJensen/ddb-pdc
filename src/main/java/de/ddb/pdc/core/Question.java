@@ -1,5 +1,7 @@
 package de.ddb.pdc.core;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Questions that can be asked by the public domain calculator.
  *
@@ -262,10 +264,11 @@ public enum Question {
 
   /**
    * Gets the human readable text of the question that (e.g.) can be printed to
-   * the user.
+   * the user. Used for JSON serialization.
    *
    * @return the human readable text
    */
+  @JsonValue
   public String getText() {
     return this.questionText;
   }
