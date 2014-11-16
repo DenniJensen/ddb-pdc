@@ -73,7 +73,7 @@ public class AnswererFactory {
         return new OfficialWorkToBeGenerallyReceivedAnswerer();
       default:
         throw new IllegalArgumentException("No answerer available for "
-          + question);
+            + question);
     }
   }
 }
