@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
@@ -20,7 +21,12 @@ public class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
   public Answer getAnswer(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
-    if (currentYear - metaData.getAuthorYearOfDeath() > 70) {
+    int authorDeathYear = 0;
+    for (Author author : metaData.getAuthors()) {
+      authorDeathYear = Math.max(authorDeathYear, author.getDeathYear()
+          .get(Calendar.YEAR));
+    }
+    if (currentYear - authorDeathYear > 70) {
       return Answer.YES;
     } else {
       return Answer.NO;

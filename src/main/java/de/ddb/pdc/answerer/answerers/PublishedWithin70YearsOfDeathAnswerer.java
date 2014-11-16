@@ -1,7 +1,10 @@
 package de.ddb.pdc.answerer.answerers;
 
+import java.util.Calendar;
+
 import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
@@ -14,7 +17,15 @@ public class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    if (metaData.getYearPublished() <= metaData.getAuthorYearOfDeath() + 70) {
+
+    int authorDeathYear = 0;
+    for (Author author : metaData.getAuthors()) {
+      authorDeathYear = Math.max(authorDeathYear, author.getDeathYear()
+          .get(Calendar.YEAR));
+    }
+
+    if (metaData.getPublishedYear().get(Calendar.YEAR)
+        <= authorDeathYear + 70) {
       return Answer.YES;
     } else {
       return Answer.NO;

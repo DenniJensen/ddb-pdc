@@ -18,7 +18,7 @@ public class PublishedMoreThan25YearsAgoAnswerer implements Answerer {
   public Answer getAnswer(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
-    if (currentYear - metaData.getYearPublished() > 25) {
+    if (currentYear - metaData.getPublishedYear().get(Calendar.YEAR) > 25) {
       return Answer.YES;
     } else {
       return Answer.NO;

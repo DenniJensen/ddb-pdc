@@ -16,7 +16,7 @@ public class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    String country = metaData.getCountryCreatedIn();
+    String country = metaData.get;
     if (EEAMembers.isMember(country)) {
       return Answer.YES;
     } else {

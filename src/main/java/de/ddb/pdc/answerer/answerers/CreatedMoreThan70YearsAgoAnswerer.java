@@ -8,6 +8,8 @@ import de.ddb.pdc.metadata.DDBItem;
 
 /**
  * Answers the CREATED_MORE_THAN_70_YEARS_AGO question.
+ *
+ * FIXME Assumption: published year is equal to created year
  */
 public class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
 
@@ -18,7 +20,7 @@ public class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
   public Answer getAnswer(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
-    if (currentYear - metaData.getYearOfCreation() > 70) {
+    if (currentYear - metaData.getPublishedYear().get(Calendar.YEAR) > 70) {
       return Answer.YES;
     } else {
       return Answer.NO;

@@ -1,7 +1,10 @@
 package de.ddb.pdc.answerer.answerers;
 
+import java.util.List;
+
 import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
@@ -14,12 +17,13 @@ public class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    String country = metaData.getAuthorCountry();
-    if (EEAMembers.isMember(country)) {
-      return Answer.YES;
-    } else {
-      return Answer.NO;
+    List<Author> authors = metaData.getAuthors();
+    for (Author author : authors) {
+      if (!EEAMembers.isMember(author.getNationality())) {
+        return Answer.NO;
+      }
     }
+    return Answer.YES;
   }
 
 }
