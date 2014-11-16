@@ -296,7 +296,8 @@ enum FlowChartStateGermany implements FlowChartState {
       throws IllegalStateException {
     if (this.unconditionalNextState != null) {
       return this.unconditionalNextState.getNextState(answer);
-    } else if (this.positiveNextState != null && this.negativeNextState != null) {
+    } else if (this.positiveNextState != null
+        && this.negativeNextState != null) {
       if (answer == Answer.YES) {
         return this.positiveNextState;
       } else {
