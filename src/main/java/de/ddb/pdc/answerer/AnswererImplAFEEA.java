@@ -10,15 +10,15 @@ public class AnswererImplAFEEA implements Answerer {
 
   /**
    * Answer whether the author's country is a member of the EEA.
-   */ 
+   */
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    String country = metaData.authorCountry;
+    String country = metaData.getAuthorCountry();
     if (EEAMembers.isMember(country)) {
       return Answer.YES;
     } else {
       return Answer.NO;
     }
   }
-  
+
 }

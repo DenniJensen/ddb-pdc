@@ -15,11 +15,11 @@ public class AnswererImplAA implements Answerer {
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    if (metaData.authorName == null) {
+    if (metaData.getAuthor() == null) {
       return Answer.YES;
     } else {
       return Answer.NO;
     }
   }
-  
+
 }

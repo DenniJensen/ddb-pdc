@@ -1,9 +1,9 @@
 package de.ddb.pdc.answerer;
 
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.core.Category;
 import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PublicDomainCalculatorFactory;
-import de.ddb.pdc.core.Category;
 import de.ddb.pdc.core.Question;
 import de.ddb.pdc.core.Questionnaire;
 import de.ddb.pdc.core.UnsupportedCategoryException;
@@ -12,12 +12,12 @@ import de.ddb.pdc.metadata.DDBItem;
 
 /**
  * Run the PDC for test data defined in DDBItem.
- * 
+ *
  */
 public class AnswererServiceImpl implements AnswererService {
-  
+
   /**
-   * 
+   *
    * @param country
    * @param metadata
    * @return
@@ -26,21 +26,22 @@ public class AnswererServiceImpl implements AnswererService {
    * @throws UnsupportedQuestionException
    */
   @Override
-  public Result getResult(String country, DDBItem metadata) 
+  public Result getResult(String country, DDBItem metadata)
       throws UnsupportedCountryException, UnsupportedCategoryException,
       UnsupportedQuestionException {
-    
+
     // --- initialize the calculator
     System.out.println("Starting pdc");
-    PublicDomainCalculator pdc = PublicDomainCalculatorFactory.getCalculator(country);
-    Category category = Category.valueOf(metadata.category);
-    Questionnaire questionnaire = pdc.startQuestionnaire(category);    
+    PublicDomainCalculator pdc =
+        new PublicDomainCalculatorFactory().getCalculator(country);
+    Category category = Category.valueOf(metadata.getCategory());
+    Questionnaire questionnaire = pdc.startQuestionnaire(category);
     Question currentQuestion;
     Answerer answerer;
     Answer answer;
-    
+
     while (questionnaire.hasQuestions()) {
-      // --- process each question    
+      // --- process each question
       currentQuestion = questionnaire.getCurrentQuestion();
       System.out.println("Question: " + currentQuestion.getText());
       answerer = AnswererFactory.getAnswererForQuestion(currentQuestion);
@@ -48,12 +49,12 @@ public class AnswererServiceImpl implements AnswererService {
       System.out.println("Answer: " + answer.name());
       questionnaire.answerCurrentQuestion(answer);
     }
-    
+
     // --- prepare and return the final result
     boolean isPublicDomain = questionnaire.isPublicDomain();
     System.out.println("Public domain:" + isPublicDomain);
-    Result result = new Result(isPublicDomain, questionnaire.getTrace());    
+    Result result = new Result(isPublicDomain, questionnaire.getTrace());
     return result;
   }
-  
+
 }

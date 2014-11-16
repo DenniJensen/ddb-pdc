@@ -10,11 +10,11 @@ public class AnswererImplPMT70YAC implements Answerer {
 
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    if (metaData.yearPublished - metaData.yearOfCreation > 70) {
+    if (metaData.getYearPublished() - metaData.getYearOfCreation() > 70) {
       return Answer.YES;
     } else {
       return Answer.NO;
     }
   }
-  
+
 }
