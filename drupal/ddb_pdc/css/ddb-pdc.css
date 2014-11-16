@@ -1,0 +1,100 @@
+@charset "utf-8";
+/* CSS Document */
+
+.item {
+	padding: 5px;
+	overflow: hidden;
+	width: 100%;
+	padding:30px 0 30px 0;
+	border-bottom: 1px solid #efebe8;
+}
+.item-image {
+	float: left;
+	padding-right:15px;
+}
+.item-image img {
+	max-height: 105px;
+	max-width: 105px;
+}
+.item-summary {
+	float: left;
+	margin-right: 10px;
+	width: 440px;
+}
+.item-title a{
+	font-weight: bold;
+    word-wrap: break-word;
+	font-size: 1.5em;
+    text-decoration: none;
+	color: #a5003b;
+    font-family: KarbidWeb,Calibri,Arial,sans-serif;
+}
+.item-title a:hover{
+	color: #a5003b;
+}
+.item-title a:visited{
+	color: #a5003b;
+}
+.item-subtitle {
+}
+.item-calculate {
+	width:125px;
+	background-color:#b5004a;
+	padding:8px;
+	border-radius:5px;
+	float:right;
+}
+.item-calculate-button{
+	display:inline-block;
+	
+}
+.item-calculate:hover {
+	background-color:#a5003b;
+}
+.item-calculate a{
+	font-size:19px;
+	color:#fff;
+	text-decoration:none;
+	font-weight:bold;
+}
+.item-calculate a:hover{
+	color:#fff;
+	text-decoration:none;
+}
+.item-calculate a:visited{
+	color:#fff;
+	text-decoration:none;
+}
+.item-license{
+	background-color:#F9E8EA;
+	padding:8px 20px;
+	border-radius:5px;
+	float:right;	
+}
+.pdc-questions-wrapper{
+	margin-top:30px;	
+}
+.pdc-questions{
+	border-radius:5px;	
+	margin-bottom:25px;
+	overflow:hidden;
+}
+.pdc-question{
+	padding:11px;	
+}
+.pdc-answer{
+	padding:11px;		
+}
+.negative .pdc-question{
+	background-color:#f9dcdf;	
+}
+.negative .pdc-answer{
+	background-color:#F9E8EA;	
+}
+
+.positive .pdc-question{
+	background-color:#ddf2d5;	
+}
+.positive .pdc-answer{
+	background-color:#eaf6e6;	
+}
