@@ -1,24 +1,28 @@
 package de.ddb.pdc.metadata;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 /**
  * Implementation of the {@link MetaFetcher} interface.
  */
 public class MetaFetcherImpl implements MetaFetcher {
 
   private static final String URL =
-      "https://www.deutsche-digitale-bibliothek.de";
+    "https://www.deutsche-digitale-bibliothek.de";
   private static final String APIURL =
-      "https://api.deutsche-digitale-bibliothek.de";
+    "https://api.deutsche-digitale-bibliothek.de";
   private static final String SEARCH = "/search?";
   private static final String AUTH = "oauth_consumer_key=";
   private static final String SORTROWS = "&sort=RELEVANCE&rows=";
   private static final String QUERY = "&query=";
+  private static final String ITEM = "/items/";
+  private static final String AIP = "/aip?";
 
-  private final RestTemplate restTemplate;
-  private final String authKey;
+  private RestTemplate restTemplate;
+  private String authKey;
 
   /**
    * Creates a new MetaFetcherImpl.
@@ -34,28 +38,69 @@ public class MetaFetcherImpl implements MetaFetcher {
   /**
    * {@inheritDoc}
    */
-  @Override
   public DDBItem[] searchForItems(String query, int maxCount)
       throws RestClientException {
     String modifiedQuery = query.replace(" ", "+");
-    String url =
-        MetaFetcherImpl.APIURL + MetaFetcherImpl.SEARCH + MetaFetcherImpl.AUTH
-            + this.authKey + MetaFetcherImpl.SORTROWS + maxCount
-            + MetaFetcherImpl.QUERY + modifiedQuery;
-    ResultsOfJSON roj =
-        this.restTemplate.getForObject(url, ResultsOfJSON.class);
-    return this.getDDBItems(roj);
+    String url = APIURL + SEARCH + AUTH + authKey + SORTROWS + maxCount + QUERY
+      + modifiedQuery;
+    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
+    return getDDBItems(roj);
   }
 
 
   /**
    * {@inheritDoc}
    */
-  @Override
   public void fetchMetadata(DDBItem ddbItem) throws RestClientException {
-    // TODO: implement
+    String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
+    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
+    fillDDBItemMetadataFromDDB(ddbItem, roj);
   }
-
+  
+  /**
+   * @param ddbItem filled with information
+   * @param roj store information of the ddb aip request
+   */
+  private void fillDDBItemMetadataFromDDB(DDBItem ddbItem, ResultsOfJSON roj) {
+    RDFItem rdfitem = roj.getEdm().getRdf();
+    String publishedYear = (String) rdfitem.getProvidedCHO().get("issued");
+    
+    int year = 8000;
+    try {
+      if (publishedYear != null) {
+        year = Integer.parseInt(publishedYear.split(",")[0]);
+        
+      }
+    } catch (NumberFormatException e) {
+      year = 8000;
+    }
+    ddbItem.setPublishedYear(year);
+    
+    // some Agent input are represented at ArrayList or LinkedHashMap
+    if (rdfitem.getAgent() instanceof ArrayList<?>) {
+      ArrayList<LinkedHashMap> alAgent =  (ArrayList) rdfitem.getAgent();
+      for (int idx = 0; idx < alAgent.size(); idx++) {
+        String about = (String) alAgent.get(idx).get("@about");
+        if (about.startsWith("http")) {
+          String authorid = alAgent.get(idx).get("@about").toString()
+            .replace("http://d-nb.info/gnd/", "");
+          Author author = new Author(authorid);
+          ddbItem.setAuthor(author);
+        }
+      }
+    }
+    
+    // till now no testdata where author in LinkedHashMap
+    if (rdfitem.getAgent() instanceof LinkedHashMap<?,?>) {
+        //LinkedHashMap lhmAgent = (LinkedHashMap) rdf.get("Agent");    
+    }
+    ddbItem.setInstitute((String) rdfitem.getAggregation().get("provider"));
+  }
+  
+  /**
+   * @param roj results of the ddb search query
+   * @return a list of ddbitems from roj
+   */
   private DDBItem[] getDDBItems(ResultsOfJSON roj) {
     int maxResults = roj.getResults().size();
     DDBItem[] ddbItems = new DDBItem[maxResults];
@@ -63,10 +108,9 @@ public class MetaFetcherImpl implements MetaFetcher {
     int idx = 0;
     for (SearchResultItem rsi : roj.getResults()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
-      System.out.println(rsi.getId());
-      ddbItem.setTitle(MetaFetcherImpl.deleteMatchTags(rsi.getTitle()));
-      ddbItem.setSubtitle(MetaFetcherImpl.deleteMatchTags(rsi.getSubtitle()));
-      ddbItem.setImageUrl(MetaFetcherImpl.URL + rsi.getThumbnail());
+      ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
+      ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
+      ddbItem.setImageUrl(URL + rsi.getThumbnail());
       ddbItem.setCategory(rsi.getCategory());
       ddbItem.setMedia(rsi.getMedia());
       ddbItem.setType(rsi.getType());
