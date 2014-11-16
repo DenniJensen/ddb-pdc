@@ -2,17 +2,17 @@ package de.ddb.pdc.answerer;
 
 import org.springframework.stereotype.Service;
 
-import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
 import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
+import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromTriptisAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorNaturalPersonAnswerer;
-import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
-import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
-import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
 import de.ddb.pdc.answerer.answerers.CountryOfOriginTriptisAnswerer;
+import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
+import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.GovernmentDecisionAnswerer;
 import de.ddb.pdc.answerer.answerers.OfficialWorkToBeGenerallyReceivedAnswerer;
 import de.ddb.pdc.answerer.answerers.PublishedMoreThan25YearsAgoAnswerer;
@@ -29,7 +29,8 @@ public class AnswererFactory {
 
   /**
    * Creates and returns a specific implementation of {@link Answerer} depending
-   * on the type of question provided.
+   * on the type of question provided
+   *
    * @param question The question to create an answerer for.
    * @return required Answerer implementation.
    * @throws de.ddb.pdc.answerer.UnsupportedQuestionException No implementation

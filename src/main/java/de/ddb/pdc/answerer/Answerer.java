@@ -12,6 +12,7 @@ public interface Answerer {
 
   /**
    * Determine the answer based on the given meta data.
+   *
    * @param metaData The metadata to decide the question on.
    * @return answer The answer to the question.
    */
