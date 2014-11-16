@@ -1,5 +1,8 @@
 package de.ddb.pdc.metadata;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 /**
@@ -15,6 +18,8 @@ public class MetaFetcherImpl implements MetaFetcher {
   private static final String AUTH = "oauth_consumer_key=";
   private static final String SORTROWS = "&sort=RELEVANCE&rows=";
   private static final String QUERY = "&query=";
+  private static final String ITEM = "/items/";
+  private static final String AIP = "/aip?";
 
   private RestTemplate restTemplate;
   private String authKey;
@@ -47,9 +52,56 @@ public class MetaFetcherImpl implements MetaFetcher {
    * {@inheritDoc}
    */
   public void fetchMetadata(DDBItem ddbItem) throws RestClientException {
-
+    String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
+    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
+    System.out.println(roj.getEdm().getRdf().getProvidedCHO());
+    fillDDBItemMetadataFromDDB(ddbItem, roj);
   }
-
+  
+  /**
+   * @param ddbItem filled with information
+   * @param roj store information of the ddb aip request
+   */
+  private void fillDDBItemMetadataFromDDB(DDBItem ddbItem, ResultsOfJSON roj) {
+    RDFItem rdfitem = roj.getEdm().getRdf();
+    String publishedYear = (String) rdfitem.getProvidedCHO().get("issued");
+    
+    System.out.println("test");
+    int year = 8000;
+    try {
+      if (publishedYear != null) {
+        year = Integer.parseInt(publishedYear.split(",")[0]);
+        
+      }
+    } catch (NumberFormatException e) {
+      //test
+    }
+    ddbItem.setPublishedYear(year);
+    
+    // some Agent input are represented at ArrayList or LinkedHashMap
+    if (rdfitem.getAgent().getClass() == ArrayList.class) {
+      ArrayList<LinkedHashMap> alAgent =  (ArrayList) rdfitem.getAgent();
+      for (int idx = 0; idx < alAgent.size(); idx++) {
+        if (alAgent.get(idx).get("@about").toString().startsWith("http")) {
+          String authorid = alAgent.get(idx).get("@about").toString()
+            .replace("http://d-nb.info/gnd/", "");
+          Author author = new Author(authorid);
+          ddbItem.setAuthor(author);
+        }
+      }
+    }
+    
+    // till now no testdata where author in LinkedHashMap
+    if (rdfitem.getAgent().getClass() == LinkedHashMap.class) {
+        //LinkedHashMap lhmAgent = (LinkedHashMap) rdf.get("Agent");    
+    }
+    ddbItem.setInstitute((String) rdfitem.getAggregation().get("provider"));
+  }
+  
+  /**
+   * @param roj results of the ddb search query
+   * @return a list of ddbitems from roj
+   */
   private DDBItem[] getDDBItems(ResultsOfJSON roj) {
     int maxResults = roj.getResults().size();
     DDBItem[] ddbItems = new DDBItem[maxResults];
