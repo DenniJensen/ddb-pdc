@@ -13,7 +13,7 @@ import de.ddb.pdc.metadata.DDBItem;
 public class CreatedMoreThan70YearsAgoAnswererTest {
 
   @Test
-  public void testCurrentYear() {
+  public void currentYearTest() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata =
         new DDBItem(null, null, null, currentYear, 0, null, 0, 0, null);
@@ -25,7 +25,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
   }
 
   @Test
-  public void test69Year() {
+  public void Year69Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata =
         new DDBItem(null, null, null, currentYear - 69, 0, null, 0, 0, null);
@@ -37,7 +37,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
   }
 
   @Test
-  public void test70Year() {
+  public void year70Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata =
         new DDBItem(null, null, null, currentYear - 70, 0, null, 0, 0, null);
@@ -49,7 +49,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
   }
 
   @Test
-  public void test71Year() {
+  public void year71Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata =
         new DDBItem(null, null, null, currentYear - 71, 0, null, 0, 0, null);
