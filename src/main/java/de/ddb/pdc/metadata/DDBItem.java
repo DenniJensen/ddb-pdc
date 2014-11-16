@@ -38,7 +38,7 @@ public class DDBItem {
     return id;
   }
 
-  void setId(String id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -49,7 +49,7 @@ public class DDBItem {
     return title;
   }
 
-  void setTitle(String title) {
+  public void setTitle(String title) {
     this.title = title;
   }
 
@@ -61,7 +61,7 @@ public class DDBItem {
     return subtitle;
   }
 
-  void setSubtitle(String subtitle) {
+  public void setSubtitle(String subtitle) {
     this.subtitle = subtitle;
   }
 
@@ -73,7 +73,7 @@ public class DDBItem {
     return imageUrl;
   }
 
-  void setImageUrl(String imageUrl) {
+  public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
 
@@ -81,7 +81,7 @@ public class DDBItem {
     return media;
   }
 
-  void setMedia(String media) {
+  public void setMedia(String media) {
     this.media = media;
   }
 
@@ -89,7 +89,7 @@ public class DDBItem {
     return category;
   }
 
-  void setCategory(String category) {
+  public void setCategory(String category) {
     this.category = category;
   }
 
@@ -97,7 +97,7 @@ public class DDBItem {
     return type;
   }
 
-  void setType(String type) {
+  public void setType(String type) {
     this.type = type;
   }
 
