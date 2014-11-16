@@ -13,6 +13,8 @@ public class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
    * Answer whether the country that the item was created in is a member of the
    * EEA.
    *
+   * FIXME there is no nationality-field of the work at the moment
+   * FIXME this is mis-using the author-nationality.
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
