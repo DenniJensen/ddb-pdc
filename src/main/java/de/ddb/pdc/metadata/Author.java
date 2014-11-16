@@ -4,14 +4,16 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Class store Author informations
+ * Class for storing Author information
  */
 public class Author {
 
   private String dnbId;
   private String name;
   private Calendar birthYear = new GregorianCalendar();
+  private String placeOfBirth;
   private Calendar deathYear = new GregorianCalendar();
+  private String placeOfDeath;
   private String nationality;
   
   public Author(String dnbId) {
@@ -52,6 +54,22 @@ public class Author {
   
   public void setNationality(String nationality) {
     this.nationality = nationality;
+  }
+
+  public String getPlaceOfBirth() {
+    return placeOfBirth;
+  }
+
+  public void setPlaceOfBirth(String placeOfBirth) {
+    this.placeOfBirth = placeOfBirth;
+  }
+
+  public String getPlaceOfDeath() {
+    return placeOfDeath;
+  }
+
+  public void setPlaceOfDeath(String placeOfDeath) {
+    this.placeOfDeath = placeOfDeath;
   }
 
 }

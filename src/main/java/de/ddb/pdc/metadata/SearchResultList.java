@@ -11,4 +11,5 @@ class SearchResultList {
   public ArrayList<SearchResultItem> getDocs() {
     return docs;
   }
+  
 }

@@ -24,7 +24,7 @@ public class DDBItem {
   /**
    * Creates a new DDBItem.
    *
-   * @param id item ID in the DDB databse
+   * @param id item ID in the DDB database
    */
   public DDBItem(String id) {
     this.id = id;
@@ -32,7 +32,7 @@ public class DDBItem {
   }
 
   /**
-   * Returns the item assigned to the item by the DDB.
+   * Returns the item ID assigned to the item by the DDB.
    */
   public String getId() {
     return id;
@@ -66,7 +66,7 @@ public class DDBItem {
   }
 
   /**
-   * Returns the URL of an thumbnail image that can be used when displaying
+   * Returns the URL of a thumbnail image that can be used when displaying
    * the item in a user interface. The URL is always absolute.
    */
   public String getImageUrl() {

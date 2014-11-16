@@ -19,6 +19,7 @@ public class MetaFetcherImpl implements MetaFetcher {
   private static final String SORTROWS = "&sort=RELEVANCE&rows=";
   private static final String QUERY = "&query=";
   private static final String ITEM = "/items/";
+  private static final String ENTITY = "/entity/";
   private static final String AIP = "/aip?";
 
   private RestTemplate restTemplate;
@@ -53,8 +54,11 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public void fetchMetadata(DDBItem ddbItem) throws RestClientException {
     String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
-    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
+    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);    
     System.out.println(roj.getEdm().getRdf().getProvidedCHO());
+    String urlEntity = APIURL + ENTITY + ddbItem.getId(); // works without key
+    ResultsOfJSON rojEntity = restTemplate.getForObject(urlEntity, 
+      ResultsOfJSON.class);
     fillDDBItemMetadataFromDDB(ddbItem, roj);
   }
   
@@ -78,7 +82,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     }
     ddbItem.setPublishedYear(year);
     
-    // some Agent input are represented at ArrayList or LinkedHashMap
+    // some Agent input are represented as ArrayList or LinkedHashMap
     if (rdfitem.getAgent().getClass() == ArrayList.class) {
       ArrayList<LinkedHashMap> alAgent =  (ArrayList) rdfitem.getAgent();
       for (int idx = 0; idx < alAgent.size(); idx++) {
@@ -86,6 +90,16 @@ public class MetaFetcherImpl implements MetaFetcher {
           String authorid = alAgent.get(idx).get("@about").toString()
             .replace("http://d-nb.info/gnd/", "");
           Author author = new Author(authorid);
+          int birth = Integer.parseInt(roj.getResults().get(0).getDateOfBirth()
+            .split(" ")[2]);
+          author.setBirthYear(birth);
+          author.setPlaceOfBirth(roj.getResults().get(0).getPlaceOfBirth()
+            .get(0));
+          int death = Integer.parseInt(roj.getResults().get(0).getDateOfDeath()
+            .split(" ")[2]);
+          author.setDeathYear(death);
+          author.setPlaceOfDeath(roj.getResults().get(0).getPlaceOfDeath()
+            .get(0));
           ddbItem.setAuthor(author);
         }
       }
