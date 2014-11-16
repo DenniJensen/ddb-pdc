@@ -1,6 +1,7 @@
 package de.ddb.pdc.answerer;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import de.ddb.pdc.answerer.answerers.AuthorNaturalPersonAnswerer;
@@ -19,7 +20,7 @@ public class AuthorNaturalPersonAnswererTest {
     Answer answer = answerer.getAnswer(metadata);
 
     // FIXME Hardcoded
-    Assert.assertEquals(Answer.YES, answer);
+    assertEquals(Answer.YES, answer);
   }
 
 }

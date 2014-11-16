@@ -1,5 +1,7 @@
 package de.ddb.pdc.answerer;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +31,7 @@ public class AnonymousAauthorAnswererTest {
     Answerer answerer = new AnonymousAauthorAnswerer();
     Answer answer = answerer.getAnswer(metadata);
 
-    Assert.assertEquals(Answer.NO, answer);
+    assertEquals(Answer.NO, answer);
   }
 
 }

@@ -1,8 +1,9 @@
 package de.ddb.pdc.answerer;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Calendar;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
@@ -21,7 +22,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
 
-    Assert.assertEquals(Answer.NO, answer);
+    assertEquals(Answer.NO, answer);
   }
 
   @Test
@@ -33,7 +34,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
 
-    Assert.assertEquals(Answer.NO, answer);
+    assertEquals(Answer.NO, answer);
   }
 
   @Test
@@ -45,7 +46,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
 
-    Assert.assertEquals(Answer.NO, answer);
+    assertEquals(Answer.NO, answer);
   }
 
   @Test
@@ -57,7 +58,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
 
-    Assert.assertEquals(Answer.YES, answer);
+    assertEquals(Answer.YES, answer);
   }
 
 }

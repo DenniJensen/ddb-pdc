@@ -1,6 +1,7 @@
 package de.ddb.pdc.answerer;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
@@ -21,7 +22,7 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
       Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
       Answer answer = answerer.getAnswer(metadata);
 
-      Assert.assertEquals(Answer.YES, answer);
+      assertEquals(Answer.YES, answer);
     }
   }
 
@@ -34,7 +35,7 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
     Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
     Answer answer = answerer.getAnswer(metadata);
 
-    Assert.assertEquals(Answer.NO, answer);
+    assertEquals(Answer.NO, answer);
   }
 
 }
