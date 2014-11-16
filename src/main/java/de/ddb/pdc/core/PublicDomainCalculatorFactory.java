@@ -21,7 +21,7 @@ public class PublicDomainCalculatorFactory {
    *         Either you specified a wrong country code or there is no
    *         implementation available for that countr.
    */
-  public static PublicDomainCalculator getCalculator(String country)
+  public PublicDomainCalculator getCalculator(String country)
       throws UnsupportedCountryException {
     switch (country) {
       case "de": //$NON-NLS-1$
