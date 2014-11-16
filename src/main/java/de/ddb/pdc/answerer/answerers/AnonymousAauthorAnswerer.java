@@ -17,7 +17,7 @@ public class AnonymousAauthorAnswerer implements Answerer {
   @SuppressWarnings("javadoc")
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    if (metaData.getAuthor() == null) {
+    if (metaData.getAuthors().size() == 0) {
       return Answer.YES;
     } else {
       return Answer.NO;

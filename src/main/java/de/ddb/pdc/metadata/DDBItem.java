@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
  */
 public class DDBItem {
   private String id;
-  private String author;
   private String title;
   private String subtitle;
   private String imageUrl;
@@ -41,17 +40,6 @@ public class DDBItem {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  /**
-   * Returns the author of the work represented by the item.
-   */
-  public String getAuthor() {
-    return author;
-  }
-
-  void setAuthor(String author) {
-    this.author = author;
   }
 
   /**
