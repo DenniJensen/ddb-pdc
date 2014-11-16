@@ -3,23 +3,23 @@ package de.ddb.pdc.answerer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.ddb.pdc.answerer.answerers.AnswererImplAA;
-import de.ddb.pdc.answerer.answerers.AnswererImplABA;
-import de.ddb.pdc.answerer.answerers.AnswererImplADMT70YA;
-import de.ddb.pdc.answerer.answerers.AnswererImplAFEEA;
-import de.ddb.pdc.answerer.answerers.AnswererImplAFT;
-import de.ddb.pdc.answerer.answerers.AnswererImplANP;
-import de.ddb.pdc.answerer.answerers.AnswererImplAOP;
-import de.ddb.pdc.answerer.answerers.AnswererImplCDODF;
-import de.ddb.pdc.answerer.answerers.AnswererImplCMT70YA;
-import de.ddb.pdc.answerer.answerers.AnswererImplCOOE;
-import de.ddb.pdc.answerer.answerers.AnswererImplCOOT;
-import de.ddb.pdc.answerer.answerers.AnswererImplGD;
-import de.ddb.pdc.answerer.answerers.AnswererImplOWITBGR;
-import de.ddb.pdc.answerer.answerers.AnswererImplPMT25YA;
-import de.ddb.pdc.answerer.answerers.AnswererImplPMT70YAC;
-import de.ddb.pdc.answerer.answerers.AnswererImplPW70YOD;
-import de.ddb.pdc.answerer.answerers.AnswererImplWPOC;
+import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorFromTriptisAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorNaturalPersonAnswerer;
+import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
+import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
+import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
+import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
+import de.ddb.pdc.answerer.answerers.CountryOfOriginTriptisAnswerer;
+import de.ddb.pdc.answerer.answerers.GovernmentDecisionAnswerer;
+import de.ddb.pdc.answerer.answerers.OfficialWorkToBeGenerallyReceivedAnswerer;
+import de.ddb.pdc.answerer.answerers.PublishedMoreThan25YearsAgoAnswerer;
+import de.ddb.pdc.answerer.answerers.PublishedMoreThan70YearsAfterCreationAnswerer;
+import de.ddb.pdc.answerer.answerers.PublishedWithin70YearsOfDeathAnswerer;
+import de.ddb.pdc.answerer.answerers.WorkPublishedOrCommunicatedAnswerer;
 import de.ddb.pdc.core.Question;
 
 @SuppressWarnings({"static-method", "javadoc"})
@@ -31,88 +31,88 @@ public class AnswererFactoryTest {
 
     Assert.assertTrue(
         factory.getAnswererForQuestion(Question.AUTHOR_ANONYMOUS)
-        instanceof AnswererImplAA);
+        instanceof AnonymousAauthorAnswerer);
 
     Assert.assertTrue(
         factory.getAnswererForQuestion(Question.ANNOUNCEMENT_BY_AUTHORITY)
-        instanceof AnswererImplABA);
+        instanceof AnnouncementByAuthorityAnswerer);
 
     Assert
         .assertTrue(
         factory
             .getAnswererForQuestion(Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO)
-        instanceof AnswererImplADMT70YA);
+        instanceof AuthorDiedMoreThan70YearsAgoAnswerer);
 
     Assert
         .assertTrue(
         factory
             .getAnswererForQuestion(Question.AUTHOR_FROM_EUROPEAN_ECONOMIC_AREA)
-        instanceof AnswererImplAFEEA);
+        instanceof AuthorFromEuropeanEconomicAreaAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.AUTHOR_FROM_TRIPTIS)
-        instanceof AnswererImplAFT);
+        instanceof AuthorFromTriptisAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.AUTHOR_NATURAL_PERSON)
-        instanceof AnswererImplANP);
+        instanceof AuthorNaturalPersonAnswerer);
 
     Assert
         .assertTrue(factory.getAnswererForQuestion(Question.ACT_OF_PARLIAMENT)
-        instanceof AnswererImplAOP);
+        instanceof ActOfParliamentAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.COURT_DECISION_OR_DECISION_FORMULA)
-        instanceof AnswererImplCDODF);
+        instanceof CourtDecisionOrDecisionFormulaAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.CREATED_MORE_THAN_70_YEARS_AGO)
-        instanceof AnswererImplCMT70YA);
+        instanceof CreatedMoreThan70YearsAgoAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.COUNTRY_OF_ORIGIN_EEA)
-        instanceof AnswererImplCOOE);
+        instanceof CountryOfOriginEuropeanEconomicAreaAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.COUNTRY_OF_ORIGIN_TRIPTIS)
-        instanceof AnswererImplCOOT);
+        instanceof CountryOfOriginTriptisAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.GOVERNMENT_DIRECTIVE)
-        instanceof AnswererImplGD);
+        instanceof GovernmentDecisionAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(
             Question.OFFICIAL_WORK_INTENDED_TO_BE_GENERALLY_RECEIVED)
-        instanceof AnswererImplOWITBGR);
+        instanceof OfficialWorkToBeGenerallyReceivedAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.PUBLISHED_MORE_THAN_25_YEARS_AGO)
-        instanceof AnswererImplPMT25YA);
+        instanceof PublishedMoreThan25YearsAgoAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(
             Question.PUBLISHED_MORE_THAN_70_YEAR_AFTER_CREATION)
-        instanceof AnswererImplPMT70YAC);
+        instanceof PublishedMoreThan70YearsAfterCreationAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.PUBLISHED_WITHIN_70_YEARS_OF_DEATH)
-        instanceof AnswererImplPW70YOD);
+        instanceof PublishedWithin70YearsOfDeathAnswerer);
 
     Assert
         .assertTrue(factory
             .getAnswererForQuestion(Question.WORK_PUBLISHED_OR_COMMUNICATED)
-        instanceof AnswererImplWPOC);
+        instanceof WorkPublishedOrCommunicatedAnswerer);
   }
 }

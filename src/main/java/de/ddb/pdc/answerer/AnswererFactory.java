@@ -2,23 +2,23 @@ package de.ddb.pdc.answerer;
 
 import org.springframework.stereotype.Service;
 
-import de.ddb.pdc.answerer.answerers.AnswererImplAA;
-import de.ddb.pdc.answerer.answerers.AnswererImplABA;
-import de.ddb.pdc.answerer.answerers.AnswererImplADMT70YA;
-import de.ddb.pdc.answerer.answerers.AnswererImplAFEEA;
-import de.ddb.pdc.answerer.answerers.AnswererImplAFT;
-import de.ddb.pdc.answerer.answerers.AnswererImplANP;
-import de.ddb.pdc.answerer.answerers.AnswererImplAOP;
-import de.ddb.pdc.answerer.answerers.AnswererImplCDODF;
-import de.ddb.pdc.answerer.answerers.AnswererImplCMT70YA;
-import de.ddb.pdc.answerer.answerers.AnswererImplCOOE;
-import de.ddb.pdc.answerer.answerers.AnswererImplCOOT;
-import de.ddb.pdc.answerer.answerers.AnswererImplGD;
-import de.ddb.pdc.answerer.answerers.AnswererImplOWITBGR;
-import de.ddb.pdc.answerer.answerers.AnswererImplPMT25YA;
-import de.ddb.pdc.answerer.answerers.AnswererImplPMT70YAC;
-import de.ddb.pdc.answerer.answerers.AnswererImplPW70YOD;
-import de.ddb.pdc.answerer.answerers.AnswererImplWPOC;
+import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorFromTriptisAnswerer;
+import de.ddb.pdc.answerer.answerers.AuthorNaturalPersonAnswerer;
+import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
+import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
+import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
+import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
+import de.ddb.pdc.answerer.answerers.CountryOfOriginTriptisAnswerer;
+import de.ddb.pdc.answerer.answerers.GovernmentDecisionAnswerer;
+import de.ddb.pdc.answerer.answerers.OfficialWorkToBeGenerallyReceivedAnswerer;
+import de.ddb.pdc.answerer.answerers.PublishedMoreThan25YearsAgoAnswerer;
+import de.ddb.pdc.answerer.answerers.PublishedMoreThan70YearsAfterCreationAnswerer;
+import de.ddb.pdc.answerer.answerers.PublishedWithin70YearsOfDeathAnswerer;
+import de.ddb.pdc.answerer.answerers.WorkPublishedOrCommunicatedAnswerer;
 import de.ddb.pdc.core.Question;
 
 /**
@@ -40,39 +40,39 @@ public class AnswererFactory {
       throws UnsupportedQuestionException {
     switch (question) {
       case AUTHOR_FROM_TRIPTIS:
-        return new AnswererImplAFT();
+        return new AuthorFromTriptisAnswerer();
       case COUNTRY_OF_ORIGIN_TRIPTIS:
-        return new AnswererImplCOOT();
+        return new CountryOfOriginTriptisAnswerer();
       case CREATED_MORE_THAN_70_YEARS_AGO:
-        return new AnswererImplCMT70YA();
+        return new CreatedMoreThan70YearsAgoAnswerer();
       case PUBLISHED_MORE_THAN_25_YEARS_AGO:
-        return new AnswererImplPMT25YA();
+        return new PublishedMoreThan25YearsAgoAnswerer();
       case PUBLISHED_MORE_THAN_70_YEAR_AFTER_CREATION:
-        return new AnswererImplPMT70YAC();
+        return new PublishedMoreThan70YearsAfterCreationAnswerer();
       case WORK_PUBLISHED_OR_COMMUNICATED:
-        return new AnswererImplWPOC();
+        return new WorkPublishedOrCommunicatedAnswerer();
       case COUNTRY_OF_ORIGIN_EEA:
-        return new AnswererImplCOOE();
+        return new CountryOfOriginEuropeanEconomicAreaAnswerer();
       case AUTHOR_FROM_EUROPEAN_ECONOMIC_AREA:
-        return new AnswererImplAFEEA();
+        return new AuthorFromEuropeanEconomicAreaAnswerer();
       case AUTHOR_ANONYMOUS:
-        return new AnswererImplAA();
+        return new AnonymousAauthorAnswerer();
       case AUTHOR_DIED_MORE_THAN_70_YEARS_AGO:
-        return new AnswererImplADMT70YA();
+        return new AuthorDiedMoreThan70YearsAgoAnswerer();
       case PUBLISHED_WITHIN_70_YEARS_OF_DEATH:
-        return new AnswererImplPW70YOD();
+        return new PublishedWithin70YearsOfDeathAnswerer();
       case AUTHOR_NATURAL_PERSON:
-        return new AnswererImplANP();
+        return new AuthorNaturalPersonAnswerer();
       case ANNOUNCEMENT_BY_AUTHORITY:
-        return new AnswererImplABA();
+        return new AnnouncementByAuthorityAnswerer();
       case GOVERNMENT_DIRECTIVE:
-        return new AnswererImplGD();
+        return new GovernmentDecisionAnswerer();
       case ACT_OF_PARLIAMENT:
-        return new AnswererImplAOP();
+        return new ActOfParliamentAnswerer();
       case COURT_DECISION_OR_DECISION_FORMULA:
-        return new AnswererImplCDODF();
+        return new CourtDecisionOrDecisionFormulaAnswerer();
       case OFFICIAL_WORK_INTENDED_TO_BE_GENERALLY_RECEIVED:
-        return new AnswererImplOWITBGR();
+        return new OfficialWorkToBeGenerallyReceivedAnswerer();
       default:
         throw new UnsupportedQuestionException(question);
     }
