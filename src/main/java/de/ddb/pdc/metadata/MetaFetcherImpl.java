@@ -54,7 +54,6 @@ public class MetaFetcherImpl implements MetaFetcher {
   public void fetchMetadata(DDBItem ddbItem) throws RestClientException {
     String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
     ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
-    System.out.println(roj.getEdm().getRdf().getProvidedCHO());
     fillDDBItemMetadataFromDDB(ddbItem, roj);
   }
   
@@ -66,7 +65,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     RDFItem rdfitem = roj.getEdm().getRdf();
     String publishedYear = (String) rdfitem.getProvidedCHO().get("issued");
     
-    System.out.println("test");
     int year = 8000;
     try {
       if (publishedYear != null) {
@@ -109,7 +107,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     int idx = 0;
     for (SearchResultItem rsi : roj.getResults()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
-      System.out.println(rsi.getId());
       ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
       ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
       ddbItem.setImageUrl(URL + rsi.getThumbnail());
