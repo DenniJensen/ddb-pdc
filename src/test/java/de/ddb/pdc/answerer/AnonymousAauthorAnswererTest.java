@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 @SuppressWarnings({"static-method", "javadoc", "nls"})
@@ -14,8 +15,7 @@ public class AnonymousAauthorAnswererTest {
 
   @Test
   public void authorAnonymousTest() {
-    DDBItem metadata =
-        new DDBItem(null, null, null, 0, 0, null, 0, 0, null);
+    DDBItem metadata = new DDBItem("test-id");
 
     Answerer answerer = new AnonymousAauthorAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -25,8 +25,10 @@ public class AnonymousAauthorAnswererTest {
 
   @Test
   public void authorNotAnonymousTest() {
-    DDBItem metadata =
-        new DDBItem(null, null, null, 0, 0, "Goethe", 0, 0, null);
+    Author author = new Author("test-id");
+    author.setName("Goethe");
+    DDBItem metadata = new DDBItem("test-id");
+    metadata.setAuthor(author);
 
     Answerer answerer = new AnonymousAauthorAnswerer();
     Answer answer = answerer.getAnswer(metadata);

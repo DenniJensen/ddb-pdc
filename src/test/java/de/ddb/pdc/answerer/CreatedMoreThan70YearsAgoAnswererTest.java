@@ -10,14 +10,14 @@ import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
 
-@SuppressWarnings({"static-method", "javadoc"})
+@SuppressWarnings({"static-method", "javadoc", "nls"})
 public class CreatedMoreThan70YearsAgoAnswererTest {
 
   @Test
   public void currentYearTest() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-    DDBItem metadata =
-        new DDBItem(null, null, null, currentYear, 0, null, 0, 0, null);
+    DDBItem metadata = new DDBItem("test-id");
+    metadata.setPublishedYear(currentYear);
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -28,8 +28,9 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
   @Test
   public void Year69Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-    DDBItem metadata =
-        new DDBItem(null, null, null, currentYear - 69, 0, null, 0, 0, null);
+    DDBItem metadata = new DDBItem("test-id");
+    metadata.setPublishedYear(currentYear-69);
+
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -40,8 +41,9 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
   @Test
   public void year70Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-    DDBItem metadata =
-        new DDBItem(null, null, null, currentYear - 70, 0, null, 0, 0, null);
+    DDBItem metadata = new DDBItem("test-id");
+    metadata.setPublishedYear(currentYear-70);
+
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -52,8 +54,9 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
   @Test
   public void year71Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-    DDBItem metadata =
-        new DDBItem(null, null, null, currentYear - 71, 0, null, 0, 0, null);
+    DDBItem metadata = new DDBItem("test-id");
+    metadata.setPublishedYear(currentYear-71);
+
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);

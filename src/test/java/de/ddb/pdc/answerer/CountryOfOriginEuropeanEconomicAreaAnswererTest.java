@@ -7,6 +7,7 @@ import org.junit.Test;
 import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
 import de.ddb.pdc.answerer.answerers.EEAMembers;
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 @SuppressWarnings({"static-method", "javadoc", "nls"})
@@ -16,8 +17,10 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
   public void memberTest() {
 
     for (EEAMembers member : EEAMembers.values()) {
-      DDBItem metadata =
-          new DDBItem(null, null, member.name(), 0, 0, null, 0, 0, null);
+      DDBItem metadata = new DDBItem("test-id");
+      Author author = new Author("test-id");
+      author.setNationality(member.name()); // FIXME wrong nationality
+      metadata.setAuthor(author);
 
       Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
       Answer answer = answerer.getAnswer(metadata);
@@ -29,8 +32,10 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
   @Test
   public void notMemberTest() {
 
-    DDBItem metadata =
-        new DDBItem(null, null, "russia", 0, 0, null, 0, 0, null);
+    DDBItem metadata = new DDBItem("test-id");
+    Author author = new Author("test-id");
+    author.setNationality("russia"); // FIXME wrong nationality
+    metadata.setAuthor(author);
 
     Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
     Answer answer = answerer.getAnswer(metadata);
