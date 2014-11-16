@@ -19,11 +19,17 @@ import de.ddb.pdc.metadata.DDBItem;
 @Service
 public class AnswererServiceImpl implements AnswererService {
 
-  @Autowired
-  private PublicDomainCalculatorFactory calculatorFactory;
+  private final PublicDomainCalculatorFactory calculatorFactory;
 
+  private final AnswererFactory answererFactory;
+
+  @SuppressWarnings("javadoc")
   @Autowired
-  private AnswererFactory answererFactory;
+  public AnswererServiceImpl(PublicDomainCalculatorFactory calculatorFactory,
+      AnswererFactory answererFactory) {
+    this.calculatorFactory = calculatorFactory;
+    this.answererFactory = answererFactory;
+  }
 
   /**
    * {@inheritDoc}
