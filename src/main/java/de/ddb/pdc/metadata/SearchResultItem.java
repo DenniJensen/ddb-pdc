@@ -13,31 +13,31 @@ class SearchResultItem {
   private String media;
   private String thumbnail;
 
-  String getId() {
+  public String getId() {
     return id;
   }
 
-  String getTitle() {
+  public String getTitle() {
     return title;
   }
 
-  String getSubtitle() {
+  public String getSubtitle() {
     return subtitle;
   }
 
-  String getCategory() {
+  public String getCategory() {
     return category;
   }
 
-  String getType() {
+  public String getType() {
     return type;
   }
 
-  String getMedia() {
+  public String getMedia() {
     return media;
   }
 
-  String getThumbnail() {
+  public String getThumbnail() {
     return thumbnail;
   }
 }
