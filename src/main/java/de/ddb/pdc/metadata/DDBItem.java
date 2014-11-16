@@ -1,11 +1,14 @@
 package de.ddb.pdc.metadata;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * Aggregates the metadata of an item from the DDB.
  */
 public class DDBItem {
   private String id;
-  private String author;
   private String title;
   private String subtitle;
   private String imageUrl;
@@ -13,6 +16,11 @@ public class DDBItem {
   private String category;
   private String type;
 
+  //metadata
+  private ArrayList<Author> authors;
+  private String institute;
+  private Calendar publishedYear = new GregorianCalendar();
+ 
   /**
    * Creates a new DDBItem.
    *
@@ -20,6 +28,7 @@ public class DDBItem {
    */
   public DDBItem(String id) {
     this.id = id;
+    this.authors = new ArrayList<Author>();
   }
 
   /**
@@ -31,17 +40,6 @@ public class DDBItem {
 
   void setId(String id) {
     this.id = id;
-  }
-
-  /**
-   * Returns the author of the work represented by the item.
-   */
-  public String getAuthor() {
-    return author;
-  }
-
-  void setAuthor(String author) {
-    this.author = author;
   }
 
   /**
@@ -101,6 +99,30 @@ public class DDBItem {
 
   void setType(String type) {
     this.type = type;
+  }
+
+  public ArrayList<Author> getAuthors() {
+    return authors;
+  }
+
+  public void setAuthor(Author author) {
+    this.authors.add(author);
+  }
+
+  public String getInstitute() {
+    return institute;
+  }
+
+  public void setInstitute(String institute) {
+    this.institute = institute;
+  }
+
+  public Calendar getPublishedYear() {
+    return publishedYear;
+  }
+
+  public void setPublishedYear(int publishedYear) {
+    this.publishedYear.set(Calendar.YEAR, publishedYear);
   }
 
 }
