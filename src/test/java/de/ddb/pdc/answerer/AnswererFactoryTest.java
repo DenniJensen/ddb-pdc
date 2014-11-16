@@ -3,17 +3,17 @@ package de.ddb.pdc.answerer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
 import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
+import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromTriptisAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorNaturalPersonAnswerer;
-import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
-import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
-import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
 import de.ddb.pdc.answerer.answerers.CountryOfOriginTriptisAnswerer;
+import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
+import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.GovernmentDecisionAnswerer;
 import de.ddb.pdc.answerer.answerers.OfficialWorkToBeGenerallyReceivedAnswerer;
 import de.ddb.pdc.answerer.answerers.PublishedMoreThan25YearsAgoAnswerer;
@@ -26,7 +26,7 @@ import de.ddb.pdc.core.Question;
 public class AnswererFactoryTest {
 
   @Test
-  public void test() throws UnsupportedQuestionException {
+  public void test() {
     AnswererFactory factory = new AnswererFactory();
 
     Assert.assertTrue(

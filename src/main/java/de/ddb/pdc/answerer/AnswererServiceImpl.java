@@ -32,19 +32,14 @@ public class AnswererServiceImpl implements AnswererService {
    */
   @Override
   public PDCResult getResult(String country, DDBItem metadata)
-      throws UnsupportedCountryException, UnsupportedCategoryException,
-      UnsupportedQuestionException {
+      throws UnsupportedCountryException, UnsupportedCategoryException {
 
     // get the public domain calculator for the country
     PublicDomainCalculator pdc = this.calculatorFactory.getCalculator(country);
 
     // get the category of the cultural good
     Category category;
-    try {
-      category = Category.valueOf(metadata.getCategory());
-    } catch (IllegalArgumentException e) {
-      throw new UnsupportedCategoryException(null);
-    }
+    category = Category.valueOf(metadata.getCategory());
 
     // get the questionnaire for this cultural good
     Questionnaire questionnaire = pdc.startQuestionnaire(category);

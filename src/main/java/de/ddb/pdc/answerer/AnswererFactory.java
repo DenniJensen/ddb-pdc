@@ -33,12 +33,9 @@ public class AnswererFactory {
    *
    * @param question The question to create an answerer for.
    * @return required Answerer implementation.
-   * @throws de.ddb.pdc.answerer.UnsupportedQuestionException No implementation
-   *   for this question was found.
    */
   @SuppressWarnings("static-method")
-  public Answerer getAnswererForQuestion(Question question)
-      throws UnsupportedQuestionException {
+  public Answerer getAnswererForQuestion(Question question) {
     switch (question) {
       case AUTHOR_FROM_TRIPTIS:
         return new AuthorFromTriptisAnswerer();
@@ -75,7 +72,8 @@ public class AnswererFactory {
       case OFFICIAL_WORK_INTENDED_TO_BE_GENERALLY_RECEIVED:
         return new OfficialWorkToBeGenerallyReceivedAnswerer();
       default:
-        throw new UnsupportedQuestionException(question);
+        throw new IllegalArgumentException("No answerer available for "
+          + question);
     }
   }
 }

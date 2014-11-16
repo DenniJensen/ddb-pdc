@@ -29,11 +29,8 @@ public interface AnswererService {
    *   available
    * @throws UnsupportedCategoryException the calculator for the country does
    *   not support the category.
-   * @throws UnsupportedQuestionException There is no answerer for a question
-   *   that was asked by the calculator.
    */
   public PDCResult getResult(String country, DDBItem metadata)
-      throws UnsupportedCountryException, UnsupportedCategoryException,
-      UnsupportedQuestionException;
+      throws UnsupportedCountryException, UnsupportedCategoryException;
 
 }
