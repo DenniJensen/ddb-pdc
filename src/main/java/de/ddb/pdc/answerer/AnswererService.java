@@ -20,15 +20,15 @@ public interface AnswererService {
    * and the answers that were given to them.
    *
    * @param country The country to calculate the public domain status for.
-   *   This has to be the 2 letter country code defined in
-   *   ISO-3166-1 alpha-2.
+   *        This has to be the 2 letter country code defined in
+   *        ISO-3166-1 alpha-2.
    * @param metadata The DDBItem with the meta data about the cultural good.
    * @return A PDCResult object containing the public domain status and the
-   *   questions and answer trace.
+   *         questions and answer trace.
    * @throws UnsupportedCountryException no calculator for the given country
-   *   available
+   *         available
    * @throws UnsupportedCategoryException the calculator for the country does
-   *   not support the category.
+   *         not support the category.
    */
   public PDCResult getResult(String country, DDBItem metadata)
       throws UnsupportedCountryException, UnsupportedCategoryException;
