@@ -1,8 +1,6 @@
 package de.ddb.pdc.answerer;
 
 import de.ddb.pdc.core.PDCResult;
-import de.ddb.pdc.core.UnsupportedCategoryException;
-import de.ddb.pdc.core.UnsupportedCountryException;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
@@ -25,12 +23,7 @@ public interface AnswererService {
    * @param metadata The DDBItem with the meta data about the cultural good.
    * @return A PDCResult object containing the public domain status and the
    *         questions and answer trace.
-   * @throws UnsupportedCountryException no calculator for the given country
-   *         available
-   * @throws UnsupportedCategoryException the calculator for the country does
-   *         not support the category.
    */
-  public PDCResult getResult(String country, DDBItem metadata)
-      throws UnsupportedCountryException, UnsupportedCategoryException;
+  public PDCResult getResult(String country, DDBItem metadata);
 
 }

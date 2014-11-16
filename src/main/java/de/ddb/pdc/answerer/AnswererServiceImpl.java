@@ -10,8 +10,6 @@ import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PublicDomainCalculatorFactory;
 import de.ddb.pdc.core.Question;
 import de.ddb.pdc.core.Questionnaire;
-import de.ddb.pdc.core.UnsupportedCategoryException;
-import de.ddb.pdc.core.UnsupportedCountryException;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
@@ -31,8 +29,7 @@ public class AnswererServiceImpl implements AnswererService {
    * {@inheritDoc}
    */
   @Override
-  public PDCResult getResult(String country, DDBItem metadata)
-      throws UnsupportedCountryException, UnsupportedCategoryException {
+  public PDCResult getResult(String country, DDBItem metadata) {
 
     // get the public domain calculator for the country
     PublicDomainCalculator pdc = this.calculatorFactory.getCalculator(country);
