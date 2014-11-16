@@ -1,5 +1,6 @@
 package de.ddb.pdc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import de.ddb.pdc.answerer.AnswererService;
-import de.ddb.pdc.answerer.AnswererServiceImpl;
+import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
 import de.ddb.pdc.metadata.MetaFetcherImpl;
@@ -25,6 +26,9 @@ public class Main implements CommandLineRunner {
 
   @Value("${ddb.apikey}")
   private String ddbApiKey;
+
+  @Autowired
+  private AnswererService answererService;
 
   @Bean
   public MetaFetcher metaFetcher() {
@@ -44,7 +48,6 @@ public class Main implements CommandLineRunner {
    */
   @Override
   public void run(String... args) throws Exception {
-    AnswererService answererService = new AnswererServiceImpl();
 
     // test data
     DDBItem testItem =
@@ -52,6 +55,7 @@ public class Main implements CommandLineRunner {
             1920, 1956, "Göthe", 1880, 1940, "Estonia");
 
 
-    answererService.getResult("de", testItem);
+    PDCResult result = this.answererService.getResult("de", testItem);
+    System.out.println("is public domain: " + result.isPublicDomain());
   }
 }

@@ -1,5 +1,6 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
 
@@ -11,15 +12,12 @@ public class AnswererImplCOOT implements Answerer {
   /**
    * Answer whether the country that the item was created in is a member of
    * TRIPTIS.
-   * 
+   *
    * TODO add TRIPTIS membership check
-   * 
-   * @param metaData
-   * @return 
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
     return Answer.YES;
   }
-  
+
 }

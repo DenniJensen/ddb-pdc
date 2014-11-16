@@ -1,26 +1,39 @@
 package de.ddb.pdc.answerer;
 
+import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.core.UnsupportedCategoryException;
 import de.ddb.pdc.core.UnsupportedCountryException;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
- *
- *
+ * The AnswererService is a business logic service component.
+ * It exposes an interface to decide the public domain problem on an
+ * Item (DDBItem) for a given country.
  */
 public interface AnswererService {
-  
+
   /**
-   * 
-   * @param country
-   * @param metadata
-   * @return 
-   * @throws UnsupportedCountryException 
-   * @throws UnsupportedCategoryException 
-   * @throws UnsupportedQuestionException 
+   * Get the public domain status for the DDBItem that was passed as argument.
+   * The public domain status is either true or false. true indicates that the
+   * cultural good is in the public domain for the given country. The result
+   * will also contain a list of questions that were asked to get the result
+   * and the answers that were given to them.
+   *
+   * @param country The country to calculate the public domain status for.
+   *   This has to be the 2 letter country code defined in
+   *   ISO-3166-1 alpha-2.
+   * @param metadata The DDBItem with the meta data about the cultural good.
+   * @return A PDCResult object containing the public domain status and the
+   *   questions and answer trace.
+   * @throws UnsupportedCountryException no calculator for the given country
+   *   available
+   * @throws UnsupportedCategoryException the calculator for the country does
+   *   not support the category.
+   * @throws UnsupportedQuestionException There is no answerer for a question
+   *   that was asked by the calculator.
    */
-  public Result getResult(String country, DDBItem metadata)
+  public PDCResult getResult(String country, DDBItem metadata)
       throws UnsupportedCountryException, UnsupportedCategoryException,
-      UnsupportedQuestionException; 
+      UnsupportedQuestionException;
 
 }

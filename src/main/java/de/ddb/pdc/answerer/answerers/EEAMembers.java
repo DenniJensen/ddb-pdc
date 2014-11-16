@@ -1,8 +1,9 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 /**
- * Member countries of the EEA, as specified by the official PDC documentation.
+ * {@inheritDoc}
  */
+@SuppressWarnings("javadoc")
 public enum EEAMembers {
   austria,
   belgium,
@@ -38,10 +39,10 @@ public enum EEAMembers {
   /**
    * Determine whether the provided country is a member of the EEA.
    * @param country
-   * @return 
+   * @return
    */
   public static boolean isMember(String country) {
-    country = country.replaceAll("\\s+","_");
+    country = country.replaceAll("\\s+", "_"); //$NON-NLS-1$ //$NON-NLS-2$
     country = country.toLowerCase();
     try {
       EEAMembers.valueOf(country);

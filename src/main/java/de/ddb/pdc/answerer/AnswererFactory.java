@@ -1,19 +1,44 @@
 package de.ddb.pdc.answerer;
 
+import org.springframework.stereotype.Service;
+
+import de.ddb.pdc.answerer.answerers.AnswererImplAA;
+import de.ddb.pdc.answerer.answerers.AnswererImplABA;
+import de.ddb.pdc.answerer.answerers.AnswererImplADMT70YA;
+import de.ddb.pdc.answerer.answerers.AnswererImplAFEEA;
+import de.ddb.pdc.answerer.answerers.AnswererImplAFT;
+import de.ddb.pdc.answerer.answerers.AnswererImplANP;
+import de.ddb.pdc.answerer.answerers.AnswererImplAOP;
+import de.ddb.pdc.answerer.answerers.AnswererImplCDODF;
+import de.ddb.pdc.answerer.answerers.AnswererImplCMT70YA;
+import de.ddb.pdc.answerer.answerers.AnswererImplCOOE;
+import de.ddb.pdc.answerer.answerers.AnswererImplCOOT;
+import de.ddb.pdc.answerer.answerers.AnswererImplGD;
+import de.ddb.pdc.answerer.answerers.AnswererImplOWITBGR;
+import de.ddb.pdc.answerer.answerers.AnswererImplPMT25YA;
+import de.ddb.pdc.answerer.answerers.AnswererImplPMT70YAC;
+import de.ddb.pdc.answerer.answerers.AnswererImplPW70YOD;
+import de.ddb.pdc.answerer.answerers.AnswererImplWPOC;
 import de.ddb.pdc.core.Question;
 
+/**
+ * The answerer factory creates answerer instances based on the question.
+ */
+@Service
 public class AnswererFactory {
-  
+
   /**
    * Creates and returns a specific implementation of {@link Answerer} depending
    * on the type of question provided.
-   * @param question
-   * @return required Answerer implementation
-   * @throws de.ddb.pdc.answerer.UnsupportedQuestionException
+   * @param question The question to create an answerer for.
+   * @return required Answerer implementation.
+   * @throws de.ddb.pdc.answerer.UnsupportedQuestionException No implementation
+   *   for this question was found.
    */
-  public static Answerer getAnswererForQuestion(Question question) 
+  @SuppressWarnings("static-method")
+  public Answerer getAnswererForQuestion(Question question)
       throws UnsupportedQuestionException {
-    switch(question) {
+    switch (question) {
       case AUTHOR_FROM_TRIPTIS:
         return new AnswererImplAFT();
       case COUNTRY_OF_ORIGIN_TRIPTIS:
@@ -47,9 +72,9 @@ public class AnswererFactory {
       case COURT_DECISION_OR_DECISION_FORMULA:
         return new AnswererImplCDODF();
       case OFFICIAL_WORK_INTENDED_TO_BE_GENERALLY_RECEIVED:
-        return new AnswererImplOWITBGR();      
+        return new AnswererImplOWITBGR();
       default:
         throw new UnsupportedQuestionException(question);
     }
-  } 
+  }
 }

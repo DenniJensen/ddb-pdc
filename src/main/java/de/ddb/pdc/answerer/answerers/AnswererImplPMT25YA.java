@@ -1,7 +1,8 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import java.util.Calendar;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
 
@@ -11,9 +12,7 @@ import de.ddb.pdc.metadata.DDBItem;
 public class AnswererImplPMT25YA implements Answerer {
 
   /**
-   *
-   * @param metaData
-   * @return
+   * {@inheritDoc}
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {

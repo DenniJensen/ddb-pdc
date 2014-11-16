@@ -1,7 +1,8 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import java.util.Calendar;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
 
@@ -10,6 +11,9 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 public class AnswererImplCMT70YA implements Answerer {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Answer getAnswer(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
