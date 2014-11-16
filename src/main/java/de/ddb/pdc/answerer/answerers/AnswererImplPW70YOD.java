@@ -14,7 +14,7 @@ public class AnswererImplPW70YOD implements Answerer {
    */
   @Override
   public Answer getAnswer(DDBItem metaData) {
-    if (metaData.getYearPublished() < metaData.getAuthorYearOfDeath() + 70) {
+    if (metaData.getYearPublished() <= metaData.getAuthorYearOfDeath() + 70) {
       return Answer.YES;
     } else {
       return Answer.NO;

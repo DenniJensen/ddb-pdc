@@ -20,7 +20,7 @@ public class AnswererImplADMT70YA implements Answerer {
   public Answer getAnswer(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
-    if (currentYear - metaData.getAuthorYearOfBirth() > 70) {
+    if (currentYear - metaData.getAuthorYearOfDeath() > 70) {
       return Answer.YES;
     } else {
       return Answer.NO;
