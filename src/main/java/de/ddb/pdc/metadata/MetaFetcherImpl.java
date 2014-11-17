@@ -76,7 +76,7 @@ public class MetaFetcherImpl implements MetaFetcher {
         
       }
     } catch (NumberFormatException e) {
-      //test
+      year = 8000;
     }
     ddbItem.setPublishedYear(year);
     
@@ -84,7 +84,8 @@ public class MetaFetcherImpl implements MetaFetcher {
     if (rdfitem.getAgent().getClass() == ArrayList.class) {
       ArrayList<LinkedHashMap> alAgent =  (ArrayList) rdfitem.getAgent();
       for (int idx = 0; idx < alAgent.size(); idx++) {
-        if (alAgent.get(idx).get("@about").toString().startsWith("http")) {
+        String about = (String) alAgent.get(idx).get("@about");
+        if (about.startsWith("http")) {
           String authorid = alAgent.get(idx).get("@about").toString()
             .replace("http://d-nb.info/gnd/", "");
           Author author = new Author(authorid);
@@ -104,7 +105,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     }
     
     // till now no testdata where author in LinkedHashMap
-    if (rdfitem.getAgent().getClass() == LinkedHashMap.class) {
+    if (rdfitem.getAgent() instanceof LinkedHashMap<?,?>) {
         //LinkedHashMap lhmAgent = (LinkedHashMap) rdf.get("Agent");    
     }
     ddbItem.setInstitute((String) rdfitem.getAggregation().get("provider"));
