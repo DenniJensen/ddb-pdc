@@ -105,7 +105,7 @@ public class DDBItem {
     return authors;
   }
 
-  public void setAuthor(Author author) {
+  public void addAuthor(Author author) {
     this.authors.add(author);
   }
 
@@ -113,7 +113,7 @@ public class DDBItem {
     return institute;
   }
 
-  public void setInstitute(String institute) {
+  public void setInstitution(String institute) {
     this.institute = institute;
   }
 

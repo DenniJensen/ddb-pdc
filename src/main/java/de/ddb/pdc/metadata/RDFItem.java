@@ -1,31 +1,61 @@
 package de.ddb.pdc.metadata;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RDFItem {
+class RDFItem {
+
   @JsonProperty("ProvidedCHO")
-  private LinkedHashMap<String,Object> providedCHO;
+  private Map<String, Object> providedCHO;
   
   @JsonProperty("Agent")
-  private Object agent;
+  private Object agents;
   
   @JsonProperty("Aggregation")
-  private LinkedHashMap<String,Object> aggregation;
-  
-  public LinkedHashMap<String,Object> getAggregation() {
-    return aggregation;
+  private Map<String, Object> aggregation;
+
+  public int getPublishYear() {
+    try {
+      String publishedYear = (String) providedCHO.get("issued");
+      if (publishedYear == null) {
+        // The item is missing the publishing date.
+        return -1;
+      }
+      return Integer.parseInt(publishedYear.split(",")[0]);
+    } catch (NumberFormatException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public Object getAgent() {
-    return agent;
+  public String getInstitution() {
+    return (String) aggregation.get("provider");
   }
 
-  public LinkedHashMap<String,Object> getProvidedCHO() {
-    return providedCHO;
+  public List<String> getAuthorIds() {
+    List<String> authorIds = new ArrayList<>();
+    for (Map agent : getAgents()) {
+      String about = agent.get("@about").toString();
+      if (about.startsWith("http://d-nb.info/")) {
+        authorIds.add(about);
+      }
+    }
+    return authorIds;
   }
-  
+
+  private List<Map> getAgents() {
+    if (agents instanceof List) {
+      // Multiple agents
+      return (List) agents;
+    } else {
+      // A single agent
+      List<Map> agentList = new ArrayList<>();
+      agentList.add((Map) agents);
+      return agentList;
+    }
+  }
 }

@@ -30,11 +30,11 @@ public class MetaFetcherImplTest {
 
     ArrayList<SearchResultItem> resultItems = new ArrayList<>();
     resultItems.add(resultItem);
-    ResultsOfJSON result = mock(ResultsOfJSON.class);
-    when(result.getResults()).thenReturn(resultItems);
+    SearchResults results = mock(SearchResults.class);
+    when(results.getResultItems()).thenReturn(resultItems);
 
     String url = "https://api.deutsche-digitale-bibliothek.de/search?oauth_consumer_key=authkey&sort=RELEVANCE&rows=10&query=Titel";
-    when(rest.getForObject(url, ResultsOfJSON.class)).thenReturn(result);
+    when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
     DDBItem[] items = fetcher.searchForItems("Titel", 10);
     assertEquals(1, items.length);

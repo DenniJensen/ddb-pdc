@@ -48,21 +48,4 @@ class SearchResultItem {
   public String getThumbnail() {
     return thumbnail;
   }
-  
-  public String getDateOfBirth() {
-    return dateOfBirth;
-  }
-
-  public String getDateOfDeath() {
-    return dateOfDeath;
-  }
-
-  public ArrayList<String> getPlaceOfBirth() {
-    return placeOfBirth;
-  }
-
-  public ArrayList<String> getPlaceOfDeath() {
-    return placeOfDeath;
-  }
-  
 }
