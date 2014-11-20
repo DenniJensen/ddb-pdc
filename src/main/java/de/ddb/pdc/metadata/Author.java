@@ -13,7 +13,6 @@ public class Author {
   private Calendar yearOfBirth = new GregorianCalendar();
   private String placeOfBirth;
   private Calendar yearOfDeath = new GregorianCalendar();
-  private String placeOfDeath;
   private String nationality;
 
   /**
