@@ -20,7 +20,6 @@ class EntitiesResultItem {
   }
 
   public int getYearOfBirth() {
-    System.out.println(dateOfBirth);
     if (dateOfBirth == null) {
       return -1;
     }
