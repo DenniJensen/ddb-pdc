@@ -20,20 +20,27 @@ class EntitiesResultItem {
   }
 
   public int getYearOfBirth() {
+    System.out.println(dateOfBirth);
     if (dateOfBirth == null) {
       return -1;
     }
-    return Integer.parseInt(dateOfBirth.split(" ")[2]);
+    String[] splitDob = dateOfBirth.split(" ");
+
+    return Integer.parseInt(splitDob[splitDob.length - 1]);
   }
 
   public int getYearOfDeath() {
     if (dateOfDeath == null) {
       return -1;
     }
-    return Integer.parseInt(dateOfDeath.split(" ")[2]);
+    String[] splitDod = dateOfDeath.split(" ");
+    return Integer.parseInt(splitDod[splitDod.length - 1]);
   }
 
   public String getPlaceOfBirth() {
-    return placeOfBirth.get(0);
+    if (placeOfBirth != null) {
+      return placeOfBirth.get(0);
+    }
+    return null;
   }
 }
