@@ -1,18 +1,19 @@
 package de.ddb.pdc.core;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
  * Represents the result of a public-domain calculation for a specific item.
  */
 public class PDCResult {
 
-  private boolean publicDomain;
-  private List<AnsweredQuestion> trace;
+  private final boolean publicDomain;
+  private final List<AnsweredQuestion> trace;
 
   /**
    * Creates a PDCResult.
@@ -41,14 +42,14 @@ public class PDCResult {
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
-  
+
   /**
    * JSON representation of the PDCResult.
-   * @throws IOException 
+   * @throws IOException
    */
   public String toJSONString() throws IOException {
     StringWriter stringWriter = new StringWriter();
-    JsonFactory jsonFactory = new JsonFactory();    
+    JsonFactory jsonFactory = new JsonFactory();
     JsonGenerator jsonGen = jsonFactory.createGenerator(stringWriter);
     jsonGen.writeStartObject();
     jsonGen.writeFieldName("publicDomain");
@@ -62,7 +63,8 @@ public class PDCResult {
     }
     jsonGen.writeEndArray();
     jsonGen.writeEndObject();
-    jsonGen.flush();    
+    jsonGen.flush();
+    jsonGen.close();
     return stringWriter.toString();
   }
 }
