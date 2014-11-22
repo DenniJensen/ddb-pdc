@@ -60,17 +60,17 @@ public class PDCController {
    * client.
    *
    * @param itemId DDB item ID
-   * @return PDCResult as JSON
+   * @return PDCResult serialized to standard JSON
    */
   @RequestMapping("/pdc/{itemId}")
-  public String calculate(@PathVariable String itemId) throws Exception {
+  public PDCResult calculate(@PathVariable String itemId) throws Exception {
 
     // create a dbbItem for the requested itemId, populate the dbbItem
     DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
 
     // provide the meta data to the answerer service and get the result
-    PDCResult pdcResult = this.answererService.getResult(this.country,ddbItem);
+    PDCResult pdcResult = this.answererService.getResult(this.country, ddbItem);
 
-    return pdcResult.toJSONString();
+    return pdcResult;
   }
 }

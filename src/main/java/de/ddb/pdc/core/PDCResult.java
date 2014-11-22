@@ -42,29 +42,5 @@ public class PDCResult {
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
-
-  /**
-   * JSON representation of the PDCResult.
-   * @throws IOException
-   */
-  public String toJSONString() throws IOException {
-    StringWriter stringWriter = new StringWriter();
-    JsonFactory jsonFactory = new JsonFactory();
-    JsonGenerator jsonGen = jsonFactory.createGenerator(stringWriter);
-    jsonGen.writeStartObject();
-    jsonGen.writeFieldName("publicDomain");
-    jsonGen.writeBoolean(this.isPublicDomain());
-    jsonGen.writeStartArray();
-    for (AnsweredQuestion answeredQuestion : this.getTrace()) {
-      jsonGen.writeStartObject();
-      jsonGen.writeFieldName(answeredQuestion.getQuestion().getText());
-      jsonGen.writeBoolean(answeredQuestion.getAnswer().toBoolean());
-      jsonGen.writeEndObject();
-    }
-    jsonGen.writeEndArray();
-    jsonGen.writeEndObject();
-    jsonGen.flush();
-    jsonGen.close();
-    return stringWriter.toString();
-  }
+ 
 }
