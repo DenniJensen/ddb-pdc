@@ -116,4 +116,18 @@ public class Questionnaire {
   public List<AnsweredQuestion> getTrace() {
     return this.answered;
   }
+
+  /**
+   * Get the result of this questionnaire. The result will contain the public
+   * domain status of the cultural good this questionnaire was answered for
+   * and the trace of all answered questions.
+   *
+   * @return The public domain status and the answered question trace.
+   * @throws IllegalStateException You did not answer all the questions that are
+   *         necessary. You can not get a result yet.
+   */
+  public PDCResult getResult() throws IllegalStateException {
+    PDCResult result = new PDCResult(this.isPublicDomain(), this.getTrace());
+    return result;
+  }
 }

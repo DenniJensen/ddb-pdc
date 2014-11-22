@@ -5,36 +5,36 @@ package de.ddb.pdc.answerer.answerers;
  */
 @SuppressWarnings("javadoc")
 public enum EEAMembers {
-  austria,
-  belgium,
-  bulgaria,
-  cyprus,
-  czech_republic,
-  denmark,
-  estonia,
-  finland,
-  france,
-  germany,
-  greece,
-  hungary,
-  iceland,
-  ireland,
-  italy,
-  latvia,
-  liechtenstein,
-  lithuania,
-  luxembourg,
-  malta,
-  netherlands,
-  norway,
-  poland,
-  portugal,
-  romania,
-  slovakia,
-  slovenia,
-  spain,
-  sweden,
-  united_kingdom;
+  AUSTRIA,
+  BELGIUM,
+  BULGARIA,
+  CYPRUS,
+  CZECH_REPUBLIC,
+  DENMARK,
+  ESTONIA,
+  FINLAND,
+  FRANCE,
+  GERMANY,
+  GREECE,
+  HUNGARY,
+  ICELAND,
+  IRELAND,
+  ITALY,
+  LATVIA,
+  LIECHTENSTEIN,
+  LITHUANIA,
+  LUXEMBOURG,
+  MALTA,
+  NETHERLANDS,
+  NORWAY,
+  POLAND,
+  PORTUGAL,
+  ROMANIA,
+  SLOVAKIA,
+  SLOVENIA,
+  SPAIN,
+  SWEDEN,
+  UNITED_KINGDOM;
 
   /**
    * Determine whether the provided country is a member of the EEA.
@@ -43,7 +43,7 @@ public enum EEAMembers {
    */
   public static boolean isMember(String country) {
     country = country.replaceAll("\\s+", "_"); //$NON-NLS-1$ //$NON-NLS-2$
-    country = country.toLowerCase();
+    country = country.toUpperCase();
     try {
       EEAMembers.valueOf(country);
       return true;

@@ -43,20 +43,16 @@ public class AnswererServiceImpl implements AnswererService {
   @Override
   public PDCResult getResult(String country, DDBItem metadata) {
 
-    // get the public domain calculator for the country
     PublicDomainCalculator pdc = this.calculatorFactory.getCalculator(country);
 
-    // get the category of the cultural good
-    Category category;
-    category = Category.valueOf(metadata.getCategory());
+    // FIXME: HardCoded
+    Category category = Category.LITERARY_OR_ARTISTIC_WORK;
 
-    // get the questionnaire for this cultural good
     Questionnaire questionnaire = pdc.startQuestionnaire(category);
     Question currentQuestion;
     Answerer answerer;
     Answer answer;
 
-    // answer all the questions of the questionnaire
     while (questionnaire.hasQuestions()) {
       currentQuestion = questionnaire.getCurrentQuestion();
       answerer = this.answererFactory.getAnswererForQuestion(currentQuestion);
@@ -64,9 +60,6 @@ public class AnswererServiceImpl implements AnswererService {
       questionnaire.answerCurrentQuestion(answer);
     }
 
-    // build and return the result
-    boolean isPublicDomain = questionnaire.isPublicDomain();
-    PDCResult result = new PDCResult(isPublicDomain, questionnaire.getTrace());
-    return result;
+    return questionnaire.getResult();
   }
 }
