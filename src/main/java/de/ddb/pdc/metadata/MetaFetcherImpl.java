@@ -1,7 +1,9 @@
 package de.ddb.pdc.metadata;
 
+import java.util.Map;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
 /**
  * Implementation of the {@link MetaFetcher} interface.
  */
@@ -15,6 +17,10 @@ public class MetaFetcherImpl implements MetaFetcher {
   private static final String AUTH = "oauth_consumer_key=";
   private static final String SORTROWS = "&sort=RELEVANCE&rows=";
   private static final String QUERY = "&query=";
+  private static final String ITEM = "/items/";
+  private static final String ENTITY = "/entities?query=id:\"";
+  private static final String ENTITY_END = "\"&";
+  private static final String AIP = "/aip?";
 
   private RestTemplate restTemplate;
   private String authKey;
@@ -38,26 +44,17 @@ public class MetaFetcherImpl implements MetaFetcher {
     String modifiedQuery = query.replace(" ", "+");
     String url = APIURL + SEARCH + AUTH + authKey + SORTROWS + maxCount + QUERY
       + modifiedQuery;
-    ResultsOfJSON roj = restTemplate.getForObject(url, ResultsOfJSON.class);
-    return getDDBItems(roj);
+    SearchResults results = restTemplate.getForObject(url, SearchResults.class);
+    return getDDBItems(results);
   }
 
-
-  /**
-   * {@inheritDoc}
-   */
-  public void fetchMetadata(DDBItem ddbItem) throws RestClientException {
-
-  }
-
-  private DDBItem[] getDDBItems(ResultsOfJSON roj) {
-    int maxResults = roj.getResults().size();
-    DDBItem[] ddbItems = new DDBItem[maxResults];
+  private DDBItem[] getDDBItems(SearchResults results) {
+    int numItems = results.getResultItems().size();
+    DDBItem[] ddbItems = new DDBItem[numItems];
 
     int idx = 0;
-    for (SearchResultItem rsi : roj.getResults()) {
+    for (SearchResultItem rsi : results.getResultItems()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
-      System.out.println(rsi.getId());
       ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
       ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
       ddbItem.setImageUrl(URL + rsi.getThumbnail());
@@ -76,7 +73,48 @@ public class MetaFetcherImpl implements MetaFetcher {
    * result items. These are added by the DDB API to simplify highlighting
    * of matching substrings, but we don't need or want them.
    */
-  public static String deleteMatchTags(String string) {
+  private static String deleteMatchTags(String string) {
     return string.replace("<match>", "").replace("</match>", "");
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public DDBItem fetchMetadata(String itemId) throws RestClientException {
+    DDBItem ddbItem = new DDBItem(itemId);
+    String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
+    ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
+    fillDDBItem(ddbItem, result);
+    fetchAuthorMetadata(ddbItem);
+    return ddbItem;
+  }
+
+  private void fillDDBItem(DDBItem item, ItemAipResult result) {
+    RDFItem rdf = result.getRDFItem();
+    item.setPublishedYear(rdf.getPublishYear());
+    item.setInstitution(rdf.getInstitution());
+
+    for (String authorId : rdf.getAuthorIds()) {
+      Author author = new Author(authorId);
+      item.addAuthor(author);
+    }
+  }
+
+  private void fetchAuthorMetadata(DDBItem item) {
+    for (Author author : item.getAuthors()) {
+      String urlEntity = APIURL + ENTITY + author.getDnbId() + ENTITY_END
+          + AUTH + authKey;
+      EntitiesResult result = restTemplate.getForObject(urlEntity,
+          EntitiesResult.class);
+      fillAuthor(author, result);
+    }
+  }
+
+  private void fillAuthor(Author author, EntitiesResult result) {
+    EntitiesResultItem entity = result.getResultItem();
+    author.setName(entity.getName());
+    author.setYearOfBirth(entity.getYearOfBirth());
+    author.setYearOfDeath(entity.getYearOfDeath());
+    author.setPlaceOfBirth(entity.getPlaceOfBirth());
   }
 }

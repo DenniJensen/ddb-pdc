@@ -1,15 +1,15 @@
 package de.ddb.pdc.metadata;
 
-import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-class SearchResultList {
+class EntitiesResultList {
 
-  private ArrayList<SearchResultItem> docs;
+  private ArrayList<EntitiesResultItem> docs;
 
-  public ArrayList<SearchResultItem> getDocs() {
+  public ArrayList<EntitiesResultItem> getDocs() {
     return docs;
   }
-  
 }

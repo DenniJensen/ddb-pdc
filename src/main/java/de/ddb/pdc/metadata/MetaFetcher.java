@@ -22,8 +22,9 @@ public interface MetaFetcher {
    * Fills the passed {@link DDBItem} with all metadata available in the
    * DDB database.
    *
-   * @param ddbItem              item to fill
+   * @param itemId               ID of item to fill
+   * @return                     the item
    * @throws RestClientException if communication with the DDB API fails
    */
-  public void fetchMetadata(DDBItem ddbItem) throws RestClientException;
+  public DDBItem fetchMetadata(String itemId) throws RestClientException;
 }

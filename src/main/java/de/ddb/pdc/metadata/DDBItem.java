@@ -1,11 +1,14 @@
 package de.ddb.pdc.metadata;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * Aggregates the metadata of an item from the DDB.
  */
 public class DDBItem {
   private String id;
-  private String author;
   private String title;
   private String subtitle;
   private String imageUrl;
@@ -13,35 +16,30 @@ public class DDBItem {
   private String category;
   private String type;
 
+  //metadata
+  private ArrayList<Author> authors;
+  private String institute;
+  private Calendar publishedYear = new GregorianCalendar();
+ 
   /**
    * Creates a new DDBItem.
    *
-   * @param id item ID in the DDB databse
+   * @param id item ID in the DDB database
    */
   public DDBItem(String id) {
     this.id = id;
+    this.authors = new ArrayList<Author>();
   }
 
   /**
-   * Returns the item assigned to the item by the DDB.
+   * Returns the item ID assigned to the item by the DDB.
    */
   public String getId() {
     return id;
   }
 
-  void setId(String id) {
+  public void setId(String id) {
     this.id = id;
-  }
-
-  /**
-   * Returns the author of the work represented by the item.
-   */
-  public String getAuthor() {
-    return author;
-  }
-
-  void setAuthor(String author) {
-    this.author = author;
   }
 
   /**
@@ -51,7 +49,7 @@ public class DDBItem {
     return title;
   }
 
-  void setTitle(String title) {
+  public void setTitle(String title) {
     this.title = title;
   }
 
@@ -63,19 +61,19 @@ public class DDBItem {
     return subtitle;
   }
 
-  void setSubtitle(String subtitle) {
+  public void setSubtitle(String subtitle) {
     this.subtitle = subtitle;
   }
 
   /**
-   * Returns the URL of an thumbnail image that can be used when displaying
+   * Returns the URL of a thumbnail image that can be used when displaying
    * the item in a user interface. The URL is always absolute.
    */
   public String getImageUrl() {
     return imageUrl;
   }
 
-  void setImageUrl(String imageUrl) {
+  public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
 
@@ -83,7 +81,7 @@ public class DDBItem {
     return media;
   }
 
-  void setMedia(String media) {
+  public void setMedia(String media) {
     this.media = media;
   }
 
@@ -91,7 +89,7 @@ public class DDBItem {
     return category;
   }
 
-  void setCategory(String category) {
+  public void setCategory(String category) {
     this.category = category;
   }
 
@@ -99,8 +97,32 @@ public class DDBItem {
     return type;
   }
 
-  void setType(String type) {
+  public void setType(String type) {
     this.type = type;
+  }
+
+  public ArrayList<Author> getAuthors() {
+    return authors;
+  }
+
+  public void addAuthor(Author author) {
+    this.authors.add(author);
+  }
+
+  public String getInstitute() {
+    return institute;
+  }
+
+  public void setInstitution(String institute) {
+    this.institute = institute;
+  }
+
+  public Calendar getPublishedYear() {
+    return publishedYear;
+  }
+
+  public void setPublishedYear(int publishedYear) {
+    this.publishedYear.set(Calendar.YEAR, publishedYear);
   }
 
 }

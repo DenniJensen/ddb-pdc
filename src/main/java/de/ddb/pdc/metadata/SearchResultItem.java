@@ -1,5 +1,7 @@
 package de.ddb.pdc.metadata;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -12,6 +14,12 @@ class SearchResultItem {
   private String type;
   private String media;
   private String thumbnail;
+  
+  // for the data about the author
+  private String dateOfBirth;
+  private String dateOfDeath;
+  private ArrayList<String> placeOfBirth;
+  private ArrayList<String> placeOfDeath;
 
   public String getId() {
     return id;
