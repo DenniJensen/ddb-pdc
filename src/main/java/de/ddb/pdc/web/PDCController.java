@@ -1,33 +1,40 @@
 package de.ddb.pdc.web;
 
+import de.ddb.pdc.answerer.AnswererService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.ddb.pdc.core.Answer;
-import de.ddb.pdc.core.Category;
 import de.ddb.pdc.core.PDCResult;
-import de.ddb.pdc.core.PublicDomainCalculator;
-import de.ddb.pdc.core.PublicDomainCalculatorFactory;
-import de.ddb.pdc.core.Questionnaire;
+import de.ddb.pdc.metadata.DDBItem;
+import de.ddb.pdc.metadata.MetaFetcher;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Provides an HTTP interface for public domain calculation.
  */
 @RestController
 public class PDCController {
-  private final PublicDomainCalculatorFactory calculatorFactory;
-
+  
+  @Value("${ddb.country}")
+  private String country;
+  
+  private final AnswererService answererService;
+  private final MetaFetcher metaFetcher;
+  
   /**
    * Creates a PDCController.
    *
-   * @param calculatorFactory factory to receive
-   *                          {@link PublicDomainCalculator} objects from
+   * @param metaFetcher     {@link MetaFetcher} to use for DBB API calls
+   * @param answererService to decide the public domain problem on an item for 
+   *                        a given country
    */
   @Autowired
-  public PDCController(PublicDomainCalculatorFactory calculatorFactory) {
-    this.calculatorFactory = calculatorFactory;
+  public PDCController(MetaFetcher metaFetcher, 
+      AnswererService answererService) {
+    this.metaFetcher = metaFetcher;
+    this.answererService = answererService;
   }
 
   /**
@@ -49,25 +56,24 @@ public class PDCController {
    *                  is true if the answer was answered with "yes" and
    *                  false if the answer was "no".
    *
+   * TODO catch exceptions here to return an appropriate response status to the
+   * client.
+   * 
    * @param itemId DDB item ID
-   * @return
+   * @return PDCResult as JSON
    */
   @RequestMapping("/pdc/{itemId}")
-  public PDCResult calculate(@PathVariable String itemId) throws Exception {
-    // TODO: Replace dummy implementation.
-
-    PublicDomainCalculator calculator =
-        this.calculatorFactory.getCalculator("de");
-    Questionnaire questionnaire =
-        calculator.startQuestionnaire(Category.LITERARY_OR_ARTISTIC_WORK);
-
-    questionnaire.answerCurrentQuestion(Answer.NO);
-    questionnaire.answerCurrentQuestion(Answer.NO);
-    questionnaire.answerCurrentQuestion(Answer.YES);
-
-    PDCResult result =
-        new PDCResult(questionnaire.isPublicDomain(), questionnaire.getTrace());
-
-    return result;
+  public String calculate(@PathVariable String itemId) throws Exception {
+        
+    // create a dbbItem for the requested itemId
+    DDBItem ddbItem = new DDBItem(itemId);
+    
+    // populate the dbbItem
+    metaFetcher.fetchMetadata(ddbItem);
+    
+    // provide the meta data to the answerer service and get the result  
+    PDCResult pdcResult = this.answererService.getResult(this.country,ddbItem);
+        
+    return pdcResult.toJSONString();
   }
 }

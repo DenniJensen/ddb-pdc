@@ -22,7 +22,7 @@ public class AnswererServiceImpl implements AnswererService {
   private final PublicDomainCalculatorFactory calculatorFactory;
 
   private final AnswererFactory answererFactory;
-
+  
   @SuppressWarnings("javadoc")
   @Autowired
   public AnswererServiceImpl(PublicDomainCalculatorFactory calculatorFactory,
