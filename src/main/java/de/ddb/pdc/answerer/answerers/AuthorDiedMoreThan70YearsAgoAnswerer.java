@@ -23,7 +23,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
     for (Author author : metaData.getAuthors()) {
-      authorDeathYear = Math.max(authorDeathYear, author.getDeathYear()
+      authorDeathYear = Math.max(authorDeathYear, author.getYearOfDeath()
           .get(Calendar.YEAR));
     }
     if (currentYear - authorDeathYear > 70) {

@@ -26,9 +26,9 @@ public class AnonymousAauthorAnswererTest {
   @Test
   public void authorNotAnonymousTest() {
     Author author = new Author("test-id");
-    author.setName("Goethe");
+    author.("Goethe");
     DDBItem metadata = new DDBItem("test-id");
-    metadata.setAuthor(author);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AnonymousAauthorAnswerer();
     Answer answer = answerer.getAnswer(metadata);

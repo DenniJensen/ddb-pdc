@@ -20,7 +20,7 @@ public class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
 
     int authorDeathYear = 0;
     for (Author author : metaData.getAuthors()) {
-      authorDeathYear = Math.max(authorDeathYear, author.getDeathYear()
+      authorDeathYear = Math.max(authorDeathYear, author.getYearOfDeath()
           .get(Calendar.YEAR));
     }
 
