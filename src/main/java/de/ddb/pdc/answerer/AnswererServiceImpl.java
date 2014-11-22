@@ -22,8 +22,14 @@ public class AnswererServiceImpl implements AnswererService {
   private final PublicDomainCalculatorFactory calculatorFactory;
 
   private final AnswererFactory answererFactory;
-  
-  @SuppressWarnings("javadoc")
+
+  /**
+   * Creates a new AnswererService that uses the given
+   * {@link PublicDomainCalculatorFactory} and the given
+   * {@link AnswererFactory} to decide the public domain problem.
+   * @param calculatorFactory the public domain calculator factory instance
+   * @param answererFactory the answerer factory instance
+   */
   @Autowired
   public AnswererServiceImpl(PublicDomainCalculatorFactory calculatorFactory,
       AnswererFactory answererFactory) {
