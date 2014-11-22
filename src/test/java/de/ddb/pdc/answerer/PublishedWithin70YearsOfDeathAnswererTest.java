@@ -3,6 +3,7 @@ package de.ddb.pdc.answerer;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
@@ -19,9 +20,11 @@ public class PublishedWithin70YearsOfDeathAnswererTest {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
     metadata.setPublishedYear(currentYear);
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear);
-    metadata.setAuthor(author);
+
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new PublishedWithin70YearsOfDeathAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -34,9 +37,11 @@ public class PublishedWithin70YearsOfDeathAnswererTest {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
     metadata.setPublishedYear(currentYear);
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-70);
-    metadata.setAuthor(author);
+
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-70);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new PublishedWithin70YearsOfDeathAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -49,9 +54,11 @@ public class PublishedWithin70YearsOfDeathAnswererTest {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
     metadata.setPublishedYear(currentYear);
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-71);
-    metadata.setAuthor(author);
+
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-71);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new PublishedWithin70YearsOfDeathAnswerer();
     Answer answer = answerer.getAnswer(metadata);

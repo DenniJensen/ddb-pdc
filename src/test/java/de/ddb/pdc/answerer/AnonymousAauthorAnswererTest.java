@@ -25,8 +25,7 @@ public class AnonymousAauthorAnswererTest {
 
   @Test
   public void authorNotAnonymousTest() {
-    Author author = new Author("test-id");
-    author.("Goethe");
+    Author author = new Author("test-id", "Goethe", null, null, null, null);
     DDBItem metadata = new DDBItem("test-id");
     metadata.addAuthor(author);
 

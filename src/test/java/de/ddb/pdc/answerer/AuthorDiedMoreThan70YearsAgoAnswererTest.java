@@ -3,6 +3,7 @@ package de.ddb.pdc.answerer;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
@@ -18,9 +19,10 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
   public void currentYearTest() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear);
-    metadata.setAuthor(author);
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -32,9 +34,10 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
   public void Year69Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-69);
-    metadata.setAuthor(author);
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-69);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -46,9 +49,10 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
   public void Year70Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-70);
-    metadata.setAuthor(author);
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-70);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -60,9 +64,10 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
   public void Year71Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-71);
-    metadata.setAuthor(author);
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-71);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -74,11 +79,12 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
   public void MultipleAuthorPositiveTest() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-71);
-    metadata.setAuthor(author);
-    metadata.setAuthor(author);
-    metadata.setAuthor(author);
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-71);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
+    metadata.addAuthor(author);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);
@@ -90,12 +96,15 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
   public void MultipleAuthorNegativeTest() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setDeathYear(currentYear-71);
-    metadata.setAuthor(author);
-    author = new Author("test-id");
-    author.setDeathYear(currentYear-69);
-    metadata.setAuthor(author);
+    Calendar death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-71);
+    Author author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
+
+    death = new GregorianCalendar();
+    death.set(Calendar.YEAR, currentYear-69);
+    author = new Author("test-id", null, null, null, death, null);
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
     Answer answer = answerer.getAnswer(metadata);

@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
  */
 public class Author {
 
-  private String dnbId;
+  private final String dnbId;
   private String name;
   private Calendar yearOfBirth = new GregorianCalendar();
   private String placeOfBirth;
@@ -22,6 +22,26 @@ public class Author {
    */
   public Author(String dnbId) {
     this.dnbId = dnbId;
+  }
+
+  /**
+   * Creates an Author and initializes all fields.
+   *
+   * @param dnbId the ID assigned to the author by the DNB
+   * @param name the name of the author
+   * @param yearOfBirth the year the author was born
+   * @param placeOfBirth the place the author was born
+   * @param yearOfDeath the year the author died
+   * @param nationality the nationality of the author
+   */
+  public Author(String dnbId, String name, Calendar yearOfBirth,
+      String placeOfBirth, Calendar yearOfDeath, String nationality) {
+    this.dnbId = dnbId;
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.placeOfBirth = placeOfBirth;
+    this.yearOfDeath = yearOfDeath;
+    this.nationality = nationality;
   }
 
   /**
@@ -50,7 +70,7 @@ public class Author {
   public Calendar getYearOfBirth() {
     return yearOfBirth;
   }
-  
+
   void setYearOfBirth(int yearOfBirth) {
     if (yearOfBirth == -1) {
       this.yearOfBirth = null;
@@ -66,7 +86,7 @@ public class Author {
   public Calendar getYearOfDeath() {
     return yearOfDeath;
   }
-  
+
   void setYearOfDeath(int yearOfDeath) {
     if (yearOfDeath == -1) {
       this.yearOfDeath = null;
@@ -83,7 +103,7 @@ public class Author {
   public String getNationality() {
     return nationality;
   }
-  
+
   void setNationality(String nationality) {
     this.nationality = nationality;
   }

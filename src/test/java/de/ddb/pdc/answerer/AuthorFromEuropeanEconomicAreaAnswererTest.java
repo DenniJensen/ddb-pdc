@@ -18,9 +18,8 @@ public class AuthorFromEuropeanEconomicAreaAnswererTest {
 
     for (EEAMembers member : EEAMembers.values()) {
       DDBItem metadata = new DDBItem("test-id");
-      Author author = new Author("test-id");
-      author.setNationality(member.name());
-      metadata.setAuthor(author);
+      Author author = new Author("test-id", null, null, null, null, member.name());
+      metadata.addAuthor(author);
 
       Answerer answerer = new AuthorFromEuropeanEconomicAreaAnswerer();
       Answer answer = answerer.getAnswer(metadata);
@@ -33,9 +32,8 @@ public class AuthorFromEuropeanEconomicAreaAnswererTest {
   public void notMemberTest() {
 
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setNationality("russia");
-    metadata.setAuthor(author);
+    Author author = new Author("test-id", null, null, null, null, "russia");
+    metadata.addAuthor(author);
 
     Answerer answerer = new AuthorFromEuropeanEconomicAreaAnswerer();
     Answer answer = answerer.getAnswer(metadata);

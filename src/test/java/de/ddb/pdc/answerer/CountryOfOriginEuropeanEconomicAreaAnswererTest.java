@@ -18,9 +18,10 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
 
     for (EEAMembers member : EEAMembers.values()) {
       DDBItem metadata = new DDBItem("test-id");
-      Author author = new Author("test-id");
-      author.setNationality(member.name()); // FIXME wrong nationality
-      metadata.setAuthor(author);
+      // FIXME wrong nationality
+      Author author = new Author("test-id", null, null, null, null,
+          member.name());
+      metadata.addAuthor(author);
 
       Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
       Answer answer = answerer.getAnswer(metadata);
@@ -33,9 +34,10 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
   public void notMemberTest() {
 
     DDBItem metadata = new DDBItem("test-id");
-    Author author = new Author("test-id");
-    author.setNationality("russia"); // FIXME wrong nationality
-    metadata.setAuthor(author);
+    // FIXME wrong nationality
+    Author author = new Author("test-id", null, null, null, null,
+        "russia");
+    metadata.addAuthor(author);
 
     Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
     Answer answer = answerer.getAnswer(metadata);
