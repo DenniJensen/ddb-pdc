@@ -9,7 +9,7 @@ function ddb_pdc_menu() {
 
  
 $items['public-domain-calculator'] = array( // creates a link for the PDC search form
-    'title' => 'Public Domain Calculator', // page title
+    'title' => 'PDC Prototype 1', // page title
     'description' => 'Deutsche Digitale Bibliothek - Public Domain Calculator', // page description
     'page callback' => 'drupal_get_form', // function that creates a (form) content for this page
     'page arguments' => array('ddb_pdc_form'), // function that provides input for the drupal_get_form function - eg. drupal_get_form(ddb_pdc_form);
