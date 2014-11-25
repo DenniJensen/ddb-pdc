@@ -42,6 +42,9 @@ public enum EEAMembers {
    * @return
    */
   public static boolean isMember(String country) {
+    if (country == null) {
+      return false;
+    }
     country = country.replaceAll("\\s+", "_"); //$NON-NLS-1$ //$NON-NLS-2$
     country = country.toUpperCase();
     try {
