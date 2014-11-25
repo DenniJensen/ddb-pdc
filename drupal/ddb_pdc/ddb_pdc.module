@@ -1,24 +1,25 @@
 <?php
 include 'includes/search-results.php';
 include 'includes/result.php';
-
-define("PDC_SERVERADRESS", 'http://localhost:8080');
+$serveradress =  variable_get("ddb_pdc_serveradress", 'http://localhost:8080');
+define("PDC_SERVERADRESS", $serveradress);
 
 function ddb_pdc_menu() {
   $items = array();
 
  
 $items['public-domain-calculator'] = array( // creates a link for the PDC search form
-    'title' => 'Public Domain Calculator', // page title
+    'title' => 'PDC Prototype 1', // page title
     'description' => 'Deutsche Digitale Bibliothek - Public Domain Calculator', // page description
     'page callback' => 'drupal_get_form', // function that creates a (form) content for this page
     'page arguments' => array('ddb_pdc_form'), // function that provides input for the drupal_get_form function - eg. drupal_get_form(ddb_pdc_form);
+	'menu_name' => 'main-menu', // remove this line, to add the link to the Navigation menu
     'access callback' => TRUE // permission
   );
 
 $items['search-results/%'] = // % will be replaced by page arguments
   array(
-    'title' => 'Public Domain Calculator results',
+    'title' => 'Search results',
     'page callback' => 'ddb_pdc_search_results',
 	'access callback' => TRUE,
 	'page arguments' => array(1), // searchterm as argument for the function ddb_pdc_controller
@@ -27,12 +28,21 @@ $items['search-results/%'] = // % will be replaced by page arguments
   
 $items['pdc-result/%'] = // % will be replaced by page arguments
   array(
-    'title' => 'Public Domain Calculator results',
+    'title' => 'Public Domain Calculator result',
     'page callback' => 'ddb_pdc_result',
 	'access callback' => TRUE,
 	'page arguments' => array(1), // searchterm as argument for the function ddb_pdc_controller
 	'type' => MENU_CALLBACK,
   ); 
+  
+$items['admin/config/ddb_pdc'] = array(
+    'title' => 'DDB-PDC Module Configuration',
+    'description' => 'Please set the server adress here',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ddb_pdc_admin'),
+    'access arguments' => array('administer ddb_pdc settings'),
+    'type' => MENU_NORMAL_ITEM,
+   );  
   
   return $items;
 }
@@ -50,7 +60,7 @@ $form['ddb_title'] = array(
  
 $form['submit_button'] = array(
     '#type' => 'submit',
-    '#value' => t('Calculate!'),
+    '#value' => t('Search'),
   );
  
   return $form;
@@ -81,4 +91,17 @@ function ddb_pdc_http_request($request, $inputdata){
    
   return $result;	
   
+}
+function ddb_pdc_admin() {
+  $form = array();
+
+  $form['ddb_pdc_serveradress'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Serveradress'),
+    '#default_value' => variable_get('ddb_pdc_serveradress', 'http://localhost:8080'),
+    '#description' => t("Serveradress, like http://localhost:8080"),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
 }
