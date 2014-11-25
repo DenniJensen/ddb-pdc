@@ -1,14 +1,19 @@
 package de.ddb.pdc.core;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
  * Represents the result of a public-domain calculation for a specific item.
  */
 public class PDCResult {
 
-  private boolean publicDomain;
-  private List<AnsweredQuestion> trace;
+  private final boolean publicDomain;
+  private final List<AnsweredQuestion> trace;
 
   /**
    * Creates a PDCResult.
@@ -37,4 +42,5 @@ public class PDCResult {
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
+ 
 }

@@ -5,7 +5,7 @@ package de.ddb.pdc.core;
  * there is no known public domain calculator implementation available for the
  * requested country or the country code was invalid.
  */
-public class UnsupportedCountryException extends Exception {
+public class UnsupportedCountryException extends RuntimeException {
 
   private static final long serialVersionUID = 5007774657090621544L;
 

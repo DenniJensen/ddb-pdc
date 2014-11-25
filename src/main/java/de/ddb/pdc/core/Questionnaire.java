@@ -23,7 +23,7 @@ public class Questionnaire {
   private final List<AnsweredQuestion> answered;
 
   /**
-   * Creates a new Questionnair from the initial state of the flow chart given
+   * Creates a new Questionnaire from the initial state of the flow chart given
    * as parameter.
    *
    * @param initialState The initial state of the flow chart to use.
@@ -115,5 +115,19 @@ public class Questionnaire {
    */
   public List<AnsweredQuestion> getTrace() {
     return this.answered;
+  }
+
+  /**
+   * Get the result of this questionnaire. The result will contain the public
+   * domain status of the cultural good this questionnaire was answered for
+   * and the trace of all answered questions.
+   *
+   * @return The public domain status and the answered question trace.
+   * @throws IllegalStateException You did not answer all the questions that are
+   *         necessary. You can not get a result yet.
+   */
+  public PDCResult getResult() throws IllegalStateException {
+    PDCResult result = new PDCResult(this.isPublicDomain(), this.getTrace());
+    return result;
   }
 }
