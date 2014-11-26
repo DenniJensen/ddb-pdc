@@ -12,13 +12,13 @@ import de.ddb.pdc.metadata.DDBItem;
  *
  * TODO include month and day in the check.
  */
-public class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
+class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
+  public Answer answerQuestionForItem(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
@@ -33,4 +33,12 @@ public class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     }
   }
 
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return null;
+  }
 }

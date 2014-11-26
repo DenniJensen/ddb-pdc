@@ -1,11 +1,11 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
@@ -18,7 +18,7 @@ public class AnonymousAauthorAnswererTest {
     DDBItem metadata = new DDBItem("test-id");
 
     Answerer answerer = new AnonymousAauthorAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     Assert.assertEquals(Answer.YES, answer);
   }
@@ -30,9 +30,9 @@ public class AnonymousAauthorAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AnonymousAauthorAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
-    assertEquals(Answer.NO, answer);
+    assertEquals(Answer.ASSUMED_NO, answer);
   }
 
 }

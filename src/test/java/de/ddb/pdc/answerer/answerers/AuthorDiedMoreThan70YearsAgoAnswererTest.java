@@ -1,4 +1,4 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.Author;
@@ -25,7 +26,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -40,7 +41,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -55,7 +56,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -70,7 +71,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.YES, answer);
   }
@@ -87,7 +88,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.YES, answer);
   }
@@ -107,7 +108,7 @@ public class AuthorDiedMoreThan70YearsAgoAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new AuthorDiedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }

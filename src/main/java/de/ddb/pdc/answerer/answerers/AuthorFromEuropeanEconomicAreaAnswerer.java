@@ -10,13 +10,13 @@ import de.ddb.pdc.metadata.DDBItem;
 /**
  * Answers the AUTHOR_FROM_EUROPEAN_ECONOMIC_AREA question.
  */
-public class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
+class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
 
   /**
    * Answer whether the author's country is a member of the EEA.
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
+  public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     for (Author author : authors) {
       if (!EEAMembers.isMember(author.getNationality())) {
@@ -26,4 +26,12 @@ public class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
     return Answer.YES;
   }
 
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return null;
+  }
 }

@@ -1,4 +1,4 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
 import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
 import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.answerers.AnswererFactory;
 import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromTriptisAnswerer;

@@ -10,14 +10,22 @@ import de.ddb.pdc.metadata.DDBItem;
  * FIXME Assumption: published year is equal to created year
  * FIXME Therefore answer is hardcodede no
  */
-public class PublishedMoreThan70YearsAfterCreationAnswerer implements Answerer {
+class PublishedMoreThan70YearsAfterCreationAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.NO;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_NO;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return "hardcoded answer no, assumption: published year == created year";
   }
 
 }

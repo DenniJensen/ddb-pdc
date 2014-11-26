@@ -1,25 +1,25 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
 
 @SuppressWarnings({"static-method", "javadoc", "nls"})
-public class AnnouncementByAuthorityAnswererTest {
+public class GovernmentDecisionAnswererTest {
 
   @Test
   public void test() {
     DDBItem metadata = new DDBItem("test-id");
 
-    Answerer answerer = new AnnouncementByAuthorityAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answerer answerer = new GovernmentDecisionAnswerer();
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     // FIXME Hardcoded
-    assertEquals(Answer.NO, answer);
+    assertEquals(Answer.ASSUMED_NO, answer);
   }
 
 }

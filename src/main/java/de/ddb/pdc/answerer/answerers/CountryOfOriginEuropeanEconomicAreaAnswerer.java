@@ -7,7 +7,7 @@ import de.ddb.pdc.metadata.DDBItem;
 /**
  * Answers the COUNTRY_OF_ORIGIN_EEA question.
  */
-public class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
+class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
 
   /**
    * Answer whether the country that the item was created in is a member of the
@@ -17,7 +17,7 @@ public class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
    * FIXME this is mis-using the author-nationality.
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
+  public Answer answerQuestionForItem(DDBItem metaData) {
     // FIXME wrong nationality used here
     String country = metaData.getAuthors().get(0).getNationality();
     if (EEAMembers.isMember(country)) {
@@ -27,4 +27,11 @@ public class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return null;
+  }
 }

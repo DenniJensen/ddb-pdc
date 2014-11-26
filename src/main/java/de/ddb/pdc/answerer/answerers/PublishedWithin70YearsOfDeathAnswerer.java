@@ -10,13 +10,13 @@ import de.ddb.pdc.metadata.DDBItem;
 /**
  * Answers the PUBLISHED_WITHIN_70_YEARS_OF_DEATH question.
  */
-public class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
+class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
+  public Answer answerQuestionForItem(DDBItem metaData) {
 
     int authorDeathYear = 0;
     for (Author author : metaData.getAuthors()) {
@@ -30,6 +30,14 @@ public class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
     } else {
       return Answer.NO;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return null;
   }
 
 }

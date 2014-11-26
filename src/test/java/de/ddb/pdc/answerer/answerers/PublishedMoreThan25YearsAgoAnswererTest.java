@@ -1,4 +1,4 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.answerer.answerers.PublishedMoreThan25YearsAgoAnswerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
@@ -20,7 +21,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
     metadata.setPublishedYear(currentYear);
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -32,7 +33,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
     metadata.setPublishedYear(currentYear-24);
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -44,7 +45,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
     metadata.setPublishedYear(currentYear-25);
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -56,7 +57,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
     metadata.setPublishedYear(currentYear-26);
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.YES, answer);
   }

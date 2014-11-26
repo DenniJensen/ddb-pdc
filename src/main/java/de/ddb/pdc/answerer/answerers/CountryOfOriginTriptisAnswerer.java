@@ -7,7 +7,7 @@ import de.ddb.pdc.metadata.DDBItem;
 /**
  * Answers the COUNTRY_OF_ORIGIN_TRIPTIS question.
  */
-public class CountryOfOriginTriptisAnswerer implements Answerer {
+class CountryOfOriginTriptisAnswerer implements Answerer {
 
   /**
    * Answer whether the country that the item was created in is a member of
@@ -16,8 +16,15 @@ public class CountryOfOriginTriptisAnswerer implements Answerer {
    * TODO add TRIPTIS membership check
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.YES;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_YES;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return "hardcoded answer yes";
+  }
 }

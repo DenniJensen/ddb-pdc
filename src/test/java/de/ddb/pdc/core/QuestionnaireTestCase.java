@@ -1,12 +1,14 @@
 package de.ddb.pdc.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class QuestionnaireTestCase {
-  private PublicDomainCalculator pdc;
-  private Category testCategory;
-  private Question[] yesAnsweredQuestions;
-  private Boolean expectedResult;
+  private final PublicDomainCalculator pdc;
+  private final Category testCategory;
+  private final Question[] yesAnsweredQuestions;
+  private final Boolean expectedResult;
   private Questionnaire questionnaire;
 
   public QuestionnaireTestCase(PublicDomainCalculator pdc, Category testCategory,
@@ -32,14 +34,14 @@ public class QuestionnaireTestCase {
     if (lastElement == -1){
       path = "[all answers NO]";
       allAnswersUsed = true;
-      while (questionnaire.hasQuestions()) {questionnaire.answerCurrentQuestion(Answer.NO);}
+      while (questionnaire.hasQuestionsLeft()) {questionnaire.answerCurrentQuestion(Answer.NO, null);}
     }
 
-    while (questionnaire.hasQuestions()){
+    while (questionnaire.hasQuestionsLeft()){
 
       if (questionnaire.getCurrentQuestion() == yesAnsweredQuestions[i]){
         path= path + questionnaire.getCurrentQuestion() + " ";
-        questionnaire.answerCurrentQuestion(Answer.YES);
+        questionnaire.answerCurrentQuestion(Answer.YES, null);
         if (lastElement > i) {
           i++;
         }
@@ -48,7 +50,7 @@ public class QuestionnaireTestCase {
         }
       }
       else {
-        questionnaire.answerCurrentQuestion(Answer.NO);
+        questionnaire.answerCurrentQuestion(Answer.NO, null);
       }
     }
 

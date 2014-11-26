@@ -1,24 +1,8 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import org.springframework.stereotype.Service;
 
-import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
-import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
-import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
-import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
-import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
-import de.ddb.pdc.answerer.answerers.AuthorFromTriptisAnswerer;
-import de.ddb.pdc.answerer.answerers.AuthorNaturalPersonAnswerer;
-import de.ddb.pdc.answerer.answerers.CountryOfOriginEuropeanEconomicAreaAnswerer;
-import de.ddb.pdc.answerer.answerers.CountryOfOriginTriptisAnswerer;
-import de.ddb.pdc.answerer.answerers.CourtDecisionOrDecisionFormulaAnswerer;
-import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
-import de.ddb.pdc.answerer.answerers.GovernmentDecisionAnswerer;
-import de.ddb.pdc.answerer.answerers.OfficialWorkToBeGenerallyReceivedAnswerer;
-import de.ddb.pdc.answerer.answerers.PublishedMoreThan25YearsAgoAnswerer;
-import de.ddb.pdc.answerer.answerers.PublishedMoreThan70YearsAfterCreationAnswerer;
-import de.ddb.pdc.answerer.answerers.PublishedWithin70YearsOfDeathAnswerer;
-import de.ddb.pdc.answerer.answerers.WorkPublishedOrCommunicatedAnswerer;
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Question;
 
 /**

@@ -11,13 +11,13 @@ import de.ddb.pdc.metadata.DDBItem;
  *
  * FIXME Assumption: published year is equal to created year
  */
-public class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
+class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
+  public Answer answerQuestionForItem(DDBItem metaData) {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     if (currentYear - metaData.getPublishedYear().get(Calendar.YEAR) > 70) {
@@ -25,6 +25,14 @@ public class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
     } else {
       return Answer.NO;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return null;
   }
 
 }

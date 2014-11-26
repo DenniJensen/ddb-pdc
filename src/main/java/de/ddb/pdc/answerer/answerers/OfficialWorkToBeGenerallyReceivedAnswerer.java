@@ -9,14 +9,22 @@ import de.ddb.pdc.metadata.DDBItem;
  *
  * TODO hard coded answer
  */
-public class OfficialWorkToBeGenerallyReceivedAnswerer implements Answerer {
+class OfficialWorkToBeGenerallyReceivedAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.NO;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_NO;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getAssumptionForLastAnswer() {
+    return "hardcoded answer no";
   }
 
 }

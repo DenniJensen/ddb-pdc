@@ -17,6 +17,20 @@ public interface Answerer {
    * @param metaData The metadata to decide the {@link Question} question on.
    * @return answer The answer to the question.
    */
-  public Answer getAnswer(DDBItem metaData);
+  public Answer answerQuestionForItem(DDBItem metaData);
+
+  /**
+   * Gets the assumptions that have been made while answering the question
+   * for the previous item. Not all Questions can be answered based on known
+   * facts of the item that was passed to the answerQuestionForItem method.
+   * If metadata is missing or not clear enough to answer the question,
+   * the answerer can make an assumption to solve the question for this item.
+   * If an assumption was made to answer the question this assumption can be
+   * accessed by calling this method. It will return null if no assumptions have
+   * been made.
+   *
+   * @return null if no assumptions have been made or the assumption itself
+   */
+  public String getAssumptionForLastAnswer();
 
 }

@@ -1,4 +1,4 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.answerer.answerers.PublishedWithin70YearsOfDeathAnswerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.Author;
@@ -27,7 +28,7 @@ public class PublishedWithin70YearsOfDeathAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new PublishedWithin70YearsOfDeathAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.YES, answer);
   }
@@ -44,7 +45,7 @@ public class PublishedWithin70YearsOfDeathAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new PublishedWithin70YearsOfDeathAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.YES, answer);
   }
@@ -61,7 +62,7 @@ public class PublishedWithin70YearsOfDeathAnswererTest {
     metadata.addAuthor(author);
 
     Answerer answerer = new PublishedWithin70YearsOfDeathAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }

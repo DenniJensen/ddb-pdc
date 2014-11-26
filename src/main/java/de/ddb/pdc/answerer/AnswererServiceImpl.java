@@ -3,6 +3,7 @@ package de.ddb.pdc.answerer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.ddb.pdc.answerer.answerers.AnswererFactory;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.Category;
 import de.ddb.pdc.core.PDCResult;
@@ -52,12 +53,14 @@ public class AnswererServiceImpl implements AnswererService {
     Question currentQuestion;
     Answerer answerer;
     Answer answer;
+    String assumption;
 
-    while (questionnaire.hasQuestions()) {
+    while (questionnaire.hasQuestionsLeft()) {
       currentQuestion = questionnaire.getCurrentQuestion();
       answerer = this.answererFactory.getAnswererForQuestion(currentQuestion);
-      answer = answerer.getAnswer(metadata);
-      questionnaire.answerCurrentQuestion(answer);
+      answer = answerer.answerQuestionForItem(metadata);
+      assumption = answerer.getAssumptionForLastAnswer();
+      questionnaire.answerCurrentQuestion(answer, assumption);
     }
 
     return questionnaire.getResult();

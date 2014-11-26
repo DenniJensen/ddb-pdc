@@ -1,9 +1,51 @@
 package de.ddb.pdc.core;
 
+import static de.ddb.pdc.core.Category.BROADCAST;
+import static de.ddb.pdc.core.Category.FIRST_FIXATION_OF_A_FILM;
+import static de.ddb.pdc.core.Category.LITERARY_OR_ARTISTIC_WORK;
+import static de.ddb.pdc.core.Category.NON_ORIGINAL_PHOTOGRAPH;
+import static de.ddb.pdc.core.Category.PERFORMANCE;
+import static de.ddb.pdc.core.Category.PHONOGRAM;
+import static de.ddb.pdc.core.Category.SCIENTIFIC_EDITION_OF_AN_OUT_OF_COPYRIGHT_WORK;
+import static de.ddb.pdc.core.Category.UNORIGINAL_DATABASE;
+import static de.ddb.pdc.core.Question.ACT_OF_PARLIAMENT;
+import static de.ddb.pdc.core.Question.ANNOUNCEMENT_BY_AUTHORITY;
+import static de.ddb.pdc.core.Question.AUTHOR_ANONYMOUS;
+import static de.ddb.pdc.core.Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO;
+import static de.ddb.pdc.core.Question.AUTHOR_FROM_EUROPEAN_ECONOMIC_AREA;
+import static de.ddb.pdc.core.Question.AUTHOR_FROM_TRIPTIS;
+import static de.ddb.pdc.core.Question.AUTHOR_NATURAL_PERSON;
+import static de.ddb.pdc.core.Question.CHANGED_OR_COMPLETED_WITHIN_LAST_15_YEARS;
+import static de.ddb.pdc.core.Question.COUNTRY_OF_ORIGIN_EEA;
+import static de.ddb.pdc.core.Question.COUNTRY_OF_ORIGIN_TRIPTIS;
+import static de.ddb.pdc.core.Question.COUNTRY_REGISTERED_OFFICE_EEA;
+import static de.ddb.pdc.core.Question.COURT_DECISION_OR_DECISION_FORMULA;
+import static de.ddb.pdc.core.Question.CREATED_MORE_THAN_25_YEARS_AGO;
+import static de.ddb.pdc.core.Question.CREATED_MORE_THAN_50_YEARS_AGO;
+import static de.ddb.pdc.core.Question.CREATED_MORE_THAN_70_YEARS_AGO;
+import static de.ddb.pdc.core.Question.FIRST_BROADCAST_25_YEARS;
+import static de.ddb.pdc.core.Question.FIXATION_PUBLISHED_50_YEARS_FROM_PERFORMANCE;
+import static de.ddb.pdc.core.Question.FIXATION_PUBLISHED_MORE_THAN_50_YEARS_AGO;
+import static de.ddb.pdc.core.Question.FORMED_UNDER_LAW_OF_EEA;
+import static de.ddb.pdc.core.Question.GOVERNMENT_DIRECTIVE;
+import static de.ddb.pdc.core.Question.OFFICIAL_WORK_INTENDED_TO_BE_GENERALLY_RECEIVED;
+import static de.ddb.pdc.core.Question.OPERATION_LINKED_TO_ECONOMY_EEA;
+import static de.ddb.pdc.core.Question.PERFORMED_MORE_THAN_50_YEARS_AGO;
+import static de.ddb.pdc.core.Question.PUBLISHED_AFTER_COMPLETION_OR_CHANGE;
+import static de.ddb.pdc.core.Question.PUBLISHED_IN_LAST_15_YEARS;
+import static de.ddb.pdc.core.Question.PUBLISHED_MORE_THAN_25_YEARS_AGO;
+import static de.ddb.pdc.core.Question.PUBLISHED_MORE_THAN_50_YEARS_AGO;
+import static de.ddb.pdc.core.Question.PUBLISHED_MORE_THAN_70_YEARS_AGO;
+import static de.ddb.pdc.core.Question.PUBLISHED_MORE_THAN_70_YEAR_AFTER_CREATION;
+import static de.ddb.pdc.core.Question.PUBLISHED_WITHIN_50_YEAR_AFTER_CREATION;
+import static de.ddb.pdc.core.Question.PUBLISHED_WITHIN_70_YEARS_OF_DEATH;
+import static de.ddb.pdc.core.Question.REGISTERED_IN_EEA;
+import static de.ddb.pdc.core.Question.RIGHTSHOLDER_RESIDENT_EEA;
+import static de.ddb.pdc.core.Question.RIGHT_HOLDER_COMPANY_OR_FIRM;
+import static de.ddb.pdc.core.Question.WORK_PUBLISHED_OR_COMMUNICATED;
+
 import org.junit.Before;
 import org.junit.Test;
-import static de.ddb.pdc.core.Category.*;
-import static de.ddb.pdc.core.Question.*;
 
 public class PublicDomainCalculatorFactoryTest {
   private PublicDomainCalculator pdcDE;
@@ -82,16 +124,16 @@ public class PublicDomainCalculatorFactoryTest {
     new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, true).test();
 
     yesQuestions = new Question[]{AUTHOR_NATURAL_PERSON, AUTHOR_FROM_TRIPTIS};
-    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, false).test();
+    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, null).test();
 
     yesQuestions = new Question[]{AUTHOR_NATURAL_PERSON, COUNTRY_OF_ORIGIN_TRIPTIS};
-    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, false).test();
+    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, null).test();
 
     yesQuestions = new Question[]{AUTHOR_ANONYMOUS, COUNTRY_OF_ORIGIN_TRIPTIS};
-    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, false).test();
+    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, null).test();
 
     yesQuestions = new Question[]{AUTHOR_ANONYMOUS, AUTHOR_FROM_TRIPTIS};
-    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, false).test();
+    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, null).test();
 
     yesQuestions = new Question[]{AUTHOR_ANONYMOUS};
     new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, true).test();
@@ -133,7 +175,7 @@ public class PublicDomainCalculatorFactoryTest {
     new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, false).test();
 
     yesQuestions = new Question[]{};
-    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, false).test();
+    new QuestionnaireTestCase(pdcDE, LITERARY_OR_ARTISTIC_WORK, yesQuestions, null).test();
   }
 
   @Test

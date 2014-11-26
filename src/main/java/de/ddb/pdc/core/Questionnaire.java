@@ -21,6 +21,7 @@ public class Questionnaire {
 
   private FlowChartState state;
   private final List<AnsweredQuestion> answered;
+  private boolean isAborted;
 
   /**
    * Creates a new Questionnaire from the initial state of the flow chart given
@@ -31,6 +32,7 @@ public class Questionnaire {
   public Questionnaire(FlowChartState initialState) {
     this.state = initialState;
     this.answered = new LinkedList<AnsweredQuestion>();
+    this.isAborted = false;
   }
 
   /**
@@ -39,7 +41,10 @@ public class Questionnaire {
    *
    * @return true if more questions need to be answered
    */
-  public boolean hasQuestions() {
+  public boolean hasQuestionsLeft() {
+    if (this.isAborted) {
+      return false;
+    }
     try {
       this.state.getQuestion();
       return true;
@@ -71,14 +76,21 @@ public class Questionnaire {
    * will be thrown because there is no question to answer.
    *
    * @param answer The answer to the current question
+   * @param assumption Assumptions made to answer the question
    * @throws NoSuchElementException There is no question that you can answer
    */
-  public void answerCurrentQuestion(Answer answer)
+  public void answerCurrentQuestion(Answer answer, String assumption)
       throws NoSuchElementException {
+
     try {
       Question question = this.state.getQuestion();
-      this.state = this.state.getNextState(answer);
       this.answered.add(new AnsweredQuestion(question, answer));
+
+      if (answer == Answer.UNKNOWN) {
+        this.isAborted = true;
+      } else {
+        this.state = this.state.getNextState(answer);
+      }
     } catch (IllegalStateException e) {
       throw new NoSuchElementException();
     }
@@ -91,16 +103,20 @@ public class Questionnaire {
    * not answer all questions, an IllegalStateException will be thrown. Make
    * sure that hasNextQuestion returns false before calling this method.
    *
-   * @return true if the good falls into the public domain
+   * @return true if the good falls into the public domain, false if it does
+   *         not, and null if the decision can not be made.
    * @throws IllegalStateException You did not answer all the questions that are
    *         necessary
    */
-  public boolean isPublicDomain() throws IllegalStateException {
+  public Boolean isPublicDomain() throws IllegalStateException {
+    if (this.isAborted) {
+      return null;
+    }
     if (this.state.hasResult()) {
       try {
         return this.state.getResult();
       } catch (CannotCalculateException e) {
-        return false;
+        return null;
       }
     }
     throw new IllegalStateException();
