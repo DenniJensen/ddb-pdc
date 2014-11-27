@@ -7,7 +7,7 @@ import de.ddb.pdc.metadata.DDBItem;
 /**
  * Answers the AUTHOR_ANONYMOUS question.
  */
-class AnonymousAauthorAnswerer implements Answerer {
+class AnonymousAuthorAnswerer implements Answerer {
 
   private String assumption;
 
@@ -19,7 +19,7 @@ class AnonymousAauthorAnswerer implements Answerer {
   @SuppressWarnings("javadoc")
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
-    if (metaData.getAuthors().size() == 0) {
+    if (metaData.getAuthors().isEmpty()) {
       this.assumption = null;
       return Answer.YES;
     } else {
