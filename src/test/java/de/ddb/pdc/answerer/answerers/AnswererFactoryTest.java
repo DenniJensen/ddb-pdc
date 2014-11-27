@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import de.ddb.pdc.answerer.answerers.ActOfParliamentAnswerer;
 import de.ddb.pdc.answerer.answerers.AnnouncementByAuthorityAnswerer;
-import de.ddb.pdc.answerer.answerers.AnonymousAauthorAnswerer;
+import de.ddb.pdc.answerer.answerers.AnonymousAuthorAnswerer;
 import de.ddb.pdc.answerer.answerers.AnswererFactory;
 import de.ddb.pdc.answerer.answerers.AuthorDiedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.answerer.answerers.AuthorFromEuropeanEconomicAreaAnswerer;
@@ -31,9 +31,8 @@ public class AnswererFactoryTest {
   public void test() {
     AnswererFactory factory = new AnswererFactory();
 
-    assertTrue(
-        factory.getAnswererForQuestion(Question.AUTHOR_ANONYMOUS)
-        instanceof AnonymousAauthorAnswerer);
+    assertTrue(factory.getAnswererForQuestion(Question.AUTHOR_ANONYMOUS)
+        instanceof AnonymousAuthorAnswerer);
 
     assertTrue(
         factory.getAnswererForQuestion(Question.ANNOUNCEMENT_BY_AUTHORITY)

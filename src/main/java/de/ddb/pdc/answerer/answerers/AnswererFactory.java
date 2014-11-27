@@ -26,7 +26,7 @@ public class AnswererFactory {
       case ANNOUNCEMENT_BY_AUTHORITY:
         return new AnnouncementByAuthorityAnswerer();
       case AUTHOR_ANONYMOUS:
-        return new AnonymousAauthorAnswerer();
+        return new AnonymousAuthorAnswerer();
       case AUTHOR_DIED_MORE_THAN_70_YEARS_AGO:
         return new AuthorDiedMoreThan70YearsAgoAnswerer();
       case AUTHOR_FROM_EUROPEAN_ECONOMIC_AREA:

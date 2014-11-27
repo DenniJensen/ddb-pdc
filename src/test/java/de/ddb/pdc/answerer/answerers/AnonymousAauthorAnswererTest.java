@@ -17,7 +17,7 @@ public class AnonymousAauthorAnswererTest {
   public void authorAnonymousTest() {
     DDBItem metadata = new DDBItem("test-id");
 
-    Answerer answerer = new AnonymousAauthorAnswerer();
+    Answerer answerer = new AnonymousAuthorAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
 
     Assert.assertEquals(Answer.YES, answer);
@@ -29,7 +29,7 @@ public class AnonymousAauthorAnswererTest {
     DDBItem metadata = new DDBItem("test-id");
     metadata.addAuthor(author);
 
-    Answerer answerer = new AnonymousAauthorAnswerer();
+    Answerer answerer = new AnonymousAuthorAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.ASSUMED_NO, answer);
