@@ -18,6 +18,9 @@ class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
+    if (! metaData.getPublishedYear().isSet(Calendar.YEAR)) {
+      return Answer.UNKNOWN;
+    }
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     if (currentYear - metaData.getPublishedYear().get(Calendar.YEAR) > 70) {

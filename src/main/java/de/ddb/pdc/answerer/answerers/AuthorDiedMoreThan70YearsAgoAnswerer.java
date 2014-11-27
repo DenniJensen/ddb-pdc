@@ -6,6 +6,7 @@ import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
+import java.util.List;
 
 /**
  * Answers the AUTHOR_DIED_MORE_THAN_70_YEARS_AGO question.
@@ -19,10 +20,14 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
+    if (metaData.getAuthors().isEmpty()) {
+      return Answer.UNKNOWN;
+    } 
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
-    for (Author author : metaData.getAuthors()) {
+    List<Author> authors = metaData.getAuthors();
+    for (Author author : authors) {
       authorDeathYear = Math.max(authorDeathYear, author.getYearOfDeath()
           .get(Calendar.YEAR));
     }
@@ -30,7 +35,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
       return Answer.YES;
     } else {
       return Answer.NO;
-    }
+    }    
   }
 
 

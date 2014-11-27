@@ -17,7 +17,11 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
-
+    if ((metaData.getAuthors().isEmpty())
+        || (! metaData.getPublishedYear().isSet(Calendar.YEAR))) {
+      return Answer.UNKNOWN;
+    }
+    
     int authorDeathYear = 0;
     for (Author author : metaData.getAuthors()) {
       authorDeathYear = Math.max(authorDeathYear, author.getYearOfDeath()

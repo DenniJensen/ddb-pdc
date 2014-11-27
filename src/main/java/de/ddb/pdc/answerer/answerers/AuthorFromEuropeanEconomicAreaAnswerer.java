@@ -17,6 +17,9 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
+    if (metaData.getAuthors().isEmpty()) {
+      return Answer.UNKNOWN;
+    } 
     List<Author> authors = metaData.getAuthors();
     for (Author author : authors) {
       if (!EEAMembers.isMember(author.getNationality())) {

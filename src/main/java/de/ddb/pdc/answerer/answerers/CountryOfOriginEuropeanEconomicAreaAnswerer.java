@@ -19,6 +19,9 @@ class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
     // FIXME wrong nationality used here
+    if (metaData.getAuthors().isEmpty()) {
+      return Answer.UNKNOWN;
+    }
     String country = metaData.getAuthors().get(0).getNationality();
     if (EEAMembers.isMember(country)) {
       return Answer.YES;
