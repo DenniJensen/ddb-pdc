@@ -10,18 +10,7 @@ public class AnsweredQuestion {
   private final Answer answer;
 
   private final String note;
-
-  /**
-   * Creates a new answered question. Pass the question and the answer to this
-   * question as arguments.
-   *
-   * @param question The question
-   * @param answer The answer to the question
-   */
-  public AnsweredQuestion(Question question, Answer answer) {
-    this(question, answer, null);
-  }
-
+  
   /**
    * Creates a new answered question. Pass the question and the answer to this
    * question as arguments. Additionally specify a note if necessary to add
