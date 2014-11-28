@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
+/**
+ * Class for the entity items of the entity json result
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class EntitiesResultItem {
 
@@ -19,23 +22,39 @@ class EntitiesResultItem {
     return preferredName;
   }
 
+  /**
+   * @return  a 4 digit int if a year is found or -1
+   */
   public int getYearOfBirth() {
     if (dateOfBirth == null) {
       return -1;
     }
-    String[] splitDob = dateOfBirth.split(" ");
 
-    return Integer.parseInt(splitDob[splitDob.length - 1]);
+    try {
+      return Integer.parseInt(Utility.useRegex(dateOfBirth,"\\d{4}"));
+    } catch (NumberFormatException e) {
+      return -1;
+    }
   }
 
+  /**
+   * @return  a 4 digit int if a year is found or -1
+   */
   public int getYearOfDeath() {
     if (dateOfDeath == null) {
       return -1;
     }
-    String[] splitDod = dateOfDeath.split(" ");
-    return Integer.parseInt(splitDod[splitDod.length - 1]);
+
+    try {
+      return Integer.parseInt(Utility.useRegex(dateOfDeath,"\\d{4}"));
+    } catch (NumberFormatException e) {
+      return -1;
+    }
   }
 
+  /**
+   * @return the first entry where the author is born or null if empty
+   */
   public String getPlaceOfBirth() {
     if (placeOfBirth != null) {
       return placeOfBirth.get(0);
