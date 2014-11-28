@@ -94,8 +94,10 @@ public class MetaFetcherImpl implements MetaFetcher {
     DDBItem ddbItem = new DDBItem(itemId);
     String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
     ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
-    fillDDBItem(ddbItem, result);
-    fetchAuthorMetadata(ddbItem);
+    if ( result.getRDFItem() != null) {
+      fillDDBItem(ddbItem, result);
+      fetchAuthorMetadata(ddbItem);
+    }
     return ddbItem;
   }
 
