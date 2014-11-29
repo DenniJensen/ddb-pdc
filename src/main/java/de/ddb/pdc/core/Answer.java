@@ -59,4 +59,32 @@ public enum Answer {
   public int toInteger() {
     return this.value;
   }
+
+  /**
+   * Converts the answer into a string for the json serialization.
+   * NO = "no", YES = "yes", ASSUMED_NO = "assumed no",
+   * ASSUMED_YES = "assumed yes", UNKNOWN = "unknown"
+   *
+   * @return the string conversion of the enum
+   */
+  @Override
+  @JsonValue
+  public String toString() {
+    if (this == YES) {
+      return "yes";
+    }
+    if (this == NO) {
+      return "no";
+    }
+    if (this == ASSUMED_YES) {
+      return "assumed yes";
+    }
+    if (this == ASSUMED_NO) {
+      return "assumed no";
+    }
+    if (this == UNKNOWN) {
+      return "unknown";
+    }
+    return "";
+  }
 }

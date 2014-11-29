@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 public class Questionnaire {
 
   private FlowChartState state;
-  private final List<AnsweredQuestion> answered;
+  private final List<AnsweredQuestion> answeredQuestions;
   private boolean isAborted;
 
   /**
@@ -31,7 +31,7 @@ public class Questionnaire {
    */
   public Questionnaire(FlowChartState initialState) {
     this.state = initialState;
-    this.answered = new LinkedList<AnsweredQuestion>();
+    this.answeredQuestions = new LinkedList<AnsweredQuestion>();
     this.isAborted = false;
   }
 
@@ -84,7 +84,7 @@ public class Questionnaire {
 
     try {
       Question question = this.state.getQuestion();
-      this.answered.add(new AnsweredQuestion(question, answer, assumption));
+      this.answeredQuestions.add(new AnsweredQuestion(question, answer, assumption));
 
       if (answer == Answer.UNKNOWN) {
         this.isAborted = true;
@@ -130,7 +130,7 @@ public class Questionnaire {
    * @return List of answered questions
    */
   public List<AnsweredQuestion> getTrace() {
-    return this.answered;
+    return this.answeredQuestions;
   }
 
   /**
