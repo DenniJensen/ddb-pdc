@@ -30,17 +30,16 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
     for (Author author : authors) {
-      Calendar deathCalendar = author.getYearOfDeath();
-      if (deathCalendar == null) {
-        this.assumption = "Not all death dates known. Will assume some authors"
+      Calendar deathYearCalendar = author.getYearOfDeath();
+      if (deathYearCalendar == null) {
+        this.assumption = "Not all death dates known. Will assume some authors "
             + "are still living.";
         return Answer.ASSUMED_NO;
       }
 
       authorDeathYear = Math.max(authorDeathYear,
-          deathCalendar.get(Calendar.YEAR));
+          deathYearCalendar.get(Calendar.YEAR));
     }
-    this.assumption = null;
     if (currentYear - authorDeathYear > 70) {
       return Answer.YES;
     } else {
