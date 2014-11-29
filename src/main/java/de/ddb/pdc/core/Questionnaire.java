@@ -84,7 +84,8 @@ public class Questionnaire {
 
     try {
       Question question = this.state.getQuestion();
-      this.answeredQuestions.add(new AnsweredQuestion(question, answer, assumption));
+      this.answeredQuestions.add(
+          new AnsweredQuestion(question, answer, assumption));
 
       if (answer == Answer.UNKNOWN) {
         this.isAborted = true;
