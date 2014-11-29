@@ -1,53 +1,53 @@
 package de.ddb.pdc.core;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import de.ddb.pdc.core.answerers.AnswererFactory;
+import de.ddb.pdc.metadata.DDBItem;
 
 /**
- * Implementation of a {@link PublicDomainCalculator}
+ * Run the PDC for test data defined in DDBItem.
+ * This class implements the AnswererService interface
  */
+@Service
 public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
+  private final QuestionnaireFactory questionnaireFactory;
+  private final AnswererFactory answererFactory;
 
   /**
-   * The country specific flow chart.
-   */
-  private final FlowChartState flowchart;
-
-  /**
-   * Create a new Public Domain Calculator that decides the public domain
-   * problem based on the flow chart given.
+   * Creates a new PublicDomainCalculatorImpl.
    *
-   * @param flowchart The country specific flow chart.
+   * @param questionnaireFactory {@link QuestionnaireFactory} to use
+   * @param answererFactory {@link QuestionnaireFactory}
    */
-  public PublicDomainCalculatorImpl(FlowChartState flowchart) {
-    this.flowchart = flowchart;
+  @Autowired
+  public PublicDomainCalculatorImpl(
+      QuestionnaireFactory questionnaireFactory,
+      AnswererFactory answererFactory) {
+    this.questionnaireFactory = questionnaireFactory;
+    this.answererFactory = answererFactory;
   }
 
   /**
-   * @{inheritDoc}
+   * {@inheritDoc}
    */
   @Override
-  public Set<Category> getSupportedCategories() {
-    Set<Category> supportedCategories = new HashSet<Category>();
-    for (Category category : Category.values()) {
-      try {
-        this.flowchart.getInitialState(category);
-        supportedCategories.add(category);
-      } catch (UnsupportedCategoryException e) {
-        // an unsupported category will not be added to the set of supported
-        // categories
-      }
+  public PDCResult calculate(String country, DDBItem metadata) {
+    // FIXME: HardCoded
+    Category category = Category.LITERARY_OR_ARTISTIC_WORK;
+    Questionnaire questionnaire = questionnaireFactory.build(country, category);
+    answerQuestions(questionnaire, metadata);
+    return questionnaire.getResult();
+ }
+
+  private void answerQuestions(Questionnaire questionnaire, DDBItem metadata) {
+    while (questionnaire.hasQuestionsLeft()) {
+      Question question = questionnaire.getCurrentQuestion();
+      Answerer answerer = answererFactory.getAnswererForQuestion(question);
+      Answer answer = answerer.answerQuestionForItem(metadata);
+      String assumption = answerer.getAssumptionForLastAnswer();
+      questionnaire.answerCurrentQuestion(answer, assumption);
     }
-    return supportedCategories;
   }
-
-  /**
-   * @{inheritDoc}
-   */
-  @Override
-  public Questionnaire startQuestionnaire(Category category)
-      throws UnsupportedCategoryException {
-    return new Questionnaire(this.flowchart.getInitialState(category));
-  }
-
 }
