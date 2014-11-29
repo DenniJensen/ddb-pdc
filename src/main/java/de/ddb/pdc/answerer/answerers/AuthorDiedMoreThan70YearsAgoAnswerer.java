@@ -40,6 +40,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
       authorDeathYear = Math.max(authorDeathYear,
           deathYearCalendar.get(Calendar.YEAR));
     }
+    this.assumption = null;
     if (currentYear - authorDeathYear > 70) {
       return Answer.YES;
     } else {
