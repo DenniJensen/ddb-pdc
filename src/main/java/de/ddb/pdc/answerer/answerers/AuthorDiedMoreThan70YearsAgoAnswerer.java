@@ -1,12 +1,12 @@
 package de.ddb.pdc.answerer.answerers;
 
 import java.util.Calendar;
+import java.util.List;
 
 import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
-import java.util.List;
 
 /**
  * Answers the AUTHOR_DIED_MORE_THAN_70_YEARS_AGO question.
@@ -15,27 +15,37 @@ import java.util.List;
  */
 class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
 
+  private String assumption;
+
   /**
    * {@inheritDoc}
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
-    if (metaData.getAuthors().isEmpty()) {
+    List<Author> authors = metaData.getAuthors();
+    if (authors == null || authors.isEmpty()) {
       return Answer.UNKNOWN;
-    } 
+    }
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
-    List<Author> authors = metaData.getAuthors();
     for (Author author : authors) {
-      authorDeathYear = Math.max(authorDeathYear, author.getYearOfDeath()
-          .get(Calendar.YEAR));
+      Calendar deathCalendar = author.getYearOfDeath();
+      if (deathCalendar == null) {
+        this.assumption = "Not all death dates known. Will assume some authors"
+            + "are still living.";
+        return Answer.ASSUMED_NO;
+      }
+
+      authorDeathYear = Math.max(authorDeathYear,
+          deathCalendar.get(Calendar.YEAR));
     }
+    this.assumption = null;
     if (currentYear - authorDeathYear > 70) {
       return Answer.YES;
     } else {
       return Answer.NO;
-    }    
+    }
   }
 
 
@@ -44,6 +54,6 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
    */
   @Override
   public String getAssumptionForLastAnswer() {
-    return null;
+    return this.assumption;
   }
 }

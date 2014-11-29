@@ -11,7 +11,7 @@ import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 @SuppressWarnings({"static-method", "javadoc", "nls"})
-public class AnonymousAauthorAnswererTest {
+public class AnonymousAuthorAnswererTest {
 
   @Test
   public void authorAnonymousTest() {
@@ -32,7 +32,7 @@ public class AnonymousAauthorAnswererTest {
     Answerer answerer = new AnonymousAuthorAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
 
-    assertEquals(Answer.ASSUMED_NO, answer);
+    assertEquals(Answer.NO, answer);
   }
 
 }

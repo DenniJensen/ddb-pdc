@@ -1,7 +1,10 @@
 package de.ddb.pdc.answerer.answerers;
 
+import java.util.List;
+
 import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
@@ -19,10 +22,12 @@ class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
     // FIXME wrong nationality used here
-    if (metaData.getAuthors().isEmpty()) {
+    List<Author> authors = metaData.getAuthors();
+    if (authors == null || authors.isEmpty()) {
       return Answer.UNKNOWN;
     }
-    String country = metaData.getAuthors().get(0).getNationality();
+    // FIXME only nationality of first author used
+    String country = authors.get(0).getNationality();
     if (EEAMembers.isMember(country)) {
       return Answer.YES;
     } else {

@@ -17,10 +17,10 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
-    if (metaData.getAuthors().isEmpty()) {
-      return Answer.UNKNOWN;
-    } 
     List<Author> authors = metaData.getAuthors();
+    if (authors == null || authors.isEmpty()) {
+      return Answer.UNKNOWN;
+    }
     for (Author author : authors) {
       if (!EEAMembers.isMember(author.getNationality())) {
         return Answer.NO;
