@@ -39,7 +39,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
     Questionnaire questionnaire = questionnaireFactory.build(country, category);
     answerQuestions(questionnaire, metadata);
     return questionnaire.getResult();
- }
+  }
 
   private void answerQuestions(Questionnaire questionnaire, DDBItem metadata) {
     while (questionnaire.hasQuestionsLeft()) {
