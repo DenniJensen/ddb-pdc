@@ -10,12 +10,12 @@ public enum Answer {
   /**
    * Negative answer to a question.
    */
-  NO(0),
+  NO,
 
   /**
    * Positive answer to a question.
    */
-  YES(1),
+  YES,
 
   /**
    * The answer to a question is no based on an assumption made by the public
@@ -23,7 +23,7 @@ public enum Answer {
    * {@link AnsweredQuestion} of the question trace to learn more about the
    * assumption that was made.
    */
-  ASSUMED_NO(2),
+  ASSUMED_NO,
 
   /**
    * The answer to a question is yes based on an assumption made by the public
@@ -31,21 +31,12 @@ public enum Answer {
    * {@link AnsweredQuestion} of the question trace to learn more about the
    * assumption that was made.
    */
-  ASSUMED_YES(3),
+  ASSUMED_YES,
 
   /**
-   * The answer to a question is yes based on an assumption made by the public
-   * domain calculator. Check the note inside the corresponding
-   * {@link AnsweredQuestion} of the question trace to learn more about the
-   * assumption that was made.
+   * The answer to a question is unknown.
    */
-  UNKNOWN(4);
-
-  private int value;
-
-  private Answer(int value) {
-    this.value = value;
-  }
+  UNKNOWN;
 
   /**
    * Converts the answer to an integer used for the json serialization.
@@ -57,7 +48,12 @@ public enum Answer {
    */
   @JsonValue
   public int toInteger() {
-    return this.value;
+    for (int i = 0; i < Answer.values().length; i++) {
+      if (Answer.values()[i] == this) {
+        return i;
+      }
+    }
+    return -1; // this should never happen
   }
 
   /**
@@ -70,21 +66,19 @@ public enum Answer {
   @Override
   @JsonValue
   public String toString() {
-    if (this == YES) {
-      return "yes";
+    switch(this) {
+      case YES:
+        return "yes";
+      case ASSUMED_YES:
+        return "assumed yes";
+      case NO:
+        return "no";
+      case ASSUMED_NO:
+        return "assumed no";
+      case UNKNOWN:
+        return "unknown";
+      default:
+        return "";
     }
-    if (this == NO) {
-      return "no";
-    }
-    if (this == ASSUMED_YES) {
-      return "assumed yes";
-    }
-    if (this == ASSUMED_NO) {
-      return "assumed no";
-    }
-    if (this == UNKNOWN) {
-      return "unknown";
-    }
-    return "";
   }
 }
