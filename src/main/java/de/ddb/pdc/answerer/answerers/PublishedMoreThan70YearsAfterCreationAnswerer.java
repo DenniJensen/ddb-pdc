@@ -24,7 +24,7 @@ class PublishedMoreThan70YearsAfterCreationAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
+  public String getNoteForLastQuestion() {
     return "hardcoded answer no, assumption: published year == created year";
   }
 

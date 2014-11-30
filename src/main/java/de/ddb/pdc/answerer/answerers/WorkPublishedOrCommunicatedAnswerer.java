@@ -23,7 +23,7 @@ class WorkPublishedOrCommunicatedAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
+  public String getNoteForLastQuestion() {
     return "the work is known, therefore it is assumed to be published";
   }
 

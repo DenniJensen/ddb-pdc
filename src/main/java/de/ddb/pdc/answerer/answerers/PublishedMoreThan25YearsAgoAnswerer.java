@@ -11,6 +11,8 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class PublishedMoreThan25YearsAgoAnswerer implements Answerer {
 
+  private String note;
+
   /**
    * {@inheritDoc}
    */
@@ -23,6 +25,8 @@ class PublishedMoreThan25YearsAgoAnswerer implements Answerer {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     if (currentYear - publishedYear.get(Calendar.YEAR) > 25) {
+      this.note = "The work was published in "
+          + publishedYear.get(Calendar.YEAR);
       return Answer.YES;
     } else {
       return Answer.NO;
@@ -33,7 +37,7 @@ class PublishedMoreThan25YearsAgoAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
-    return null;
+  public String getNoteForLastQuestion() {
+    return this.note;
   }
 }

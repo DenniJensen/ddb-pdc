@@ -59,7 +59,7 @@ public class AnswererServiceImpl implements AnswererService {
       currentQuestion = questionnaire.getCurrentQuestion();
       answerer = this.answererFactory.getAnswererForQuestion(currentQuestion);
       answer = answerer.answerQuestionForItem(metadata);
-      assumption = answerer.getAssumptionForLastAnswer();
+      assumption = answerer.getNoteForLastQuestion();
       questionnaire.answerCurrentQuestion(answer, assumption);
     }
 

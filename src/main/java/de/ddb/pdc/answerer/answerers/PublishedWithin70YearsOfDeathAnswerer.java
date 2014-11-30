@@ -13,7 +13,7 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
 
-  private String assumption;
+  private String note;
 
   /**
    * {@inheritDoc}
@@ -31,7 +31,7 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
     for (Author author : authors) {
       if (author.getYearOfDeath() == null
           || !author.getYearOfDeath().isSet(Calendar.YEAR)) {
-        this.assumption = "Not all death years of all authors known. Assuming "
+        this.note = "Not all death years of all authors known. Assuming "
             + "at least one author is still alive";
         return Answer.ASSUMED_NO;
       }
@@ -39,7 +39,7 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
       authorDeathYear = Math.max(authorDeathYear, theYearOfDeath);
     }
 
-    this.assumption = null;
+    this.note = null;
 
     if (metaData.getPublishedYear() == null
         || !metaData.getPublishedYear().isSet(Calendar.YEAR)) {
@@ -58,8 +58,8 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
-    return this.assumption;
+  public String getNoteForLastQuestion() {
+    return this.note;
   }
 
 }
