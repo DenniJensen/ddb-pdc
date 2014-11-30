@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.ddb.pdc.answerer.AnswererService;
+import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
@@ -20,21 +20,21 @@ public class PDCController {
   @Value("${ddb.country:de}")
   private String country;
 
-  private final AnswererService answererService;
+  private final PublicDomainCalculator calculator;
   private final MetaFetcher metaFetcher;
 
   /**
    * Creates a PDCController.
    *
    * @param metaFetcher     {@link MetaFetcher} to use for DBB API calls
-   * @param answererService to decide the public domain problem on an item for
+   * @param calculator to decide the public domain problem on an item for
    *                        a given country
    */
   @Autowired
   public PDCController(MetaFetcher metaFetcher,
-      AnswererService answererService) {
+      PublicDomainCalculator calculator) {
     this.metaFetcher = metaFetcher;
-    this.answererService = answererService;
+    this.calculator = calculator;
   }
 
   /**
@@ -69,7 +69,7 @@ public class PDCController {
     DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
 
     // provide the meta data to the answerer service and get the result
-    PDCResult pdcResult = this.answererService.getResult(this.country, ddbItem);
+    PDCResult pdcResult = this.calculator.calculate(this.country, ddbItem);
 
     return pdcResult;
   }
