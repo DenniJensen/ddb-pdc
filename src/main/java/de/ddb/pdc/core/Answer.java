@@ -48,9 +48,9 @@ public enum Answer {
    */
   @JsonValue
   public int toInteger() {
-    for (int i = 0; i < Answer.values().length; i++) {
-      if (Answer.values()[i] == this) {
-        return i;
+    for (int index = 0; index < Answer.values().length; index++) {
+      if (Answer.values()[index] == this) {
+        return index;
       }
     }
     return -1; // this should never happen
