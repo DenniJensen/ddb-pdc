@@ -3,7 +3,7 @@
  */
 package de.ddb.pdc.web;
 
-import de.ddb.pdc.answerer.AnswererService;
+import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
@@ -23,11 +23,11 @@ public class PDCControllerTest {
     DDBItem ddbItemfromMetaFetcher = new DDBItem("123");
     Mockito.when(mfetcher.fetchMetadata("123")).thenReturn(ddbItemfromMetaFetcher);
 
-    AnswererService ansService = Mockito.mock(AnswererService.class);
+    PublicDomainCalculator ansService = Mockito.mock(PublicDomainCalculator.class);
     List<AnsweredQuestion> trace = new ArrayList<AnsweredQuestion>();
     PDCResult pdcResult = new PDCResult(true,trace);
     // country is null
-    Mockito.when(ansService.getResult(null, mfetcher.fetchMetadata("123"))).thenReturn(pdcResult);
+    Mockito.when(ansService.calculate(null, mfetcher.fetchMetadata("123"))).thenReturn(pdcResult);
 
     PDCController pdcController = new PDCController(mfetcher, ansService);
 
