@@ -9,14 +9,22 @@ import de.ddb.pdc.metadata.DDBItem;
  *
  * TODO hard coded answer.
  */
-public class WorkPublishedOrCommunicatedAnswerer implements Answerer {
+class WorkPublishedOrCommunicatedAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.YES;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_YES;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getNoteForLastQuestion() {
+    return "the work is known, therefore it is assumed to be published";
   }
 
 }

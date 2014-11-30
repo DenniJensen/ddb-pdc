@@ -6,19 +6,27 @@ import de.ddb.pdc.metadata.DDBItem;
 
 /**
  * Answers the AUTHOR_FROM_TRIPTIS question.
- * 
+ *
  */
-public class AuthorFromTriptisAnswerer implements Answerer {
+class AuthorFromTriptisAnswerer implements Answerer {
 
   /**
    * Answers whether the country that the author originates from is a member of
    * TRIPTIS.
-   * 
+   *
    * TODO add TRIPTIS membership check
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.YES;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_YES;
   }
-  
+
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getNoteForLastQuestion() {
+    return "Hardcoded answer yes";
+  }
 }

@@ -9,14 +9,21 @@ import de.ddb.pdc.metadata.DDBItem;
  *
  * FIXME hard coded answer
  */
-public class ActOfParliamentAnswerer implements Answerer {
+class ActOfParliamentAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.NO;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_NO;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getNoteForLastQuestion() {
+    return "Hardcoded answer. The answer will always be no.";
+  }
 }

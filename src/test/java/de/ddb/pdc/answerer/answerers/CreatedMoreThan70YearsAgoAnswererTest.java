@@ -1,4 +1,4 @@
-package de.ddb.pdc.answerer;
+package de.ddb.pdc.answerer.answerers;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
+import de.ddb.pdc.answerer.Answerer;
 import de.ddb.pdc.answerer.answerers.CreatedMoreThan70YearsAgoAnswerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
@@ -20,7 +21,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
     metadata.setPublishedYear(currentYear);
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -33,7 +34,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
 
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -46,7 +47,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
 
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.NO, answer);
   }
@@ -59,7 +60,7 @@ public class CreatedMoreThan70YearsAgoAnswererTest {
 
 
     Answerer answerer = new CreatedMoreThan70YearsAgoAnswerer();
-    Answer answer = answerer.getAnswer(metadata);
+    Answer answer = answerer.answerQuestionForItem(metadata);
 
     assertEquals(Answer.YES, answer);
   }

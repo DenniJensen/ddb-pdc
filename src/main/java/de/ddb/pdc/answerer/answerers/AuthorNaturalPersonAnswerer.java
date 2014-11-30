@@ -9,14 +9,22 @@ import de.ddb.pdc.metadata.DDBItem;
  *
  * TODO clarify how this is determined by the fetcher.
  */
-public class AuthorNaturalPersonAnswerer implements Answerer {
+class AuthorNaturalPersonAnswerer implements Answerer {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Answer getAnswer(DDBItem metaData) {
-    return Answer.YES;
+  public Answer answerQuestionForItem(DDBItem metaData) {
+    return Answer.ASSUMED_YES;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getNoteForLastQuestion() {
+    return "Hardcoded answer yes";
   }
 
 }

@@ -298,7 +298,7 @@ enum FlowChartStateGermany implements FlowChartState {
       return this.unconditionalNextState.getNextState(answer);
     } else if (this.positiveNextState != null
         && this.negativeNextState != null) {
-      if (answer == Answer.YES) {
+      if (answer == Answer.YES || answer == Answer.ASSUMED_YES) {
         return this.positiveNextState;
       } else {
         return this.negativeNextState;

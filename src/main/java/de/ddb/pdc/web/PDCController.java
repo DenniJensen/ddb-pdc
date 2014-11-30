@@ -17,7 +17,7 @@ import de.ddb.pdc.metadata.MetaFetcher;
 @RestController
 public class PDCController {
 
-  @Value("${ddb.country}")
+  @Value("${ddb.country:de}")
   private String country;
 
   private final AnswererService answererService;
