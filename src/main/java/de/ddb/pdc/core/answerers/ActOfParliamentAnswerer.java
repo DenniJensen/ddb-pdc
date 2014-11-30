@@ -23,7 +23,7 @@ class ActOfParliamentAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
+  public String getNoteForLastQuestion() {
     return "Hardcoded answer. The answer will always be no.";
   }
 }

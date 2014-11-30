@@ -15,7 +15,7 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
 
-  private String assumption;
+  private String note;
 
   /**
    * {@inheritDoc}
@@ -32,7 +32,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     for (Author author : authors) {
       Calendar deathYearCalendar = author.getYearOfDeath();
       if (deathYearCalendar == null) {
-        this.assumption = "Not all death dates known. Will assume some authors "
+        this.note = "Not all death dates known. Will assume some authors "
             + "are still living.";
         return Answer.ASSUMED_NO;
       }
@@ -41,8 +41,10 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
           deathYearCalendar.get(Calendar.YEAR));
     }
     if (currentYear - authorDeathYear > 70) {
+      this.note = "All authors died before or in " + authorDeathYear;
       return Answer.YES;
     } else {
+      this.note = "At least one author died in " + authorDeathYear;
       return Answer.NO;
     }
   }
@@ -52,7 +54,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
-    return this.assumption;
+  public String getNoteForLastQuestion() {
+    return this.note;
   }
 }

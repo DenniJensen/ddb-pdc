@@ -46,7 +46,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
       Question question = questionnaire.getCurrentQuestion();
       Answerer answerer = answererFactory.getAnswererForQuestion(question);
       Answer answer = answerer.answerQuestionForItem(metadata);
-      String assumption = answerer.getAssumptionForLastAnswer();
+      String assumption = answerer.getNoteForLastQuestion();
       questionnaire.answerCurrentQuestion(answer, assumption);
     }
   }

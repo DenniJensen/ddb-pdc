@@ -26,7 +26,7 @@ class AuthorFromTriptisAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
+  public String getNoteForLastQuestion() {
     return "Hardcoded answer yes";
   }
 }

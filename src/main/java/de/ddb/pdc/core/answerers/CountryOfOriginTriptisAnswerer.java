@@ -24,7 +24,7 @@ class CountryOfOriginTriptisAnswerer implements Answerer {
    * {@inheritDoc}
    */
   @Override
-  public String getAssumptionForLastAnswer() {
+  public String getNoteForLastQuestion() {
     return "hardcoded answer yes";
   }
 }
