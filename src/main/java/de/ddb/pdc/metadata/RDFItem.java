@@ -33,10 +33,14 @@ class RDFItem {
         return -1;
       }
 
-      return Integer.parseInt(MetadataUtils.useRegex(publishedYear,"\\d{4}"));
+      return getDateAsInt(publishedYear,"\\d{4}");
     } catch (NumberFormatException e) {
       return -1;
     }
+  }
+  
+  private int getDateAsInt(String date, String regex){
+    return Integer.parseInt(MetadataUtils.useRegex(date, regex));
   }
 
   /**

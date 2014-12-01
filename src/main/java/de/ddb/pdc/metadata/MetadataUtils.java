@@ -4,9 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * class for utilities methods of metadata
+ *  class for methods of meta fetcher
  */
-public class MetadataUtils {
+public final class MetadataUtils {
+
+  private MetadataUtils(){}
 
   /**
    * @param string  input for regex
