@@ -3,9 +3,6 @@ package de.ddb.pdc.metadata;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * class to list the SearchResultItems
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class SearchResultList {
 

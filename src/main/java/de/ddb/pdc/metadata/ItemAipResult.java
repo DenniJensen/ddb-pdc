@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * call for the aip json result
- */
 @JsonFormat
 @JsonIgnoreProperties(ignoreUnknown = true)
 class ItemAipResult {

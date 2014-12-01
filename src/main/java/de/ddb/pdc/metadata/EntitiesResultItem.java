@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
-/**
- * Class for the entity items of the entity json result
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class EntitiesResultItem {
 
@@ -31,7 +28,7 @@ class EntitiesResultItem {
     }
 
     try {
-      return Integer.parseInt(Utility.useRegex(dateOfBirth,"\\d{4}"));
+      return Integer.parseInt(MetadataUtils.useRegex(dateOfBirth,"\\d{4}"));
     } catch (NumberFormatException e) {
       return -1;
     }
@@ -46,7 +43,7 @@ class EntitiesResultItem {
     }
 
     try {
-      return Integer.parseInt(Utility.useRegex(dateOfDeath,"\\d{4}"));
+      return Integer.parseInt(MetadataUtils.useRegex(dateOfDeath,"\\d{4}"));
     } catch (NumberFormatException e) {
       return -1;
     }

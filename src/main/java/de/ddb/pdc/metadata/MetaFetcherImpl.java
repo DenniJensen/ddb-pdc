@@ -102,7 +102,6 @@ public class MetaFetcherImpl implements MetaFetcher {
   }
 
   /**
-   * Inserts more information about the work for each DDBItem (e.g. authors).
    * The data is extracted from RDFItem via ItemAipResult.
    * 
    * @param item The DDBItem object in which the data will be stored

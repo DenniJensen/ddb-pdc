@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 
-/**
- * class to list the EntitiesResultItems of entity json request
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class EntitiesResultList {
 

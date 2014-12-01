@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
-/**
- * class to get the results of the search json result
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class SearchResults {
 
