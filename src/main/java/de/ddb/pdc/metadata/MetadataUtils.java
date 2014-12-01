@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 /**
  *  class for methods of meta fetcher
  */
-public final class Utility {
+public final class MetadataUtils {
 
-  private Utility(){}
+  private MetadataUtils(){}
 
   /**
    * @param string  input for regex

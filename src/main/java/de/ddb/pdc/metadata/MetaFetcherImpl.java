@@ -49,12 +49,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     return getDDBItems(results);
   }
 
-  /**
-   * Creates an array of objects containing search results from the DDB API.
-   * 
-   * @param results The original format of the search results
-   * @return An array of DDBItem in a usable format for displaying
-   */
   private DDBItem[] getDDBItems(SearchResults results) {
     int numItems = results.getResultItems().size();
     DDBItem[] ddbItems = new DDBItem[numItems];
@@ -75,14 +69,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     return ddbItems;
   }
 
-  /**
-   * Deletes the "<match>...</match>" markers in metadata values of search
-   * result items. These are added by the DDB API to simplify highlighting
-   * of matching substrings, but we don't need or want them.
-   *
-   * @param string The string containing the markers
-   * @return A new string with the same content but without the markers
-   */
   private static String deleteMatchTags(String string) {
     return string.replace("<match>", "").replace("</match>", "");
   }
@@ -101,13 +87,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     return ddbItem;
   }
 
-  /**
-   * Inserts more information about the work for each DDBItem (e.g. authors).
-   * The data is extracted from RDFItem via ItemAipResult.
-   * 
-   * @param item The DDBItem object in which the data will be stored
-   * @param result The object containing the result from the query to the DDB
-   */
   private void fillDDBItem(DDBItem item, ItemAipResult result) {
     RDFItem rdf = result.getRDFItem();
     item.setPublishedYear(rdf.getPublishYear());
@@ -119,12 +98,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     }
   }
 
-  /**
-   * Starts a query to the DDB API in order to get metadata about an author.
-   * The data is then filled into the corresponding DDBItem of the work.
-   * 
-   * @param item The DDBItem which author's metadata will be updated
-   */
   private void fetchAuthorMetadata(DDBItem item) {
     for (Author author : item.getAuthors()) {
       String urlEntity = APIURL + ENTITY + author.getDnbId() + ENTITY_END
@@ -135,12 +108,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     }
   }
 
-  /**
-   * Inserts the metadata about an author into an author object.
-   * 
-   * @param author The author object in which the data will be stored
-   * @param result The object containing the result from the query to the DDB
-   */
   private void fillAuthor(Author author, EntitiesResult result) {
     EntitiesResultItem entity = result.getResultItem();
     author.setName(entity.getName());

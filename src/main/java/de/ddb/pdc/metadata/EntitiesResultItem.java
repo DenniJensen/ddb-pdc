@@ -23,7 +23,7 @@ class EntitiesResultItem {
   }
 
   /**
-   * @return  a 4 digit int if a year is found or -1
+   * @return A 4 digit int if a year is found or -1
    */
   public int getYearOfBirth() {
     if (dateOfBirth == null) {
@@ -31,14 +31,14 @@ class EntitiesResultItem {
     }
 
     try {
-      return Integer.parseInt(Utility.useRegex(dateOfBirth,"\\d{4}"));
+      return getDateAsInt(dateOfBirth,"\\d{4}");
     } catch (NumberFormatException e) {
       return -1;
     }
   }
 
   /**
-   * @return  a 4 digit int if a year is found or -1
+   * @return A 4 digit int if a year is found or -1
    */
   public int getYearOfDeath() {
     if (dateOfDeath == null) {
@@ -46,14 +46,18 @@ class EntitiesResultItem {
     }
 
     try {
-      return Integer.parseInt(Utility.useRegex(dateOfDeath,"\\d{4}"));
+      return getDateAsInt(dateOfDeath,"\\d{4}");
     } catch (NumberFormatException e) {
       return -1;
     }
   }
+  
+  private int getDateAsInt(String date, String regex){
+    return Integer.parseInt(MetadataUtils.useRegex(date, regex));
+  }
 
   /**
-   * @return the first entry where the author is born or null if empty
+   * @return The first entry where the author is born or null if empty
    */
   public String getPlaceOfBirth() {
     if (placeOfBirth != null) {
