@@ -1,7 +1,6 @@
 package de.ddb.pdc.metadata;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +33,7 @@ class RDFItem {
         return -1;
       }
 
-      return Integer.parseInt(Utility.useRegex(publishedYear,"\\d{4}"));
+      return Integer.parseInt(MetadataUtils.useRegex(publishedYear,"\\d{4}"));
     } catch (NumberFormatException e) {
       return -1;
     }
