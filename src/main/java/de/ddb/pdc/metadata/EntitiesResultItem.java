@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
-/**
- * Class for the entity items of the entity json result
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class EntitiesResultItem {
 
@@ -52,7 +49,7 @@ class EntitiesResultItem {
     }
   }
   
-  private int getDateAsInt(String date, String regex){
+  private int getDateAsInt(String date, String regex) {
     return Integer.parseInt(MetadataUtils.useRegex(date, regex));
   }
 

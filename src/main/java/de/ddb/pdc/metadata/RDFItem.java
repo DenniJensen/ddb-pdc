@@ -7,9 +7,6 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * class for rdf item from edm item of aip json request
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class RDFItem {
 
@@ -39,7 +36,7 @@ class RDFItem {
     }
   }
   
-  private int getDateAsInt(String date, String regex){
+  private int getDateAsInt(String date, String regex) {
     return Integer.parseInt(MetadataUtils.useRegex(date, regex));
   }
 
