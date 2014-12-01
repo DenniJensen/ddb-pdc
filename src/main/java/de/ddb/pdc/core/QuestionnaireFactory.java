@@ -1,8 +1,11 @@
 package de.ddb.pdc.core;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Provides {@link Questionnaire} objects to {@link PublicDomainCalculator}.
  */
+@Service
 public class QuestionnaireFactory {
 
   /**
