@@ -9,6 +9,9 @@ class EntitiesResultList {
 
   private ArrayList<EntitiesResultItem> docs;
 
+  /**
+   * @return the doc elements of the entity json request
+   */
   public ArrayList<EntitiesResultItem> getDocs() {
     return docs;
   }

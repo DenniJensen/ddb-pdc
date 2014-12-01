@@ -12,6 +12,9 @@ class SearchResults {
   @JsonProperty("results")
   private ArrayList<SearchResultList> results;
 
+  /**
+   * returns the result of the search json result with the docs.
+   */
   public ArrayList<SearchResultItem> getResultItems() {
     return results.get(0).getDocs();
   }

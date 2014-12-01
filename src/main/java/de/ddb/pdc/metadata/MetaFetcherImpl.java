@@ -1,6 +1,5 @@
 package de.ddb.pdc.metadata;
 
-import java.util.Map;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,8 +25,10 @@ public class MetaFetcherImpl implements MetaFetcher {
   private String authKey;
 
   /**
-   * Creates a new MetaFetcherImpl.
-   *
+   * Creates a new object of the class MetaFetcherImpl.
+   * This class collects the needed information for answering the questions.
+   * The data about works and authors is collected by calls to the DDB API.
+   * 
    * @param restTemplate RestTemplate to use for issuing requests
    * @param authKey      authentication Key for the DDB API
    */
@@ -68,11 +69,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     return ddbItems;
   }
 
-  /**
-   * Deletes the "<match>...</match>" markers in metadata values of search
-   * result items. These are added by the DDB API to simplify highlighting
-   * of matching substrings, but we don't need or want them.
-   */
   private static String deleteMatchTags(String string) {
     return string.replace("<match>", "").replace("</match>", "");
   }
@@ -84,8 +80,10 @@ public class MetaFetcherImpl implements MetaFetcher {
     DDBItem ddbItem = new DDBItem(itemId);
     String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
     ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
-    fillDDBItem(ddbItem, result);
-    fetchAuthorMetadata(ddbItem);
+    if ( result.getRDFItem() != null) {
+      fillDDBItem(ddbItem, result);
+      fetchAuthorMetadata(ddbItem);
+    }
     return ddbItem;
   }
 

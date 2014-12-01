@@ -17,9 +17,9 @@ public class DDBItem {
   private String type;
 
   //metadata
-  private ArrayList<Author> authors;
-  private String institute;
-  private Calendar publishedYear = new GregorianCalendar();
+  private ArrayList<Author> authors = null;
+  private String institution = null;
+  private Calendar publishedYear = null;
  
   /**
    * Creates a new DDBItem.
@@ -77,6 +77,10 @@ public class DDBItem {
     this.imageUrl = imageUrl;
   }
 
+  /**
+   * Returns the Media category of the work.
+   * If the work has no media, null is returned.
+   */
   public String getMedia() {
     return media;
   }
@@ -85,6 +89,10 @@ public class DDBItem {
     this.media = media;
   }
 
+  /**
+   * Returns the category of the work.
+   * If the work has no category, null is returned.
+   */
   public String getCategory() {
     return category;
   }
@@ -93,6 +101,10 @@ public class DDBItem {
     this.category = category;
   }
 
+  /**
+   * Returns the type of the work.
+   * If the work has no type, null is returned.
+   */
   public String getType() {
     return type;
   }
@@ -101,6 +113,10 @@ public class DDBItem {
     this.type = type;
   }
 
+  /**
+   * Returns list of authors of the work.
+   * If no authors are found, null is returned.
+   */
   public ArrayList<Author> getAuthors() {
     return authors;
   }
@@ -109,20 +125,31 @@ public class DDBItem {
     this.authors.add(author);
   }
 
-  public String getInstitute() {
-    return institute;
+  /**
+   * Returns the institution which has the information about the work.
+   * If no institution found, null is returned.
+   */
+  public String getInstitution() {
+    return institution;
   }
 
-  public void setInstitution(String institute) {
-    this.institute = institute;
+  public void setInstitution(String institution) {
+    this.institution = institution;
   }
 
+  /**
+   * Returns the published year of the work.
+   * If no published year found, null is returned
+   */
   public Calendar getPublishedYear() {
     return publishedYear;
   }
 
   public void setPublishedYear(int publishedYear) {
-    this.publishedYear.set(Calendar.YEAR, publishedYear);
+    if (publishedYear != -1) {
+      this.publishedYear = new GregorianCalendar();
+      this.publishedYear.set(Calendar.YEAR, publishedYear);
+    }
   }
 
 }

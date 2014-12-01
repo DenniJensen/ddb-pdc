@@ -83,7 +83,7 @@ public class MetaFetcherImplTest {
     
     DDBItem ddbItem = fetcher.fetchMetadata("itemId");
     
-    assertEquals("Deutsche Digitale Bibliothek",ddbItem.getInstitute());
+    assertEquals("Deutsche Digitale Bibliothek",ddbItem.getInstitution());
     assertEquals(1946,ddbItem.getPublishedYear().get(Calendar.YEAR));
     assertEquals("http://d-nb.info/gnd/118540238", ddbItem.getAuthors().get(0).getDnbId());
     Author author = ddbItem.getAuthors().get(0);

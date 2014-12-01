@@ -19,6 +19,9 @@ class RDFItem {
   @JsonProperty("Aggregation")
   private Map<String, Object> aggregation;
 
+  /**
+   * @return a 4 digit int if a issued year is found or -1
+   */
   public int getPublishYear() {
     try {
       String publishedYear = (String) providedCHO.get("issued");
@@ -26,16 +29,29 @@ class RDFItem {
         // The item is missing the publishing date.
         return -1;
       }
-      return Integer.parseInt(publishedYear.split(",")[0]);
+
+      return getDateAsInt(publishedYear,"\\d{4}");
     } catch (NumberFormatException e) {
-      throw new RuntimeException(e);
+      return -1;
     }
   }
-
-  public String getInstitution() {
-    return (String) aggregation.get("provider");
+  
+  private int getDateAsInt(String date, String regex) {
+    return Integer.parseInt(MetadataUtils.useRegex(date, regex));
   }
 
+  /**
+   * @return  institution from the dataProvider item of aggregation
+   */
+  public String getInstitution() {
+    List<Object> dataProvider = (ArrayList<Object>) aggregation
+      .get("dataProvider");
+    return dataProvider.get(0).toString();
+  }
+
+  /**
+   * @return  list of all author ids
+   */
   public List<String> getAuthorIds() {
     List<String> authorIds = new ArrayList<>();
     for (Map agent : getAgents()) {
@@ -47,6 +63,9 @@ class RDFItem {
     return authorIds;
   }
 
+  /**
+   * @return  list of all agents item in rdf item
+   */
   private List<Map> getAgents() {
     if (agents instanceof List) {
       // Multiple agents

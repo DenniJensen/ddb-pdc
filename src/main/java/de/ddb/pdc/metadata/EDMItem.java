@@ -8,6 +8,9 @@ public class EDMItem {
   @JsonProperty("RDF")
   private RDFItem rdf;
 
+  /**
+   * @return the rdf of the aip json result
+   */
   public RDFItem getRdf() {
     return rdf;
   }

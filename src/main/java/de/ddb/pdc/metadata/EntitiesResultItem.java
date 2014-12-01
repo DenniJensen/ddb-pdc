@@ -19,23 +19,43 @@ class EntitiesResultItem {
     return preferredName;
   }
 
+  /**
+   * @return A 4 digit int if a year is found or -1
+   */
   public int getYearOfBirth() {
     if (dateOfBirth == null) {
       return -1;
     }
-    String[] splitDob = dateOfBirth.split(" ");
 
-    return Integer.parseInt(splitDob[splitDob.length - 1]);
+    try {
+      return getDateAsInt(dateOfBirth,"\\d{4}");
+    } catch (NumberFormatException e) {
+      return -1;
+    }
   }
 
+  /**
+   * @return A 4 digit int if a year is found or -1
+   */
   public int getYearOfDeath() {
     if (dateOfDeath == null) {
       return -1;
     }
-    String[] splitDod = dateOfDeath.split(" ");
-    return Integer.parseInt(splitDod[splitDod.length - 1]);
+
+    try {
+      return getDateAsInt(dateOfDeath,"\\d{4}");
+    } catch (NumberFormatException e) {
+      return -1;
+    }
+  }
+  
+  private int getDateAsInt(String date, String regex) {
+    return Integer.parseInt(MetadataUtils.useRegex(date, regex));
   }
 
+  /**
+   * @return The first entry where the author is born or null if empty
+   */
   public String getPlaceOfBirth() {
     if (placeOfBirth != null) {
       return placeOfBirth.get(0);

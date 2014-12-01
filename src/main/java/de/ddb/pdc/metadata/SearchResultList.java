@@ -8,6 +8,10 @@ class SearchResultList {
 
   private ArrayList<SearchResultItem> docs;
 
+  /**
+   * Returns a list with all docs of the result item from the search
+   * json result.
+   */
   public ArrayList<SearchResultItem> getDocs() {
     return docs;
   }

@@ -45,7 +45,7 @@ public class Author {
   }
 
   /**
-   * Returns the ID assigned to the author by the Deutsche Nationalbibliothek
+   * Returns the ID assigned to the author by the 'Deutsche Nationalbibliothek'
    * (http://d-nb.info).
    */
   public String getDnbId() {
@@ -64,8 +64,8 @@ public class Author {
   }
 
   /**
-   * Returns the year at which the author was born. If unknown, null is
-   * returned.
+   * Returns the year at which the author was born.
+   * If unknown, null is returned.
    */
   public Calendar getYearOfBirth() {
     return yearOfBirth;
@@ -97,8 +97,8 @@ public class Author {
   }
 
   /**
-   * Returns the name of the state at which the author was born. If
-   * unknown, null is returned.
+   * Returns the name of the state at which the author was born.
+   * If unknown, null is returned.
    */
   public String getNationality() {
     return nationality;
