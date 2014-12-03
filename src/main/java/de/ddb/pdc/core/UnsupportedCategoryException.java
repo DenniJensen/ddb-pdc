@@ -9,7 +9,7 @@ package de.ddb.pdc.core;
  *
  * @author Frank Zechert
  */
-public class UnsupportedCategoryException extends Exception {
+public class UnsupportedCategoryException extends RuntimeException {
 
   private static final long serialVersionUID = -3142564228568193171L;
 

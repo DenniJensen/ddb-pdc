@@ -2,6 +2,9 @@
 /target
 /build
 
+# Not sharing keys
+config
+
 # Vagrant files
 /.vagrant
 

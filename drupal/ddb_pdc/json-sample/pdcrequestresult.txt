@@ -1,0 +1,16 @@
+{
+"publicDomain":true,
+"trace":[
+	{
+	"question":"Is the work any kind of work which the official body publishing it intends to be generally received?",
+	"answer":false
+	},
+	{
+	"question":"Is the work a court decision or officially issued discussion formula?",
+	"answer":false
+	},
+	{
+	"question":"Is the work an act of parliament which has entered the parliamentary process?",
+	"answer":true
+	}
+]}

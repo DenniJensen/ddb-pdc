@@ -48,7 +48,6 @@
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
-          <showDeprecation>true</showDeprecation>
         </configuration>
       </plugin>
       <plugin>
@@ -74,6 +73,10 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
