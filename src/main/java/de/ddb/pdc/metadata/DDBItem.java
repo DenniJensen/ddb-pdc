@@ -18,7 +18,7 @@ public class DDBItem {
 
   //metadata
   private ArrayList<Author> authors = null;
-  private String institute = null;
+  private String institution = null;
   private Calendar publishedYear = null;
  
   /**
@@ -129,12 +129,12 @@ public class DDBItem {
    * Returns the institution which has the information about the work.
    * If no institution found, null is returned.
    */
-  public String getInstitute() {
-    return institute;
+  public String getInstitution() {
+    return institution;
   }
 
-  public void setInstitute(String institute) {
-    this.institute = institute;
+  public void setInstitution(String institution) {
+    this.institution = institution;
   }
 
   /**
