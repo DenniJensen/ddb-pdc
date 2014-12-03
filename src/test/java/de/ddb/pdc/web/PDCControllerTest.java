@@ -8,6 +8,7 @@ import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
+import de.ddb.pdc.storage.StorageService;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
@@ -29,7 +30,11 @@ public class PDCControllerTest {
     // country is null
     Mockito.when(ansService.calculate(null, mfetcher.fetchMetadata("123"))).thenReturn(pdcResult);
 
-    PDCController pdcController = new PDCController(mfetcher, ansService);
+    StorageService storageService = Mockito.mock(StorageService.class);
+    
+    PDCController pdcController = new PDCController(
+        mfetcher, ansService, storageService
+    );
 
     Assert.assertSame(pdcResult, pdcController.calculate("123"));
   }

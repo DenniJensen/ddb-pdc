@@ -1,6 +1,5 @@
 /**
- * Storage service for storing and fetching PDC data models. TODO decouple the
- * MongoDataModel from the service.
+ * Storage service for storing and fetching PDC data models.
  */
 package de.ddb.pdc.storage;
 
@@ -13,14 +12,14 @@ public interface StorageService {
    *
    * @param record
    */
-  public void store(MongoDataModel record);
+  public void store(StorageModel record);
 
   /**
    * Update an existing MongoDataModel.
    * 
    * @param record 
    */
-  public void update(MongoDataModel record);
+  public void update(StorageModel record);
   
   /**
    * Find a single MongoDataModel record by its item ID.
@@ -28,14 +27,14 @@ public interface StorageService {
    * @param itemId
    * @return record
    */
-  public MongoDataModel fetch(String itemId);
+  public StorageModel fetch(String itemId);
 
   /**
    * Fetch all records from storage.
    *
    * @return list of records
    */
-  public List<MongoDataModel> fetchAll();
+  public List<StorageModel> fetchAll();
 
   /**
    * Remove all records from storage.
