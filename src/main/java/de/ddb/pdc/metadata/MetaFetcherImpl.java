@@ -22,19 +22,19 @@ public class MetaFetcherImpl implements MetaFetcher {
   private static final String AIP = "/aip?";
 
   private RestTemplate restTemplate;
-  private String authKey;
+  private String apiKey;
 
   /**
    * Creates a new object of the class MetaFetcherImpl.
    * This class collects the needed information for answering the questions.
    * The data about works and authors is collected by calls to the DDB API.
-   * 
+   *
    * @param restTemplate RestTemplate to use for issuing requests
-   * @param authKey      authentication Key for the DDB API
+   * @param apiKey       DDB API key for authentication
    */
-  public MetaFetcherImpl(RestTemplate restTemplate, String authKey) {
+  public MetaFetcherImpl(RestTemplate restTemplate, String apiKey) {
     this.restTemplate = restTemplate;
-    this.authKey = authKey;
+    this.apiKey = apiKey;
   }
 
   /**
@@ -42,9 +42,7 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem[] searchForItems(String query, int maxCount)
       throws RestClientException {
-    String modifiedQuery = query.replace(" ", "+");
-    String url = APIURL + SEARCH + AUTH + authKey + SORTROWS + maxCount + QUERY
-      + modifiedQuery;
+    String url = DdbApiUrls.searchUrl(query, maxCount, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
@@ -78,9 +76,9 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
-    String url = APIURL + ITEM + ddbItem.getId() + AIP + AUTH + authKey;
+    String url = DdbApiUrls.itemAipUrl(itemId, apiKey);
     ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
-    if ( result.getRDFItem() != null) {
+    if (result.getRDFItem() != null) {
       fillDDBItem(ddbItem, result);
       fetchAuthorMetadata(ddbItem);
     }
@@ -100,9 +98,8 @@ public class MetaFetcherImpl implements MetaFetcher {
 
   private void fetchAuthorMetadata(DDBItem item) {
     for (Author author : item.getAuthors()) {
-      String urlEntity = APIURL + ENTITY + author.getDnbId() + ENTITY_END
-          + AUTH + authKey;
-      EntitiesResult result = restTemplate.getForObject(urlEntity,
+      String entityUrl = DdbApiUrls.entityUrl(author.getDnbId(), apiKey);
+      EntitiesResult result = restTemplate.getForObject(entityUrl,
           EntitiesResult.class);
       fillAuthor(author, result);
     }

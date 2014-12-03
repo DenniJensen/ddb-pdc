@@ -6,7 +6,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -36,7 +35,7 @@ public class MetaFetcherImplTest {
     SearchResults results = mock(SearchResults.class);
     when(results.getResultItems()).thenReturn(resultItems);
 
-    String url = "https://api.deutsche-digitale-bibliothek.de/search?oauth_consumer_key=authkey&sort=RELEVANCE&rows=10&query=Titel";
+    String url = DdbApiUrls.searchUrl("Titel", 10, "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
     DDBItem[] items = fetcher.searchForItems("Titel", 10);
