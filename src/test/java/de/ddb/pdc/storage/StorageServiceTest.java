@@ -10,12 +10,12 @@
 package de.ddb.pdc.storage;
 
 import com.mongodb.MongoClient;
+import de.ddb.pdc.core.AnsweredQuestion;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,21 +58,18 @@ public class StorageServiceTest {
     final String itemCategory = "Movies";
     final String institute = "Insti";
     final boolean publicDomain = false;
-    final List<String> trace = new ArrayList<String>();
-    trace.add("Question A");
-    trace.add("Question B");
-    trace.add("Question C");
+    final List<AnsweredQuestion> trace = new ArrayList<>();
     final String timeStamp = new Date().toString();
     /* -------- */
 
     // create and store a new entry in DB
-    MongoDataModel newEntry = new MongoDataModel(
+    StorageModel newEntry = new StorageModel(
         itemID,itemCategory,institute,publicDomain,trace,timeStamp);
 
     storageService.store(newEntry);
 
     // fetch stored entry
-    MongoDataModel storedEntry = storageService.fetch(itemID);
+    StorageModel storedEntry = storageService.fetch(itemID);
 
     boolean check = compareTwoEntries(newEntry, storedEntry);
 
@@ -87,7 +84,7 @@ public class StorageServiceTest {
    *
    * @return true if entries are equal
    */
-  private boolean compareTwoEntries(MongoDataModel mdm1, MongoDataModel mdm2){
+  private boolean compareTwoEntries(StorageModel mdm1, StorageModel mdm2){
     boolean equal = false;
 
     if((mdm1.getItemId().equals(mdm2.getItemId())) &&
@@ -108,10 +105,10 @@ public class StorageServiceTest {
    */
   @Test
   public void testDeleteAll() {
-    List <MongoDataModel> entriesBefore= storageService.fetchAll();
+    List <StorageModel> entriesBefore= storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
-    List <MongoDataModel> entriesAfter = storageService.fetchAll();
+    List <StorageModel> entriesAfter = storageService.fetchAll();
     Assert.assertEquals(true, entriesAfter.isEmpty());
 
   }
