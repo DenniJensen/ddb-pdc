@@ -25,7 +25,8 @@ class PublishedMoreThan70YearsAfterCreationAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "hardcoded answer no, assumption: published year == created year";
+    return "Assuming that the work's creation and publishing year "
+        + "are identical.";
   }
 
 }

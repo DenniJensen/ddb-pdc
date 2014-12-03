@@ -25,6 +25,6 @@ class CountryOfOriginTriptisAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "hardcoded answer yes";
+    return "The answer is always assumed to be yes.";
   }
 }

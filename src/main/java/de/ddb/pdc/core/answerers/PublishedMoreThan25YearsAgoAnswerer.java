@@ -24,9 +24,10 @@ class PublishedMoreThan25YearsAgoAnswerer implements Answerer {
     }
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
+    this.note = "The work was published in "
+        + publishedYear.get(Calendar.YEAR)
+        + ".";
     if (currentYear - publishedYear.get(Calendar.YEAR) > 25) {
-      this.note = "The work was published in "
-          + publishedYear.get(Calendar.YEAR);
       return Answer.YES;
     } else {
       return Answer.NO;

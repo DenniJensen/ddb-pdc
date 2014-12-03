@@ -24,7 +24,7 @@ class OfficialWorkToBeGenerallyReceivedAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "hardcoded answer no";
+    return "The answer is always assumed to be no.";
   }
 
 }

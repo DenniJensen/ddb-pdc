@@ -12,6 +12,8 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
 
+  private String note;
+
   /**
    * Answer whether the author's country is a member of the EEA.
    */
@@ -19,6 +21,7 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
+      this.note = "No author(s) are known.";
       return Answer.UNKNOWN;
     }
     for (Author author : authors) {
@@ -35,6 +38,6 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return null;
+    return this.note;
   }
 }
