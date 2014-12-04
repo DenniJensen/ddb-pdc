@@ -1,5 +1,5 @@
 /**
- * This is not a unit test, this is a real test. :D
+ * This is not a unit test, this is a real test. (but with a test-DB) :D
  * Tests the store and fetch methods
  * Test behaviour is specified by the included Configuration class and
  * environment properties are loaded from a designated test file.
@@ -60,8 +60,10 @@ public class MongoStorageServiceImplTest {
     final String institute = "Insti";
     final boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
-    AnsweredQuestion answeredQuestionA = new AnsweredQuestion(Question.AUTHOR_ANONYMOUS, Answer.NO, null);
-    AnsweredQuestion answeredQuestionB = new AnsweredQuestion(Question.PERFORMED_MORE_THAN_50_YEARS_AGO, Answer.YES, null);
+    AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
+            Question.AUTHOR_ANONYMOUS, Answer.NO, null);
+    AnsweredQuestion answeredQuestionB = new AnsweredQuestion(
+            Question.PERFORMED_MORE_THAN_50_YEARS_AGO, Answer.YES, null);
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
     /* -------- */
@@ -73,6 +75,60 @@ public class MongoStorageServiceImplTest {
     StorageModel storedEntry = storageService.fetch(itemID);
     boolean check = compareTwoEntries(newEntry, storedEntry);
     Assert.assertEquals(true, check);
+  }
+
+  /**
+   * Test of store and update method, of class StorageService.
+   * ItemID have to be an unique number.
+   */
+  @Test
+  public void testStoreAndUpdate(){
+    /* Dummy data */
+    final String itemID = "8963254";
+    final String itemCategory = "Movies";
+    final String institute = "Insti";
+    final boolean publicDomain = false;
+    final List<AnsweredQuestion> trace = new ArrayList<>();
+    AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
+            Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null);
+    AnsweredQuestion answeredQuestionB = new AnsweredQuestion(
+            Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.NO, null);
+    trace.add(answeredQuestionA);
+    trace.add(answeredQuestionB);
+    /* -------- */
+
+    // create and store a new entry in DB
+    StorageModel newEntry = new StorageModel(
+        itemID,itemCategory,institute,publicDomain,trace);
+    storageService.store(newEntry);
+
+    final List<AnsweredQuestion> newTrace = new ArrayList<>();
+    AnsweredQuestion newAnsweredQuestionA = new AnsweredQuestion(
+            Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null);
+    AnsweredQuestion newAnsweredQuestionB = new AnsweredQuestion(
+            Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.YES, null);
+    newTrace.add(newAnsweredQuestionA);
+    newTrace.add(newAnsweredQuestionB);
+    StorageModel updatedEntry = new StorageModel(
+            itemID, itemCategory, institute, true, newTrace);
+    storageService.update(updatedEntry);
+     // fetch stored entry
+    StorageModel storedEntry = storageService.fetch(itemID);
+    boolean check = compareTwoEntries(updatedEntry, storedEntry);
+    Assert.assertEquals(true, check);
+  }
+
+  /**
+   * Test of deleteAll-method of class StorageService.
+   *
+   */
+  @Test
+  public void testDeleteAll() {
+    List <StorageModel> entriesBefore= storageService.fetchAll();
+    Assert.assertEquals(false, entriesBefore.isEmpty());
+    storageService.deleteAll();
+    List <StorageModel> entriesAfter = storageService.fetchAll();
+    Assert.assertEquals(true, entriesAfter.isEmpty());
   }
 
   /**
@@ -137,19 +193,7 @@ public class MongoStorageServiceImplTest {
     return equal;
   }
 
-  /**
-   * Test of deleteAll-method of class StorageService.
-   *
-   */
-  @Test
-  public void testDeleteAll() {
-    List <StorageModel> entriesBefore= storageService.fetchAll();
-    Assert.assertEquals(false, entriesBefore.isEmpty());
-    storageService.deleteAll();
-    List <StorageModel> entriesAfter = storageService.fetchAll();
-    Assert.assertEquals(true, entriesAfter.isEmpty());
 
-  }
 
   /**
    * Configuration for creating the required Beans needed by the test class.
