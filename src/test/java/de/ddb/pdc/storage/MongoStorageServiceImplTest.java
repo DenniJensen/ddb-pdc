@@ -35,11 +35,11 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-public class StorageServiceTest {
+public class MongoStorageServiceImplTest {
 
   private StorageService storageService;
 
-  public StorageServiceTest() {
+  public MongoStorageServiceImplTest() {
   }
 
   @Autowired
