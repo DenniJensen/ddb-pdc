@@ -10,10 +10,11 @@
 package de.ddb.pdc.storage;
 
 import com.mongodb.MongoClient;
+import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.AnsweredQuestion;
+import de.ddb.pdc.core.Question;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,20 +60,18 @@ public class MongoStorageServiceImplTest {
     final String institute = "Insti";
     final boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
-    final String timeStamp = new Date().toString();
+    AnsweredQuestion answeredQuestionA = new AnsweredQuestion(Question.AUTHOR_ANONYMOUS, Answer.NO, null);
+    AnsweredQuestion answeredQuestionB = new AnsweredQuestion(Question.PERFORMED_MORE_THAN_50_YEARS_AGO, Answer.YES, null);
+    trace.add(answeredQuestionA);
+    trace.add(answeredQuestionB);
     /* -------- */
-
     // create and store a new entry in DB
     StorageModel newEntry = new StorageModel(
-        itemID,itemCategory,institute,publicDomain,trace,timeStamp);
-
+        itemID,itemCategory,institute,publicDomain,trace);
     storageService.store(newEntry);
-
     // fetch stored entry
     StorageModel storedEntry = storageService.fetch(itemID);
-
     boolean check = compareTwoEntries(newEntry, storedEntry);
-
     Assert.assertEquals(true, check);
   }
 
@@ -91,10 +90,49 @@ public class MongoStorageServiceImplTest {
             (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
             (mdm1.getInstitute().equals(mdm2.getInstitute())) &&
             (mdm1.isPublicDomain() == mdm2.isPublicDomain())&&
-            (mdm1.getTrace().equals(mdm2.getTrace())) &&
+            (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace())) &&
             (mdm1.getTimestampAsString().equals(mdm2.getTimestampAsString()))
             ){
       equal = true;
+    }
+    return equal;
+  }
+
+  /**
+   * Compares two Traces and return true if these have the same values
+   *
+   * @param trace1
+   * @param trace2
+   *
+   * @return true if traces are equal
+   */
+  private boolean compareTwoTraces(List<AnsweredQuestion> trace1,
+          List<AnsweredQuestion> trace2){
+    boolean equal = true;
+    if(!( trace1.size() == trace2.size()) ){
+      equal = false;
+    }
+    else{
+      for(int i = 0; i < trace1.size(); i++){
+        if(!( trace1.get(i).getQuestion().equals(trace2.get(i).getQuestion()) &&
+                trace1.get(i).getAnswer().equals(trace2.get(i).getAnswer()))){
+          equal = false;
+          break;
+        }
+        if((!trace1.get(i).hasNote()) || (!trace2.get(i).hasNote()) ){
+          if( (trace1.get(i).hasNote() && (!trace2.get(i).hasNote())) ||
+                (trace2.get(i).hasNote() && (!trace1.get(i).hasNote())) ){
+            equal = false;
+            break;
+          }
+        }
+        else{
+          if(! (trace1.get(i).getNote().equals(trace2.get(i).getNote())) ){
+            equal = false;
+            break;
+          }
+        }
+      }
     }
     return equal;
   }
