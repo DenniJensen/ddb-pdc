@@ -24,32 +24,12 @@ public class StorageModel {
   private final String timestamp;
 
   /**
-   * Constructor for the repository.
-   * @param itemId
-   * @param itemCategory
-   * @param institute
-   * @param publicDomain
-   * @param trace
-   * @param timestamp as a String, in U
-   */
-  public StorageModel(String itemId, String itemCategory, String institute,
-      boolean publicDomain, List<AnsweredQuestion> trace, String timestamp) {
-
-    this.itemId = itemId;
-    this.itemCategory = itemCategory;
-    this.institute = institute;
-    this.publicDomain = publicDomain;
-    this.trace = trace;
-    this.timestamp = timestamp;
-  }
-
-  /**
    * Constructor for storing new records.
    * The timestamp is automatically assigned to the current date and time.
-   * 
+   *
    * TODO move the SimpleDateFormat initialization elsewhere
    * TODO set the time zone through the properties file
-   * 
+   *
    * @param itemId
    * @param itemCategory
    * @param institute
@@ -68,51 +48,51 @@ public class StorageModel {
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
     this.timestamp = sdf.format(new Date());
   }
-  
-  
+
+
   /**
-   * 
-   * @return 
+   *
+   * @return
    */
   public String getItemId() {
     return itemId;
   }
 
   /**
-   * 
-   * @return 
+   *
+   * @return
    */
   public String getItemCategory() {
     return itemCategory;
   }
 
   /**
-   * 
-   * @return 
+   *
+   * @return
    */
   public String getInstitute() {
     return institute;
   }
 
   /**
-   * 
-   * @return 
+   *
+   * @return
    */
   public boolean isPublicDomain() {
     return publicDomain;
   }
 
   /**
-   * 
-   * @return 
+   *
+   * @return
    */
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
 
   /**
-   * 
-   * @return 
+   *
+   * @return
    */
   public String getTimestampAsString() {
     return timestamp;
