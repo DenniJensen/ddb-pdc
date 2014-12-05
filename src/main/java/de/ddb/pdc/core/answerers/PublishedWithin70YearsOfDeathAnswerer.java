@@ -32,7 +32,7 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
       if (author.getYearOfDeath() == null
           || !author.getYearOfDeath().isSet(Calendar.YEAR)) {
         this.note = "Not every authors' year of death is known. Assuming "
-            + "at least one author is still alive";
+            + "at least one author is still alive.";
         return Answer.ASSUMED_NO;
       }
       int theYearOfDeath = author.getYearOfDeath().get(Calendar.YEAR);
