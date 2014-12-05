@@ -13,6 +13,8 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
 
+  private String note;
+
   /**
    * {@inheritDoc}
    */
@@ -24,6 +26,9 @@ class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
     }
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
+    this.note = "Assuming the publishing year ("
+        + publishedYear.get(Calendar.YEAR)
+        + ") is also the work's year of creation.";
     if (currentYear - publishedYear.get(Calendar.YEAR) > 70) {
       return Answer.YES;
     } else {
@@ -36,7 +41,7 @@ class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return null;
+    return this.note;
   }
 
 }

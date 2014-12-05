@@ -24,7 +24,7 @@ class AuthorNaturalPersonAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "Hardcoded answer yes";
+    return "The answer is always assumed to be yes.";
   }
 
 }
