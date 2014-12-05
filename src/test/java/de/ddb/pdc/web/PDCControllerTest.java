@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 public class PDCControllerTest {
 
   @Test
-  public void calculate() throws Exception{
+  public void determinePublicDomainTest() throws Exception{
 
     MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
     DDBItem ddbItemfromMetaFetcher = new DDBItem("123");
@@ -31,12 +31,12 @@ public class PDCControllerTest {
     Mockito.when(ansService.calculate(null, mfetcher.fetchMetadata("123"))).thenReturn(pdcResult);
 
     StorageService storageService = Mockito.mock(StorageService.class);
-    
+
     PDCController pdcController = new PDCController(
         mfetcher, ansService, storageService
     );
 
-    Assert.assertSame(pdcResult, pdcController.calculate("123"));
+    Assert.assertSame(pdcResult, pdcController.determinePublicDomain("123"));
   }
 
 }

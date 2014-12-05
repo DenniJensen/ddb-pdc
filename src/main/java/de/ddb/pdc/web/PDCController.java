@@ -68,7 +68,7 @@ public class PDCController {
    * @return PDCResult serialized to standard JSON
    */
   @RequestMapping("/pdc/{itemId}")
-  public PDCResult calculate(@PathVariable String itemId) throws Exception {
+  public PDCResult determinePublicDomain(@PathVariable String itemId) throws Exception {
     
     final PDCResult pdcResult;
     
