@@ -10,16 +10,6 @@ public class MetaFetcherImpl implements MetaFetcher {
 
   private static final String URL =
     "https://www.deutsche-digitale-bibliothek.de";
-  private static final String APIURL =
-    "https://api.deutsche-digitale-bibliothek.de";
-  private static final String SEARCH = "/search?";
-  private static final String AUTH = "oauth_consumer_key=";
-  private static final String SORTROWS = "&sort=RELEVANCE&rows=";
-  private static final String QUERY = "&query=";
-  private static final String ITEM = "/items/";
-  private static final String ENTITY = "/entities?query=id:\"";
-  private static final String ENTITY_END = "\"&";
-  private static final String AIP = "/aip?";
 
   private RestTemplate restTemplate;
   private String apiKey;
