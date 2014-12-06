@@ -39,6 +39,20 @@
 .item-title a:visited{
 	color: #a5003b;
 }
+.item-title{
+	font-weight: bold;
+    word-wrap: break-word;
+	font-size: 1.5em;
+    text-decoration: none;
+	color: #a5003b;
+    font-family: KarbidWeb,Calibri,Arial,sans-serif;
+}
+.item-title:hover{
+	color: #a5003b;
+}
+.item-title:visited{
+	color: #a5003b;
+}
 .item-subtitle {
 }
 .item-calculate {
@@ -92,6 +106,9 @@
 .publicdomain .item-license{
 	background-color:#ddf2d5;	
 }
+.unknownpublicdomain .item-license{
+	background-color:#e5e5e5;	
+}
 .pdc-questions-wrapper{
 	margin-top:30px;	
 }
@@ -107,13 +124,22 @@
 .pdc-answer{
 	padding:11px;		
 }
+.unknown .pdc-question{
+	background-color:#e5e5e5;	
+}
+.unknown .pdc-answer{
+	background-color:#f4f4f4;	
+}
 .negative .pdc-question{
 	background-color:#f9dcdf;	
 }
 .negative .pdc-answer{
 	background-color:#F9E8EA;	
 }
-
+.notes{
+	color: #acacac;
+    float: right;	
+}
 .positive .pdc-question{
 	background-color:#ddf2d5;	
 }
@@ -137,7 +163,7 @@
   text-align: center;
   margin-bottom: 1em;
   margin-right: 0.6em; /* LTR */
-  padding: 7px 17px;
+  padding: 5px 17px;
   -khtml-border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

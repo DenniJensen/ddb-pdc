@@ -14,6 +14,8 @@ function ddb_pdc_result ( $ddbid ){
 	 
 	$pdcresult = ddb_pdc_http_request('/pdc/' .$ddbid, $ddbid); // HTTP Request to the PDC with the DDB ID
 
+	//var_dump($pdcresult);
+
 	$json_pdcresult = json_decode($pdcresult->data); // Get json data from the request and decode it 
 	
 	// Get information about the work with this ID to show it on the result page
@@ -27,14 +29,25 @@ function ddb_pdc_result ( $ddbid ){
 		}
 	}
 	
-	($json_pdcresult->publicDomain) ? $publicdomain = "publicdomain" : $publicdomain = "notpublicdomain";
+	switch($json_pdcresult->publicDomain){
+		case null:
+			$publicdomain = "unknownpublicdomain";
+			break;
+		case true:
+			$publicdomain = "publicdomain";
+			break;
+			
+		case false:
+			$publicdomain = "notpublicdomain";
+			break;
+	}
 	
 	$output = '';
 
 	$output .= '<div class="item ' . $publicdomain . '" >';
-	$output .= '<div class="item-image"><img src="' .$imageURL .'"/></div>';
+	$output .= '<div class="item-image"><a class="colorbox-load" title="'.$title.'" href="'.$imageURL .'"><img src="' .$imageURL .'"/></a></div>';
 	$output .='<div class="item-summary">';
-    $output .='<div class="item-title"><a href="#">' . $title . '</a></div>';
+    $output .='<div class="item-title">' . $title . '</div>';
     $output .='<div class="item-subtitle">' . $subtitle . '</div>';
   	$output .='</div>';
   	$output .='<div class="item-license"><img src="' . $imagespath . $publicdomain . '.png"/></div>';
@@ -42,15 +55,20 @@ function ddb_pdc_result ( $ddbid ){
 	
 	$output .='<div class="pdc-questions-wrapper">';
 	foreach($json_pdcresult->trace as $question){
-		if($question->answer){
+		if($question->answer == "assumed yes"){
 			$output .='<div class="pdc-questions positive">';
 			$output .='<div class="pdc-question"><img src="' . $imagespath . 'question_true.png" alt="" />' . $question->question . '</div>';
-			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_true.png" alt="" />Yes</div>';
+			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_true.png" alt="" />Yes<span class="notes">'.$question->note.'</span></div>';
 			$output .='</div>';
-		} else{
+		} else if($question->answer == "assumed no"){
 			$output .='<div class="pdc-questions negative">';
 			$output .='<div class="pdc-question"><img src="' . $imagespath . 'question_false.png" alt="" />' . $question->question . '</div>';
-			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_false.png" alt="" />No</div>';
+			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_false.png" alt="" />No<span class="notes">'.$question->note.'</span></div>';
+			$output .='</div>';	
+		} else{
+			$output .='<div class="pdc-questions unknown">';
+			$output .='<div class="pdc-question"><img src="' . $imagespath . 'question_unknown.png" alt="" />' . $question->question . '</div>';
+			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_unknown.png" alt="" />Unknown<span class="notes">'.$question->note.'</span></div>';
 			$output .='</div>';	
 		}
 	}

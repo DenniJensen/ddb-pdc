@@ -3,7 +3,7 @@
   <div id="header" class="<?php print $secondary_menu ? 'with-secondary-menu': 'without-secondary-menu'; ?> right-to-left"><div class="section clearfix">
 
     <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+      <a href="http://www.deutsche-digitale-bibliothek.de" target="_blank" title="<?php print t('Home'); ?>" rel="home" id="logo">
         <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
       </a>
     <?php endif; ?>
@@ -35,7 +35,7 @@
     <?php endif; ?>
     
     <div id="fu-berlin-logo">
-    	<img src="<?php echo base_path() . "sites/all/themes/ddb_fuberlin/images/fuberlin_logo.png"; ?>" alt="<?php print t('Freie Universität Berlin'); ?>" />
+    	<a href="http://www.fu-berlin.de" target="_blank"><img src="<?php echo base_path() . "sites/all/themes/ddb_fuberlin/images/fuberlin_logo.png"; ?>" alt="<?php print t('Freie Universität Berlin'); ?>" /></a>
     </div>
     
     <div class="main_navigation">  
@@ -62,15 +62,16 @@
   
 <img class="navigation_line" src="<?php echo base_path() . "sites/all/themes/ddb_fuberlin/images/navigation_line.png"; ?>" alt="" />
 
+  
+
+
+  
+  <div id="main-wrapper" class="clearfix"><div id="main" class="clearfix">
   <?php if ($messages): ?>
     <div id="messages"><div class="section clearfix">
       <?php print $messages; ?>
     </div></div> <!-- /.section, /#messages -->
   <?php endif; ?>
-
-
-  
-  <div id="main-wrapper" class="clearfix"><div id="main" class="clearfix">
 
     <div id="content" class="column"><div class="section">
       <a id="main-content"></a>

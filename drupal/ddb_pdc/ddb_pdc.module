@@ -19,7 +19,7 @@ $items['public-domain-calculator'] = array( // creates a link for the PDC search
 
 $items['search-results/%'] = // % will be replaced by page arguments
   array(
-    'title' => 'Search results',
+    //'title' => 'Search results',
     'page callback' => 'ddb_pdc_search_results',
 	'access callback' => TRUE,
 	'page arguments' => array(1), // searchterm as argument for the function ddb_pdc_controller
@@ -68,14 +68,16 @@ $form['submit_button'] = array(
 
 function
 ddb_pdc_form_validate($form, &$form_state) { // to validate input fields
-  
+  if(empty($form_state['values']['ddb_title'])){
+    form_error($form, t('Bitte geben Sie einen Suchbegriff ein!'));
+  }
 }
 
 function
 ddb_pdc_form_submit($form, &$form_state) {
 	//drupal_set_message(t("Author: @author, Titel: @title", array('@author' => $form_state['values']['ddb_author'], '@title' => $form_state['values']['ddb_title'])));
-
-	drupal_goto('search-results/' .  $form_state['values']['ddb_title']);
+	$input = $form_state['values']['ddb_title'];
+	drupal_goto('search-results/' .  urlencode($input));
 }
 
 function ddb_pdc_http_request($request, $inputdata){
