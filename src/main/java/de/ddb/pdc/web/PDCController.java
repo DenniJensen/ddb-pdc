@@ -23,9 +23,9 @@ public class PDCController {
   private String country;
 
   private final PublicDomainCalculator calculator;
-  private final MetaFetcher metaFetcher;  
+  private final MetaFetcher metaFetcher;
   private final StorageService storageService;
-  
+
   /**
    * Creates a PDCController.
    *
@@ -61,41 +61,31 @@ public class PDCController {
    *                  is true if the answer was answered with "yes" and
    *                  false if the answer was "no".
    *
-   * TODO catch exceptions here to return an appropriate response status to the
-   * client.
-   *
    * @param itemId DDB item ID
    * @return PDCResult serialized to standard JSON
    */
   @RequestMapping("/pdc/{itemId}")
   public PDCResult determinePublicDomain(@PathVariable String itemId) throws Exception {
-    
+
     final PDCResult pdcResult;
-    
-    // fetch the requested item from storage
+
     StorageModel fetchedRecord = storageService.fetch(itemId);
-    // if the item was found then return the requested information
-    if (fetchedRecord != null) {      
+
+    if (fetchedRecord != null) {
       pdcResult = new PDCResult(
           fetchedRecord.isPublicDomain(), fetchedRecord.getTrace()
       );
     } else {
-      // create a dbbItem for the requested itemId, populate the dbbItem
       DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
-      
-      // provide the meta data to the answerer service and get the result
+
       pdcResult = this.calculator.calculate(this.country, ddbItem);
       
-      // add the result to storage, including related metadata
-      // FIXME currently uses the metadata category, not pdcResult category as
-      // the latter does not exist yet.
-      // TODO add null checks before storing
       StorageModel newRecord = new StorageModel(
           itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
           pdcResult.isPublicDomain(), pdcResult.getTrace()
       );
-      storageService.store(newRecord);      
-    }    
+      storageService.store(newRecord);
+    }
     return pdcResult;
   }
 }
