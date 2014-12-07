@@ -35,7 +35,6 @@ public class MongoStorageServiceImpl implements StorageService {
   /**
    * Stores a single MongoDataModel record in the collection.
    *
-   * @param record
    */
   @Override
   public void store(StorageModel record) {
@@ -47,7 +46,6 @@ public class MongoStorageServiceImpl implements StorageService {
    * {@link store(StorageModel)} method to store the new record.
    * The record that is removed is the first record that matches the itemId.
    *
-   * @param newRecord
    */
   @Override
   public void update(StorageModel newRecord) {
@@ -61,8 +59,6 @@ public class MongoStorageServiceImpl implements StorageService {
    * Fetches the first StorageModel record from the collection that matches
    * the query. Implements the Query class so SQL-like constructs can be used.
    *
-   * @param itemId
-   * @return record
    */
   @Override
   public StorageModel fetch(String itemId) {
