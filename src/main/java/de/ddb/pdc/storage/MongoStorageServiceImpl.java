@@ -44,7 +44,7 @@ public class MongoStorageServiceImpl implements StorageService {
 
   /**
    * Updates a record by removing the existing record and calling the
-   * {@link #store(StorageModel) store()} method to store the new record.
+   * {@link store(StorageModel)} method to store the new record.
    * The record that is removed is the first record that matches the itemId.
    *
    * @param newRecord
