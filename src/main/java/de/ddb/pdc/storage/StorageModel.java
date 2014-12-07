@@ -1,7 +1,3 @@
-/**
- * Entity representing the PDC record structure in storage.
- * TODO apply TDA (tell don't ask) principle to getter methods.
- */
 package de.ddb.pdc.storage;
 
 import de.ddb.pdc.core.AnsweredQuestion;
@@ -11,6 +7,9 @@ import java.util.List;
 import java.util.TimeZone;
 import org.springframework.data.annotation.Id;
 
+/**
+ * Entity representing the PDC record structure in storage.
+ */
 public class StorageModel {
 
   @Id
@@ -18,7 +17,7 @@ public class StorageModel {
 
   private final String itemId;
   private final String itemCategory;
-  private final String institute;
+  private final String institution;
   private final boolean publicDomain;
   private final List<AnsweredQuestion> trace;
   private final String timestamp;
@@ -26,9 +25,6 @@ public class StorageModel {
   /**
    * Constructor for storing new records.
    * The timestamp is automatically assigned to the current date and time.
-   *
-   * TODO move the SimpleDateFormat initialization elsewhere
-   * TODO set the time zone through the properties file
    *
    * @param itemId
    * @param itemCategory
@@ -41,7 +37,7 @@ public class StorageModel {
 
     this.itemId = itemId;
     this.itemCategory = itemCategory;
-    this.institute = institute;
+    this.institution = institute;
     this.publicDomain = publicDomain;
     this.trace = trace;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,51 +45,26 @@ public class StorageModel {
     this.timestamp = sdf.format(new Date());
   }
 
-
-  /**
-   *
-   * @return
-   */
   public String getItemId() {
     return itemId;
   }
 
-  /**
-   *
-   * @return
-   */
   public String getItemCategory() {
     return itemCategory;
   }
 
-  /**
-   *
-   * @return
-   */
   public String getInstitute() {
-    return institute;
+    return institution;
   }
 
-  /**
-   *
-   * @return
-   */
   public boolean isPublicDomain() {
     return publicDomain;
   }
 
-  /**
-   *
-   * @return
-   */
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
 
-  /**
-   *
-   * @return
-   */
   public String getTimestampAsString() {
     return timestamp;
   }
