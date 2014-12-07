@@ -204,7 +204,8 @@ public class MongoStorageServiceImplTest {
      * @return something really long
      */
     @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+    public static PropertySourcesPlaceholderConfigurer
+        propertyPlaceholderConfigurer() {
       return new PropertySourcesPlaceholderConfigurer();
     }
 
