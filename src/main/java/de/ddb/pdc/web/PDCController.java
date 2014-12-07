@@ -65,7 +65,8 @@ public class PDCController {
    * @return PDCResult serialized to standard JSON
    */
   @RequestMapping("/pdc/{itemId}")
-  public PDCResult determinePublicDomain(@PathVariable String itemId) throws Exception {
+  public PDCResult determinePublicDomain(@PathVariable String itemId)
+          throws Exception {
 
     final PDCResult pdcResult;
 
@@ -79,7 +80,7 @@ public class PDCController {
       DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
 
       pdcResult = this.calculator.calculate(this.country, ddbItem);
-      
+
       StorageModel newRecord = new StorageModel(
           itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
           pdcResult.isPublicDomain(), pdcResult.getTrace()
