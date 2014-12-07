@@ -1,15 +1,3 @@
-/**
- * The MongoDB implementation of the StorageService.
- *
- * This class does not provide a MongoTemplate.update method as all the 
- * relevant data required for record creation is available when using the 
- * StorageService.
- * A remove-insert implementation is used instead. The itemId is assumed to be 
- * globally unique. This is important as MongoDB may otherwise apply changes to
- * multiple records.
- *
- * TODO include support for secure mode (connection with authentication).
- */
 package de.ddb.pdc.storage;
 
 import java.util.List;
@@ -20,18 +8,23 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+/**
+ * The MongoDB implementation of the StorageService.
+ *
+ * This class does not provide a MongoTemplate.update method as all the
+ * relevant data required for record creation is available when using the
+ * StorageService.
+ * A remove-insert implementation is used instead. The itemId is assumed to be
+ * globally unique. This is important as MongoDB may otherwise apply changes to
+ * multiple records.
+ *
+ */
 @Component
 public class MongoStorageServiceImpl implements StorageService {
 
   private final MongoTemplate mongoTemplate;
   private final String collectionName;
 
-  /**
-   * @Autowired ensures Spring injects the required Bean. @Value reads the
-   * related key-value from the properties file.
-   * @param mongoTemplate
-   * @param collectionName
-   */
   @Autowired
   public MongoStorageServiceImpl(MongoTemplate mongoTemplate,
           @Value("${collection.name:pdcData}") String collectionName) {
@@ -48,15 +41,12 @@ public class MongoStorageServiceImpl implements StorageService {
   public void store(StorageModel record) {
     mongoTemplate.insert(record, collectionName);
   }
-    
+
   /**
    * Updates a record by removing the existing record and calling the
-   * {@link #store(StorageModel) store()} method to store the new record. 
+   * {@link #store(StorageModel) store()} method to store the new record.
    * The record that is removed is the first record that matches the itemId.
-   * 
-   * TODO implement inspection of the WriteResult to ensure the old record was
-   * indeed removed.
-   * 
+   *
    * @param newRecord
    */
   @Override
