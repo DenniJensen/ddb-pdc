@@ -1,12 +1,3 @@
-/**
- * This is not a unit test, this is a real test. (but with a test-DB) :D
- * Tests the store and fetch methods
- * Test behaviour is specified by the included Configuration class and
- * environment properties are loaded from a designated test file.
- * TODO Make the Configuration class available to other test classes.
- * TODO finalize the test case for store and fetch.
- * TODO Implement the remaining test case for the update method.
- */
 package de.ddb.pdc.storage;
 
 import com.mongodb.MongoClient;
@@ -31,9 +22,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-/**
- * AnnotationConfigContextLoader loads bean definitions from annotated classes.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public class MongoStorageServiceImplTest {
@@ -48,13 +36,8 @@ public class MongoStorageServiceImplTest {
     this.storageService = storageService;
   }
 
-  /**
-   * Test of store and fetch method, of class StorageService.
-   * ItemID have to be an unique number.
-   */
   @Test
   public void testStoreAndFetch() {
-    /* Dummy data */
     final String itemID = "156987";
     final String itemCategory = "Movies";
     final String institute = "Insti";
@@ -66,24 +49,18 @@ public class MongoStorageServiceImplTest {
             Question.PERFORMED_MORE_THAN_50_YEARS_AGO, Answer.YES, null);
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
-    /* -------- */
-    // create and store a new entry in DB
+
     StorageModel newEntry = new StorageModel(
         itemID,itemCategory,institute,publicDomain,trace);
     storageService.store(newEntry);
-    // fetch stored entry
+
     StorageModel storedEntry = storageService.fetch(itemID);
     boolean check = compareTwoEntries(newEntry, storedEntry);
     Assert.assertEquals(true, check);
   }
 
-  /**
-   * Test of store and update method, of class StorageService.
-   * ItemID have to be an unique number.
-   */
   @Test
   public void testStoreAndUpdate(){
-    /* Dummy data */
     final String itemID = "8963254";
     final String itemCategory = "Movies";
     final String institute = "Insti";
@@ -95,9 +72,7 @@ public class MongoStorageServiceImplTest {
             Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.NO, null);
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
-    /* -------- */
 
-    // create and store a new entry in DB
     StorageModel newEntry = new StorageModel(
         itemID,itemCategory,institute,publicDomain,trace);
     storageService.store(newEntry);
@@ -112,16 +87,11 @@ public class MongoStorageServiceImplTest {
     StorageModel updatedEntry = new StorageModel(
             itemID, itemCategory, institute, true, newTrace);
     storageService.update(updatedEntry);
-     // fetch stored entry
+
     StorageModel storedEntry = storageService.fetch(itemID);
-    boolean check = compareTwoEntries(updatedEntry, storedEntry);
-    Assert.assertEquals(true, check);
+    Assert.assertTrue(compareTwoEntries(updatedEntry, storedEntry));
   }
 
-  /**
-   * Test of deleteAll-method of class StorageService.
-   *
-   */
   @Test
   public void testDeleteAll() {
     List <StorageModel> entriesBefore= storageService.fetchAll();
