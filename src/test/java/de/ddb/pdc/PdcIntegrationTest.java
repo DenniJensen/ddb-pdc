@@ -2,6 +2,7 @@ package de.ddb.pdc;
 
 import de.ddb.pdc.metadata.DdbApiUrls;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class PdcIntegrationTest {
   private RestTemplate serverRestTemplate;
   private MockRestServiceServer mockDdbApi;
 
+  private final String DDB_DOMAIN = "https://www.deutsche-digitale-bibliothek.de";
+
   @Before
   public void setUp() {
     mockDdbApi = MockRestServiceServer.createServer(serverRestTemplate);
@@ -59,29 +62,31 @@ public class PdcIntegrationTest {
 
     assertEquals(3, results.size());
 
+    String totalUrl;
+    String urlSearch;
     Map result1 = (Map) results.get(0);
     assertEquals("TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK", result1.get("id"));
     assertEquals("Goethe", result1.get("title"));
     assertEquals("Druckgraphik", result1.get("subtitle"));
-    assertEquals(
-        "https://www.deutsche-digitale-bibliothek.de/binary/TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK/list/1.jpg",
-        result1.get("imageUrl"));
+    urlSearch = "/binary/TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK/list/1.jpg";
+    totalUrl = DDB_DOMAIN + urlSearch;
+    assertEquals(totalUrl, result1.get("imageUrl"));
 
     Map result2 = (Map) results.get(1);
     assertEquals("ILL7O3BSG7ZXIZMX6RT23AR7FDT3NUPK", result2.get("id"));
     assertEquals("Goethe", result2.get("title"));
     assertEquals("Zeichnung", result2.get("subtitle"));
-    assertEquals(
-        "https://www.deutsche-digitale-bibliothek.de/binary/ILL7O3BSG7ZXIZMX6RT23AR7FDT3NUPK/list/1.jpg",
-        result2.get("imageUrl"));
+    urlSearch = "/binary/ILL7O3BSG7ZXIZMX6RT23AR7FDT3NUPK/list/1.jpg";
+    totalUrl = DDB_DOMAIN + urlSearch;
+    assertEquals(totalUrl, result2.get("imageUrl"));
 
     Map result3 = (Map) results.get(2);
     assertEquals("4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22", result3.get("id"));
     assertEquals("Cornelie Goethe", result3.get("title"));
     assertEquals("Druckgraphik", result3.get("subtitle"));
-    assertEquals(
-        "https://www.deutsche-digitale-bibliothek.de/binary/4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22/list/1.jpg",
-        result3.get("imageUrl"));
+    urlSearch =  "/binary/4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22/list/1.jpg";
+    totalUrl = DDB_DOMAIN + urlSearch;
+    assertEquals(totalUrl, result3.get("imageUrl"));
   }
 
   private String loadJsonReponse(String path) throws Exception {
@@ -90,5 +95,18 @@ public class PdcIntegrationTest {
     try (BufferedReader bufferedReader = new BufferedReader(streamReader)) {
       return bufferedReader.readLine();
     }
+  }
+
+
+  @Ignore
+  @Test
+  public void searchItem() throws Exception {
+    String ddbUrl = DdbApiUrls.itemAipUrl("3", dbbApiKey);
+    String ddbResponse = loadJsonReponse("/pdc/3");
+    mockDdbApi.expect(requestTo(ddbUrl))
+            .andRespond(withSuccess(ddbResponse, MediaType.APPLICATION_JSON));
+    RestTemplate client = new TestRestTemplate();
+    String url = urlPrefix + "/search?q=1";
+
   }
 }
