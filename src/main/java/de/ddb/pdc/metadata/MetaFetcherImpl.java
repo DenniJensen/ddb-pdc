@@ -92,14 +92,17 @@ public class MetaFetcherImpl implements MetaFetcher {
       EntitiesResult result = restTemplate.getForObject(entityUrl,
           EntitiesResult.class);
       fillAuthor(author, result);
+
     }
   }
 
   private void fillAuthor(Author author, EntitiesResult result) {
     EntitiesResultItem entity = result.getResultItem();
-    author.setName(entity.getName());
-    author.setYearOfBirth(entity.getYearOfBirth());
-    author.setYearOfDeath(entity.getYearOfDeath());
-    author.setPlaceOfBirth(entity.getPlaceOfBirth());
+    if (entity != null) {
+      author.setName(entity.getName());
+      author.setYearOfBirth(entity.getYearOfBirth());
+      author.setYearOfDeath(entity.getYearOfDeath());
+      author.setPlaceOfBirth(entity.getPlaceOfBirth());
+    }
   }
 }
