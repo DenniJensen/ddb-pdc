@@ -1,6 +1,5 @@
 package de.ddb.pdc.core;
 
-import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**

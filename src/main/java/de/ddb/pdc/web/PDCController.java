@@ -10,6 +10,8 @@ import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
+import de.ddb.pdc.storage.StorageModel;
+import de.ddb.pdc.storage.StorageService;
 
 /**
  * Provides an HTTP interface for public domain calculation.
@@ -22,6 +24,7 @@ public class PDCController {
 
   private final PublicDomainCalculator calculator;
   private final MetaFetcher metaFetcher;
+  private final StorageService storageService;
 
   /**
    * Creates a PDCController.
@@ -29,12 +32,14 @@ public class PDCController {
    * @param metaFetcher     {@link MetaFetcher} to use for DBB API calls
    * @param calculator to decide the public domain problem on an item for
    *                        a given country
+   * @param storageService to access previously calculated item information
    */
   @Autowired
   public PDCController(MetaFetcher metaFetcher,
-      PublicDomainCalculator calculator) {
+      PublicDomainCalculator calculator, StorageService storageService) {
     this.metaFetcher = metaFetcher;
     this.calculator = calculator;
+    this.storageService = storageService;
   }
 
   /**
@@ -56,21 +61,32 @@ public class PDCController {
    *                  is true if the answer was answered with "yes" and
    *                  false if the answer was "no".
    *
-   * TODO catch exceptions here to return an appropriate response status to the
-   * client.
-   *
    * @param itemId DDB item ID
    * @return PDCResult serialized to standard JSON
    */
   @RequestMapping("/pdc/{itemId}")
-  public PDCResult calculate(@PathVariable String itemId) throws Exception {
+  public PDCResult determinePublicDomain(@PathVariable String itemId)
+      throws Exception {
 
-    // create a dbbItem for the requested itemId, populate the dbbItem
-    DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
+    final PDCResult pdcResult;
 
-    // provide the meta data to the answerer service and get the result
-    PDCResult pdcResult = this.calculator.calculate(this.country, ddbItem);
+    StorageModel fetchedRecord = storageService.fetch(itemId);
 
+    if (fetchedRecord != null) {
+      pdcResult = new PDCResult(
+          fetchedRecord.isPublicDomain(), fetchedRecord.getTrace()
+      );
+    } else {
+      DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
+
+      pdcResult = this.calculator.calculate(this.country, ddbItem);
+
+      StorageModel newRecord = new StorageModel(
+          itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
+          pdcResult.isPublicDomain(), pdcResult.getTrace()
+      );
+      storageService.store(newRecord);
+    }
     return pdcResult;
   }
 }
