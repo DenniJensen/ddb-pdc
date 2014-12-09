@@ -34,9 +34,15 @@ public class Crawler implements CommandLineRunner {
   public void run(String... args) throws Exception {
     List<String> argsList = Arrays.asList(args);
 
-    enabled = this.isCommandLineArgument(argsList, "-c", "--crawler");
-    String maxDepthString = getCommandLineArgument(argsList, "--depth");
-    String fetchSizeString = getCommandLineArgument(argsList, "--fetchSize");
+    enabled = this.isArgument(argsList, "-c", "--crawler");
+
+    if (!enabled) {
+      LOG.info("The crawler is disabled. Enable it with --crawler or -c.");
+      return;
+    }
+
+    String maxDepthString = getArgumentValue(argsList, "--depth");
+    String fetchSizeString = getArgumentValue(argsList, "--fetchSize");
 
     if (maxDepthString != null) {
       try {
@@ -52,11 +58,6 @@ public class Crawler implements CommandLineRunner {
       } catch (NumberFormatException e) {
         // do nothing, keep the default fetchSize
       }
-    }
-
-    if (!enabled) {
-      LOG.info("The crawler is disabled. Enable it with --crawler or -c.");
-      return;
     }
 
     LOG.info(String.format("The crawler is enabled. Max depth: %d, fetch size: "
@@ -77,7 +78,7 @@ public class Crawler implements CommandLineRunner {
    *         the arguments. false otherwise.
    */
   @SuppressWarnings("static-method")
-  private boolean isCommandLineArgument(List<String> args, String... cmds) {
+  private boolean isArgument(List<String> args, String... cmds) {
     for (String cmd : cmds) {
       if (args.contains(cmd)) {
         return true;
@@ -94,7 +95,7 @@ public class Crawler implements CommandLineRunner {
    * @return The value as String or null if no value was found.
    */
   @SuppressWarnings("static-method")
-  private String getCommandLineArgument(List<String> args, String cmd) {
+  private String getArgumentValue(List<String> args, String cmd) {
     boolean found = false;
     for (String arg : args) {
       if (arg.equalsIgnoreCase(cmd)) {
