@@ -66,7 +66,7 @@ public class PDCController {
    */
   @RequestMapping("/pdc/{itemId}")
   public PDCResult determinePublicDomain(@PathVariable String itemId)
-          throws Exception {
+      throws Exception {
 
     final PDCResult pdcResult;
 

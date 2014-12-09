@@ -25,19 +25,13 @@ public class StorageModel {
   /**
    * Constructor for storing new records.
    * The timestamp is automatically assigned to the current date and time.
-   *
-   * @param itemId
-   * @param itemCategory
-   * @param institute
-   * @param publicDomain
-   * @param trace
    */
-  public StorageModel(String itemId, String itemCategory, String institute,
+  public StorageModel(String itemId, String itemCategory, String institution,
           boolean publicDomain, List<AnsweredQuestion> trace) {
 
     this.itemId = itemId;
     this.itemCategory = itemCategory;
-    this.institution = institute;
+    this.institution = institution;
     this.publicDomain = publicDomain;
     this.trace = trace;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -53,7 +47,7 @@ public class StorageModel {
     return itemCategory;
   }
 
-  public String getInstitute() {
+  public String getInstitution() {
     return institution;
   }
 

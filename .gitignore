@@ -16,3 +16,4 @@ config
 /nb-configuration.xml
 .classpath
 .settings/
+!/config/

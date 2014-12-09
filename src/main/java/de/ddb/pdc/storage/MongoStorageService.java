@@ -20,13 +20,13 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class MongoStorageServiceImpl implements StorageService {
+public class MongoStorageService implements StorageService {
 
   private final MongoTemplate mongoTemplate;
   private final String collectionName;
 
   @Autowired
-  public MongoStorageServiceImpl(MongoTemplate mongoTemplate,
+  public MongoStorageService(MongoTemplate mongoTemplate,
           @Value("${collection.name:pdcData}") String collectionName) {
     this.mongoTemplate = mongoTemplate;
     this.collectionName = collectionName;

@@ -1,10 +1,10 @@
-/**
- * Storage service for storing and fetching PDC data models.
- */
 package de.ddb.pdc.storage;
 
 import java.util.List;
 
+/**
+ * Storage service for storing and fetching PDC data models.
+ */
 public interface StorageService {
 
   /**
