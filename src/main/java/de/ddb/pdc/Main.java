@@ -23,11 +23,14 @@ public class Main {
   private String ddbApiKey;
 
   @Bean
-  public MetaFetcher metaFetcher() {
-    RestTemplate template = new RestTemplate();
-    return new MetaFetcherImpl(template, ddbApiKey);
+  public RestTemplate restTemplate() {
+    return new RestTemplate();
   }
 
+  @Bean
+  public MetaFetcher metaFetcher(RestTemplate restTemplate) {
+    return new MetaFetcherImpl(restTemplate, ddbApiKey);
+  }
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);

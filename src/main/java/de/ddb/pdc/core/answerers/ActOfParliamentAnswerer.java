@@ -24,6 +24,6 @@ class ActOfParliamentAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "Hardcoded answer. The answer will always be no.";
+    return "The answer is always assumed to be no.";
   }
 }
