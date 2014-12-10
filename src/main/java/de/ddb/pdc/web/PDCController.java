@@ -10,7 +10,7 @@ import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
-import de.ddb.pdc.storage.PDCResultEntity;
+import de.ddb.pdc.storage.StoredPDCResult;
 import de.ddb.pdc.storage.StorageService;
 import java.util.TimeZone;
 import java.util.Calendar;
@@ -63,11 +63,11 @@ public class PDCController {
    *                  is true if the answer was answered with "yes" and
    *                  false if the answer was "no".
    *
-   * A retrieved evaluation result is re-calculated if both of the following 
+   * A retrieved PDC result is re-calculated if both of the following 
    * conditions are true:
    * 1) the DDB item is not part of the public domain
    * 2) the year of the current request is greater than the year at which the
-   * public-domain evaluation was calculated
+   * public-domain result was calculated and stored
    * 
    * @param itemId DDB item ID
    * @return PDCResult serialized to standard JSON
@@ -78,29 +78,29 @@ public class PDCController {
 
     final PDCResult pdcResult;
 
-    PDCResultEntity fetchedRecord = storageService.fetch(itemId);
+    StoredPDCResult fetchedResult = storageService.fetch(itemId);
     
-    if (fetchedRecord != null) {
+    if (fetchedResult != null) {
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
       int requestYear = calendar.get(Calendar.YEAR);
+      calendar.setTime(fetchedResult.getCreatedDate());
+      int recordCreationYear = calendar.get(Calendar.YEAR);
       
-      String recordTimestamp = fetchedRecord.getTimestampAsString();
-      int recordYear = Integer.parseInt(recordTimestamp.substring(0,5));
-      
-      if ((requestYear > recordYear) && (! fetchedRecord.isPublicDomain())) {
+      if ((requestYear > recordCreationYear) 
+          && (! fetchedResult.isPublicDomain())) {
         DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
 
         pdcResult = this.calculator.calculate(this.country, ddbItem);
 
-        PDCResultEntity updatedRecord = new PDCResultEntity(
+        StoredPDCResult updatedResult = new StoredPDCResult(
             itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
             pdcResult.isPublicDomain(), pdcResult.getTrace()
         );
-        storageService.update(updatedRecord);
+        storageService.update(updatedResult);
         
       } else {      
         pdcResult = new PDCResult(
-            fetchedRecord.isPublicDomain(), fetchedRecord.getTrace()
+            fetchedResult.isPublicDomain(), fetchedResult.getTrace()
         );
       }      
     } else {
@@ -108,7 +108,7 @@ public class PDCController {
 
       pdcResult = this.calculator.calculate(this.country, ddbItem);
 
-      PDCResultEntity newRecord = new PDCResultEntity(
+      StoredPDCResult newRecord = new StoredPDCResult(
           itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
           pdcResult.isPublicDomain(), pdcResult.getTrace()
       );

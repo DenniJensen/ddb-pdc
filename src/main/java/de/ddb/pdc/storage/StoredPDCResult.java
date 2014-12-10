@@ -1,7 +1,7 @@
 package de.ddb.pdc.storage;
 
 import de.ddb.pdc.core.AnsweredQuestion;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -9,8 +9,9 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Entity representing the PDC record structure in storage.
+ *  
  */
-public class PDCResultEntity {
+public class StoredPDCResult {
 
   @Id
   private String id;
@@ -20,13 +21,13 @@ public class PDCResultEntity {
   private final String institution;
   private final boolean publicDomain;
   private final List<AnsweredQuestion> trace;
-  private final String timestamp;
+  private final Date createdDate;
 
   /**
    * Constructor for storing new records.
-   * The timestamp is automatically assigned to the current date and time.
+   * createdDate is set to the current date and time.
    */
-  public PDCResultEntity(String itemId, String itemCategory, String institution,
+  public StoredPDCResult(String itemId, String itemCategory, String institution,
           boolean publicDomain, List<AnsweredQuestion> trace) {
 
     this.itemId = itemId;
@@ -34,9 +35,7 @@ public class PDCResultEntity {
     this.institution = institution;
     this.publicDomain = publicDomain;
     this.trace = trace;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-    this.timestamp = sdf.format(new Date());    
+    this.createdDate = new Date();
   }
 
   public String getItemId() {
@@ -59,8 +58,8 @@ public class PDCResultEntity {
     return trace;
   }
 
-  public String getTimestampAsString() {
-    return timestamp;
+  public Date getCreatedDate() {
+    return createdDate;
   }
 
 }

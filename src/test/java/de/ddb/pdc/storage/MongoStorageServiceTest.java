@@ -35,12 +35,12 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    PDCResultEntity newEntry = new PDCResultEntity(
+    StoredPDCResult newEntry = new StoredPDCResult(
         itemID, category, institution,publicDomain,trace
     );
     storageService.store(newEntry);
 
-    PDCResultEntity storedEntry = storageService.fetch(itemID);
+    StoredPDCResult storedEntry = storageService.fetch(itemID);
     boolean check = compareTwoEntries(newEntry, storedEntry);
     Assert.assertEquals(true, check);
   }
@@ -60,7 +60,7 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    PDCResultEntity newEntry = new PDCResultEntity(
+    StoredPDCResult newEntry = new StoredPDCResult(
         itemID, category, institution,publicDomain,trace
     );
     storageService.store(newEntry);
@@ -72,41 +72,42 @@ public class MongoStorageServiceTest {
             Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.YES, null);
     newTrace.add(newAnsweredQuestionA);
     newTrace.add(newAnsweredQuestionB);
-    PDCResultEntity updatedEntry = new PDCResultEntity(
+    StoredPDCResult updatedEntry = new StoredPDCResult(
       itemID, category, institution, true, newTrace
     );
     storageService.update(updatedEntry);
 
-    PDCResultEntity storedEntry = storageService.fetch(itemID);
+    StoredPDCResult storedEntry = storageService.fetch(itemID);
     Assert.assertTrue(compareTwoEntries(updatedEntry, storedEntry));
   }
 
   @Test
   public void testDeleteAll() {
-    List <PDCResultEntity> entriesBefore= storageService.fetchAll();
+    List <StoredPDCResult> entriesBefore= storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
-    List <PDCResultEntity> entriesAfter = storageService.fetchAll();
+    List <StoredPDCResult> entriesAfter = storageService.fetchAll();
     Assert.assertEquals(true, entriesAfter.isEmpty());
   }
 
   /**
-   * Compares two Entries and return true if these have the same values
-   *
+   * Compares two Entries and return true if these have the same values.
+   * The expected record's creationDate should be less than the actual record's
+   * creationDate, as the latter is created later on in time.
+   * 
    * @param mdm1
    * @param mdm2
    *
    * @return true if entries are equal
    */
-  private boolean compareTwoEntries(PDCResultEntity mdm1, PDCResultEntity mdm2){
+  private boolean compareTwoEntries(StoredPDCResult mdm1, StoredPDCResult mdm2){
     boolean equal = false;
 
     if((mdm1.getItemId().equals(mdm2.getItemId())) &&
             (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
             (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
             (mdm1.isPublicDomain() == mdm2.isPublicDomain())&&
-            (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace())) &&
-            (mdm1.getTimestampAsString().equals(mdm2.getTimestampAsString()))
+            (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
             ){
       equal = true;
     }

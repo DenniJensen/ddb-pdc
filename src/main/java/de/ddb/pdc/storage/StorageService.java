@@ -12,14 +12,14 @@ public interface StorageService {
    *
    * @param record
    */
-  public void store(PDCResultEntity record);
+  public void store(StoredPDCResult record);
 
   /**
    * Update an existing MongoDataModel.
    * 
    * @param record 
    */
-  public void update(PDCResultEntity record);
+  public void update(StoredPDCResult record);
   
   /**
    * Find a single MongoDataModel record by its item ID.
@@ -27,14 +27,14 @@ public interface StorageService {
    * @param itemId
    * @return record
    */
-  public PDCResultEntity fetch(String itemId);
+  public StoredPDCResult fetch(String itemId);
 
   /**
    * Fetch all records from storage.
    *
    * @return list of records
    */
-  public List<PDCResultEntity> fetchAll();
+  public List<StoredPDCResult> fetchAll();
 
   /**
    * Remove all records from storage.
