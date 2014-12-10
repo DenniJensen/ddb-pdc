@@ -30,14 +30,17 @@ public class MetaFetcherImpl implements MetaFetcher {
   /**
    * {@inheritDoc}
    */
-  public DDBItem[] searchForItems(String query, int maxCount)
+  public DDBItem[] searchForItems(String query, int startItem, int maxCount, String sort)
       throws RestClientException {
-    String url = DdbApiUrls.searchUrl(query, maxCount, apiKey);
+    String url = DdbApiUrls.searchUrl(query,startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
 
   private DDBItem[] getDDBItems(SearchResults results) {
+    if (results.getResultItems() == null) {
+      return new DDBItem[0];
+    }
     int numItems = results.getResultItems().size();
     DDBItem[] ddbItems = new DDBItem[numItems];
 
