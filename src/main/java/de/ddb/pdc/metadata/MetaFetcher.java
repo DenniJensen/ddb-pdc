@@ -15,7 +15,7 @@ public interface MetaFetcher {
    * @return                     matching items
    * @throws RestClientException if communication with the DDB API fails
    */
-  public DDBItem[] searchForItems(String query, int maxCount)
+  public DDBItem[] searchForItems(String query, int startItem, int maxCount, String sort)
       throws RestClientException;
 
   /**
