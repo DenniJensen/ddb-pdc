@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 /**
  * Entity representing the PDC record structure in storage.
  */
-public class StorageModel {
+public class PDCResultEntity {
 
   @Id
   private String id;
@@ -26,7 +26,7 @@ public class StorageModel {
    * Constructor for storing new records.
    * The timestamp is automatically assigned to the current date and time.
    */
-  public StorageModel(String itemId, String itemCategory, String institution,
+  public PDCResultEntity(String itemId, String itemCategory, String institution,
           boolean publicDomain, List<AnsweredQuestion> trace) {
 
     this.itemId = itemId;

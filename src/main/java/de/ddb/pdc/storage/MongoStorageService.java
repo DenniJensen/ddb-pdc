@@ -37,7 +37,7 @@ public class MongoStorageService implements StorageService {
    *
    */
   @Override
-  public void store(StorageModel record) {
+  public void store(PDCResultEntity record) {
     mongoTemplate.insert(record, collectionName);
   }
 
@@ -48,7 +48,7 @@ public class MongoStorageService implements StorageService {
    *
    */
   @Override
-  public void update(StorageModel newRecord) {
+  public void update(PDCResultEntity newRecord) {
     Query query = new Query();
     query.addCriteria(Criteria.where("itemId").is(newRecord.getItemId()));
     mongoTemplate.remove(query, collectionName);
@@ -61,10 +61,10 @@ public class MongoStorageService implements StorageService {
    *
    */
   @Override
-  public StorageModel fetch(String itemId) {
+  public PDCResultEntity fetch(String itemId) {
     Query query = new Query();
     query.addCriteria(Criteria.where("itemId").is(itemId));
-    return mongoTemplate.findOne(query, StorageModel.class, collectionName);
+    return mongoTemplate.findOne(query, PDCResultEntity.class, collectionName);
   }
 
   /**
@@ -73,8 +73,8 @@ public class MongoStorageService implements StorageService {
    * @return list of MongoDataModel records
    */
   @Override
-  public List<StorageModel> fetchAll() {
-    return mongoTemplate.findAll(StorageModel.class, collectionName);
+  public List<PDCResultEntity> fetchAll() {
+    return mongoTemplate.findAll(PDCResultEntity.class, collectionName);
   }
 
   /**

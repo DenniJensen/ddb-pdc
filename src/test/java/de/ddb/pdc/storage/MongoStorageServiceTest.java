@@ -35,12 +35,12 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StorageModel newEntry = new StorageModel(
+    PDCResultEntity newEntry = new PDCResultEntity(
         itemID, category, institution,publicDomain,trace
     );
     storageService.store(newEntry);
 
-    StorageModel storedEntry = storageService.fetch(itemID);
+    PDCResultEntity storedEntry = storageService.fetch(itemID);
     boolean check = compareTwoEntries(newEntry, storedEntry);
     Assert.assertEquals(true, check);
   }
@@ -60,7 +60,7 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StorageModel newEntry = new StorageModel(
+    PDCResultEntity newEntry = new PDCResultEntity(
         itemID, category, institution,publicDomain,trace
     );
     storageService.store(newEntry);
@@ -72,21 +72,21 @@ public class MongoStorageServiceTest {
             Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.YES, null);
     newTrace.add(newAnsweredQuestionA);
     newTrace.add(newAnsweredQuestionB);
-    StorageModel updatedEntry = new StorageModel(
+    PDCResultEntity updatedEntry = new PDCResultEntity(
       itemID, category, institution, true, newTrace
     );
     storageService.update(updatedEntry);
 
-    StorageModel storedEntry = storageService.fetch(itemID);
+    PDCResultEntity storedEntry = storageService.fetch(itemID);
     Assert.assertTrue(compareTwoEntries(updatedEntry, storedEntry));
   }
 
   @Test
   public void testDeleteAll() {
-    List <StorageModel> entriesBefore= storageService.fetchAll();
+    List <PDCResultEntity> entriesBefore= storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
-    List <StorageModel> entriesAfter = storageService.fetchAll();
+    List <PDCResultEntity> entriesAfter = storageService.fetchAll();
     Assert.assertEquals(true, entriesAfter.isEmpty());
   }
 
@@ -98,7 +98,7 @@ public class MongoStorageServiceTest {
    *
    * @return true if entries are equal
    */
-  private boolean compareTwoEntries(StorageModel mdm1, StorageModel mdm2){
+  private boolean compareTwoEntries(PDCResultEntity mdm1, PDCResultEntity mdm2){
     boolean equal = false;
 
     if((mdm1.getItemId().equals(mdm2.getItemId())) &&

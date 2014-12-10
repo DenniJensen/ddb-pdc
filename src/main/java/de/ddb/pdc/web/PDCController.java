@@ -10,7 +10,7 @@ import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
-import de.ddb.pdc.storage.StorageModel;
+import de.ddb.pdc.storage.PDCResultEntity;
 import de.ddb.pdc.storage.StorageService;
 
 /**
@@ -70,7 +70,7 @@ public class PDCController {
 
     final PDCResult pdcResult;
 
-    StorageModel fetchedRecord = storageService.fetch(itemId);
+    PDCResultEntity fetchedRecord = storageService.fetch(itemId);
 
     if (fetchedRecord != null) {
       pdcResult = new PDCResult(
@@ -81,7 +81,7 @@ public class PDCController {
 
       pdcResult = this.calculator.calculate(this.country, ddbItem);
 
-      StorageModel newRecord = new StorageModel(
+      PDCResultEntity newRecord = new PDCResultEntity(
           itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
           pdcResult.isPublicDomain(), pdcResult.getTrace()
       );
