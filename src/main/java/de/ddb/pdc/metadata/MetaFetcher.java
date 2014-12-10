@@ -11,7 +11,9 @@ public interface MetaFetcher {
    * Searches the DDB for items whose metadata contains the passed substring.
    *
    * @param query                substring to search for
+   * @param startItem            start number of items
    * @param maxCount             maximum number of items to return
+   * @param sort                 sort order of items
    * @return                     matching items
    * @throws RestClientException if communication with the DDB API fails
    */

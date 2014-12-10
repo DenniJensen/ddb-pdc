@@ -11,10 +11,12 @@ public class DdbApiUrls {
   /**
    * Returns an absolute URL for a DDB API /search request.
    *
-   * @param query    search query in Solr syntax
-   * @param maxItems maximum number of items to return
-   * @param apiKey   DDB API key for authentication
-   * @return         corresponding URL
+   * @param query     search query in Solr syntax
+   * @param startItem start number of items to return
+   * @param maxItems  maximum number of items to return
+   * @param sort      sort order of items
+   * @param apiKey    DDB API key for authentication
+   * @return          corresponding URL
    */
   public static String searchUrl(String query,int startItem, int maxItems,
     String sort, String apiKey) {
