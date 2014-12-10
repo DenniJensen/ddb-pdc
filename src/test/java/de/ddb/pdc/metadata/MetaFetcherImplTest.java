@@ -35,10 +35,10 @@ public class MetaFetcherImplTest {
     SearchResults results = mock(SearchResults.class);
     when(results.getResultItems()).thenReturn(resultItems);
 
-    String url = DdbApiUrls.searchUrl("Titel", 10, "authkey");
+    String url = DdbApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
-    DDBItem[] items = fetcher.searchForItems("Titel", 10);
+    DDBItem[] items = fetcher.searchForItems("Titel", 0, 10, "relevance");
     assertEquals(1, items.length);
     assertEquals("abcde", items[0].getId());
     assertEquals("Titel", items[0].getTitle());
