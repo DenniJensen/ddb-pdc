@@ -36,7 +36,7 @@ public class PDCResultEntity {
     this.trace = trace;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-    this.timestamp = sdf.format(new Date());
+    this.timestamp = sdf.format(new Date());    
   }
 
   public String getItemId() {

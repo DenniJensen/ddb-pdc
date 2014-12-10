@@ -12,6 +12,8 @@ import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
 import de.ddb.pdc.storage.PDCResultEntity;
 import de.ddb.pdc.storage.StorageService;
+import java.util.TimeZone;
+import java.util.Calendar;
 
 /**
  * Provides an HTTP interface for public domain calculation.
@@ -61,6 +63,12 @@ public class PDCController {
    *                  is true if the answer was answered with "yes" and
    *                  false if the answer was "no".
    *
+   * A retrieved evaluation result is re-calculated if both of the following 
+   * conditions are true:
+   * 1) the DDB item is not part of the public domain
+   * 2) the year of the current request is greater than the year at which the
+   * public-domain evaluation was calculated
+   * 
    * @param itemId DDB item ID
    * @return PDCResult serialized to standard JSON
    */
@@ -71,11 +79,30 @@ public class PDCController {
     final PDCResult pdcResult;
 
     PDCResultEntity fetchedRecord = storageService.fetch(itemId);
-
+    
     if (fetchedRecord != null) {
-      pdcResult = new PDCResult(
-          fetchedRecord.isPublicDomain(), fetchedRecord.getTrace()
-      );
+      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+      int requestYear = calendar.get(Calendar.YEAR);
+      
+      String recordTimestamp = fetchedRecord.getTimestampAsString();
+      int recordYear = Integer.parseInt(recordTimestamp.substring(0,5));
+      
+      if ((requestYear > recordYear) && (! fetchedRecord.isPublicDomain())) {
+        DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
+
+        pdcResult = this.calculator.calculate(this.country, ddbItem);
+
+        PDCResultEntity updatedRecord = new PDCResultEntity(
+            itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
+            pdcResult.isPublicDomain(), pdcResult.getTrace()
+        );
+        storageService.update(updatedRecord);
+        
+      } else {      
+        pdcResult = new PDCResult(
+            fetchedRecord.isPublicDomain(), fetchedRecord.getTrace()
+        );
+      }      
     } else {
       DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
 
@@ -87,6 +114,7 @@ public class PDCController {
       );
       storageService.store(newRecord);
     }
+    
     return pdcResult;
   }
 }
