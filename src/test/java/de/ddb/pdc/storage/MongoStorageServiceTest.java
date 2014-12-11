@@ -14,13 +14,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=TestConfiguration.class, 
+@ContextConfiguration(classes=TestConfiguration.class,
     loader = AnnotationConfigContextLoader.class)
 public class MongoStorageServiceTest {
-  
+
   @Autowired
   private StorageService storageService;
-  
+
   @Test
   public void testStoreAndFetch() {
     final String itemID = "156987";
@@ -47,7 +47,7 @@ public class MongoStorageServiceTest {
 
   @Test
   public void testStoreAndUpdate(){
-    
+
     final String itemID = "8963254";
     final String category = "Movies";
     final String institution = "Insti";
@@ -94,7 +94,7 @@ public class MongoStorageServiceTest {
    * Compares two Entries and return true if these have the same values.
    * The expected record's creationDate should be less than the actual record's
    * creationDate, as the latter is created later on in time.
-   * 
+   *
    * @param mdm1
    * @param mdm2
    *
@@ -106,7 +106,8 @@ public class MongoStorageServiceTest {
     if((mdm1.getItemId().equals(mdm2.getItemId())) &&
             (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
             (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
-            (mdm1.isPublicDomain() == mdm2.isPublicDomain())&&
+            (mdm1.isPublicDomain() == mdm2.isPublicDomain()) &&
+            (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 )&&
             (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
             ){
       equal = true;
@@ -152,5 +153,5 @@ public class MongoStorageServiceTest {
     }
     return equal;
   }
-  
+
 }
