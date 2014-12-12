@@ -57,7 +57,7 @@ class EntitiesResultItem {
    * @return The first entry where the author is born or null if empty
    */
   public String getPlaceOfBirth() {
-    if (placeOfBirth != null) {
+    if (placeOfBirth != null && placeOfBirth.size() > 0) {
       return placeOfBirth.get(0);
     }
     return null;

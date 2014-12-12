@@ -46,6 +46,10 @@ class RDFItem {
   public String getInstitution() {
     List<Object> dataProvider = (ArrayList<Object>) aggregation
       .get("dataProvider");
+
+    if (dataProvider == null || dataProvider.size() == 0) {
+      return null;
+    }
     return dataProvider.get(0).toString();
   }
 
@@ -54,10 +58,13 @@ class RDFItem {
    */
   public List<String> getAuthorIds() {
     List<String> authorIds = new ArrayList<>();
-    for (Map agent : getAgents()) {
-      String about = agent.get("@about").toString();
-      if (about.startsWith("http://d-nb.info/")) {
-        authorIds.add(about);
+    List<Map> agents = getAgents();
+    if (agents != null) {
+      for (Map agent : getAgents()) {
+        String about = agent.get("@about").toString();
+        if (about.startsWith("http://d-nb.info/")) {
+          authorIds.add(about);
+        }
       }
     }
     return authorIds;
@@ -67,6 +74,9 @@ class RDFItem {
    * @return  list of all agents item in rdf item
    */
   private List<Map> getAgents() {
+    if (agents == null) {
+      return null;
+    }
     if (agents instanceof List) {
       // Multiple agents
       return (List) agents;

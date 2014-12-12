@@ -12,8 +12,8 @@ public class DdbApiUrlsTest {
   @Test
   public void searchUrl() {
     assertEquals(API_URL_PREFIX +
-        "/search?query=foo&rows=123&sort=relevance&oauth_consumer_key=key",
-        DdbApiUrls.searchUrl("foo", 123, "key"));
+        "/search?query=foo&offset=0&rows=123&sort=relevance&oauth_consumer_key=key",
+        DdbApiUrls.searchUrl("foo", 0, 123, "relevance", "key"));
   }
 
   @Test

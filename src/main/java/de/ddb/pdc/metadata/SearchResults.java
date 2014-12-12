@@ -16,6 +16,9 @@ class SearchResults {
    * returns the result of the search json result with the docs.
    */
   public ArrayList<SearchResultItem> getResultItems() {
+    if (results == null || results.size() == 0) {
+      return null;
+    }
     return results.get(0).getDocs();
   }
 }

@@ -113,7 +113,8 @@ public class CrawlerSchedule extends Thread {
     LOG.info(String.format("Running fetch phase from item %d to item %d",
         offset, offset + fetchSize));
     try {
-      DDBItem[] results = metaFetcher.searchForItems("*", fetchSize);
+      DDBItem[] results = metaFetcher.searchForItems("*", 0, fetchSize,
+        "relevance");
       for (DDBItem result : results) {
         fetchedResults.add(result);
       }
