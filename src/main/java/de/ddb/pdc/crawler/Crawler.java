@@ -25,11 +25,17 @@ public class Crawler implements CommandLineRunner {
   private final int timeout = 1000;
   private final CrawlerSchedule schedule;
 
+  /**
+   * Creates a new Crawler.
+   */
   @Autowired
   public Crawler(CrawlerSchedule schedule) {
     this.schedule = schedule;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void run(String... args) throws Exception {
     List<String> argsList = Arrays.asList(args);
