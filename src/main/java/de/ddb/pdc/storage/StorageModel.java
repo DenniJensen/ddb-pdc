@@ -18,7 +18,7 @@ public class StorageModel {
   private final String itemId;
   private final String itemCategory;
   private final String institution;
-  private final boolean publicDomain;
+  private final Boolean publicDomain;
   private final List<AnsweredQuestion> trace;
   private final String timestamp;
 
@@ -27,7 +27,7 @@ public class StorageModel {
    * The timestamp is automatically assigned to the current date and time.
    */
   public StorageModel(String itemId, String itemCategory, String institution,
-          boolean publicDomain, List<AnsweredQuestion> trace) {
+          Boolean publicDomain, List<AnsweredQuestion> trace) {
 
     this.itemId = itemId;
     this.itemCategory = itemCategory;
