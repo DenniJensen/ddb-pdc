@@ -61,12 +61,12 @@
 	border-radius:5px;
 	float:right;
 	background-color: #fdd6df;
-  background-image: -moz-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: -ms-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: -o-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e90d3b), color-stop(1, #ab053b)) !important;
-  background-image: -webkit-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -moz-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -ms-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -o-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e90d3b), color-stop(1, #ab053b)) !important;
+	background-image: -webkit-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
 }
 .item-calculate-button{
 	display:inline-block;
@@ -74,12 +74,12 @@
 }
 .item-calculate:hover {
 	background-color: #fdd6df;
-  background-image: -moz-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: -ms-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: -o-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff0d3b), color-stop(1, #c3053b)) !important;
-  background-image: -webkit-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -moz-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -ms-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -o-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff0d3b), color-stop(1, #c3053b)) !important;
+	background-image: -webkit-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
 }
 .item-calculate a{
 	font-size:19px;
@@ -147,37 +147,37 @@
 	background-color:#eaf6e6;	
 }
 #ddb-pdc-form .form-submit{
-  background: #292929;
+	background: #292929;
     background-color: #fdd6df;
-  background-image: -moz-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: -ms-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: -o-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e90d3b), color-stop(1, #ab053b)) !important;
-  background-image: -webkit-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  background-image: linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
-  border:none;
-  color: #fff;
-  font-size: 19px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 1em;
-  margin-right: 0.6em; /* LTR */
-  padding: 5px 17px;
-  -khtml-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-   border-radius: 5px;
-   width: 125px;
+	background-image: -moz-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -ms-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -o-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e90d3b), color-stop(1, #ab053b)) !important;
+	background-image: -webkit-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	background-image: linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
+	border:none;
+	color: #fff;
+	font-size: 19px;
+	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
+	margin-bottom: 1em;
+	margin-right: 0.6em; /* LTR */
+	padding: 5px 17px;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	width: 125px;
 }
 #ddb-pdc-form .form-submit:hover,
 #ddb-pdc-form .form-submit:focus {
-  background: #292929;
-    background-color: #fdd6df;
-  background-image: -moz-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: -ms-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: -o-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff0d3b), color-stop(1, #c3053b)) !important;
-  background-image: -webkit-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
-  background-image: linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background: #292929;
+	background-color: #fdd6df;
+	background-image: -moz-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -ms-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -o-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff0d3b), color-stop(1, #c3053b)) !important;
+	background-image: -webkit-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
+	background-image: linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
 }

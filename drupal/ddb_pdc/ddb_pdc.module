@@ -19,7 +19,6 @@ $items['public-domain-calculator'] = array( // creates a link for the PDC search
 
 $items['search-results/%'] = // % will be replaced by page arguments
   array(
-    //'title' => 'Search results',
     'page callback' => 'ddb_pdc_search_results',
 	'access callback' => TRUE,
 	'page arguments' => array(1), // searchterm as argument for the function ddb_pdc_controller

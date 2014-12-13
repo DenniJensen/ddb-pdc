@@ -1247,9 +1247,9 @@ select.form-select {
 }
 .form-item {
   float: left;
-    margin-bottom: 1em;
-    margin-right: 50px;
-    margin-top: 3px;
+  margin-bottom: 1em;
+  margin-right: 50px;
+  margin-top: 3px;
 }
 .form-item label {
   font-size: 0.929em;
