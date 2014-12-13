@@ -81,9 +81,15 @@ public class PDCController {
 
       pdcResult = this.calculator.calculate(this.country, ddbItem);
 
+      System.out.println(pdcResult);
+      System.out.println(pdcResult.isPublicDomain());
+      System.out.println(pdcResult.getTrace());
       StorageModel newRecord = new StorageModel(
-          itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
-          pdcResult.isPublicDomain(), pdcResult.getTrace()
+          itemId,
+          ddbItem.getCategory(),
+          ddbItem.getInstitution(),
+          pdcResult.isPublicDomain(),
+          pdcResult.getTrace()
       );
       storageService.store(newRecord);
     }
