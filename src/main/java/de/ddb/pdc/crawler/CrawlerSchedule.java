@@ -35,6 +35,9 @@ public class CrawlerSchedule extends Thread {
   private final MetaFetcher metaFetcher;
   private final PublicDomainCalculator calculator;
 
+  /**
+   * Creates a new CrawlerSchedule.
+   */
   @Autowired
   public CrawlerSchedule(MetaFetcher metaFetcher,
       PublicDomainCalculator calculator) {
@@ -71,6 +74,9 @@ public class CrawlerSchedule extends Thread {
     this.timeout = timeout;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void run() {
     while (!end) {

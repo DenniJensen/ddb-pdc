@@ -38,6 +38,9 @@ public class DDBItem {
     return id;
   }
 
+  /**
+   * Sets the item's ID.
+   */
   public void setId(String id) {
     this.id = id;
   }
@@ -49,6 +52,9 @@ public class DDBItem {
     return title;
   }
 
+  /**
+   * Sets the item's title.
+   */
   public void setTitle(String title) {
     this.title = title;
   }
@@ -61,6 +67,9 @@ public class DDBItem {
     return subtitle;
   }
 
+  /**
+   * Sets the item's subtitle.
+   */
   public void setSubtitle(String subtitle) {
     this.subtitle = subtitle;
   }
@@ -73,6 +82,9 @@ public class DDBItem {
     return imageUrl;
   }
 
+  /**
+   * Sets the item's thumbnail image URL.
+   */
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
@@ -85,6 +97,9 @@ public class DDBItem {
     return media;
   }
 
+  /**
+   * Sets the item's media type.
+   */
   public void setMedia(String media) {
     this.media = media;
   }
@@ -97,6 +112,9 @@ public class DDBItem {
     return category;
   }
 
+  /**
+   * Sets the item's category.
+   */
   public void setCategory(String category) {
     this.category = category;
   }
@@ -109,6 +127,9 @@ public class DDBItem {
     return type;
   }
 
+  /**
+   * Sets the item's type.
+   */
   public void setType(String type) {
     this.type = type;
   }
@@ -121,6 +142,9 @@ public class DDBItem {
     return authors;
   }
 
+  /**
+   * Adds an author to the list returned by {@link #getAuthors()}.
+   */
   public void addAuthor(Author author) {
     this.authors.add(author);
   }
@@ -133,6 +157,9 @@ public class DDBItem {
     return institution;
   }
 
+  /**
+   * Sets the item's institution.
+   */
   public void setInstitution(String institution) {
     this.institution = institution;
   }
@@ -145,6 +172,9 @@ public class DDBItem {
     return publishedYear;
   }
 
+  /**
+   * Sets the item's publishing year.
+   */
   public void setPublishedYear(int publishedYear) {
     if (publishedYear != -1) {
       this.publishedYear = new GregorianCalendar();

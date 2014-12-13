@@ -25,6 +25,13 @@ public class MongoStorageService implements StorageService {
   private final MongoTemplate mongoTemplate;
   private final String collectionName;
 
+  /**
+   * Creates a new MongoStorageService.
+   *
+   * @param mongoTemplate  MongoTemplate to use
+   * @param collectionName name of the MongoDB collection to store
+   *                       results into
+   */
   @Autowired
   public MongoStorageService(MongoTemplate mongoTemplate,
           @Value("${collection.name:pdcData}") String collectionName) {
