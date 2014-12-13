@@ -42,6 +42,6 @@ public class SearchController {
   public DDBItem[] search(
       @RequestParam(value = "q", required = true) String query,
       @RequestParam(value = "max", required = true) int maxResults) {
-    return metaFetcher.searchForItems(query, maxResults);
+    return metaFetcher.searchForItems(query, 0, maxResults, "relevance");
   }
 }

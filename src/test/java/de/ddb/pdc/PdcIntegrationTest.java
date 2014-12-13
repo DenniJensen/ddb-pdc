@@ -51,7 +51,7 @@ public class PdcIntegrationTest {
 
   @Test
   public void search() throws Exception {
-    String ddbUrl = DdbApiUrls.searchUrl("goethe", 3, dbbApiKey);
+    String ddbUrl = DdbApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
     String ddbResponse = loadJsonReponse("/ddb_search/goethe3");
     mockDdbApi.expect(requestTo(ddbUrl))
         .andRespond(withSuccess(ddbResponse, MediaType.APPLICATION_JSON));
