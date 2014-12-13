@@ -2,7 +2,6 @@ package de.ddb.pdc;
 
 import de.ddb.pdc.metadata.DdbApiUrls;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +50,9 @@ public class PdcIntegrationTest {
 
   @Test
   public void search() throws Exception {
-    String ddbUrl = DdbApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
-    String ddbResponse = loadJsonReponse("/ddb_search/goethe3");
-    mockDdbApi.expect(requestTo(ddbUrl))
-        .andRespond(withSuccess(ddbResponse, MediaType.APPLICATION_JSON));
-
-    RestTemplate client = new TestRestTemplate();
-    String url = urlPrefix + "/search?q=goethe&max=3";
-    List results = client.getForObject(url, List.class);
+    String url = DdbApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
+    mockDdbApiRequest(url, "/ddb_search/goethe3");
+    List results = getForObject("/search?q=goethe&max=3", List.class);
 
     assertEquals(3, results.size());
 
@@ -89,24 +83,110 @@ public class PdcIntegrationTest {
     assertEquals(totalUrl, result3.get("imageUrl"));
   }
 
-  private String loadJsonReponse(String path) throws Exception {
+  private <T> T getForObject(String path, Class<T> resultClass) {
+    RestTemplate client = new TestRestTemplate();
+    return client.getForObject(urlPrefix + path, resultClass);
+  }
+
+  @Test
+  public void determinePublicDomain() throws Exception {
+    final String itemId = "TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK";
+    final String authorId = "http://d-nb.info/gnd/118592343";
+
+    String aipUrl = DdbApiUrls.itemAipUrl(itemId, dbbApiKey);
+    mockDdbApiRequest(aipUrl, "/ddb_items_aip/goethe");
+    String entityUrl = DdbApiUrls.entityUrl(authorId, dbbApiKey);
+    mockDdbApiRequest(entityUrl, "/ddb_entities/goethe");
+    Map result = getForObject("/pdc/" + itemId, Map.class);
+
+    assertEquals(null, result.get("publicDomain"));
+
+    List trace = (List) result.get("trace");
+    assertEquals(9, trace.size());
+
+    Map question1 = (Map) trace.get(0);
+    assertEquals("Is the work any kind of work which the official body " +
+        "publishing it intends to be generally received?",
+        question1.get("question"));
+    assertEquals("assumed no", question1.get("answer"));
+    assertEquals("The answer is always assumed to be no.",
+        question1.get("note"));
+
+    Map question2 = (Map) trace.get(1);
+    assertEquals("Is the work a court decision or officially issued " +
+        "discussion formula?",
+        question2.get("question"));
+    assertEquals("assumed no", question2.get("answer"));
+    assertEquals("The answer is always assumed to be no.",
+        question2.get("note"));
+
+    Map question3 = (Map) trace.get(2);
+    assertEquals("Is the work an act of parliament which has entered the " +
+        "parliamentary process?",
+        question3.get("question"));
+    assertEquals("assumed no", question3.get("answer"));
+    assertEquals("The answer is always assumed to be no.",
+        question3.get("note"));
+
+    Map question4 = (Map) trace.get(3);
+    assertEquals("Is the work a government directive?",
+        question4.get("question"));
+    assertEquals("assumed no", question4.get("answer"));
+    assertEquals("The answer is always assumed to be no.",
+        question4.get("note"));
+
+    Map question5 = (Map) trace.get(4);
+    assertEquals("Is the work an official decision or announcement by a " +
+        "public authority?",
+        question5.get("question"));
+    assertEquals("assumed no", question5.get("answer"));
+    assertEquals("The answer is always assumed to be no.",
+        question5.get("note"));
+
+    Map question6 = (Map) trace.get(5);
+    assertEquals("Is the author natural person?", question6.get("question"));
+    assertEquals("assumed yes", question6.get("answer"));
+    assertEquals("The answer is always assumed to be yes.",
+        question6.get("note"));
+
+    Map question7 = (Map) trace.get(6);
+    assertEquals("Is the nationality or place of residence of the author " +
+        "the European Economic Area?",
+        question7.get("question"));
+    assertEquals("no", question7.get("answer"));
+    assertEquals(null, question7.get("note"));
+
+    Map question8 = (Map) trace.get(7);
+    assertEquals("Is the country of origin the European Economic Area?",
+        question8.get("question"));
+    assertEquals("no", question8.get("answer"));
+    assertEquals(null, question8.get("note"));
+
+    Map question9 = (Map) trace.get(8);
+    assertEquals("Is the country of origin the Berne TRIPTIS WCT?",
+        question9.get("question"));
+    assertEquals("assumed yes", question9.get("answer"));
+    assertEquals("The answer is always assumed to be yes.",
+        question9.get("note"));
+  }
+
+  private void mockDdbApiRequest(String url, String jsonResourcePath)
+      throws Exception {
+    String escapedUrl = escapeUrl(url);
+    String response = loadJsonResource(jsonResourcePath);
+    mockDdbApi.expect(requestTo(escapedUrl))
+        .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
+  }
+
+  private String escapeUrl(String url) {
+    return url.replace("\"", "%22");
+  }
+
+  private String loadJsonResource(String path) throws Exception {
     InputStream stream = getClass().getResourceAsStream(path + ".json");
     InputStreamReader streamReader = new InputStreamReader(stream);
     try (BufferedReader bufferedReader = new BufferedReader(streamReader)) {
       return bufferedReader.readLine();
     }
-  }
-
-
-  @Ignore
-  @Test
-  public void searchItem() throws Exception {
-    String ddbUrl = DdbApiUrls.itemAipUrl("3", dbbApiKey);
-    String ddbResponse = loadJsonReponse("/pdc/3");
-    mockDdbApi.expect(requestTo(ddbUrl))
-            .andRespond(withSuccess(ddbResponse, MediaType.APPLICATION_JSON));
-    RestTemplate client = new TestRestTemplate();
-    String url = urlPrefix + "/search?q=1";
-
   }
 }
