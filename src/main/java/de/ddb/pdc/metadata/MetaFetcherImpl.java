@@ -38,14 +38,16 @@ public class MetaFetcherImpl implements MetaFetcher {
     return getDDBItems(results);
   }
 
-  private String convertToSolrQuery(String query){
+  private String convertToSolrQuery(String query) {
     // initial syntax: e.g. 'words+to-search!'
     // final syntax: e.g. '{!query.op=AND}words\+to\-search\!'
     // the beginning '?query=' is added in the method searchUrl in DdbApiUrls
-    String[] specialChars = {"+", "-", "&&", "||", "!", "(", ")", "{", "}", 
-      "[", "]", "^", "\"", "~", "*", "?", ":", "\\", "/"};
+    String[] specialChars = {"\\", "+", "-", "&&", "||", "!", "(", ")",
+      "{", "}", "[", "]", "^", "\"", "~", "*", "?", ":", "/"};
     for (String chars : specialChars) {
-      query.replace(chars, "\\" + chars);
+      if (query.contains(chars)) {
+        query = query.replace(chars, "\\" + chars);
+      }
     }
     query = "{!query.op=AND}" + query;
     return query;
