@@ -49,7 +49,6 @@ public class MetaFetcherImpl implements MetaFetcher {
         query = query.replace(chars, "\\" + chars);
       }
     }
-    query = "{!query.op=AND}" + query;
     return query;
   }
 
