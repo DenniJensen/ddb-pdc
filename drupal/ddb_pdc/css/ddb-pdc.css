@@ -27,11 +27,11 @@
 }
 .item-title a{
 	font-weight: bold;
-    word-wrap: break-word;
+	word-wrap: break-word;
 	font-size: 1.5em;
-    text-decoration: none;
+	text-decoration: none;
 	color: #a5003b;
-    font-family: KarbidWeb,Calibri,Arial,sans-serif;
+	font-family: KarbidWeb,Calibri,Arial,sans-serif;
 }
 .item-title a:hover{
 	color: #a5003b;
@@ -41,11 +41,11 @@
 }
 .item-title{
 	font-weight: bold;
-    word-wrap: break-word;
+	word-wrap: break-word;
 	font-size: 1.5em;
-    text-decoration: none;
+	text-decoration: none;
 	color: #a5003b;
-    font-family: KarbidWeb,Calibri,Arial,sans-serif;
+	font-family: KarbidWeb,Calibri,Arial,sans-serif;
 }
 .item-title:hover{
 	color: #a5003b;
@@ -69,8 +69,7 @@
 	background-image: linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
 }
 .item-calculate-button{
-	display:inline-block;
-	
+	display:inline-block;	
 }
 .item-calculate:hover {
 	background-color: #fdd6df;
@@ -144,7 +143,7 @@
 }
 .notes{
 	color: #acacac;
-    float: right;	
+	float: right;	
 }
 .positive .pdc-question{
 	background-color:#ddf2d5;	
@@ -160,7 +159,7 @@
 }
 #ddb-pdc-form .form-submit{
 	background: #292929;
-    background-color: #fdd6df;
+	background-color: #fdd6df;
 	background-image: -moz-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
 	background-image: -ms-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
 	background-image: -o-linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
