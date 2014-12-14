@@ -76,7 +76,9 @@ function
 ddb_pdc_form_submit($form, &$form_state) {
 	//drupal_set_message(t("Author: @author, Titel: @title", array('@author' => $form_state['values']['ddb_author'], '@title' => $form_state['values']['ddb_title'])));
 	$input = $form_state['values']['ddb_title'];
-	drupal_goto('search-results/' .  urlencode($input));
+	
+	$options = array('query' => array('start' => '0', 'max'=> '10'));
+	drupal_goto('search-results/' .  urlencode($input), $options);
 }
 
 function ddb_pdc_http_request($request, $inputdata){

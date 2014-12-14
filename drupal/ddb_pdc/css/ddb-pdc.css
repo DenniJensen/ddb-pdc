@@ -192,3 +192,34 @@
 	background-image: -webkit-linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
 	background-image: linear-gradient(top, #ff0d3b 0%, #c3053b 100%) !important;
 }
+
+/* Pagination */
+
+.pagination {
+	display: block;
+    margin: 30px auto 0;
+    width: 200px;
+}
+.pager_previous {
+	float: left;
+    margin-right: 30px;	
+}
+.wrapper-dropdown {
+	margin-bottom:50px;
+}
+.dropdown li{
+	list-style:none;
+	float:right;
+	padding:0 7px;	
+	border-right: 1px solid #666;
+}
+.dropdown li a{
+	color:#ab053b;
+}
+.dropdown li.first{
+	padding:0 0 0 7px;	
+	border-right:none;
+}
+.dropdown li.last{
+	padding:0 7px 0 0;	
+}
