@@ -1,12 +1,12 @@
 package de.ddb.pdc.web;
 
-import de.ddb.pdc.metadata.MetaFetcher;
 import de.ddb.pdc.metadata.DDBItem;
+import de.ddb.pdc.metadata.MetaFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+  
 /**
  * Provides an HTTP interface for DDB item search .
  */
@@ -36,12 +36,15 @@ public class SearchController {
    * @param query      string to search for in item metadata
    * @param maxResults maximum number of matching items to return
    *                   (must be larger than 0)
+   * @param start      Number of elements to skip in the search (search offset)
    * @return           found items
    */
   @RequestMapping("/search")
   public DDBItem[] search(
       @RequestParam(value = "q", required = true) String query,
-      @RequestParam(value = "max", required = true) int maxResults) {
-    return metaFetcher.searchForItems(query, 0, maxResults, "relevance");
+      @RequestParam(value = "max", required = true) int maxResults,
+      @RequestParam(value = "start", required = false) Integer start) {
+    start = (start != null) ? start : 0;
+    return metaFetcher.searchForItems(query, start, maxResults, "relevance");
   }
 }
