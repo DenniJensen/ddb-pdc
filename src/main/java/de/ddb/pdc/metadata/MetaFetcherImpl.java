@@ -32,9 +32,23 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem[] searchForItems(String query, int startItem, int maxCount,
       String sort) throws RestClientException {
+    query = convertToSolrQuery(query);
     String url = DdbApiUrls.searchUrl(query,startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
+  }
+
+  private String convertToSolrQuery(String query){
+    // initial syntax: e.g. 'words+to-search!'
+    // final syntax: e.g. '{!query.op=AND}words\+to\-search\!'
+    // the beginning '?query=' is added in the method searchUrl in DdbApiUrls
+    String[] specialChars = {"+", "-", "&&", "||", "!", "(", ")", "{", "}", 
+      "[", "]", "^", "\"", "~", "*", "?", ":", "\\", "/"};
+    for (String chars : specialChars) {
+      query.replace(chars, "\\" + chars);
+    }
+    query = "{!query.op=AND}" + query;
+    return query;
   }
 
   private DDBItem[] getDDBItems(SearchResults results) {
