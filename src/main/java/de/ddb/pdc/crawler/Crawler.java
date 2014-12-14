@@ -21,8 +21,8 @@ public class Crawler implements CommandLineRunner {
   private static final Log LOG = LogFactory.getLog(Crawler.class);
   private boolean enabled = false;
   private int maxDepth = 1000;
-  private int fetchSize = 10;
-  private final int timeout = 1000;
+  private int fetchSize = 100;
+  private final int timeout = 500;
   private final CrawlerSchedule schedule;
 
   /**
