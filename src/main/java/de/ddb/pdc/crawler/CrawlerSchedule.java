@@ -12,8 +12,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,18 +38,19 @@ import de.ddb.pdc.web.SearchController;
 @SuppressWarnings("nls")
 public class CrawlerSchedule extends Thread {
 
-  private static final Log LOG = LogFactory.getLog(CrawlerSchedule.class);
+  private static final Logger LOG = LoggerFactory.getLogger(
+      CrawlerSchedule.class);
   private int maxDepth;
   private int fetchSize;
-  private LinkedList<Integer> offsets;
+  private LinkedList<Integer> paginationOffsets = new LinkedList<Integer>();
   private long timeout;
   private boolean end;
-  private final LinkedList<DDBItem> fetchedResults;
+  private final List<DDBItem> fetchedResults = new LinkedList<>();
   private final SearchController searchController;
   private final PDCController pdcController;
   private final Map<Question, Integer> unknownCauses;
   private final Set<String> foundCategories;
-  private int count;
+  private int depthCount;
   private int countTrue;
   private int countFalse;
   private int countFailed;
@@ -64,13 +65,8 @@ public class CrawlerSchedule extends Thread {
     super("CrawlerSchedule");
     this.searchController = searchController;
     this.pdcController = pdcController;
-    this.fetchedResults = new LinkedList<DDBItem>();
-    this.offsets = new LinkedList<Integer>();
-    this.end = false;
-    this.count = 0;
 
     this.unknownCauses = new TreeMap<Question, Integer>();
-    
     this.foundCategories = new TreeSet<String>();
   }
 
@@ -104,7 +100,7 @@ public class CrawlerSchedule extends Thread {
    */
   @Override
   public void run() {
-    randomizeOffsets();
+    randomizePaginationOffsets();
     while (!end) {
       if (fetchedResults.isEmpty()) {
         runFetchPhase();
@@ -124,15 +120,15 @@ public class CrawlerSchedule extends Thread {
     printStatistics();
   }
 
-  private void randomizeOffsets() {
+  private void randomizePaginationOffsets() {
     int numberOfSearches = (int) Math.ceil(this.maxDepth / this.fetchSize);
     Random random = new Random();
     while (numberOfSearches-- > 0) {
       int offset = 0;
       do {
         offset = random.nextInt(this.maxDepth) * this.fetchSize;
-      } while(offsets.contains(offset));
-      offsets.add(offset);
+      } while (paginationOffsets.contains(offset));
+      paginationOffsets.add(offset);
     }
   }
 
@@ -141,13 +137,13 @@ public class CrawlerSchedule extends Thread {
    * the searchForItems method of the controller.
    */
   private void runFetchPhase() {
-    if (count >= maxDepth) {
+    if (depthCount >= maxDepth) {
       end = true;
       LOG.info("Maximum crawling depth was reached.");
       return;
     }
     
-    int offset = offsets.pop();
+    int offset = paginationOffsets.pop();
 
     LOG.info(String.format("Running fetch phase from item %d to item %d",
         offset, offset + fetchSize));
@@ -166,49 +162,56 @@ public class CrawlerSchedule extends Thread {
    * is calculated.
    */
   private void runCalculatePhase() {
-    DDBItem item = fetchedResults.pop();
+    DDBItem item = fetchedResults.remove(0);
     String id = item.getId();
     String category = item.getCategory();
     foundCategories.add(category);
 
-    LOG.info(String.format("Running calculate phase for item %s", id));
+    LOG.info("Running calculate phase for item {}", id);
     try {
       PDCResult result = pdcController.determinePublicDomain(id);
-      LOG.info(String.format("Calculation successful for %s. Result: %s",
-          id, result.isPublicDomain()));
+      LOG.info("Calculation successful for {}. Result: {}", id, 
+          result.isPublicDomain());
       
       if (result.isPublicDomain() == null) {
-        List<AnsweredQuestion> answeredQuestions = result.getTrace();
-        AnsweredQuestion lastAnsweredQuestion = answeredQuestions
-            .get(answeredQuestions.size() - 1);
-        Question lastQuestion = lastAnsweredQuestion.getQuestion();
-        String questionConstant = lastQuestion.toString();
-        LOG.info(String.format("Result unknown due to missing answer "
-            + "for Question %s", questionConstant));
-        
-        if (!unknownCauses.containsKey(lastQuestion)) {
-          unknownCauses.put(lastQuestion, 1);
-        } else {
-          unknownCauses.put(lastQuestion, unknownCauses.get(lastQuestion) + 1);
-        }
-        countUnknown++;
+        Question question = findUnansweredQuestion(result);
+        String questionConstant = question.toString();
+        LOG.info("Result unknown due to missing answer for Question {}", 
+            questionConstant);
+        countUnknownQuestion(question);
       } else if (result.isPublicDomain()) {
         countTrue ++;
       } else {
         countFalse ++;
       }
-    } catch (Throwable e) {
-      LOG.error(String.format("Calculation unsuccessful for %s.", id));
+    } catch (Exception e) {
+      LOG.error("Calculation unsuccessful for {}", id);
       LOG.error("Here is the trace:", e);
       countFailed++;
     } finally {
-      count++;
+      depthCount++;
     }
+  }
+  
+  private Question findUnansweredQuestion(PDCResult result) {
+    List<AnsweredQuestion> answeredQuestions = result.getTrace();
+    AnsweredQuestion lastAnsweredQuestion = answeredQuestions
+        .get(answeredQuestions.size() - 1);
+    return lastAnsweredQuestion.getQuestion();
+  }
+  
+  private void countUnknownQuestion(Question question) {
+    if (!unknownCauses.containsKey(question)) {
+      unknownCauses.put(question, 1);
+    } else {
+      unknownCauses.put(question, unknownCauses.get(question) + 1);
+    }
+    countUnknown++;
   }
   
   private void printStatistics() {
     LOG.info("================= CRAWLER STATISTICS =================");
-    LOG.info(String.format("Crawler crawled %d Items.", this.count));
+    LOG.info(String.format("Crawler crawled %d Items.", this.depthCount));
     LOG.info(String.format("%d items are public domain", this.countTrue));
     LOG.info(String.format("%d items are not public domain", this.countFalse));
     LOG.info(String.format("%d items are unknown", this.countUnknown));
@@ -217,8 +220,7 @@ public class CrawlerSchedule extends Thread {
     for (Entry<Question, Integer> entry : unknownCauses.entrySet()) {
       Question question = entry.getKey();
       int amount = entry.getValue();
-      LOG.info(String.format("Items unknown due to question %s: %d", 
-                             question, amount));
+      LOG.info("Items unknown due to question {}: {}", question, amount);
     }
     
     LOG.info("Found the following categories:");
