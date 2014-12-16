@@ -12,7 +12,7 @@ function ddb_pdc_result ( $ddbid ){
 	$imagespath = base_path() . "sites/all/modules/ddb_pdc/images/";
 	 
 	$pdcresult = ddb_pdc_http_request('/pdc/' .$ddbid, $ddbid); // HTTP Request to the PDC with the DDB ID
-	var_dump($pdcresult);
+
 	$json_pdcresult = json_decode($pdcresult->data); // Get json data from the request and decode it 
 	
 	// Get information about the work with this ID to show it on the result page
