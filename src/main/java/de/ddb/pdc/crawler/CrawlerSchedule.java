@@ -152,7 +152,7 @@ public class CrawlerSchedule extends Thread {
       for (DDBItem result : results) {
         fetchedResults.add(result);
       }
-    } catch (Throwable e) {
+    } catch (Exception e) {
       LOG.error("Error while fetching results", e);
     }
   }
@@ -175,9 +175,8 @@ public class CrawlerSchedule extends Thread {
       
       if (result.isPublicDomain() == null) {
         Question question = findUnansweredQuestion(result);
-        String questionConstant = question.toString();
         LOG.info("Result unknown due to missing answer for Question {}", 
-            questionConstant);
+            question);
         countUnknownQuestion(question);
       } else if (result.isPublicDomain()) {
         countTrue ++;
