@@ -10,7 +10,6 @@ function ddb_pdc_result ( $ddbid ){
 	
 	// path to the images folder in the module has to be hardcoded here otherwise exception with file not found
 	$imagespath = base_path() . "sites/all/modules/ddb_pdc/images/";
-	
 	 
 	$pdcresult = ddb_pdc_http_request('/pdc/' .$ddbid, $ddbid); // HTTP Request to the PDC with the DDB ID
 
@@ -27,33 +26,70 @@ function ddb_pdc_result ( $ddbid ){
 		}
 	}
 	
-	($json_pdcresult->publicDomain) ? $publicdomain = "publicdomain" : $publicdomain = "notpublicdomain";
+	switch($json_pdcresult->publicDomain){
+		case null:
+			$publicdomain = "unknownpublicdomain";
+			$resultImgAlt = "The license status of this work could not be determined due to missing or unclear metadata.";
+			break;
+			
+		case true:
+			$publicdomain = "publicdomain";
+			$resultImgAlt = "This work is probably in the public domain.";
+			break;
+			
+		case false:
+			$publicdomain = "notpublicdomain";
+			$resultImgAlt = "This work is probably not in the public domain.";
+			break;
+	}
 	
 	$output = '';
 
 	$output .= '<div class="item ' . $publicdomain . '" >';
-	$output .= '<div class="item-image"><img src="' .$imageURL .'"/></div>';
+	$output .= '<div class="item-image"><a class="colorbox-load" title="'.$title.'" href="'.$imageURL .'"><img src="' .$imageURL .'"/></a></div>';
 	$output .='<div class="item-summary">';
-    $output .='<div class="item-title"><a href="#">' . $title . '</a></div>';
+    $output .='<div class="item-title">' . $title . '</div>';
     $output .='<div class="item-subtitle">' . $subtitle . '</div>';
   	$output .='</div>';
-  	$output .='<div class="item-license"><img src="' . $imagespath . $publicdomain . '.png"/></div>';
+  	$output .='<div class="item-license"><img src="' . $imagespath . $publicdomain . '.png" title="'. $resultImgAlt .'"/></div>';
 	$output .='</div>';
 	
 	$output .='<div class="pdc-questions-wrapper">';
 	foreach($json_pdcresult->trace as $question){
-		if($question->answer){
-			$output .='<div class="pdc-questions positive">';
-			$output .='<div class="pdc-question"><img src="' . $imagespath . 'question_true.png" alt="" />' . $question->question . '</div>';
-			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_true.png" alt="" />Yes</div>';
-			$output .='</div>';
-		} else{
-			$output .='<div class="pdc-questions negative">';
-			$output .='<div class="pdc-question"><img src="' . $imagespath . 'question_false.png" alt="" />' . $question->question . '</div>';
-			$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_false.png" alt="" />No</div>';
-			$output .='</div>';	
+		switch($question->answer){
+			case "yes":
+				$questionResult = "positive";
+				$questionResultTrace = "Yes";
+				break;
+				
+			case "assumed yes":
+				$questionResult = "positiveAssumed";
+				$questionResultTrace = "Yes (assumed)";
+				break;
+				
+			case "no":
+				$questionResult = "negative";
+				$questionResultTrace = "No";
+				break;
+				
+			case "assumed no":
+				$questionResult = "negativeAssumed";
+				$questionResultTrace = "No (assumed)";
+				break;
+				
+			default:	
+				$questionResult = "unknown";
+				$questionResultTrace = "Unknown";
+				break;
 		}
+		
+		$output .='<div class="pdc-questions '.$questionResult.'">';
+		$output .='<div class="pdc-question"><img src="' . $imagespath . 'question_'.$questionResult.'.png" alt="" />' . $question->question . '</div>';
+		$output .='<div class="pdc-answer"><img src="' . $imagespath . 'answer_'.$questionResult.'.png" alt="" />'.$questionResultTrace.'<span class="notes">'.$question->note.'</span></div>';
+		$output .='</div>';	
+		
 	}
+	
 	$output .='</div>';
 	
 	return $output;

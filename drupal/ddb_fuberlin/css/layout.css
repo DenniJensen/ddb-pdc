@@ -25,10 +25,10 @@ body,
   margin-right: auto;
 }
 .main_navigation{
-	position: relative;
-	width: 960px;
+  width: 960px;
   margin-left: auto;
   margin-right: auto;
+  display:block;
 		
 }
 #header div.section {

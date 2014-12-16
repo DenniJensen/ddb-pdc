@@ -1,0 +1,21 @@
+object(stdClass)#5(7){
+["request"]=>string(179)"POST /search HTTP/1.0 Content-Type: application/x-www-form-urlencoded User-Agent: Drupal (+http://drupal.org/) Host: localhost:8080 Content-Length: 21 q=%5BGoethe%5D&max=10"
+["data"]=>string(187)"{
+"timestamp":1417130268140,
+"status":500,
+"error":"InternalServerError",
+"exception":"org.springframework.web.client.HttpClientErrorException",
+"message":"400BadRequest",
+"path":"/search"
+}"
+["protocol"]=>string(8)"HTTP/1.1"
+["status_message"]=>string(21)"Internal Server Error"
+["headers"]=>array(4){
+		["server"]=>string(17)"Apache-Coyote/1.1"
+		["content-type"]=>string(30)"application/json;charset=UTF-8"
+		["date"]=>string(29)"Thu, 27 Nov 2014 23:17:48 GMT"
+		["connection"]=>string(5)"close"
+	}
+["code"]=>string(3)"500"
+["error"]=>string(21)"Internal Server Error"
+}
