@@ -1,5 +1,8 @@
 package de.ddb.pdc.core;
 
+import de.ddb.pdc.metadata.DDBItem;
+import de.ddb.pdc.storage.StoredPDCResult;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -7,20 +10,53 @@ import java.util.List;
  */
 public class PDCResult {
 
+  private final String itemId;
   private final Boolean publicDomain;
   private final List<AnsweredQuestion> trace;
+  private final String itemCategory;
+  private final String institution;
+  private final Date createdDate;
 
   /**
    * Creates a PDCResult.
    *
    * @param publicDomain whether the item is considered public-domain
    * @param trace        trace of calculation questions and answers
+   * @param metadata     properties of the item
    */
-  public PDCResult(Boolean publicDomain, List<AnsweredQuestion> trace) {
+  public PDCResult(Boolean publicDomain, List<AnsweredQuestion> trace, 
+        DDBItem metadata) {
+    
+    this.itemId = metadata.getId();
     this.publicDomain = publicDomain;
     this.trace = trace;
+    this.itemCategory = metadata.getCategory();
+    this.institution = metadata.getInstitution();
+    this.createdDate = new Date();
+  }
+  
+  /**
+   * Alternative constructor used to create an instance of @{link PDCResult}
+   * from a @{link StoredPDCResult}.
+   * 
+   * @param storedPDCResult record fetched from storage
+   */
+  public PDCResult(StoredPDCResult storedPDCResult) {   
+    this.itemId = storedPDCResult.getItemId();
+    this.publicDomain = storedPDCResult.isPublicDomain();
+    this.trace = storedPDCResult.getTrace();
+    this.itemCategory = storedPDCResult.getItemCategory();
+    this.institution = storedPDCResult.getInstitution();
+    this.createdDate = storedPDCResult.getCreatedDate();
   }
 
+  /**
+   * @return the unique id of the cultural good.
+   */
+  public String getItemId() {
+    return this.itemId;
+  }
+  
   /**
    * Returns true if the item in question is considered public-domain by
    * the calculator, or false if not. Returns null if the status could not be
@@ -43,5 +79,23 @@ public class PDCResult {
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
+  
+  /**
+   * @return the item category originating from @{link DDBItem}.
+   */
+  public String getItemCategory() {
+    return this.itemCategory;
+  }
+  
+  /**
+   * @return the institution's name originating from @{link DDBItem}.
+   */
+  public String getInstitution() {
+    return this.institution;
+  }
 
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+  
 }

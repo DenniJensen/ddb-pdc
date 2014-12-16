@@ -10,7 +10,6 @@ import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
-import de.ddb.pdc.storage.StoredPDCResult;
 import de.ddb.pdc.storage.StorageService;
 import java.util.TimeZone;
 import java.util.Calendar;
@@ -76,9 +75,9 @@ public class PDCController {
   public PDCResult determinePublicDomain(@PathVariable String itemId)
       throws Exception {
 
-    final PDCResult pdcResult;
+    PDCResult pdcResult = null;
 
-    StoredPDCResult fetchedResult = storageService.fetch(itemId);
+    PDCResult fetchedResult = storageService.fetch(itemId);
     
     if (fetchedResult != null) {
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -87,32 +86,20 @@ public class PDCController {
       int recordCreationYear = calendar.get(Calendar.YEAR);
       
       if ((requestYear > recordCreationYear) 
-          && (! fetchedResult.isPublicDomain())) {
+          && (! fetchedResult.isPublicDomain())) {        
         DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
-
-        pdcResult = this.calculator.calculate(this.country, ddbItem);
-
-        StoredPDCResult updatedResult = new StoredPDCResult(
-            itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
-            pdcResult.isPublicDomain(), pdcResult.getTrace()
-        );
-        storageService.update(updatedResult);
+        pdcResult = this.calculator.calculate(this.country, ddbItem);        
+        storageService.update(pdcResult);
         
-      } else {      
-        pdcResult = new PDCResult(
-            fetchedResult.isPublicDomain(), fetchedResult.getTrace()
-        );
+      } else {
+        pdcResult = fetchedResult;
+        
       }      
     } else {
-      DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
-
+      DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);      
       pdcResult = this.calculator.calculate(this.country, ddbItem);
-
-      StoredPDCResult newRecord = new StoredPDCResult(
-          itemId, ddbItem.getCategory(), ddbItem.getInstitution(),
-          pdcResult.isPublicDomain(), pdcResult.getTrace()
-      );
-      storageService.store(newRecord);
+      storageService.store(pdcResult);
+      
     }
     
     return pdcResult;

@@ -1,5 +1,9 @@
 package de.ddb.pdc.storage;
 
+import com.mongodb.MongoClient;
+import de.ddb.pdc.core.PDCResult;
+import java.net.UnknownHostException;
+import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,9 +30,15 @@ public class MongoStorageService implements StorageService {
   private final String collectionName;
 
   @Autowired
-  public MongoStorageService(MongoTemplate mongoTemplate,
-          @Value("${collection.name:pdcData}") String collectionName) {
-    this.mongoTemplate = mongoTemplate;
+  public MongoStorageService(@Value("${host.ip:127.0.0.1}") String hostIP,
+      @Value("${host.port:27017}") int hostPort,
+      @Value("${database:pdc}") String database,
+      @Value("${collection.name:pdcData}") String collectionName) 
+      throws UnknownHostException {
+    
+    this.mongoTemplate = new MongoTemplate(
+        new MongoClient(hostIP, hostPort), database
+    );
     this.collectionName = collectionName;
   }
 
@@ -37,44 +47,65 @@ public class MongoStorageService implements StorageService {
    *
    */
   @Override
-  public void store(StoredPDCResult record) {
-    mongoTemplate.insert(record, collectionName);
+  public void store(PDCResult record) {
+    if (record != null) {
+      StoredPDCResult storageRecord = StorageUtils.toStoredPDCResult(record);
+      mongoTemplate.insert(storageRecord, collectionName);
+    }
   }
 
   /**
    * Updates a record by removing the existing record and calling the
-   * {@link store(StorageModel)} method to store the new record.
+   * {@link store(PDCResult)} method to store the new record.
    * The record that is removed is the first record that matches the itemId.
    *
    */
   @Override
-  public void update(StoredPDCResult newRecord) {
-    Query query = new Query();
-    query.addCriteria(Criteria.where("itemId").is(newRecord.getItemId()));
-    mongoTemplate.remove(query, collectionName);
-    this.store(newRecord);
+  public void update(PDCResult newRecord) {
+    if (newRecord != null) {
+      Query query = new Query();
+      query.addCriteria(Criteria.where("itemId").is(newRecord.getItemId()));
+      mongoTemplate.remove(query, collectionName);
+      this.store(newRecord);
+    }
   }
 
   /**
-   * Fetches the first StorageModel record from the collection that matches
-   * the query. Implements the Query class so SQL-like constructs can be used.
+   * Fetches the first record from the collection that matches the query.
+   * 
+   * Implements the Query class so SQL-like constructs can be used.
+   * @return the target record or null if the record was not found.
    *
    */
   @Override
-  public StoredPDCResult fetch(String itemId) {
+  public PDCResult fetch(String itemId) {
     Query query = new Query();
     query.addCriteria(Criteria.where("itemId").is(itemId));
-    return mongoTemplate.findOne(query, StoredPDCResult.class, collectionName);
+    StoredPDCResult fetchedRecord = mongoTemplate.findOne(
+        query, StoredPDCResult.class, collectionName
+    );
+    if (fetchedRecord == null) {
+      return null;
+    } else {
+      return new PDCResult(fetchedRecord);
+    }    
   }
 
   /**
-   * Fetch all MongoDataModel records from the collection.
-   *
+   * Fetch all records from the collection.
+   * A linked list is used to store the converted storage records.
    * @return list of MongoDataModel records
    */
   @Override
-  public List<StoredPDCResult> fetchAll() {
-    return mongoTemplate.findAll(StoredPDCResult.class, collectionName);
+  public List<PDCResult> fetchAll() {
+    List<StoredPDCResult> fetchedStorageRecords = mongoTemplate.findAll(
+        StoredPDCResult.class, collectionName
+    );
+    List<PDCResult> fetchedRecords = new LinkedList();
+    for (StoredPDCResult storageRecord : fetchedStorageRecords) {
+      fetchedRecords.add(new PDCResult(storageRecord));
+    }
+    return fetchedRecords;
   }
 
   /**

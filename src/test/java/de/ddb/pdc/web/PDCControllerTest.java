@@ -11,7 +11,6 @@ import de.ddb.pdc.core.Question;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
 import de.ddb.pdc.storage.StorageService;
-import de.ddb.pdc.storage.StoredPDCResult;
 import de.ddb.pdc.storage.TestConfiguration;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class PDCControllerTest {
     PublicDomainCalculator ansService = Mockito.
             mock(PublicDomainCalculator.class);
     List<AnsweredQuestion> trace = new ArrayList<AnsweredQuestion>();
-    PDCResult pdcResult = new PDCResult(true,trace);
+    PDCResult pdcResult = new PDCResult(true,trace,ddbItemfromMetaFetcher);
     // country is null
     Mockito.when(ansService.calculate(null, mfetcher.fetchMetadata("123"))).
             thenReturn(pdcResult);
@@ -72,12 +71,12 @@ public class PDCControllerTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StoredPDCResult newEntry = new StoredPDCResult(
-        itemID, category, institution,publicDomain,trace
-    );
-    storageService.store(newEntry);
-
-    PDCResult expectedPdcResult = new PDCResult(publicDomain, trace);
+    DDBItem metadata = new DDBItem(itemID);
+    metadata.setCategory(category);
+    metadata.setInstitution(institution);
+    
+    PDCResult expectedPdcResult = new PDCResult(publicDomain, trace, metadata);
+    storageService.store(expectedPdcResult);
 
     MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
     PublicDomainCalculator ansService = Mockito.
@@ -115,6 +114,8 @@ public class PDCControllerTest {
           return false;
         }
       }
+    } else {
+      return false;
     }
     return true;
   }

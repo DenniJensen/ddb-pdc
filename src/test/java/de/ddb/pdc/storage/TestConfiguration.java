@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class TestConfiguration {
 
   @Value("${host.ip:127.0.0.1}")
-  private String hostIp;
+  private String hostIP;
 
   @Value("${host.port:27017}")
   private int hostPort;
@@ -32,13 +32,10 @@ public class TestConfiguration {
   private String collectionName;
 
   @Bean
-  public MongoTemplate mongoTemplate() throws UnknownHostException {
-    return new MongoTemplate(new MongoClient(hostIp, hostPort), database);
-  }
-
-  @Bean
   public StorageService storageService() throws UnknownHostException {
-    return new MongoStorageService(mongoTemplate(), collectionName);
+    return new MongoStorageService(
+        hostIP, hostPort, database, collectionName
+    );
   }
 
   /**

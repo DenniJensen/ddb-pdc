@@ -36,7 +36,9 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
   public PDCResult calculate(String country, DDBItem metadata) {
     // FIXME: HardCoded
     Category category = Category.LITERARY_OR_ARTISTIC_WORK;
-    Questionnaire questionnaire = questionnaireFactory.build(country, category);
+    Questionnaire questionnaire = questionnaireFactory.build(
+        country, category, metadata
+    );
     answerQuestions(questionnaire, metadata);
     return questionnaire.getResult();
   }

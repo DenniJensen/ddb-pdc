@@ -2,7 +2,9 @@ package de.ddb.pdc.storage;
 
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.AnsweredQuestion;
+import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.core.Question;
+import de.ddb.pdc.metadata.DDBItem;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
@@ -26,7 +28,7 @@ public class MongoStorageServiceTest {
     final String itemID = "156987";
     final String category = "Movies";
     final String institution = "Insti";
-    final boolean publicDomain = false;
+    final Boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
     AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
             Question.AUTHOR_ANONYMOUS, Answer.NO, null);
@@ -35,12 +37,14 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StoredPDCResult newEntry = new StoredPDCResult(
-        itemID, category, institution,publicDomain,trace
-    );
+    DDBItem metadata = new DDBItem(itemID);
+    metadata.setCategory(category);
+    metadata.setInstitution(institution);
+        
+    PDCResult newEntry = new PDCResult(publicDomain, trace, metadata);
     storageService.store(newEntry);
 
-    StoredPDCResult storedEntry = storageService.fetch(itemID);
+    PDCResult storedEntry = storageService.fetch(itemID);
     boolean check = compareTwoEntries(newEntry, storedEntry);
     Assert.assertEquals(true, check);
   }
@@ -51,7 +55,7 @@ public class MongoStorageServiceTest {
     final String itemID = "8963254";
     final String category = "Movies";
     final String institution = "Insti";
-    final boolean publicDomain = false;
+    final Boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
     AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
             Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null);
@@ -60,9 +64,11 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StoredPDCResult newEntry = new StoredPDCResult(
-        itemID, category, institution,publicDomain,trace
-    );
+    DDBItem metadata = new DDBItem(itemID);
+    metadata.setCategory(category);
+    metadata.setInstitution(institution);
+    
+    PDCResult newEntry = new PDCResult(publicDomain, trace, metadata);
     storageService.store(newEntry);
 
     final List<AnsweredQuestion> newTrace = new ArrayList<>();
@@ -72,22 +78,23 @@ public class MongoStorageServiceTest {
             Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.YES, null);
     newTrace.add(newAnsweredQuestionA);
     newTrace.add(newAnsweredQuestionB);
-    StoredPDCResult updatedEntry = new StoredPDCResult(
-      itemID, category, institution, true, newTrace
+    
+    PDCResult updatedEntry = new PDCResult(
+        Boolean.TRUE, newTrace, metadata
     );
     storageService.update(updatedEntry);
 
-    StoredPDCResult storedEntry = storageService.fetch(itemID);
+    PDCResult storedEntry = storageService.fetch(itemID);
     Assert.assertTrue(compareTwoEntries(updatedEntry, storedEntry));
   }
 
   @Test
-  public void testDeleteAll() {
-    List <StoredPDCResult> entriesBefore= storageService.fetchAll();
+  public void testDeleteAll() {    
+    List <PDCResult> entriesBefore= storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
-    List <StoredPDCResult> entriesAfter = storageService.fetchAll();
-    Assert.assertEquals(true, entriesAfter.isEmpty());
+    List <PDCResult> entriesAfter = storageService.fetchAll();
+    Assert.assertEquals(true, entriesAfter.isEmpty());    
   }
 
   /**
@@ -100,13 +107,13 @@ public class MongoStorageServiceTest {
    *
    * @return true if entries are equal
    */
-  private boolean compareTwoEntries(StoredPDCResult mdm1, StoredPDCResult mdm2){
+  private boolean compareTwoEntries(PDCResult mdm1, PDCResult mdm2){
     boolean equal = false;
 
     if((mdm1.getItemId().equals(mdm2.getItemId())) &&
             (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
             (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
-            (mdm1.isPublicDomain() == mdm2.isPublicDomain()) &&
+            (mdm1.isPublicDomain().equals(mdm2.isPublicDomain())) &&
             (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 )&&
             (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
             ){

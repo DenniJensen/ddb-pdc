@@ -1,5 +1,6 @@
 package de.ddb.pdc.storage;
 
+import de.ddb.pdc.core.PDCResult;
 import java.util.List;
 
 /**
@@ -12,14 +13,14 @@ public interface StorageService {
    *
    * @param record
    */
-  public void store(StoredPDCResult record);
+  public void store(PDCResult record);
 
   /**
    * Update an existing MongoDataModel.
    * 
    * @param record 
    */
-  public void update(StoredPDCResult record);
+  public void update(PDCResult record);
   
   /**
    * Find a single MongoDataModel record by its item ID.
@@ -27,14 +28,14 @@ public interface StorageService {
    * @param itemId
    * @return record
    */
-  public StoredPDCResult fetch(String itemId);
+  public PDCResult fetch(String itemId);
 
   /**
    * Fetch all records from storage.
    *
    * @return list of records
    */
-  public List<StoredPDCResult> fetchAll();
+  public List<PDCResult> fetchAll();
 
   /**
    * Remove all records from storage.

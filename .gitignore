@@ -17,3 +17,4 @@ config
 .classpath
 .settings/
 !/config/
+/nbactions.xml
