@@ -1,6 +1,5 @@
 package de.ddb.pdc.storage;
 
-import com.mongodb.MongoClient;
 import de.ddb.pdc.core.PDCResult;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
@@ -30,15 +29,11 @@ public class MongoStorageService implements StorageService {
   private final String collectionName;
 
   @Autowired
-  public MongoStorageService(@Value("${host.ip:127.0.0.1}") String hostIP,
-      @Value("${host.port:27017}") int hostPort,
-      @Value("${database:pdc}") String database,
-      @Value("${collection.name:pdcData}") String collectionName) 
-      throws UnknownHostException {
+  public MongoStorageService(MongoTemplate mongoTemplate, 
+      @Value("${spring.data.mongodb.collection:pdcData}") 
+      String collectionName) throws UnknownHostException {
     
-    this.mongoTemplate = new MongoTemplate(
-        new MongoClient(hostIP, hostPort), database
-    );
+    this.mongoTemplate = mongoTemplate;
     this.collectionName = collectionName;
   }
 

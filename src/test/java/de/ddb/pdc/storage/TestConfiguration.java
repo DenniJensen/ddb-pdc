@@ -19,23 +19,26 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @PropertySource("file:config/test.application.properties")
 public class TestConfiguration {
 
-  @Value("${host.ip:127.0.0.1}")
-  private String hostIP;
+  @Value("${spring.data.mongodb.host:127.0.0.1}")
+  private String hostIp;
 
-  @Value("${host.port:27017}")
+  @Value("${spring.data.mongodb.port:27017}")
   private int hostPort;
 
-  @Value("${database:pdcTest}")
+  @Value("${spring.data.mongodb.database:pdcTest}")
   private String database;
 
-  @Value("${collection.name:pdcDataTest}")
+  @Value("${spring.data.mongodb.collection:pdcDataTest}")
   private String collectionName;
 
   @Bean
+  public MongoTemplate mongoTemplate() throws UnknownHostException {
+    return new MongoTemplate(new MongoClient(hostIp, hostPort), database);
+  }
+
+  @Bean
   public StorageService storageService() throws UnknownHostException {
-    return new MongoStorageService(
-        hostIP, hostPort, database, collectionName
-    );
+    return new MongoStorageService(mongoTemplate(), collectionName);
   }
 
   /**
