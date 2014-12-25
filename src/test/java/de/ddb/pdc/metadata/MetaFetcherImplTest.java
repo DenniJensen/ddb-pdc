@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -35,7 +36,7 @@ public class MetaFetcherImplTest {
     SearchResults results = mock(SearchResults.class);
     when(results.getResultItems()).thenReturn(resultItems);
 
-    String url = DdbApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
+    String url = ApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
     DDBItem[] items = fetcher.searchForItems("Titel", 0, 10, "relevance");
@@ -49,14 +50,16 @@ public class MetaFetcherImplTest {
   
   @Test
   public void fetch() {
-    EntitiesResultItem eri = mock(EntitiesResultItem.class);
-    when(eri.getName()).thenReturn("Johann Wolfgang von Goethe");
-    when(eri.getPlaceOfBirth()).thenReturn("Frankfurt am Main");
-    when(eri.getYearOfBirth()).thenReturn(1749);
-    when(eri.getYearOfDeath()).thenReturn(1832);
+    DNBAuthorItem dnbA = mock(DNBAuthorItem.class);
+    when(dnbA.name()).thenReturn("Johann Wolfgang von Goethe");
+    when(dnbA.placeOfDeathUri()).thenReturn("http://d-nb.info/gnd/4062257-5");
+    Calendar calB = new GregorianCalendar(1749,14,5);
+    when(dnbA.dateOfBirth()).thenReturn(calB);
+    Calendar calD = new GregorianCalendar(1832,16,06);
+    when(dnbA.dateOfDeath()).thenReturn(calD);
 
-    EntitiesResult er = mock(EntitiesResult.class);
-    when(er.getResultItem()).thenReturn(eri);
+    DNBLocationItem dnbL = mock(DNBLocationItem.class);
+    when(dnbL.locate()).thenReturn("de");
     
     RDFItem rdf = mock(RDFItem.class);
     String authorId = "http://d-nb.info/gnd/118540238";
@@ -74,11 +77,13 @@ public class MetaFetcherImplTest {
     
     
     String url = "https://api.deutsche-digitale-bibliothek.de/items/itemId/aip?oauth_consumer_key=authkey";
-    String url2 = "https://api.deutsche-digitale-bibliothek.de/entities?query=id:\"http://d-nb.info/gnd/118540238\"&oauth_consumer_key=authkey";
-    
+    String url2 = "http://d-nb.info/gnd/118540238/about/rdf";
+    String url3 = "http://d-nb.info/gnd/4062257-5/about/rdf";
     when(rest.getForObject(url, ItemAipResult.class)).thenReturn(result);
     
-    when(rest.getForObject(url2, EntitiesResult.class)).thenReturn(er);
+    when(rest.getForObject(url2, DNBAuthorItem.class)).thenReturn(dnbA);
+
+    when(rest.getForObject(url3, DNBLocationItem.class)).thenReturn(dnbL);
     
     DDBItem ddbItem = fetcher.fetchMetadata("itemId");
     
@@ -87,8 +92,8 @@ public class MetaFetcherImplTest {
     assertEquals("http://d-nb.info/gnd/118540238", ddbItem.getAuthors().get(0).getDnbId());
     Author author = ddbItem.getAuthors().get(0);
     assertEquals("Johann Wolfgang von Goethe",author.getName());
-    assertEquals(1749, author.getYearOfBirth().get(Calendar.YEAR));
-    assertEquals(1832, author.getYearOfDeath().get(Calendar.YEAR));
-    assertEquals("Frankfurt am Main", author.getPlaceOfBirth());
+    assertEquals(calB, author.getDateOfBirth());
+    assertEquals(calD, author.getDateOfDeath());
+    assertEquals("de", author.getPlaceOfBirth());
   } 
 }

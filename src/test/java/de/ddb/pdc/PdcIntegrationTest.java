@@ -1,6 +1,6 @@
 package de.ddb.pdc;
 
-import de.ddb.pdc.metadata.DdbApiUrls;
+import de.ddb.pdc.metadata.ApiUrls;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +50,7 @@ public class PdcIntegrationTest {
 
   @Test
   public void search() throws Exception {
-    String url = DdbApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
+    String url = ApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
     mockDdbApiRequest(url, "/ddb_search/goethe3");
     List results = getForObject("/search?q=goethe&max=3", List.class);
 
@@ -93,9 +93,9 @@ public class PdcIntegrationTest {
     final String itemId = "TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK";
     final String authorId = "http://d-nb.info/gnd/118592343";
 
-    String aipUrl = DdbApiUrls.itemAipUrl(itemId, dbbApiKey);
+    String aipUrl = ApiUrls.itemAipUrl(itemId, dbbApiKey);
     mockDdbApiRequest(aipUrl, "/ddb_items_aip/goethe");
-    String entityUrl = DdbApiUrls.entityUrl(authorId, dbbApiKey);
+    String entityUrl = ApiUrls.entityUrl(authorId, dbbApiKey);
     mockDdbApiRequest(entityUrl, "/ddb_entities/goethe");
     Map result = getForObject("/pdc/" + itemId, Map.class);
 
