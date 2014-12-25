@@ -1,11 +1,11 @@
 package de.ddb.pdc.metadata;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class RDFItem {
@@ -45,7 +45,7 @@ class RDFItem {
    */
   public String getInstitution() {
     List<Object> dataProvider = (ArrayList<Object>) aggregation
-      .get("dataProvider");
+        .get("dataProvider");
 
     if (dataProvider == null || dataProvider.size() == 0) {
       return null;

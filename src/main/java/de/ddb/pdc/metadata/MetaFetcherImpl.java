@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class MetaFetcherImpl implements MetaFetcher {
 
   private static final String URL =
-    "https://www.deutsche-digitale-bibliothek.de";
+      "https://www.deutsche-digitale-bibliothek.de";
 
   private RestTemplate restTemplate;
   private String apiKey;

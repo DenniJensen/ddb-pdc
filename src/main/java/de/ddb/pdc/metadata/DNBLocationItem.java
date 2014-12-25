@@ -12,6 +12,9 @@ public class DNBLocationItem {
       namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
   private Description description;
 
+  /**
+   * @return locate of a dnb location item
+   */
   public String locate() {
     if (this.description == null) {
       return null;
@@ -40,7 +43,7 @@ public class DNBLocationItem {
       public String getLocate() {
         if (resource != null) {
           String[] temp = resource.split("#");
-          String[] temp2 = temp[temp.length-1].split("-");
+          String[] temp2 = temp[temp.length - 1].split("-");
           if (temp2.length > 2) {
             return temp2[1].toLowerCase();
           }

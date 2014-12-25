@@ -13,6 +13,9 @@ public class DNBAuthorItem {
   @XmlElement(name = "Description", namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
   private RDFDescription description;
 
+  /**
+   * @return name of the author
+   */
   public String name() {
     if (this.description == null) {
       return null;
@@ -20,6 +23,9 @@ public class DNBAuthorItem {
     return this.description.getName();
   }
 
+  /**
+   * @return date of birth of the author
+   */
   public Calendar dateOfBirth() {
     if (this.description == null) {
       return null;
@@ -27,6 +33,9 @@ public class DNBAuthorItem {
     return formatDateString(this.description.getDateOfBirth());
   }
 
+  /**
+   * @return date of death of the author
+   */
   public Calendar dateOfDeath() {
     if (this.description == null) {
       return null;
@@ -34,6 +43,9 @@ public class DNBAuthorItem {
     return formatDateString(this.description.getDateOfDeath());
   }
 
+  /**
+   * @return the uri of the place of death from author
+   */
   public String placeOfDeathUri() {
     if (this.description == null) {
       return null;

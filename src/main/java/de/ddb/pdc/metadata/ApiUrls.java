@@ -19,7 +19,7 @@ public class ApiUrls {
    * @return          corresponding URL
    */
   public static String searchUrl(String query,int startItem, int maxItems,
-    String sort, String apiKey) {
+      String sort, String apiKey) {
     return url(apiKey, "/search",
         "query", query,
         "offset", Integer.toString(startItem),
@@ -84,6 +84,6 @@ public class ApiUrls {
    * @return url to get rdf data
    */
   public static String dnbUrl(String dnbUrl) {
-    return dnbUrl+"/about/rdf";
+    return dnbUrl + "/about/rdf";
   }
 }

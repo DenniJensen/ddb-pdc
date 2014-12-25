@@ -48,7 +48,7 @@ public enum Answer {
   @Override
   @JsonValue
   public String toString() {
-    switch(this) {
+    switch (this) {
       case YES:
         return "yes";
       case ASSUMED_YES:

@@ -34,10 +34,16 @@ public class DDBItem {
     this.authors = new ArrayList<Author>();
   }
 
+  /**
+   * @param maxResults is the max numbers of results of a search
+   */
   public void setMaxResults(int maxResults) {
     this.maxResults = maxResults;
   }
 
+  /**
+   * @return numbers of results from the search of the item
+   */
   public int getMaxResults() {
     return this.maxResults;
   }
