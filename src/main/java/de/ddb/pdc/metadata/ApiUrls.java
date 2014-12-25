@@ -3,7 +3,7 @@ package de.ddb.pdc.metadata;
 /**
  * Utility class for generating URLs for DDB API endpoints.
  */
-public class DdbApiUrls {
+public class ApiUrls {
 
   private static final String API_URL =
       "https://api.deutsche-digitale-bibliothek.de";
