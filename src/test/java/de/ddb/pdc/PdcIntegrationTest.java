@@ -95,8 +95,8 @@ public class PdcIntegrationTest {
 
     String aipUrl = ApiUrls.itemAipUrl(itemId, dbbApiKey);
     mockDdbApiRequest(aipUrl, "/ddb_items_aip/goethe");
-    String entityUrl = ApiUrls.entityUrl(authorId, dbbApiKey);
-    mockDdbApiRequest(entityUrl, "/ddb_entities/goethe");
+    String dnbUrl = ApiUrls.dnbUrl(authorId);
+    mockDdbApiRequest(dnbUrl, "/ddb_entities/goethe");
     Map result = getForObject("/pdc/" + itemId, Map.class);
 
     assertEquals(null, result.get("publicDomain"));
