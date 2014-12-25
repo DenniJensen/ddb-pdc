@@ -29,13 +29,13 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
 
     int authorDeathYear = 0;
     for (Author author : authors) {
-      if (author.getYearOfDeath() == null
-          || !author.getYearOfDeath().isSet(Calendar.YEAR)) {
+      if (author.getDateOfDeath() == null
+          || !author.getDateOfDeath().isSet(Calendar.YEAR)) {
         this.note = "Not every authors' year of death is known. Assuming "
             + "at least one author is still alive.";
         return Answer.ASSUMED_NO;
       }
-      int theYearOfDeath = author.getYearOfDeath().get(Calendar.YEAR);
+      int theYearOfDeath = author.getDateOfDeath().get(Calendar.YEAR);
       authorDeathYear = Math.max(authorDeathYear, theYearOfDeath);
     }
 

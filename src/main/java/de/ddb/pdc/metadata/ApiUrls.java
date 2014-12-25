@@ -78,4 +78,12 @@ public class ApiUrls {
     return url(apiKey, "/entities",
         "query", String.format("id:\"%s\"", dnbId));
   }
+
+  /**
+   * @param dnbUrl of an author or location
+   * @return url to get rdf data
+   */
+  public static String dnbUrl(String dnbUrl) {
+    return dnbUrl+"/about/rdf";
+  }
 }

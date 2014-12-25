@@ -8,6 +8,9 @@ import java.util.GregorianCalendar;
  * Aggregates the metadata of an item from the DDB.
  */
 public class DDBItem {
+
+  private int    maxResults;
+
   private String id;
   private String title;
   private String subtitle;
@@ -29,6 +32,14 @@ public class DDBItem {
   public DDBItem(String id) {
     this.id = id;
     this.authors = new ArrayList<Author>();
+  }
+
+  public void setMaxResults(int maxResults) {
+    this.maxResults = maxResults;
+  }
+
+  public int getMaxResults() {
+    return this.maxResults;
   }
 
   /**

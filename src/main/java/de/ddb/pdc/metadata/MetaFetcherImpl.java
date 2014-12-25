@@ -1,5 +1,6 @@
 package de.ddb.pdc.metadata;
 
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +25,8 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public MetaFetcherImpl(RestTemplate restTemplate, String apiKey) {
     this.restTemplate = restTemplate;
+    this.restTemplate.getMessageConverters()
+        .add(new Jaxb2RootElementHttpMessageConverter());
     this.apiKey = apiKey;
   }
 
@@ -32,7 +35,7 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem[] searchForItems(String query, int startItem, int maxCount,
       String sort) throws RestClientException {
-    String url = DdbApiUrls.searchUrl(query,startItem, maxCount, sort, apiKey);
+    String url = ApiUrls.searchUrl(query, startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
@@ -47,6 +50,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     int idx = 0;
     for (SearchResultItem rsi : results.getResultItems()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
+      ddbItem.setMaxResults(results.getNumberOfResults());
       ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
       ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
       ddbItem.setImageUrl(URL + rsi.getThumbnail());
@@ -69,7 +73,7 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
-    String url = DdbApiUrls.itemAipUrl(itemId, apiKey);
+    String url = ApiUrls.itemAipUrl(itemId, apiKey);
     ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
     if (result.getRDFItem() != null) {
       fillDDBItem(ddbItem, result);
@@ -91,21 +95,27 @@ public class MetaFetcherImpl implements MetaFetcher {
 
   private void fetchAuthorMetadata(DDBItem item) {
     for (Author author : item.getAuthors()) {
-      String entityUrl = DdbApiUrls.entityUrl(author.getDnbId(), apiKey);
-      EntitiesResult result = restTemplate.getForObject(entityUrl,
-          EntitiesResult.class);
+      String dnbUrl = ApiUrls.dnbUrl(author.getDnbId());
+      DNBAuthorItem result = restTemplate.getForObject(dnbUrl,
+          DNBAuthorItem.class);
       fillAuthor(author, result);
 
     }
   }
 
-  private void fillAuthor(Author author, EntitiesResult result) {
-    EntitiesResultItem entity = result.getResultItem();
-    if (entity != null) {
-      author.setName(entity.getName());
-      author.setYearOfBirth(entity.getYearOfBirth());
-      author.setYearOfDeath(entity.getYearOfDeath());
-      author.setPlaceOfBirth(entity.getPlaceOfBirth());
+  private void fillAuthor(Author author, DNBAuthorItem result) {
+    if (result != null) {
+      author.setName(result.name());
+      author.setDateOfBirth(result.dateOfBirth());
+      author.setDateOfDeath(result.dateOfDeath());
+      if (result.placeOfDeathUri() != null) {
+        String dnbUrl = ApiUrls.dnbUrl(result.placeOfDeathUri());
+        DNBLocationItem location = restTemplate.getForObject(dnbUrl,
+            DNBLocationItem.class);
+        if (location != null) {
+          author.setPlaceOfBirth(location.locate());
+        }
+      }
     }
   }
 }
