@@ -34,8 +34,14 @@ public class MetaFetcherImplTest {
     resultItems.add(resultItem);
     SearchResults results = mock(SearchResults.class);
     when(results.getResultItems()).thenReturn(resultItems);
-
-    String url = DdbApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
+    
+    String url = DdbApiUrls.searchUrl("+testing-the!syntax?right&&now\\",
+      0, 10, "relevance", "authkey");
+    assertEquals("https://api.deutsche-digitale-bibliothek.de/search"
+      + "?query=\\+testing\\-the\\!syntax\\?right\\&&now\\\\&offset=0"
+      + "&rows=10&sort=relevance&oauth_consumer_key=authkey", url);
+  
+    url = DdbApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
     DDBItem[] items = fetcher.searchForItems("Titel", 0, 10, "relevance");
