@@ -1,6 +1,7 @@
 package de.ddb.pdc.storage;
 
 import de.ddb.pdc.core.AnsweredQuestion;
+import de.ddb.pdc.core.PDCResult;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.annotation.Id;
@@ -10,6 +11,17 @@ import org.springframework.data.annotation.Id;
  *
  */
 public class StoredPDCResult {
+
+  /**
+   * Helper method for obtaining a StoredPDCResult from a PDCResult.
+   */
+  public static StoredPDCResult fromPDCResult(PDCResult pdcResult) {
+    return new StoredPDCResult(pdcResult.getItemId(),
+        pdcResult.getItemCategory(), pdcResult.getInstitution(),
+        pdcResult.isPublicDomain(), pdcResult.getTrace(),
+        pdcResult.getCreatedDate()
+    );
+  }
 
   @Id
   private String id;
@@ -23,6 +35,7 @@ public class StoredPDCResult {
 
   /**
    * Constructor for storing new records.
+   * Also used by Mongo DB to fetch existing records.
    */
   public StoredPDCResult(String itemId, String itemCategory, String institution,
         Boolean publicDomain, List<AnsweredQuestion> trace, Date createdDate) {

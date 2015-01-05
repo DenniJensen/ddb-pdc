@@ -43,7 +43,7 @@ public class MongoStorageService implements StorageService {
   @Override
   public void store(PDCResult record) {
     if (record != null) {
-      StoredPDCResult storageRecord = StorageUtils.toStoredPDCResult(record);
+      StoredPDCResult storageRecord = StoredPDCResult.fromPDCResult(record);
       mongoTemplate.insert(storageRecord, collectionName);
     }
   }
