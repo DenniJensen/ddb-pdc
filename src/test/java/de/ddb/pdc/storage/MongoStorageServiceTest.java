@@ -1,6 +1,6 @@
 package de.ddb.pdc.storage;
 
-import de.ddb.pdc.core.Answer;
+import de.ddb.pdc.core.Answer;   
 import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.core.Question;
@@ -40,7 +40,7 @@ public class MongoStorageServiceTest {
     DDBItem metadata = new DDBItem(itemID);
     metadata.setCategory(category);
     metadata.setInstitution(institution);
-        
+
     PDCResult newEntry = new PDCResult(publicDomain, trace, metadata);
     storageService.store(newEntry);
 
@@ -67,7 +67,7 @@ public class MongoStorageServiceTest {
     DDBItem metadata = new DDBItem(itemID);
     metadata.setCategory(category);
     metadata.setInstitution(institution);
-    
+
     PDCResult newEntry = new PDCResult(publicDomain, trace, metadata);
     storageService.store(newEntry);
 
@@ -78,7 +78,7 @@ public class MongoStorageServiceTest {
             Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.YES, null);
     newTrace.add(newAnsweredQuestionA);
     newTrace.add(newAnsweredQuestionB);
-    
+
     PDCResult updatedEntry = new PDCResult(
         Boolean.TRUE, newTrace, metadata
     );
@@ -89,12 +89,12 @@ public class MongoStorageServiceTest {
   }
 
   @Test
-  public void testDeleteAll() {    
+  public void testDeleteAll() {
     List <PDCResult> entriesBefore= storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
     List <PDCResult> entriesAfter = storageService.fetchAll();
-    Assert.assertEquals(true, entriesAfter.isEmpty());    
+    Assert.assertEquals(true, entriesAfter.isEmpty());
   }
 
   /**

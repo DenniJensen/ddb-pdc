@@ -6,7 +6,7 @@ import de.ddb.pdc.core.PDCResult;
  * Helper class for storage-related conversions.
  */
 public class StorageUtils {
-  
+
   public static StoredPDCResult toStoredPDCResult(PDCResult pdcResult) {
     return new StoredPDCResult(
         pdcResult.getItemId(),
@@ -15,7 +15,7 @@ public class StorageUtils {
         pdcResult.isPublicDomain(),
         pdcResult.getTrace(),
         pdcResult.getCreatedDate()
-    ); 
+    );
   }
-  
+
 }

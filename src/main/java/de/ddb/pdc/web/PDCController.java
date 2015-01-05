@@ -62,12 +62,12 @@ public class PDCController {
    *                  is true if the answer was answered with "yes" and
    *                  false if the answer was "no".
    *
-   * A retrieved PDC result is re-calculated if both of the following 
+   * A retrieved PDC result is re-calculated if both of the following
    * conditions are true:
    * 1) the DDB item is not part of the public domain
    * 2) the year of the current request is greater than the year at which the
    * public-domain result was calculated and stored
-   * 
+   *
    * @param itemId DDB item ID
    * @return PDCResult serialized to standard JSON
    */
@@ -78,30 +78,30 @@ public class PDCController {
     PDCResult pdcResult = null;
 
     PDCResult fetchedResult = storageService.fetch(itemId);
-    
+
     if (fetchedResult != null) {
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
       int requestYear = calendar.get(Calendar.YEAR);
       calendar.setTime(fetchedResult.getCreatedDate());
       int recordCreationYear = calendar.get(Calendar.YEAR);
-      
-      if ((requestYear > recordCreationYear) 
-          && (! fetchedResult.isPublicDomain())) {        
+
+      if ((requestYear > recordCreationYear)
+          && (! fetchedResult.isPublicDomain())) {
         DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
-        pdcResult = this.calculator.calculate(this.country, ddbItem);        
+        pdcResult = this.calculator.calculate(this.country, ddbItem);
         storageService.update(pdcResult);
-        
+
       } else {
         pdcResult = fetchedResult;
-        
-      }      
+
+      }
     } else {
-      DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);      
+      DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
       pdcResult = this.calculator.calculate(this.country, ddbItem);
       storageService.store(pdcResult);
-      
+
     }
-    
+
     return pdcResult;
   }
 }

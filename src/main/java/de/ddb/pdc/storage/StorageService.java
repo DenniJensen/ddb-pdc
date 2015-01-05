@@ -17,11 +17,11 @@ public interface StorageService {
 
   /**
    * Update an existing MongoDataModel.
-   * 
-   * @param record 
+   *
+   * @param record
    */
   public void update(PDCResult record);
-  
+
   /**
    * Find a single MongoDataModel record by its item ID.
    *

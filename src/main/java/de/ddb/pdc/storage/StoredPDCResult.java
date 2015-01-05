@@ -7,13 +7,13 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Entity representing the PDC record structure in storage.
- *  
+ *
  */
 public class StoredPDCResult {
 
   @Id
   private String id;
-  
+
   private final String itemId;
   private final String itemCategory;
   private final String institution;

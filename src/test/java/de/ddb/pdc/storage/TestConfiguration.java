@@ -42,7 +42,7 @@ public class TestConfiguration {
   }
 
   /**
-   * Refer to Spring documentation for Annotation Type PropertySource. 
+   * Refer to Spring documentation for Annotation Type PropertySource.
    */
   @Bean
   public static PropertySourcesPlaceholderConfigurer

@@ -29,10 +29,10 @@ public class MongoStorageService implements StorageService {
   private final String collectionName;
 
   @Autowired
-  public MongoStorageService(MongoTemplate mongoTemplate, 
-      @Value("${spring.data.mongodb.collection:pdcData}") 
+  public MongoStorageService(MongoTemplate mongoTemplate,
+      @Value("${spring.data.mongodb.collection:pdcData}")
       String collectionName) throws UnknownHostException {
-    
+
     this.mongoTemplate = mongoTemplate;
     this.collectionName = collectionName;
   }
@@ -67,7 +67,7 @@ public class MongoStorageService implements StorageService {
 
   /**
    * Fetches the first record from the collection that matches the query.
-   * 
+   *
    * Implements the Query class so SQL-like constructs can be used.
    * @return the target record or null if the record was not found.
    *
@@ -83,7 +83,7 @@ public class MongoStorageService implements StorageService {
       return null;
     } else {
       return new PDCResult(fetchedRecord);
-    }    
+    }
   }
 
   /**
