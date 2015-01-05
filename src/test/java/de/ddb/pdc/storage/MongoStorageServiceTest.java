@@ -1,6 +1,6 @@
 package de.ddb.pdc.storage;
 
-import de.ddb.pdc.core.Answer;   
+import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.core.Question;
@@ -90,7 +90,7 @@ public class MongoStorageServiceTest {
 
   @Test
   public void testDeleteAll() {
-    List <PDCResult> entriesBefore= storageService.fetchAll();
+    List <PDCResult> entriesBefore = storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
     List <PDCResult> entriesAfter = storageService.fetchAll();
@@ -108,18 +108,14 @@ public class MongoStorageServiceTest {
    * @return true if entries are equal
    */
   private boolean compareTwoEntries(PDCResult mdm1, PDCResult mdm2){
-    boolean equal = false;
-
-    if((mdm1.getItemId().equals(mdm2.getItemId())) &&
-            (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
-            (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
-            (mdm1.isPublicDomain().equals(mdm2.isPublicDomain())) &&
-            (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 )&&
-            (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
-            ){
-      equal = true;
-    }
-    return equal;
+    return (
+      (mdm1.getItemId().equals(mdm2.getItemId())) &&
+      (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
+      (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
+      (mdm1.isPublicDomain().equals(mdm2.isPublicDomain())) &&
+      (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 )&&
+      (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
+    );
   }
 
   /**

@@ -37,15 +37,15 @@ public class PDCControllerTest {
     MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
     DDBItem ddbItemfromMetaFetcher = new DDBItem("123");
     Mockito.when(mfetcher.fetchMetadata("123")).
-            thenReturn(ddbItemfromMetaFetcher);
+        thenReturn(ddbItemfromMetaFetcher);
 
     PublicDomainCalculator ansService = Mockito.
-            mock(PublicDomainCalculator.class);
+        mock(PublicDomainCalculator.class);
     List<AnsweredQuestion> trace = new ArrayList<AnsweredQuestion>();
-    PDCResult pdcResult = new PDCResult(true,trace,ddbItemfromMetaFetcher);
+    PDCResult pdcResult = new PDCResult(true, trace, ddbItemfromMetaFetcher);
     // country is null
     Mockito.when(ansService.calculate(null, mfetcher.fetchMetadata("123"))).
-            thenReturn(pdcResult);
+        thenReturn(pdcResult);
 
     StorageService storageServiceMock = Mockito.mock(StorageService.class);
 
@@ -65,29 +65,32 @@ public class PDCControllerTest {
     final boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
     AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
-            Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null);
+        Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null
+    );
     AnsweredQuestion answeredQuestionB = new AnsweredQuestion(
-            Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.NO, null);
+        Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.NO, null
+    );
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
     DDBItem metadata = new DDBItem(itemID);
     metadata.setCategory(category);
     metadata.setInstitution(institution);
-    
+
     PDCResult expectedPdcResult = new PDCResult(publicDomain, trace, metadata);
     storageService.store(expectedPdcResult);
 
     MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
     PublicDomainCalculator ansService = Mockito.
-            mock(PublicDomainCalculator.class);
+        mock(PublicDomainCalculator.class);
 
     PDCController pdcController = new PDCController(
-        mfetcher, ansService, storageService);
+        mfetcher, ansService, storageService
+    );
 
     PDCResult realPdcResult = pdcController.determinePublicDomain(itemID);
 
-    Assert.assertTrue(compareTwoPDCResults(expectedPdcResult,realPdcResult));
+    Assert.assertTrue(compareTwoPDCResults(expectedPdcResult, realPdcResult));
 
     storageService.deleteAll();
 
@@ -103,14 +106,14 @@ public class PDCControllerTest {
    * @return true if Objects are equal
    */
   private boolean compareTwoPDCResults(PDCResult pdc1, PDCResult pdc2){
-    if(pdc1.isPublicDomain() != pdc2.isPublicDomain()){
+    if (pdc1.isPublicDomain() != pdc2.isPublicDomain()){
       return false;
     }
-    if(pdc1.getTrace().size() == pdc2.getTrace().size()){
+    if (pdc1.getTrace().size() == pdc2.getTrace().size()){
       // both traces must have the same order
       for(int i = 0; i < pdc1.getTrace().size(); i++){
-        if(!compareTwoAnsweredQuestions(pdc1.getTrace().get(i),
-                pdc2.getTrace().get(i))){
+        if (!compareTwoAnsweredQuestions(pdc1.getTrace().get(i),
+            pdc2.getTrace().get(i))){
           return false;
         }
       }
@@ -131,17 +134,17 @@ public class PDCControllerTest {
    */
   private boolean compareTwoAnsweredQuestions(AnsweredQuestion ansQ1,
           AnsweredQuestion ansQ2){
-    if(! (ansQ1.getQuestion().equals(ansQ2.getQuestion())) ||
-            !(ansQ1.getAnswer().equals(ansQ2.getAnswer()))){
+    if (!(ansQ1.getQuestion().equals(ansQ2.getQuestion())) ||
+        !(ansQ1.getAnswer().equals(ansQ2.getAnswer()))){
       return false;
     }
-    if( (ansQ1.getNote() == null && ansQ2.getNote() != null) ||
-            (ansQ2.getNote() == null && ansQ1.getNote() != null) ){
+    if ((ansQ1.getNote() == null && ansQ2.getNote() != null) ||
+        (ansQ2.getNote() == null && ansQ1.getNote() != null)){
       return false;
     }
-    else{
-      if( (ansQ1.getNote() != null && ansQ2.getNote() != null) &&
-              (!ansQ1.getNote().equals(ansQ2.getNote()))){
+    else {
+      if ((ansQ1.getNote() != null && ansQ2.getNote() != null) &&
+          (!ansQ1.getNote().equals(ansQ2.getNote()))){
         return false;
       }
     }

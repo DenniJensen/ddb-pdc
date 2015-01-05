@@ -21,12 +21,12 @@ public class PDCResult {
    * Creates a PDCResult.
    *
    * @param publicDomain whether the item is considered public-domain
-   * @param trace        trace of calculation questions and answers
-   * @param metadata     properties of the item
+   * @param trace trace of calculation questions and answers
+   * @param metadata properties of the item
    */
-  public PDCResult(Boolean publicDomain, List<AnsweredQuestion> trace, 
-        DDBItem metadata) {
-    
+  public PDCResult(Boolean publicDomain, List<AnsweredQuestion> trace,
+      DDBItem metadata) {
+
     this.itemId = metadata.getId();
     this.publicDomain = publicDomain;
     this.trace = trace;
@@ -34,14 +34,14 @@ public class PDCResult {
     this.institution = metadata.getInstitution();
     this.createdDate = new Date();
   }
-  
+
   /**
    * Alternative constructor used to create an instance of @{link PDCResult}
    * from a @{link StoredPDCResult}.
-   * 
+   *
    * @param storedPDCResult record fetched from storage
    */
-  public PDCResult(StoredPDCResult storedPDCResult) {   
+  public PDCResult(StoredPDCResult storedPDCResult) {
     this.itemId = storedPDCResult.getItemId();
     this.publicDomain = storedPDCResult.isPublicDomain();
     this.trace = storedPDCResult.getTrace();
@@ -56,14 +56,14 @@ public class PDCResult {
   public String getItemId() {
     return this.itemId;
   }
-  
+
   /**
-   * Returns true if the item in question is considered public-domain by
-   * the calculator, or false if not. Returns null if the status could not be
+   * Returns true if the item in question is considered public-domain by the
+   * calculator, or false if not. Returns null if the status could not be
    * determined.
    *
    * @return true or false if the item is or is not in the public domain. null
-   *         if the decision could not be made.
+   * if the decision could not be made.
    */
   public Boolean isPublicDomain() {
     return publicDomain;
@@ -71,22 +71,21 @@ public class PDCResult {
 
   /**
    * Returns all questions and answers that led to the result of the
-   * calculation. The questions are returned in the order they were
-   * asked.
+   * calculation. The questions are returned in the order they were asked.
    *
    * @return A list of all asked questions and the given answer.
    */
   public List<AnsweredQuestion> getTrace() {
     return trace;
   }
-  
+
   /**
    * @return the item category originating from @{link DDBItem}.
    */
   public String getItemCategory() {
     return this.itemCategory;
   }
-  
+
   /**
    * @return the institution's name originating from @{link DDBItem}.
    */
@@ -97,5 +96,5 @@ public class PDCResult {
   public Date getCreatedDate() {
     return createdDate;
   }
-  
+
 }
