@@ -1063,7 +1063,7 @@ ul.action-links li a {
 /* ---------------- Messages  ----------------- */
 
 #messages {
-  padding: 20px 0 5px;
+  padding: 0 0 30px;
   margin: 0 auto;
 }
 .featured #messages {
@@ -1224,7 +1224,7 @@ fieldset .fieldset-description {
 }
 input {
   margin: 2px 0;
-  padding: 4px;
+  padding: 7px;
 }
 input,
 textarea {
@@ -1246,8 +1246,10 @@ select.form-select {
   margin-left: 1.2em; /* LTR */
 }
 .form-item {
+  float: left;
   margin-bottom: 1em;
-  margin-top: 2px;
+  margin-right: 50px;
+  margin-top: 3px;
 }
 .form-item label {
   font-size: 0.929em;

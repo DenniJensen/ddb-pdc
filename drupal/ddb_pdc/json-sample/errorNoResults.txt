@@ -1,0 +1,13 @@
+object(stdClass)#4(6){
+["request"]=>string(178)"POST /search HTTP/1.0 Content-Type: application/x-www-form-urlencoded User-Agent: Drupal (+http://drupal.org/) Host: localhost:8080 Content-Length: 20 q=fgdfgfdgdfg&max=10"
+["data"]=>string(2)"[]"
+["protocol"]=>string(8)"HTTP/1.1"
+["status_message"]=>string(2)"OK"
+["headers"]=>array(4){
+		["server"]=>string(17)"Apache-Coyote/1.1"
+		["content-type"]=>string(30)"application/json;charset=UTF-8"
+		["date"]=>string(29)"Thu, 27 Nov 2014 23:28:27 GMT"
+		["connection"]=>string(5)"close"
+	}
+["code"]=>string(3)"200"
+}

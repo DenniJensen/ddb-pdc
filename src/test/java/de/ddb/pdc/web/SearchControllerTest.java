@@ -14,8 +14,8 @@ public class SearchControllerTest {
   public void search() {
     MetaFetcher fetcher = Mockito.mock(MetaFetcher.class);
     DDBItem[] result = new DDBItem[0];
-    Mockito.when(fetcher.searchForItems("foo", 10)).thenReturn(result);
+    Mockito.when(fetcher.searchForItems("foo", 0, 10, "relevance")).thenReturn(result);
     SearchController controller = new SearchController(fetcher);
-    Assert.assertSame(result, controller.search("foo", 10));
+    Assert.assertSame(result, controller.search("foo", 10, null));
   }
 }
