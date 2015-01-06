@@ -2,7 +2,9 @@ package de.ddb.pdc.storage;
 
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.AnsweredQuestion;
+import de.ddb.pdc.core.PDCResult;
 import de.ddb.pdc.core.Question;
+import de.ddb.pdc.metadata.DDBItem;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
@@ -14,19 +16,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=TestConfiguration.class, 
+@ContextConfiguration(classes=TestConfiguration.class,
     loader = AnnotationConfigContextLoader.class)
 public class MongoStorageServiceTest {
-  
+
   @Autowired
   private StorageService storageService;
-  
+
   @Test
   public void testStoreAndFetch() {
     final String itemID = "156987";
     final String category = "Movies";
     final String institution = "Insti";
-    final boolean publicDomain = false;
+    final Boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
     AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
             Question.AUTHOR_ANONYMOUS, Answer.NO, null);
@@ -35,23 +37,25 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StorageModel newEntry = new StorageModel(
-        itemID, category, institution,publicDomain,trace
-    );
+    DDBItem metadata = new DDBItem(itemID);
+    metadata.setCategory(category);
+    metadata.setInstitution(institution);
+
+    PDCResult newEntry = new PDCResult(publicDomain, trace, metadata);
     storageService.store(newEntry);
 
-    StorageModel storedEntry = storageService.fetch(itemID);
+    PDCResult storedEntry = storageService.fetch(itemID);
     boolean check = compareTwoEntries(newEntry, storedEntry);
     Assert.assertEquals(true, check);
   }
 
   @Test
   public void testStoreAndUpdate(){
-    
+
     final String itemID = "8963254";
     final String category = "Movies";
     final String institution = "Insti";
-    final boolean publicDomain = false;
+    final Boolean publicDomain = false;
     final List<AnsweredQuestion> trace = new ArrayList<>();
     AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
             Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null);
@@ -60,9 +64,11 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionA);
     trace.add(answeredQuestionB);
 
-    StorageModel newEntry = new StorageModel(
-        itemID, category, institution,publicDomain,trace
-    );
+    DDBItem metadata = new DDBItem(itemID);
+    metadata.setCategory(category);
+    metadata.setInstitution(institution);
+
+    PDCResult newEntry = new PDCResult(publicDomain, trace, metadata);
     storageService.store(newEntry);
 
     final List<AnsweredQuestion> newTrace = new ArrayList<>();
@@ -72,45 +78,44 @@ public class MongoStorageServiceTest {
             Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.YES, null);
     newTrace.add(newAnsweredQuestionA);
     newTrace.add(newAnsweredQuestionB);
-    StorageModel updatedEntry = new StorageModel(
-      itemID, category, institution, true, newTrace
+
+    PDCResult updatedEntry = new PDCResult(
+        Boolean.TRUE, newTrace, metadata
     );
     storageService.update(updatedEntry);
 
-    StorageModel storedEntry = storageService.fetch(itemID);
+    PDCResult storedEntry = storageService.fetch(itemID);
     Assert.assertTrue(compareTwoEntries(updatedEntry, storedEntry));
   }
 
   @Test
   public void testDeleteAll() {
-    List <StorageModel> entriesBefore= storageService.fetchAll();
+    List <PDCResult> entriesBefore = storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
-    List <StorageModel> entriesAfter = storageService.fetchAll();
+    List <PDCResult> entriesAfter = storageService.fetchAll();
     Assert.assertEquals(true, entriesAfter.isEmpty());
   }
 
   /**
-   * Compares two Entries and return true if these have the same values
+   * Compares two Entries and return true if these have the same values.
+   * The expected record's creationDate should be less than the actual record's
+   * creationDate, as the latter is created later on in time.
    *
    * @param mdm1
    * @param mdm2
    *
    * @return true if entries are equal
    */
-  private boolean compareTwoEntries(StorageModel mdm1, StorageModel mdm2){
-    boolean equal = false;
-
-    if((mdm1.getItemId().equals(mdm2.getItemId())) &&
-            (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
-            (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
-            (mdm1.isPublicDomain() == mdm2.isPublicDomain())&&
-            (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace())) &&
-            (mdm1.getTimestampAsString().equals(mdm2.getTimestampAsString()))
-            ){
-      equal = true;
-    }
-    return equal;
+  private boolean compareTwoEntries(PDCResult mdm1, PDCResult mdm2){
+    return (
+      (mdm1.getItemId().equals(mdm2.getItemId())) &&
+      (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
+      (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
+      (mdm1.isPublicDomain().equals(mdm2.isPublicDomain())) &&
+      (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 )&&
+      (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
+    );
   }
 
   /**
@@ -151,5 +156,5 @@ public class MongoStorageServiceTest {
     }
     return equal;
   }
-  
+
 }

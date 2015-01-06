@@ -1,5 +1,6 @@
 package de.ddb.pdc.core;
 
+import de.ddb.pdc.metadata.DDBItem;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,17 +23,20 @@ public class Questionnaire {
   private FlowChartState state;
   private final List<AnsweredQuestion> answeredQuestions;
   private boolean isAborted;
+  private final DDBItem metadata;
 
   /**
    * Creates a new Questionnaire from the initial state of the flow chart given
    * as parameter.
    *
    * @param initialState The initial state of the flow chart to use.
+   * @param metadata     The DDBItem with the meta data about the cultural good
    */
-  public Questionnaire(FlowChartState initialState) {
+  public Questionnaire(FlowChartState initialState, DDBItem metadata) {
     this.state = initialState;
     this.answeredQuestions = new LinkedList<AnsweredQuestion>();
     this.isAborted = false;
+    this.metadata = metadata;
   }
 
   /**
@@ -136,15 +140,17 @@ public class Questionnaire {
 
   /**
    * Get the result of this questionnaire. The result will contain the public
-   * domain status of the cultural good this questionnaire was answered for
-   * and the trace of all answered questions.
+   * domain status of the cultural good this questionnaire was answered for,
+   * the trace of all answered questions and the metadata of the cultural good.
    *
    * @return The public domain status and the answered question trace.
    * @throws IllegalStateException You did not answer all the questions that are
    *         necessary. You can not get a result yet.
    */
   public PDCResult getResult() throws IllegalStateException {
-    PDCResult result = new PDCResult(this.isPublicDomain(), this.getTrace());
+    PDCResult result = new PDCResult(
+        this.isPublicDomain(), this.getTrace(), this.metadata
+    );
     return result;
   }
 }

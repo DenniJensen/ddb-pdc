@@ -1,5 +1,6 @@
 package de.ddb.pdc.core;
 
+import de.ddb.pdc.metadata.DDBItem;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,13 +15,16 @@ public class QuestionnaireFactory {
    *
    * @param country item's country of origin as country code (e.g. "de")
    * @param category item category
+   * @param metadata additional information of the item
    * @return matching questionnaire
    */
-  public Questionnaire build(String country, Category category)
+  public Questionnaire build(String country, Category category, 
+      DDBItem metadata)
       throws UnsupportedCountryException, UnsupportedCategoryException {
+    
     FlowChartState flowchart = getFlowchartForCountry(country);
     FlowChartState initial = getInitialStateForCategory(flowchart, category);
-    return new Questionnaire(initial);
+    return new Questionnaire(initial, metadata);
   }
 
   private FlowChartState getFlowchartForCountry(String country) {
