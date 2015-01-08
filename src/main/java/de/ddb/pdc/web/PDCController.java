@@ -26,21 +26,27 @@ public class PDCController {
   private final PublicDomainCalculator calculator;
   private final MetaFetcher metaFetcher;
   private final StorageService storageService;
+  private final boolean storageEnabled;
 
   /**
    * Creates a PDCController.
    *
-   * @param metaFetcher     {@link MetaFetcher} to use for DBB API calls
-   * @param calculator to decide the public domain problem on an item for
-   *                        a given country
+   * @param metaFetcher {@link MetaFetcher} to use for DBB API calls
+   * @param calculator  to decide the public domain problem on an item for
+   *                    a given country
    * @param storageService to access previously calculated item information
+   * @param storageEnabledProperty  to control whether the storage service will
+   *                                be used
    */
   @Autowired
   public PDCController(MetaFetcher metaFetcher,
-      PublicDomainCalculator calculator, StorageService storageService) {
+      PublicDomainCalculator calculator, StorageService storageService,
+      @Value("${ddb.storage.enable:true}") String storageEnabledProperty) {
+
     this.metaFetcher = metaFetcher;
     this.calculator = calculator;
     this.storageService = storageService;
+    this.storageEnabled = Boolean.parseBoolean(storageEnabledProperty);
   }
 
   /**
@@ -77,28 +83,34 @@ public class PDCController {
 
     PDCResult pdcResult = null;
 
-    PDCResult fetchedResult = storageService.fetch(itemId);
+    if (storageEnabled) {
+      PDCResult fetchedResult = storageService.fetch(itemId);
 
-    if (fetchedResult != null) {
-      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-      int requestYear = calendar.get(Calendar.YEAR);
-      calendar.setTime(fetchedResult.getCreatedDate());
-      int recordCreationYear = calendar.get(Calendar.YEAR);
+      if (fetchedResult != null) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        int requestYear = calendar.get(Calendar.YEAR);
+        calendar.setTime(fetchedResult.getCreatedDate());
+        int recordCreationYear = calendar.get(Calendar.YEAR);
 
-      if ((requestYear > recordCreationYear)
-          && (! fetchedResult.isPublicDomain())) {
+        if ((requestYear > recordCreationYear)
+            && (! fetchedResult.isPublicDomain())) {
+          DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
+          pdcResult = this.calculator.calculate(this.country, ddbItem);
+          storageService.update(pdcResult);
+
+        } else {
+          pdcResult = fetchedResult;
+
+        }
+      } else {
         DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
         pdcResult = this.calculator.calculate(this.country, ddbItem);
-        storageService.update(pdcResult);
-
-      } else {
-        pdcResult = fetchedResult;
+        storageService.store(pdcResult);
 
       }
     } else {
       DDBItem ddbItem = metaFetcher.fetchMetadata(itemId);
       pdcResult = this.calculator.calculate(this.country, ddbItem);
-      storageService.store(pdcResult);
 
     }
     return pdcResult;
