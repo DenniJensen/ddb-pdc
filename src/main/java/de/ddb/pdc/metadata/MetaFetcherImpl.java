@@ -3,6 +3,13 @@ package de.ddb.pdc.metadata;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.xml.xpath.Jaxp13XPathTemplate;
+import org.springframework.xml.xpath.XPathOperations;
+import org.w3c.dom.Node;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
+import java.util.*;
 
 /**
  * Implementation of the {@link MetaFetcher} interface.
@@ -14,6 +21,8 @@ public class MetaFetcherImpl implements MetaFetcher {
 
   private RestTemplate restTemplate;
   private String apiKey;
+
+  private XPathOperations xpathTemplate;
 
   /**
    * Creates a new object of the class MetaFetcherImpl.
@@ -28,6 +37,29 @@ public class MetaFetcherImpl implements MetaFetcher {
     this.restTemplate.getMessageConverters()
         .add(new Jaxb2RootElementHttpMessageConverter());
     this.apiKey = apiKey;
+
+    initNamespaces();
+  }
+
+  /**
+   * initialize the namespaces for XPath
+   */
+  private void initNamespaces() {
+    Map<String,String> namespaces = new HashMap<String,String>();
+    namespaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    namespaces.put("gndo", "http://d-nb.info/standards/elementset/gnd#");
+    namespaces.put("ctx", "http://www.deutsche-digitale-bibliothek.de/cortex");
+    namespaces.put("ns2", "http://www.deutsche-digitale-bibliothek.de/institution");
+    namespaces.put("ns3", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    namespaces.put("ns4", "http://www.deutsche-digitale-bibliothek.de/item");
+    namespaces.put("ore", "http://www.openarchives.org/ore/terms/");
+    namespaces.put("edm", "http://www.europeana.eu/schemas/edm/");
+    namespaces.put("skos", "http://www.w3.org/2004/02/skos/core#");
+    namespaces.put("dc", "http://purl.org/dc/elements/1.1/" );
+    namespaces.put("dcterms", "http://purl.org/dc/terms/");
+    Jaxp13XPathTemplate jaxp13XPathTemplate = new Jaxp13XPathTemplate();
+    jaxp13XPathTemplate.setNamespaces(namespaces);
+    this.xpathTemplate = jaxp13XPathTemplate;
   }
 
   /**
@@ -74,48 +106,107 @@ public class MetaFetcherImpl implements MetaFetcher {
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
     String url = ApiUrls.itemAipUrl(itemId, apiKey);
-    ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
-    if (result.getRDFItem() != null) {
+    DOMSource result = restTemplate.getForObject(url, DOMSource.class);
+    if (result != null) {
       fillDDBItem(ddbItem, result);
       fetchAuthorMetadata(ddbItem);
     }
     return ddbItem;
   }
 
-  private void fillDDBItem(DDBItem item, ItemAipResult result) {
-    RDFItem rdf = result.getRDFItem();
-    item.setPublishedYear(rdf.getPublishYear());
-    item.setInstitution(rdf.getInstitution());
-
-    for (String authorId : rdf.getAuthorIds()) {
+  private void fillDDBItem(DDBItem item, DOMSource result) {
+    String xpathIssued = "//dcterms:issued";
+    String xpathInstitution = "//edm:dataProvider[1]";
+    item.setPublishedYear(getDateAsInt(xpathTemplate
+        .evaluateAsString(xpathIssued, result),"\\d{4}"));
+    item.setInstitution(xpathTemplate
+        .evaluateAsString(xpathInstitution, result));
+    for (String authorId : listAuthorIDs(result)) {
       Author author = new Author(authorId);
       item.addAuthor(author);
     }
   }
 
+  private int getDateAsInt(String date, String regex) {
+    return Integer.parseInt(MetadataUtils.useRegex(date, regex));
+  }
+
+  private List<String> listAuthorIDs(DOMSource domSource) {
+    List<String> authorIDs = new ArrayList<String>();
+    String xpathFacetRole =
+        "//ctx:facet[@name='affiliate_fct_role_normdata']/ctx:value";
+    String xpathFacet =
+        "//ctx:facet[@name='affiliate_fct_normdata']/ctx:value";
+    List<Node> nodes = xpathTemplate.evaluateAsNodeList(xpathFacetRole,
+        domSource);
+    for (Node node : nodes) {
+      String value = node.getFirstChild().getTextContent();
+      if (value.endsWith("_1_affiliate_fct_subject")
+          || value.endsWith("_1_affiliate_fct_involved")) {
+        authorIDs.add(value.split("_")[0]);
+      }
+    }
+    if (authorIDs.size() == 0) {
+      nodes = xpathTemplate.evaluateAsNodeList(xpathFacet, domSource);
+      for (Node node : nodes) {
+        authorIDs.add(node.getFirstChild().getTextContent());
+      }
+    }
+    return authorIDs;
+  }
+
   private void fetchAuthorMetadata(DDBItem item) {
     for (Author author : item.getAuthors()) {
       String dnbUrl = ApiUrls.dnbUrl(author.getDnbId());
-      DNBAuthorItem result = restTemplate.getForObject(dnbUrl,
-          DNBAuthorItem.class);
+      DOMSource result = restTemplate.getForObject(dnbUrl, DOMSource.class);
       fillAuthor(author, result);
-
     }
   }
 
-  private void fillAuthor(Author author, DNBAuthorItem result) {
+  private void fillAuthor(Author author, Source result) {
+    String xpathName = "//gndo:variantNameForThePerson";
+    String xpathDOB  = "//gndo:dateOfBirth";
+    String xpathDOD  = "//gndo:dateOfDeath";
+    String xpathPOD  = "//gndo:placeOfDeath/rdf:Description/@rdf:about";
+    String xpathLoc  = "//gndo:geographicAreaCode/@rdf:resource";
     if (result != null) {
-      author.setName(result.name());
-      author.setDateOfBirth(result.dateOfBirth());
-      author.setDateOfDeath(result.dateOfDeath());
-      if (result.placeOfDeathUri() != null) {
-        String dnbUrl = ApiUrls.dnbUrl(result.placeOfDeathUri());
-        DNBLocationItem location = restTemplate.getForObject(dnbUrl,
-            DNBLocationItem.class);
+      author.setName(xpathTemplate.evaluateAsString(xpathName, result));
+      author.setDateOfBirth(formatDateString(xpathTemplate
+          .evaluateAsString(xpathDOB, result)));
+      author.setDateOfDeath(formatDateString(xpathTemplate
+          .evaluateAsString(xpathDOD, result)));
+      String placeOfDeath = xpathTemplate.evaluateAsString(xpathPOD, result);
+      if (placeOfDeath != null) {
+        String dnbUrl = ApiUrls.dnbUrl(placeOfDeath);
+        DOMSource location = restTemplate.getForObject(dnbUrl,
+            DOMSource.class);
         if (location != null) {
-          author.setPlaceOfBirth(location.locate());
+          author.setNationality(iso2Locate(xpathTemplate
+              .evaluateAsString(xpathLoc, location)));
         }
       }
     }
+  }
+
+  private Calendar formatDateString(String date) {
+    Calendar cal = null;
+    String[] temp = date.split("-");
+    if (temp.length == 3) {
+      cal = new GregorianCalendar();
+      cal.set(Integer.parseInt(temp[0]),Integer.parseInt(temp[1]),
+          Integer.parseInt(temp[2]));
+    }
+    return cal;
+  }
+
+  private String iso2Locate(String location) {
+    if (location != null) {
+      String[] temp = location.split("#");
+      String[] temp2 = temp[temp.length - 1].split("-");
+      if (temp2.length > 2) {
+        return temp2[1].toLowerCase();
+      }
+    }
+    return null;
   }
 }
