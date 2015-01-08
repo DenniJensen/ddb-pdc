@@ -9,7 +9,13 @@ import org.w3c.dom.Node;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 
 /**
  * Implementation of the {@link MetaFetcher} interface.
