@@ -12,7 +12,7 @@ public class QuestionnaireTest {
     FlowChartStateGermany flowChartGermany =
         FlowChartStateGermany.LITERATUR_OR_ARTISTIC_WORK;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
@@ -20,12 +20,12 @@ public class QuestionnaireTest {
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireB.isPublicDomain());
 
-    Questionnaire questionaireC = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireC = new Questionnaire(flowChartGermany, null);
     questionaireC.answerCurrentQuestion(Answer.NO, null);
     questionaireC.answerCurrentQuestion(Answer.NO, null);
     questionaireC.answerCurrentQuestion(Answer.NO, null);
@@ -37,7 +37,7 @@ public class QuestionnaireTest {
     questionaireC.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireC.isPublicDomain());
 
-    Questionnaire questionaireD = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireD = new Questionnaire(flowChartGermany, null);
     questionaireD.answerCurrentQuestion(Answer.NO, null);
     questionaireD.answerCurrentQuestion(Answer.NO, null);
     questionaireD.answerCurrentQuestion(Answer.NO, null);
@@ -57,12 +57,12 @@ public class QuestionnaireTest {
     FlowChartStateGermany flowChartGermany =
         FlowChartStateGermany.NON_ORIGINAL_PHOTOGRAPH;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     assertFalse(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireB.isPublicDomain());
@@ -73,12 +73,12 @@ public class QuestionnaireTest {
     FlowChartStateGermany flowChartGermany =
         FlowChartStateGermany.SCIENTIFIC_EDITION_OF_OOC_WORK;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireB.isPublicDomain());
@@ -89,12 +89,12 @@ public class QuestionnaireTest {
     FlowChartStateGermany flowChartGermany =
         FlowChartStateGermany.PHONOGRAM;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     assertFalse(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
@@ -105,12 +105,12 @@ public class QuestionnaireTest {
   public void performanceFlowChart() {
     FlowChartStateGermany flowChartGermany = FlowChartStateGermany.PERFORMANCE;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     assertFalse(questionaireB.isPublicDomain());
@@ -120,25 +120,25 @@ public class QuestionnaireTest {
   public void unoriginalDatabaseFlowChart() {
     FlowChartStateGermany flowChartGermany = FlowChartStateGermany.DATABASE;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     assertTrue(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     assertTrue(questionaireB.isPublicDomain());
 
-    Questionnaire questionaireC = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireC = new Questionnaire(flowChartGermany, null);
     questionaireC.answerCurrentQuestion(Answer.NO, null);
     questionaireC.answerCurrentQuestion(Answer.YES, null);
     questionaireC.answerCurrentQuestion(Answer.NO, null);
     questionaireC.answerCurrentQuestion(Answer.NO, null);
     assertTrue(questionaireC.isPublicDomain());
 
-    Questionnaire questionaireD = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireD = new Questionnaire(flowChartGermany, null);
     questionaireD.answerCurrentQuestion(Answer.NO, null);
     questionaireD.answerCurrentQuestion(Answer.YES, null);
     questionaireD.answerCurrentQuestion(Answer.YES, null);
@@ -151,12 +151,12 @@ public class QuestionnaireTest {
     FlowChartStateGermany flowChartGermany =
         FlowChartStateGermany.FIXATION_OF_FILM;
 
-    Questionnaire questionaireA = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireA = new Questionnaire(flowChartGermany, null);
     questionaireA.answerCurrentQuestion(Answer.YES, null);
     questionaireA.answerCurrentQuestion(Answer.NO, null);
     assertFalse(questionaireA.isPublicDomain());
 
-    Questionnaire questionaireB = new Questionnaire(flowChartGermany);
+    Questionnaire questionaireB = new Questionnaire(flowChartGermany, null);
     questionaireB.answerCurrentQuestion(Answer.NO, null);
     questionaireB.answerCurrentQuestion(Answer.YES, null);
     assertTrue(questionaireB.isPublicDomain());
@@ -190,7 +190,7 @@ public class QuestionnaireTest {
     expectedTrace.add(new AnsweredQuestion(
         Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.NO, null));
 
-    Questionnaire questionaire = new Questionnaire(flowChartGermany);
+    Questionnaire questionaire = new Questionnaire(flowChartGermany, null);
     questionaire.answerCurrentQuestion(Answer.NO, null);
     questionaire.answerCurrentQuestion(Answer.NO, null);
     questionaire.answerCurrentQuestion(Answer.NO, null);

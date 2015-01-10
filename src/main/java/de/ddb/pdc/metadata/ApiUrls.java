@@ -9,9 +9,11 @@ public class ApiUrls {
       "https://api.deutsche-digitale-bibliothek.de";
 
   /**
-   * Returns an absolute URL for a DDB API /search request.
-   *
-   * @param query     search query in Solr syntax
+   * Returns an absolute URL for a DDB API /search request. Any special
+   * characters are escaped as a conversion to the Solr search syntax.
+   * Example: 'words+to-search!' becomes 'words\+to\-search\!'.
+   * 
+   * @param query     initial search query
    * @param startItem start number of items to return
    * @param maxItems  maximum number of items to return
    * @param sort      sort order of items
@@ -20,11 +22,23 @@ public class ApiUrls {
    */
   public static String searchUrl(String query, int startItem, int maxItems,
       String sort, String apiKey) {
+    query = convertToSolrQuery(query);
     return url(apiKey, "/search",
         "query", query,
         "offset", Integer.toString(startItem),
         "rows", Integer.toString(maxItems),
         "sort", sort); //"relevance"
+  }
+  
+  private static String convertToSolrQuery(String query) {
+    String[] specialChars = {"\\", "+", "-", "&&", "||", "!", "(", ")",
+      "{", "}", "[", "]", "^", "\"", "~", "*", "?", ":", "/"};
+    for (String chars : specialChars) {
+      if (query.contains(chars)) {
+        query = query.replace(chars, "\\" + chars);
+      }
+    }
+    return query;
   }
 
   /**

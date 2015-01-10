@@ -17,6 +17,16 @@ public class ApiUrlsTest {
   }
 
   @Test
+  public void complexSearchUrl() {
+    String query = "+testing-the!syntax?right&&now\\";
+    assertEquals(API_URL_PREFIX +
+        "/search?query=\\+testing\\-the\\!syntax\\?right\\&&now\\\\" +
+        "&offset=0&rows=10&sort=relevance&oauth_consumer_key=key",
+        ApiUrls.searchUrl(query, 0, 10, "relevance", "key"));
+
+  }
+
+  @Test
   public void itemAipUrl() {
     assertEquals(API_URL_PREFIX +
         "/items/abcde/aip?oauth_consumer_key=key",
