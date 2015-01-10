@@ -15,11 +15,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -51,7 +51,7 @@ public class PdcIntegrationTest {
   @Test
   public void search() throws Exception {
     String url = ApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
-    mockDdbApiRequest(url, "/ddb_search/goethe3");
+    mockDdbApiRequest(url, "/ddb_search/goethe3.json");
     List results = getForObject("/search?q=goethe&max=3", List.class);
 
     assertEquals(3, results.size());
@@ -90,17 +90,20 @@ public class PdcIntegrationTest {
 
   @Test
   public void determinePublicDomain() throws Exception {
-    final String itemId = "TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK";
-    final String authorId = "http://d-nb.info/gnd/118592343";
+    final String itemId = "UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML";
+    final String authorId = "http://d-nb.info/gnd/118540238";
+    final String placeOfDeathId = "http://d-nb.info/gnd/4065105-8";
 
     String aipUrl = ApiUrls.itemAipUrl(itemId, dbbApiKey);
-    mockDdbApiRequest(aipUrl, "/ddb_items_aip/goethe");
-    String dnbUrl = ApiUrls.dnbUrl(authorId);
-    mockDdbApiRequest(dnbUrl, "/ddb_entities/goethe");
+    mockDdbApiRequest(aipUrl, "/ddb_items_aip/" + itemId + ".xml");
+    String authorUrl = ApiUrls.dnbUrl(authorId);
+    mockDdbApiRequest(authorUrl, "/dnb/118540238.xml");
+    String placeOfDeathUrl = ApiUrls.dnbUrl(placeOfDeathId);
+    mockDdbApiRequest(placeOfDeathUrl, "/dnb/4065105-8.xml");
+
     Map result = getForObject("/pdc/" + itemId, Map.class);
 
     assertEquals(null, result.get("publicDomain"));
-
     List trace = (List) result.get("trace");
     assertEquals(9, trace.size());
 
@@ -170,23 +173,36 @@ public class PdcIntegrationTest {
         question9.get("note"));
   }
 
-  private void mockDdbApiRequest(String url, String jsonResourcePath)
+  private void mockDdbApiRequest(String url, String resourcePath)
       throws Exception {
     String escapedUrl = escapeUrl(url);
-    String response = loadJsonResource(jsonResourcePath);
+    String response = loadResource(resourcePath);
+    MediaType type = responseTypeFromPath(resourcePath);
     mockDdbApi.expect(requestTo(escapedUrl))
-        .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
+        .andRespond(withSuccess(response, type));
   }
 
   private String escapeUrl(String url) {
     return url.replace("\"", "%22");
   }
 
-  private String loadJsonResource(String path) throws Exception {
-    InputStream stream = getClass().getResourceAsStream(path + ".json");
-    InputStreamReader streamReader = new InputStreamReader(stream);
-    try (BufferedReader bufferedReader = new BufferedReader(streamReader)) {
-      return bufferedReader.readLine();
+  private MediaType responseTypeFromPath(String resourcePath) {
+    if (resourcePath.endsWith(".json")) {
+      return MediaType.APPLICATION_JSON;
+    } else if (resourcePath.endsWith(".xml")) {
+      return MediaType.APPLICATION_XML;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private String loadResource(String path) throws Exception {
+    try (InputStream stream = getClass().getResourceAsStream(path)) {
+      if (stream == null) {
+        throw new FileNotFoundException(path);
+      }
+      // http://stackoverflow.com/a/5445161/547173
+      return new Scanner(stream).useDelimiter("\\A").next();
     }
   }
 }
