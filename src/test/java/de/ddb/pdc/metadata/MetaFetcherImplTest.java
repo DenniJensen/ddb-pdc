@@ -5,9 +5,10 @@ import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.xml.xpath.Jaxp13XPathTemplate;
 import org.springframework.xml.xpath.XPathOperations;
-import org.w3c.dom.Node;
+import org.w3c.dom.Document;
 
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMSource;
 import java.util.*;
 
@@ -72,55 +73,46 @@ public class MetaFetcherImplTest {
   }
   
   @Test
-  public void fetch() throws ParserConfigurationException {
-    String xpathIssued = "//dcterms:issued";
-    String xpathInstitution = "//edm:dataProvider[1]";
-    String xpathName = "//gndo:variantNameForThePerson";
-    String xpathDOB  = "//gndo:dateOfBirth";
-    String xpathDOD  = "//gndo:dateOfDeath";
-    String xpathPOD  = "//gndo:placeOfDeath/rdf:Description/@rdf:about";
-    String xpathLoc  = "//gndo:geographicAreaCode/@rdf:resource";
-    String xpathFacetRole = "//ctx:facet[@name='affiliate_fct_role_normdata']/ctx:value";
-    String xpathFacet = "//ctx:facet[@name='affiliate_fct_normdata']/ctx:value";
-    when(xpathTemplate.evaluateAsString("//dcterms:issued", domSource)).thenReturn("1946");
-    when(xpathTemplate.evaluateAsString(xpathInstitution, domSource)).thenReturn("Deutsche Digitale Bibliothek");
+  public void fetch() throws Exception {
+    final String itemId = "UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML";
+    final String authorId = "http://d-nb.info/gnd/118540238";
+    final String placeId = "http://d-nb.info/gnd/4065105-8";
 
-    when(xpathTemplate.evaluateAsString(xpathDOB, domSource)).thenReturn("1748-05-14");
-    when(xpathTemplate.evaluateAsString(xpathDOD, domSource)).thenReturn("1832-06-16");
-    when(xpathTemplate.evaluateAsString(xpathPOD, domSource)).thenReturn("http://d-nb.info/gnd/4062257-5");
-    when(xpathTemplate.evaluateAsString(xpathLoc, domSource)).thenReturn("test#XA-DE-TF");
-    when(xpathTemplate.evaluateAsString(xpathName, domSource)).thenReturn("Johann Wolfgang von Goethe");
-    Calendar calB = new GregorianCalendar(1749, 05, 14);
-    Calendar calD = new GregorianCalendar(1832,06,16);
+    String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
+    DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
+    when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
 
-    Node node = mock(Node.class);
-    Node nodeChild = mock(Node.class);
-    node.appendChild(nodeChild);
-    when(nodeChild.getTextContent()).thenReturn("http://d-nb.info/gnd/118540238");
-    when(node.getFirstChild()).thenReturn(nodeChild);
-    List<Node> nodes = new ArrayList<>();
-    nodes.add(node);
-    when(xpathTemplate.evaluateAsNodeList(xpathFacet, domSource)).thenReturn(nodes);
-    
-    
-    String url = "https://api.deutsche-digitale-bibliothek.de/items/itemId/aip?oauth_consumer_key=authkey";
-    String url2 = "http://d-nb.info/gnd/118540238/about/rdf";
-    String url3 = "http://d-nb.info/gnd/4062257-5/about/rdf";
-    when(rest.getForObject(url, DOMSource.class)).thenReturn(domSource);
-    
-    when(rest.getForObject(url2, DOMSource.class)).thenReturn(domSource);
+    String authorUrl = ApiUrls.dnbUrl(authorId);
+    DOMSource authorXml = loadDnbXml(authorId);
+    when(rest.getForObject(authorUrl, DOMSource.class)).thenReturn(authorXml);
 
-    when(rest.getForObject(url3, DOMSource.class)).thenReturn(domSource);
-    
-    DDBItem ddbItem = fetcher.fetchMetadata("itemId");
-    
-    assertEquals("Deutsche Digitale Bibliothek",ddbItem.getInstitution());
-    assertEquals(1946,ddbItem.getPublishedYear().get(Calendar.YEAR));
-    assertEquals("http://d-nb.info/gnd/118540238", ddbItem.getAuthors().get(0).getDnbId());
-    Author author = ddbItem.getAuthors().get(0);
-    assertEquals("Johann Wolfgang von Goethe",author.getName());
-    assertEquals(calB, author.getDateOfBirth());
-    assertEquals(calD, author.getDateOfDeath());
-    assertEquals("de", author.getPlaceOfBirth());
-  } 
+    String placeUrl = ApiUrls.dnbUrl(placeId);
+    DOMSource placeXml = loadDnbXml(placeId);
+    when(rest.getForObject(placeUrl, DOMSource.class)).thenReturn(placeXml);
+
+    DDBItem item = fetcher.fetchMetadata(itemId);
+    assertEquals("Bayerische Staatsbibliothek", item.getInstitution());
+    assertEquals(1849, item.getPublishedYear().get(Calendar.YEAR));
+    assertEquals(1, item.getAuthors().size());
+
+    Author author = item.getAuthors().get(0);
+    assertEquals("http://d-nb.info/gnd/118540238", author.getDnbId());
+    assertEquals("Goethe, Johann Wolfgang v.", author.getName());
+    assertEquals(new GregorianCalendar(1749, 8, 28), author.getDateOfBirth());
+    assertEquals(new GregorianCalendar(1832, 3, 22), author.getDateOfDeath());
+    assertEquals("de", author.getNationality());
+  }
+
+  private DOMSource loadXml(String path) throws Exception {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document doc = builder.parse(getClass().getResourceAsStream(path + ".xml"));
+    return new DOMSource(doc.getDocumentElement());
+  }
+
+  private DOMSource loadDnbXml(String dnbId) throws Exception {
+    String gndNumber = dnbId.split("/")[4];
+    return loadXml("/dnb/" + gndNumber);
+  }
 }

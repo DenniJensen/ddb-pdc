@@ -169,7 +169,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     }
   }
 
-  private void fillAuthor(Author author, Source result) {
+  private void fillAuthor(Author author, DOMSource result) {
     String xpathName = "//gndo:variantNameForThePerson";
     String xpathDOB  = "//gndo:dateOfBirth";
     String xpathDOD  = "//gndo:dateOfDeath";
@@ -195,21 +195,21 @@ public class MetaFetcherImpl implements MetaFetcher {
   }
 
   private Calendar formatDateString(String date) {
-    Calendar cal = null;
-    String[] temp = date.split("-");
-    if (temp.length == 3) {
-      cal = new GregorianCalendar();
-      cal.set(Integer.parseInt(temp[0]),Integer.parseInt(temp[1]),
-          Integer.parseInt(temp[2]));
+    String[] sections = date.split("-");
+    if (sections.length == 3) {
+      int year = Integer.parseInt(sections[0]);
+      int month = Integer.parseInt(sections[1]);
+      int day = Integer.parseInt(sections[2]);
+      return new GregorianCalendar(year, month, day);
     }
-    return cal;
+    return null;
   }
 
   private String iso2Locate(String location) {
     if (location != null) {
       String[] temp = location.split("#");
       String[] temp2 = temp[temp.length - 1].split("-");
-      if (temp2.length > 2) {
+      if (temp2.length >= 2) {
         return temp2[1].toLowerCase();
       }
     }
