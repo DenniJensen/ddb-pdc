@@ -18,7 +18,7 @@ public class ApiUrls {
    * @param apiKey    DDB API key for authentication
    * @return          corresponding URL
    */
-  public static String searchUrl(String query,int startItem, int maxItems,
+  public static String searchUrl(String query, int startItem, int maxItems,
       String sort, String apiKey) {
     return url(apiKey, "/search",
         "query", query,
