@@ -35,17 +35,17 @@ public class DDBItem {
   }
 
   /**
-   * @param maxResults is the max numbers of results of a search
-   */
-  public void setMaxResults(int maxResults) {
-    this.maxResults = maxResults;
-  }
-
-  /**
-   * @return numbers of results from the search of the item
+   * Returns numbers of results from the search
    */
   public int getMaxResults() {
     return this.maxResults;
+  }
+
+  /**
+   * Sets the search maxResults
+   */
+  public void setMaxResults(int maxResults) {
+    this.maxResults = maxResults;
   }
 
   /**
