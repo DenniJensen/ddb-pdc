@@ -41,7 +41,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
         unknown = true;
       } else {
         authorDeaths += author.getName() + " died in " 
-            + author.getYearOfDeath().get(Calendar.YEAR) + ", ";
+            + author.getDateOfDeath().get(Calendar.YEAR) + ", ";
       }
 
       authorDeathYear = Math.max(authorDeathYear,
@@ -52,7 +52,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
       this.note = this.note.substring(0, this.note.length() - 2);
       return Answer.ASSUMED_NO;
     }
-    authorDeaths = authorDeaths.substring(0, authorDeaths.length() - 2);
+    authorDeaths = authorDeaths.substring(0, authorDeaths.length() - 2) + ".";
     
     if (currentYear - authorDeathYear > 70) {
       this.note = "All authors died before or in " + authorDeathYear + ": "

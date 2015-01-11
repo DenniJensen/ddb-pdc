@@ -165,43 +165,66 @@ public class PdcIntegrationTest {
     assertEquals("Is the nationality or place of residence of the author " +
         "the European Economic Area?",
         question7.get("question"));
-    assertEquals("no", question7.get("answer"));
-    assertEquals("Author null is from null which is not part of the EU.", 
+    assertEquals("yes", question7.get("answer"));
+    assertEquals("Author Goethe, Johann Wolfgang v. is from de which is part of"
+        + " the EU.", 
         question7.get("note"));
 
     Map question8 = (Map) trace.get(7);
-    assertEquals("Is the country of origin the European Economic Area?",
+    assertEquals("Has the work been published or communicated to the public?",
         question8.get("question"));
-    assertEquals("no", question8.get("answer"));
-    assertEquals("Country of origin is one ore multiple of the following: null "
-        + "(no member)", question8.get("note"));
+    assertEquals("assumed yes", question8.get("answer"));
+    assertEquals("The work is known, therefore it is assumed to be published.", 
+        question8.get("note"));
 
     Map question9 = (Map) trace.get(8);
-    assertEquals("Is the country of origin the Berne TRIPTIS WCT?",
+    assertEquals("Was the work published within 70 years of the death of the "
+        + "last surviving author?",
         question9.get("question"));
-    assertEquals("no", question9.get("answer"));
-    assertEquals("Country of origin is one ore multiple of the following: null "
-        + "(no member)",
+    assertEquals("yes", question9.get("answer"));
+    assertEquals("The work was published in 1849. The longest surviving author"
+        + " died in 1832 which is a difference of 17 years.",
         question9.get("note"));
-  }
 
-  private void mockDdbApiRequest(String url, String jsonResourcePath)
+    Map question10 = (Map) trace.get(9);
+    assertEquals("Did the last surviving author die more than 70 years ago?",
+        question10.get("question"));
+    assertEquals("yes", question10.get("answer"));
+    assertEquals("All authors died before or in 1832: Goethe, Johann Wolfgang "
+        + "v. died in 1832.",
+        question10.get("note"));
+  }
+  
+  private void mockDdbApiRequest(String url, String resourcePath)
       throws Exception {
     String escapedUrl = escapeUrl(url);
-    String response = loadJsonResource(jsonResourcePath);
+    String response = loadResource(resourcePath);
+    MediaType type = responseTypeFromPath(resourcePath);
     mockDdbApi.expect(requestTo(escapedUrl))
-        .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
+        .andRespond(withSuccess(response, type));
   }
 
   private String escapeUrl(String url) {
     return url.replace("\"", "%22");
   }
 
-  private String loadJsonResource(String path) throws Exception {
-    InputStream stream = getClass().getResourceAsStream(path + ".json");
-    InputStreamReader streamReader = new InputStreamReader(stream);
-    try (BufferedReader bufferedReader = new BufferedReader(streamReader)) {
-      return bufferedReader.readLine();
+  private MediaType responseTypeFromPath(String resourcePath) {
+    if (resourcePath.endsWith(".json")) {
+      return MediaType.APPLICATION_JSON;
+    } else if (resourcePath.endsWith(".xml")) {
+      return MediaType.APPLICATION_XML;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private String loadResource(String path) throws Exception {
+    try (InputStream stream = getClass().getResourceAsStream(path)) {
+      if (stream == null) {
+        throw new FileNotFoundException(path);
+      }
+      // http://stackoverflow.com/a/5445161/547173
+      return new Scanner(stream).useDelimiter("\\A").next();
     }
   }
 }

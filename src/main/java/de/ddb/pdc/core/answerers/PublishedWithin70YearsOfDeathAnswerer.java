@@ -52,7 +52,7 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
     this.note = "The work was published in "
         + metaData.getPublishedYear().get(Calendar.YEAR)
         + ". The longest surviving author died in " + authorDeathYear
-        + " which is a difference of " + diff + "years.";
+        + " which is a difference of " + diff + " years.";
     
     if (metaData.getPublishedYear().get(Calendar.YEAR)
         <= authorDeathYear + 70) {
