@@ -5,16 +5,10 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.xml.xpath.Jaxp13XPathTemplate;
 import org.springframework.xml.xpath.XPathOperations;
-import org.w3c.dom.Node;
 
-import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 /**
@@ -112,107 +106,57 @@ public class MetaFetcherImpl implements MetaFetcher {
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
     String url = ApiUrls.itemAipUrl(itemId, apiKey);
-    DOMSource result = restTemplate.getForObject(url, DOMSource.class);
-    if (result != null) {
-      fillDDBItem(ddbItem, result);
+    DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
+    if (domSource != null) {
+      fillDDBItem(ddbItem, domSource);
       fetchAuthorMetadata(ddbItem);
     }
     return ddbItem;
   }
 
   private void fillDDBItem(DDBItem item, DOMSource result) {
-    String xpathIssued = "//dcterms:issued";
-    String xpathInstitution = "//edm:dataProvider[1]";
-    item.setPublishedYear(getDateAsInt(xpathTemplate
-        .evaluateAsString(xpathIssued, result),"\\d{4}"));
-    item.setInstitution(xpathTemplate
-        .evaluateAsString(xpathInstitution, result));
-    for (String authorId : listAuthorIDs(result)) {
+    ItemAipXml itemAipXml = new ItemAipXml(result, xpathTemplate);
+    item.setPublishedYear(itemAipXml.getPublishedYear());
+    item.setInstitution(itemAipXml.getInstitution());
+    for (String authorId : itemAipXml.getAuthorUrls()) {
       Author author = new Author(authorId);
       item.addAuthor(author);
     }
   }
 
-  private int getDateAsInt(String date, String regex) {
-    return Integer.parseInt(MetadataUtils.useRegex(date, regex));
-  }
-
-  private List<String> listAuthorIDs(DOMSource domSource) {
-    List<String> authorIDs = new ArrayList<String>();
-    String xpathFacetRole =
-        "//ctx:facet[@name='affiliate_fct_role_normdata']/ctx:value";
-    String xpathFacet =
-        "//ctx:facet[@name='affiliate_fct_normdata']/ctx:value";
-    List<Node> nodes = xpathTemplate.evaluateAsNodeList(xpathFacetRole,
-        domSource);
-    for (Node node : nodes) {
-      String value = node.getFirstChild().getTextContent();
-      if (value.endsWith("_1_affiliate_fct_subject")
-          || value.endsWith("_1_affiliate_fct_involved")) {
-        authorIDs.add(value.split("_")[0]);
-      }
-    }
-    if (authorIDs.size() == 0) {
-      nodes = xpathTemplate.evaluateAsNodeList(xpathFacet, domSource);
-      for (Node node : nodes) {
-        authorIDs.add(node.getFirstChild().getTextContent());
-      }
-    }
-    return authorIDs;
-  }
-
   private void fetchAuthorMetadata(DDBItem item) {
     for (Author author : item.getAuthors()) {
       String dnbUrl = ApiUrls.dnbUrl(author.getDnbId());
-      DOMSource result = restTemplate.getForObject(dnbUrl, DOMSource.class);
-      fillAuthor(author, result);
+      DOMSource domSource = restTemplate.getForObject(dnbUrl, DOMSource.class);
+      fillAuthor(author, domSource);
     }
   }
 
-  private void fillAuthor(Author author, DOMSource result) {
-    String xpathName = "//gndo:variantNameForThePerson";
-    String xpathDOB  = "//gndo:dateOfBirth";
-    String xpathDOD  = "//gndo:dateOfDeath";
-    String xpathPOD  = "//gndo:placeOfDeath/rdf:Description/@rdf:about";
-    String xpathLoc  = "//gndo:geographicAreaCode/@rdf:resource";
-    if (result != null) {
-      author.setName(xpathTemplate.evaluateAsString(xpathName, result));
-      author.setDateOfBirth(formatDateString(xpathTemplate
-          .evaluateAsString(xpathDOB, result)));
-      author.setDateOfDeath(formatDateString(xpathTemplate
-          .evaluateAsString(xpathDOD, result)));
-      String placeOfDeath = xpathTemplate.evaluateAsString(xpathPOD, result);
-      if (placeOfDeath != null) {
-        String dnbUrl = ApiUrls.dnbUrl(placeOfDeath);
-        DOMSource location = restTemplate.getForObject(dnbUrl,
-            DOMSource.class);
-        if (location != null) {
-          author.setNationality(iso2Locate(xpathTemplate
-              .evaluateAsString(xpathLoc, location)));
+  private void fillAuthor(Author author, DOMSource domSource) {
+    if (domSource != null) {
+      ItemDnbAuthorXml idax = new ItemDnbAuthorXml(domSource, xpathTemplate);
+      author.setName(idax.getName());
+      author.setDateOfBirth(idax.getDateOfBirth());
+      author.setDateOfDeath(idax.getDateOfDeath());
+
+      DOMSource location = null;
+      String dnbLocationUrl;
+      String placeOfBirth = idax.getPlaceOfBirth();
+      if (placeOfBirth == null || placeOfBirth.equals("")) {
+        String placeOfDeath = idax.getPlaceOfDeath();
+        if (placeOfDeath != null || !placeOfDeath.equals("")) {
+          dnbLocationUrl = ApiUrls.dnbUrl(placeOfDeath);
+          location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
         }
+      } else {
+        dnbLocationUrl = ApiUrls.dnbUrl(placeOfBirth);
+        location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
+      }
+
+      if (location != null) {
+        ItemDnbLocationXml idlx = new ItemDnbLocationXml(location, xpathTemplate);
+        author.setNationality(idlx.getIso2CountryCode());
       }
     }
-  }
-
-  private Calendar formatDateString(String date) {
-    String[] sections = date.split("-");
-    if (sections.length == 3) {
-      int year = Integer.parseInt(sections[0]);
-      int month = Integer.parseInt(sections[1]);
-      int day = Integer.parseInt(sections[2]);
-      return new GregorianCalendar(year, month, day);
-    }
-    return null;
-  }
-
-  private String iso2Locate(String location) {
-    if (location != null) {
-      String[] temp = location.split("#");
-      String[] temp2 = temp[temp.length - 1].split("-");
-      if (temp2.length >= 2) {
-        return temp2[1].toLowerCase();
-      }
-    }
-    return null;
   }
 }
