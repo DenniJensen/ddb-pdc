@@ -73,10 +73,10 @@ public class ItemDnbAuthorXml {
     int year, month, day;
     if (sections.length == 3) {
       try {
-      year = Integer.parseInt(sections[0]);
-      month = Integer.parseInt(sections[1]);
-      day = Integer.parseInt(sections[2]);
-      return new GregorianCalendar(year, month, day);
+        year = Integer.parseInt(sections[0]);
+        month = Integer.parseInt(sections[1]);
+        day = Integer.parseInt(sections[2]);
+        return new GregorianCalendar(year, month, day);
       } catch (NumberFormatException e) {
         return null;
       }

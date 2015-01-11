@@ -34,7 +34,7 @@ public class ItemAipXml {
     String date = xpath.evaluateAsString("//dcterms:issued", domSource);
     try {
       return Integer.parseInt(MetadataUtils.useRegex(date,"\\d{4}" ));
-    } catch (NumberFormatException e){
+    } catch (NumberFormatException e) {
       return -1;
     }
   }
