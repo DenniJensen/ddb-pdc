@@ -15,6 +15,13 @@ public class ItemAipXml {
   private DOMSource domSource;
   private XPathOperations xpath;
 
+  /**
+   * Create new ItemAipXml Object for every DomSource
+   * The class is need to operate with xpath on the dom
+   *
+   * @param domSource xml source in a dom
+   * @param xpath use for xpath operations
+   */
   public ItemAipXml(DOMSource domSource, XPathOperations xpath) {
     this.domSource = domSource;
     this.xpath = xpath;

@@ -154,7 +154,8 @@ public class MetaFetcherImpl implements MetaFetcher {
       }
 
       if (location != null) {
-        ItemDnbLocationXml idlx = new ItemDnbLocationXml(location, xpathTemplate);
+        ItemDnbLocationXml idlx = new ItemDnbLocationXml(location,
+            xpathTemplate);
         author.setNationality(idlx.getIso2CountryCode());
       }
     }

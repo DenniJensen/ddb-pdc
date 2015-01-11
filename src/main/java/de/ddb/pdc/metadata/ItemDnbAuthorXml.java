@@ -14,6 +14,13 @@ public class ItemDnbAuthorXml {
   private DOMSource domSource;
   private XPathOperations xpath;
 
+  /**
+   * Create ItemDnbAuthorXml Object for dnb author request.
+   * Need to operate with xpath on the dom.
+   *
+   * @param domSource source of the dom
+   * @param xpath use for xpath operations
+   */
   public ItemDnbAuthorXml(DOMSource domSource, XPathOperations xpath) {
     this.domSource = domSource;
     this.xpath = xpath;
@@ -23,14 +30,16 @@ public class ItemDnbAuthorXml {
    * Returns name of the author.
    */
   public String getName() {
-    return xpath.evaluateAsString("//gndo:variantNameForThePerson", domSource);
+    return xpath.evaluateAsString(
+        "//gndo:variantNameForThePerson", domSource);
   }
 
   /**
    * Returns a calendar object with date of birth.
    */
   public Calendar getDateOfBirth() {
-    String dateOfBirth = xpath.evaluateAsString("//gndo:dateOfBirth", domSource);
+    String dateOfBirth = xpath.evaluateAsString(
+        "//gndo:dateOfBirth", domSource);
     return formatStringToDate(dateOfBirth);
   }
 
@@ -38,7 +47,8 @@ public class ItemDnbAuthorXml {
    * Returns a calendar object with date of death.
    */
   public Calendar getDateOfDeath() {
-    String dateOfDeath = xpath.evaluateAsString("//gndo:dateOfDeath", domSource);
+    String dateOfDeath = xpath.evaluateAsString(
+        "//gndo:dateOfDeath", domSource);
     return formatStringToDate(dateOfDeath);
   }
 
@@ -46,14 +56,16 @@ public class ItemDnbAuthorXml {
    * Returns DNB URL to place of birth.
    */
   public String getPlaceOfBirth() {
-    return xpath.evaluateAsString("//gndo:placeOfBirth/rdf:Description/@rdf:about", domSource);
+    return xpath.evaluateAsString(
+        "//gndo:placeOfBirth/rdf:Description/@rdf:about", domSource);
   }
 
   /**
    * Returns DNB URL to place of death.
    */
   public String getPlaceOfDeath() {
-    return xpath.evaluateAsString("//gndo:placeOfDeath/rdf:Description/@rdf:about", domSource);
+    return xpath.evaluateAsString(
+        "//gndo:placeOfDeath/rdf:Description/@rdf:about", domSource);
   }
 
   private Calendar formatStringToDate(String date) {

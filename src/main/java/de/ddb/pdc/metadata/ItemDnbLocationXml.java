@@ -12,6 +12,13 @@ public class ItemDnbLocationXml {
   private DOMSource domSource;
   private XPathOperations xpath;
 
+  /**
+   * Create a new ItemDnbLocationXml Object for every Dnb location request
+   * Need to operate with xpath on the dom.
+   *
+   * @param domSource source on the xml dom
+   * @param xpath use for xpath operations
+   */
   public ItemDnbLocationXml(DOMSource domSource, XPathOperations xpath) {
     this.domSource = domSource;
     this.xpath = xpath;
@@ -21,7 +28,8 @@ public class ItemDnbLocationXml {
    * Returns the iso 2 country code from the resource attribute.
    */
   public String getIso2CountryCode() {
-    String location = xpath.evaluateAsString("//gndo:geographicAreaCode/@rdf:resource", domSource);
+    String location = xpath.evaluateAsString(
+        "//gndo:geographicAreaCode/@rdf:resource", domSource);
     return iso2Locate(location);
   }
 
@@ -30,7 +38,8 @@ public class ItemDnbLocationXml {
       String[] temp = location.split("#");
       String[] temp2 = temp[temp.length - 1].split("-");
       if (temp2.length >= 2) {
-        return temp2[1].substring(temp2[1].length()-2,temp2[1].length()).toLowerCase();
+        int length = temp2[1].length();
+        return temp2[1].substring(length - 2, length).toLowerCase();
       }
     }
     return null;
