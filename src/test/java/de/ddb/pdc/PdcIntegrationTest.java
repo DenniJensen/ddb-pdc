@@ -92,14 +92,14 @@ public class PdcIntegrationTest {
   public void determinePublicDomain() throws Exception {
     final String itemId = "UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML";
     final String authorId = "http://d-nb.info/gnd/118540238";
-    final String placeOfDeathId = "http://d-nb.info/gnd/4065105-8";
+    final String placeOfBirthId = "http://d-nb.info/gnd/4018118-2";
 
     String aipUrl = ApiUrls.itemAipUrl(itemId, dbbApiKey);
     mockDdbApiRequest(aipUrl, "/ddb_items_aip/" + itemId + ".xml");
     String authorUrl = ApiUrls.dnbUrl(authorId);
     mockDdbApiRequest(authorUrl, "/dnb/118540238.xml");
-    String placeOfDeathUrl = ApiUrls.dnbUrl(placeOfDeathId);
-    mockDdbApiRequest(placeOfDeathUrl, "/dnb/4065105-8.xml");
+    String placeOfBirthUrl = ApiUrls.dnbUrl(placeOfBirthId);
+    mockDdbApiRequest(placeOfBirthUrl, "/dnb/4018118-2.xml");
 
     Map result = getForObject("/pdc/" + itemId, Map.class);
 
