@@ -77,23 +77,6 @@ public class MetaFetcherImplTest {
     final String itemId = "UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML";
     final String authorId = "http://d-nb.info/gnd/118540238";
     final String placeId = "http://d-nb.info/gnd/4018118-2";
- /*
-    ItemAipXml iax = mock(ItemAipXml.class);
-    List<String> authorUrls = new ArrayList<>();
-    authorUrls.add(authorId);
-    when(iax.getInstitution()).thenReturn("Bayerische Staatsbibliothek");
-    when(iax.getPublishedYear()).thenReturn(1849);
-    when(iax.getAuthorUrls()).thenReturn(authorUrls);
-
-    ItemDnbAuthorXml idax = mock(ItemDnbAuthorXml.class);
-    when(idax.getDateOfBirth()).thenReturn(new GregorianCalendar(1749, 8, 28));
-    when(idax.getDateOfDeath()).thenReturn(new GregorianCalendar(1832, 3, 22));
-    when(idax.getName()).thenReturn("Goethe, Johann Wolfgang v.");
-    when(idax.getPlaceOfBirth()).thenReturn("http://d-nb.info/gnd/4065105-8");
-    when(idax.getPlaceOfDeath()).thenReturn("http://d-nb.info/gnd/4065105-8");
-
-    ItemDnbLocationXml idlx = mock(ItemDnbLocationXml.class);
-    when(idlx.getIso2CountryCode()).thenReturn("de"); */
 
     String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
     DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
