@@ -5,7 +5,7 @@ package de.ddb.pdc.metadata;
  */
 public class ApiUrls {
 
-  private static final String API_URL =
+  private static final String DDB_API_URL =
       "https://api.deutsche-digitale-bibliothek.de";
 
   /**
@@ -72,7 +72,7 @@ public class ApiUrls {
    * @return            corresponding URL
    */
   public static String url(String apiKey, String path, String... queryParams) {
-    String url = API_URL + path;
+    String url = DDB_API_URL + path;
     for (int key = 0; key < queryParams.length; key += 2) {
       url += (key == 0) ? "?" : "&";
       url += queryParams[key] + "=" + queryParams[key + 1];
@@ -94,6 +94,8 @@ public class ApiUrls {
   }
 
   /**
+   * Constructs the DNB URL to the rdf file for an author o a location
+   *
    * @param dnbUrl of an author or location
    * @return url to get rdf data
    */
