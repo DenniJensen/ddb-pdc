@@ -48,9 +48,10 @@ public class PDCControllerTest {
         thenReturn(pdcResult);
 
     StorageService storageServiceMock = Mockito.mock(StorageService.class);
+    String enableStorageProperty = "true";
 
     PDCController pdcController = new PDCController(
-        mfetcher, ansService, storageServiceMock
+        mfetcher, ansService, storageServiceMock, enableStorageProperty
     );
 
     Assert.assertSame(pdcResult, pdcController.determinePublicDomain("123"));
@@ -83,9 +84,10 @@ public class PDCControllerTest {
     MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
     PublicDomainCalculator ansService = Mockito.
         mock(PublicDomainCalculator.class);
+    String enableStorageProperty = "true";
 
     PDCController pdcController = new PDCController(
-        mfetcher, ansService, storageService
+        mfetcher, ansService, storageService, enableStorageProperty
     );
 
     PDCResult realPdcResult = pdcController.determinePublicDomain(itemID);
