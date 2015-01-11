@@ -127,9 +127,7 @@ public class PDCController {
     int requestYear = calendar.get(Calendar.YEAR);
     calendar.setTime(fetchedResult.getCreatedDate());
     int recordCreationYear = calendar.get(Calendar.YEAR);
-
-    return ((requestYear > recordCreationYear)
-        && (! fetchedResult.isPublicDomain()));
+    return requestYear > recordCreationYear && !fetchedResult.isPublicDomain();
   }
 
   /**
