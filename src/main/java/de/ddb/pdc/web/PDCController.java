@@ -75,8 +75,7 @@ public class PDCController {
   public PDCResult determinePublicDomain(@PathVariable String itemId)
       throws Exception {
 
-    final PDCResult pdcResult;
-
+    PDCResult pdcResult;
     if (storageEnabled) {
       pdcResult = determineWithStorageService(itemId);
     } else {
