@@ -43,9 +43,17 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
 
     if (metaData.getPublishedYear() == null
         || !metaData.getPublishedYear().isSet(Calendar.YEAR)) {
+      this.note = "The year of publication is unknown.";
       return Answer.UNKNOWN;
     }
 
+
+    int diff = metaData.getPublishedYear().get(Calendar.YEAR) - authorDeathYear;
+    this.note = "The work was published in "
+        + metaData.getPublishedYear().get(Calendar.YEAR)
+        + ". The longest surviving author died in " + authorDeathYear
+        + " which is a difference of " + diff + "years.";
+    
     if (metaData.getPublishedYear().get(Calendar.YEAR)
         <= authorDeathYear + 70) {
       return Answer.YES;

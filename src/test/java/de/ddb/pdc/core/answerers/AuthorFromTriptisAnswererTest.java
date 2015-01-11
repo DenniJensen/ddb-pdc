@@ -19,7 +19,7 @@ public class AuthorFromTriptisAnswererTest {
     Answer answer = answerer.answerQuestionForItem(metadata);
 
     // FIXME Hardcoded
-    assertEquals(Answer.ASSUMED_YES, answer);
+    assertEquals(Answer.UNKNOWN, answer);
   }
 
 }

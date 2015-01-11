@@ -81,6 +81,8 @@ public class PDCController {
 
     if (fetchedResult != null) {
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+      System.out.println(calendar);
+      System.out.println(fetchedResult.getCreatedDate());
       int requestYear = calendar.get(Calendar.YEAR);
       calendar.setTime(fetchedResult.getCreatedDate());
       int recordCreationYear = calendar.get(Calendar.YEAR);

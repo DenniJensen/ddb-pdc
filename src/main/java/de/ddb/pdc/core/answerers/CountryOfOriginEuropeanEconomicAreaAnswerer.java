@@ -11,12 +11,13 @@ import de.ddb.pdc.metadata.DDBItem;
  * Answers the COUNTRY_OF_ORIGIN_EEA question.
  */
 class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
+  
+  private String note;
 
   /**
    * Answer whether the country that the item was created in is a member of the
    * EEA.
    *
-   * FIXME there is no nationality-field of the work at the moment
    * FIXME this is mis-using the author-nationality.
    */
   @Override
@@ -24,15 +25,25 @@ class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
     // FIXME wrong nationality used here
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
+      this.note = "No authors are known";
       return Answer.UNKNOWN;
     }
-    // FIXME only nationality of first author used
-    String country = authors.get(0).getNationality();
-    if (EEAMembers.isMember(country)) {
-      return Answer.YES;
-    } else {
-      return Answer.NO;
+    
+    boolean result = true;
+    this.note = "Country of origin is one ore multiple of the following: ";
+    for (Author author : authors) {
+      if (EEAMembers.isMember(author.getNationality())) {
+        this.note += author.getNationality() + " (member), ";
+      } else {
+        this.note += author.getNationality() + " (no member), ";
+        result = false;
+      }
     }
+    this.note = this.note.substring(0, this.note.length() - 2);
+    if (result) {
+      return Answer.YES;
+    }
+    return Answer.NO;
   }
 
   /**
@@ -40,6 +51,6 @@ class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return null;
+    return this.note;
   }
 }

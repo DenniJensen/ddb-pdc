@@ -103,16 +103,19 @@ public class PdcIntegrationTest {
 
     Map result = getForObject("/pdc/" + itemId, Map.class);
 
-    assertEquals(null, result.get("publicDomain"));
+    assertEquals(true, result.get("publicDomain"));
+
     List trace = (List) result.get("trace");
-    assertEquals(9, trace.size());
+    assertEquals(10, trace.size());
 
     Map question1 = (Map) trace.get(0);
     assertEquals("Is the work any kind of work which the official body " +
         "publishing it intends to be generally received?",
         question1.get("question"));
     assertEquals("assumed no", question1.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. An official work that "
+        + "is intended to be generally received by the public is always in the "
+        + "public domain without further limitations.",
         question1.get("note"));
 
     Map question2 = (Map) trace.get(1);
@@ -120,7 +123,9 @@ public class PdcIntegrationTest {
         "discussion formula?",
         question2.get("question"));
     assertEquals("assumed no", question2.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. A court decision or "
+        + "decision formula would fall into public domain without further "
+        + "limitations.",
         question2.get("note"));
 
     Map question3 = (Map) trace.get(2);
@@ -128,14 +133,16 @@ public class PdcIntegrationTest {
         "parliamentary process?",
         question3.get("question"));
     assertEquals("assumed no", question3.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. An act of parliament "
+        + "always falls into the public domain without further limitations.",
         question3.get("note"));
 
     Map question4 = (Map) trace.get(3);
     assertEquals("Is the work a government directive?",
         question4.get("question"));
     assertEquals("assumed no", question4.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. A government decision "
+        + "would fall into the public domain without further limitations.",
         question4.get("note"));
 
     Map question5 = (Map) trace.get(4);
@@ -143,7 +150,9 @@ public class PdcIntegrationTest {
         "public authority?",
         question5.get("question"));
     assertEquals("assumed no", question5.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. An announcement by a "
+        + "public authority always falls into the public domain without further"
+        + " limitations.",
         question5.get("note"));
 
     Map question6 = (Map) trace.get(5);
@@ -157,52 +166,42 @@ public class PdcIntegrationTest {
         "the European Economic Area?",
         question7.get("question"));
     assertEquals("no", question7.get("answer"));
-    assertEquals(null, question7.get("note"));
+    assertEquals("Author null is from null which is not part of the EU.", 
+        question7.get("note"));
 
     Map question8 = (Map) trace.get(7);
     assertEquals("Is the country of origin the European Economic Area?",
         question8.get("question"));
     assertEquals("no", question8.get("answer"));
-    assertEquals(null, question8.get("note"));
+    assertEquals("Country of origin is one ore multiple of the following: null "
+        + "(no member)", question8.get("note"));
 
     Map question9 = (Map) trace.get(8);
     assertEquals("Is the country of origin the Berne TRIPTIS WCT?",
         question9.get("question"));
-    assertEquals("assumed yes", question9.get("answer"));
-    assertEquals("The answer is always assumed to be yes.",
+    assertEquals("no", question9.get("answer"));
+    assertEquals("Country of origin is one ore multiple of the following: null "
+        + "(no member)",
         question9.get("note"));
   }
 
-  private void mockDdbApiRequest(String url, String resourcePath)
+  private void mockDdbApiRequest(String url, String jsonResourcePath)
       throws Exception {
     String escapedUrl = escapeUrl(url);
-    String response = loadResource(resourcePath);
-    MediaType type = responseTypeFromPath(resourcePath);
+    String response = loadJsonResource(jsonResourcePath);
     mockDdbApi.expect(requestTo(escapedUrl))
-        .andRespond(withSuccess(response, type));
+        .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
   }
 
   private String escapeUrl(String url) {
     return url.replace("\"", "%22");
   }
 
-  private MediaType responseTypeFromPath(String resourcePath) {
-    if (resourcePath.endsWith(".json")) {
-      return MediaType.APPLICATION_JSON;
-    } else if (resourcePath.endsWith(".xml")) {
-      return MediaType.APPLICATION_XML;
-    } else {
-      throw new IllegalArgumentException();
-    }
-  }
-
-  private String loadResource(String path) throws Exception {
-    try (InputStream stream = getClass().getResourceAsStream(path)) {
-      if (stream == null) {
-        throw new FileNotFoundException(path);
-      }
-      // http://stackoverflow.com/a/5445161/547173
-      return new Scanner(stream).useDelimiter("\\A").next();
+  private String loadJsonResource(String path) throws Exception {
+    InputStream stream = getClass().getResourceAsStream(path + ".json");
+    InputStreamReader streamReader = new InputStreamReader(stream);
+    try (BufferedReader bufferedReader = new BufferedReader(streamReader)) {
+      return bufferedReader.readLine();
     }
   }
 }
