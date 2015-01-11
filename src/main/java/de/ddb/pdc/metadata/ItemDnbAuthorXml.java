@@ -70,11 +70,16 @@ public class ItemDnbAuthorXml {
 
   private Calendar formatStringToDate(String date) {
     String[] sections = date.split("-");
+    int year, month, day;
     if (sections.length == 3) {
-      int year = Integer.parseInt(sections[0]);
-      int month = Integer.parseInt(sections[1]);
-      int day = Integer.parseInt(sections[2]);
+      try {
+      year = Integer.parseInt(sections[0]);
+      month = Integer.parseInt(sections[1]);
+      day = Integer.parseInt(sections[2]);
       return new GregorianCalendar(year, month, day);
+      } catch (NumberFormatException e) {
+        return null;
+      }
     }
     return null;
   }

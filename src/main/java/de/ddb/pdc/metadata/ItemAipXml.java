@@ -32,9 +32,9 @@ public class ItemAipXml {
    */
   public int getPublishedYear() {
     String date = xpath.evaluateAsString("//dcterms:issued", domSource);
-    if (date != null || !date.equals("")) {
+    try {
       return Integer.parseInt(MetadataUtils.useRegex(date,"\\d{4}" ));
-    } else {
+    } catch (NumberFormatException e){
       return -1;
     }
   }
