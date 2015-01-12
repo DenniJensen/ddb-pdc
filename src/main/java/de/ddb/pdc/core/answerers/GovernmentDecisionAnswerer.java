@@ -24,7 +24,8 @@ class GovernmentDecisionAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be no.";
+    return "The answer is always assumed to be no. A government decision would"
+        + " fall into the public domain without further limitations.";
   }
 
 }

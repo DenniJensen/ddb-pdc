@@ -24,7 +24,9 @@ class AnnouncementByAuthorityAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be no.";
+    return "The answer is always assumed to be no. An announcement by a public "
+        + "authority always falls into the public domain without further "
+        + "limitations.";
   }
 
 }
