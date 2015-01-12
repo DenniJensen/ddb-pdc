@@ -26,6 +26,9 @@ public class MongoStorageServiceTest {
   @Test
   public void testStoreAndFetch() {
     final String itemID = "156987";
+    final String title = "Title";
+    final String subtitle = "Subtitle";
+    final String imageUrl = "/image";
     final String category = "Movies";
     final String institution = "Insti";
     final Boolean publicDomain = false;
@@ -38,6 +41,9 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionB);
 
     DDBItem metadata = new DDBItem(itemID);
+    metadata.setTitle(title);
+    metadata.setSubtitle(subtitle);
+    metadata.setImageUrl(imageUrl);
     metadata.setCategory(category);
     metadata.setInstitution(institution);
 
@@ -53,6 +59,9 @@ public class MongoStorageServiceTest {
   public void testStoreAndUpdate(){
 
     final String itemID = "8963254";
+    final String title = "Title";
+    final String subtitle = "Subtitle";
+    final String imageUrl = "/image";
     final String category = "Movies";
     final String institution = "Insti";
     final Boolean publicDomain = false;
@@ -65,6 +74,9 @@ public class MongoStorageServiceTest {
     trace.add(answeredQuestionB);
 
     DDBItem metadata = new DDBItem(itemID);
+    metadata.setTitle(title);
+    metadata.setSubtitle(subtitle);
+    metadata.setImageUrl(imageUrl);
     metadata.setCategory(category);
     metadata.setInstitution(institution);
 
@@ -110,10 +122,13 @@ public class MongoStorageServiceTest {
   private boolean compareTwoEntries(PDCResult mdm1, PDCResult mdm2){
     return (
       (mdm1.getItemId().equals(mdm2.getItemId())) &&
+      (mdm1.getTitle().equals(mdm2.getTitle())) &&
+      (mdm1.getSubtitle().equals(mdm2.getSubtitle())) &&
+      (mdm1.getImageUrl().equals(mdm2.getImageUrl())) &&
       (mdm1.getItemCategory().equals(mdm2.getItemCategory())) &&
       (mdm1.getInstitution().equals(mdm2.getInstitution())) &&
       (mdm1.isPublicDomain().equals(mdm2.isPublicDomain())) &&
-      (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 )&&
+      (mdm1.getCreatedDate().compareTo(mdm2.getCreatedDate()) == 0 ) &&
       (compareTwoTraces(mdm1.getTrace(), mdm2.getTrace()))
     );
   }

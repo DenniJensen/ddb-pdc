@@ -60,6 +60,9 @@ public class PDCControllerTest {
   public void determinePublicDomainWhenItemIsInDB() throws Exception{
 
     final String itemID = "8963254";
+    final String title = "Title";
+    final String subtitle = "Subtitle";
+    final String imageUrl = "/image";
     final String category = "Movies";
     final String institution = "Insti";
     final boolean publicDomain = false;
@@ -74,6 +77,9 @@ public class PDCControllerTest {
     trace.add(answeredQuestionB);
 
     DDBItem metadata = new DDBItem(itemID);
+    metadata.setTitle(title);
+    metadata.setSubtitle(subtitle);
+    metadata.setImageUrl(imageUrl);
     metadata.setCategory(category);
     metadata.setInstitution(institution);
 
@@ -107,6 +113,15 @@ public class PDCControllerTest {
    */
   private boolean compareTwoPDCResults(PDCResult pdc1, PDCResult pdc2){
     if (pdc1.isPublicDomain() != pdc2.isPublicDomain()){
+      return false;
+    }
+    if (!pdc1.getTitle().equals(pdc2.getTitle())){
+      return false;
+    }
+    if (!pdc1.getSubtitle().equals(pdc2.getSubtitle())){
+      return false;
+    }
+    if (!pdc1.getImageUrl().equals(pdc2.getImageUrl())){
       return false;
     }
     if (pdc1.getTrace().size() == pdc2.getTrace().size()){
