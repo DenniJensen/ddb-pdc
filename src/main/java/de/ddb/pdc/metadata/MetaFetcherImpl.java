@@ -114,8 +114,11 @@ public class MetaFetcherImpl implements MetaFetcher {
     return ddbItem;
   }
 
-  private void fillDDBItem(DDBItem item, DOMSource result) {
-    ItemAipXml itemAipXml = new ItemAipXml(result, xpathTemplate);
+  private void fillDDBItem(DDBItem item, DOMSource domSource) {
+    ItemAipXml itemAipXml = new ItemAipXml(domSource, xpathTemplate);
+    item.setTitle(itemAipXml.getTitle());
+    item.setSubtitle(itemAipXml.getSubtitle());
+    item.setImageUrl(URL + itemAipXml.getThumbnail());
     item.setPublishedYear(itemAipXml.getPublishedYear());
     item.setInstitution(itemAipXml.getInstitution());
     for (String authorId : itemAipXml.getAuthorUrls()) {
