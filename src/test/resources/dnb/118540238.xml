@@ -1,0 +1,580 @@
+<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:geo="http://www.opengis.net/ont/geosparql#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:sf="http://www.opengis.net/ont/sf#" xmlns:isbd="http://iflastandards.info/ns/isbd/elements/" xmlns:gndo="http://d-nb.info/standards/elementset/gnd#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:marcRole="http://id.loc.gov/vocabulary/relators/" xmlns:lib="http://purl.org/library/" xmlns:umbel="http://umbel.org/umbel#" xmlns:rdau="http://rdaregistry.info/" xmlns:bibo="http://purl.org/ontology/bibo/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+	<rdf:Description rdf:about="http://d-nb.info/gnd/118540238">
+		<rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#DifferentiatedPerson" />
+		<foaf:page rdf:resource="http://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe" />
+		<owl:sameAs rdf:resource="http://dbpedia.org/resource/Johann_Wolfgang_von_Goethe" />
+		<owl:sameAs rdf:resource="http://viaf.org/viaf/24602065" />
+		<gndo:gndIdentifier>118540238</gndo:gndIdentifier>
+		<gndo:oldAuthorityNumber>(DE-588c)4021455-2</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588)1014927390</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588a)1014927390</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588)101488358X</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588a)101488358X</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588)185848826</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588a)185848826</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588)185808069</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588a)185808069</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588a)118540238</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588a)1014123208</gndo:oldAuthorityNumber>
+		<gndo:variantNameForThePerson>Goethe, Johann Wolfgang v.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann Wolfgang</gndo:forename>
+			<gndo:prefix>v.</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Johann Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann Wolfgang</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Johann W. von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann W.</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Johann W.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann W.</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Johan Wolfgang von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johan Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Joh. Wolfg. v.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Joh. Wolfg.</gndo:forename>
+			<gndo:prefix>v.</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, J. Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>J. Wolfgang</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, J. W. von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>J. W.</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, J. W. v.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>J. W.</gndo:forename>
+			<gndo:prefix>v.</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, J. W.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>J. W.</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Ioannes W.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Ioannes W.</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Iohan Wolphgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iohan Wolphgang</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Jan Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Jan Wolfgang</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Jean Wolfgang von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Jean Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, João Wolfgang von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>João Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Juan W.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Juan W.</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Juan Wolfgang von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Juan Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Volfango</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Volfango</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Volfgango</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Volfgango</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Wolfgang von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Wolfgang</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Wolfango</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Wolfango</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe, Wolfgango</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Wolfgango</gndo:forename>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethe</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>Goethe</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goethius, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Goethius</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göthe, Johann Wolfgang von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Göthe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göthe, J. W. von</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>J. W.</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Göthe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göthe, Giov. Volfango</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Giov. Volfango</gndo:forename>
+			<gndo:surname>Göthe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göthe</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>Göthe</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göte, Iogann V.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iogann V.</gndo:forename>
+			<gndo:surname>Göte</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göte, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Göte</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gede, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gede</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gēte, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gēte</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gě&apos;ṭe, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gě&apos;ṭe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Iogann W.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iogann W.</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Iogann Volʹfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iogann Volʹfgang</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, J. V.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>J. V.</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Ge͏̈te, Iogann Vol&apos;fgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iogann Vol&apos;fgang</gndo:forename>
+			<gndo:surname>Ge͏̈te</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Iohan Volfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iohan Volfgang</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, I. V.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>I. V.</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Johan Volfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johan Volfgang</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Géte, Johans Volfgangs</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johans Volfgangs</gndo:forename>
+			<gndo:surname>Géte</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Johann Volʹfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann Volʹfgang</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Jogann Vol&apos;fgang fon</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Jogann Vol&apos;fgang</gndo:forename>
+			<gndo:prefix>fon</gndo:prefix>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Volʹfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Volʹfgang</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Yogann Volʹfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yogann Volʹfgang</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Yôhân Wôlfgang fôn</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yôhân Wôlfgang</gndo:forename>
+			<gndo:prefix>fôn</gndo:prefix>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gête, Yôhan Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yôhan Wolfgang</gndo:forename>
+			<gndo:surname>Gête</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gete, Yohann Volfqanq</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yohann Volfqanq</gndo:forename>
+			<gndo:surname>Gete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gêtê, Y. W.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Y. W.</gndo:forename>
+			<gndo:surname>Gêtê</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Geteh, Yohan Ṿolfgang fon</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yohan Ṿolfgang</gndo:forename>
+			<gndo:prefix>fon</gndo:prefix>
+			<gndo:surname>Geteh</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gkaite, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gkaite</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gkaite, Giochan Bolphnkannk phon</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Giochan Bolphnkannk</gndo:forename>
+			<gndo:prefix>phon</gndo:prefix>
+			<gndo:surname>Gkaite</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gkaite, Giochan B. phon</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Giochan B.</gndo:forename>
+			<gndo:prefix>phon</gndo:prefix>
+			<gndo:surname>Gkaite</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gót, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gót</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>G&apos;ote, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>G&apos;ote</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>G&apos;ote, Jochan Volfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Jochan Volfgang</gndo:forename>
+			<gndo:surname>G&apos;ote</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goet&apos;e, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Goet&apos;e</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Goet&apos;e, Iohan Volp&apos;gang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iohan Volp&apos;gang</gndo:forename>
+			<gndo:surname>Goet&apos;e</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gūta, Yūhān Wulfgāng fun</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yūhān Wulfgāng</gndo:forename>
+			<gndo:prefix>fun</gndo:prefix>
+			<gndo:surname>Gūta</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gūta, Yūhān Wulfgāng fūn</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yūhān Wulfgāng</gndo:forename>
+			<gndo:prefix>fūn</gndo:prefix>
+			<gndo:surname>Gūta</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gūta, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gūta</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Ġūtih, Yūhān Vūlfġanġ fūn</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yūhān Vūlfġanġ</gndo:forename>
+			<gndo:prefix>fūn</gndo:prefix>
+			<gndo:surname>Ġūtih</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gyot&apos;e, Yohan Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yohan Wolfgang</gndo:forename>
+			<gndo:surname>Gyot&apos;e</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>He͏̈te, E͏̈han Vol&apos;fhanh</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>E͏̈han Vol&apos;fhanh</gndo:forename>
+			<gndo:surname>He͏̈te</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Hete, Johann-Vol&apos;fhanh</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann-Vol&apos;fhanh</gndo:forename>
+			<gndo:surname>Hete</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Koet&apos;e, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Koet&apos;e</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Koet&apos;e, Yohan Polp&apos;ŭgang p&apos;on</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yohan Polp&apos;ŭgang</gndo:forename>
+			<gndo:prefix>p&apos;on</gndo:prefix>
+			<gndo:surname>Koet&apos;e</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gėtė, Johanas Volfgangas</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johanas Volfgangas</gndo:forename>
+			<gndo:surname>Gėtė</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Höte, Iohann Volfqanq</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Iohann Volfqanq</gndo:forename>
+			<gndo:surname>Höte</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>von Goethe, Johann Wolfgang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann Wolfgang</gndo:forename>
+			<gndo:surname>von Goethe</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Ge de, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Ge de</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gede, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Gede</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Göte, ...</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>...</gndo:forename>
+			<gndo:surname>Göte</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Yue han Wo fu gang Ge de</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>Yue han Wo fu gang Ge de</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Yuehan-Wofugang-Gede</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>Yuehan-Wofugang-Gede</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Gede, Yuehan Wofugang</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Yuehan Wofugang</gndo:forename>
+			<gndo:surname>Gede</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>괴테, 요한 볼프강 폰</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>괴테, 요한 볼프강 폰</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>歌德</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>歌德</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>約翰・沃爾夫岡・馮・歌德</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>約翰・沃爾夫岡・馮・歌德</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>约翰・沃尔夫冈・冯・歌德</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>约翰・沃尔夫冈・冯・歌德</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>ゲーテ, ヨハン・ヴォルフガング・フォン</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:personalName>ゲーテ, ヨハン・ヴォルフガング・フォン</gndo:personalName>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>גתה, יוהן וולפגנג פון</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>יוהן וולפגנג פון</gndo:forename>
+			<gndo:surname>גתה</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:preferredNameForThePerson>Goethe, Johann Wolfgang von</gndo:preferredNameForThePerson>
+		<gndo:preferredNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Johann Wolfgang</gndo:forename>
+			<gndo:prefix>von</gndo:prefix>
+			<gndo:surname>Goethe</gndo:surname>
+		</gndo:preferredNameEntityForThePerson>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118695940">
+				<gndo:preferredNameForThePerson>Goethe, Johann Caspar</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118540246">
+				<gndo:preferredNameForThePerson>Goethe, Katharina Elisabeth</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/11871791X">
+				<gndo:preferredNameForThePerson>Goethe, Cornelia</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118795163">
+				<gndo:preferredNameForThePerson>Schlosser, Johann Georg</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118628011">
+				<gndo:preferredNameForThePerson>Goethe, Christiane von</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/11854022X">
+				<gndo:preferredNameForThePerson>Goethe, August von</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118540254">
+				<gndo:preferredNameForThePerson>Goethe, Ottilie von</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:familialRelationship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/11687256X">
+				<gndo:preferredNameForThePerson>Melber, Johanna Maria</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:familialRelationship>
+		<gndo:acquaintanceshipOrFriendship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118617222">
+				<gndo:preferredNameForThePerson>Stein, Charlotte von</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:acquaintanceshipOrFriendship>
+		<gndo:acquaintanceshipOrFriendship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118633252">
+				<gndo:preferredNameForThePerson>Willemer, Marianne von</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:acquaintanceshipOrFriendship>
+		<gndo:acquaintanceshipOrFriendship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/118638076">
+				<gndo:preferredNameForThePerson>Buff, Charlotte</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:acquaintanceshipOrFriendship>
+		<gndo:acquaintanceshipOrFriendship>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/119277387">
+				<gndo:preferredNameForThePerson>Herzlieb, Minna</gndo:preferredNameForThePerson>
+			</rdf:Description>
+		</gndo:acquaintanceshipOrFriendship>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4053309-8">
+				<gndo:preferredNameForTheSubjectHeading>Schriftsteller</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4176310-5">
+				<gndo:preferredNameForTheSubjectHeading>Publizist</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4046517-2">
+				<gndo:preferredNameForTheSubjectHeading>Politiker</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4029050-5">
+				<gndo:preferredNameForTheSubjectHeading>Jurist</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4041423-1">
+				<gndo:preferredNameForTheSubjectHeading>Naturwissenschaftler</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4185044-0">
+				<gndo:preferredNameForTheSubjectHeading>Theaterintendant</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4037215-7">
+				<gndo:preferredNameForTheSubjectHeading>Maler</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4200345-3">
+				<gndo:preferredNameForTheSubjectHeading>Zeichner</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#12.2p" />
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#16.5p" />
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#15.1p" />
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#13.4p" />
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#7.14p" />
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#18p" />
+		<gndo:geographicAreaCode rdf:resource="http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE" />
+		<gndo:languageCode rdf:resource="http://id.loc.gov/vocabulary/iso639-2/ger" />
+		<gndo:placeOfBirth>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4018118-2">
+				<gndo:preferredNameForThePlaceOrGeographicName>Frankfurt am Main</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfBirth>
+		<gndo:placeOfDeath>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4065105-8">
+				<gndo:preferredNameForThePlaceOrGeographicName>Weimar</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfDeath>
+		<owl:sameAs rdf:resource="http://www.filmportal.de/person/CCBAA3CEF5654B98AD772651F9023DE6" />
+		<gndo:gender rdf:resource="http://d-nb.info/standards/vocab/gnd/Gender#male" />
+		<gndo:dateOfBirth rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1749-08-28</gndo:dateOfBirth>
+		<gndo:dateOfDeath rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1832-03-22</gndo:dateOfDeath>
+	</rdf:Description>
+</rdf:RDF>

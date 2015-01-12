@@ -3,9 +3,9 @@ package de.ddb.pdc.metadata;
 /**
  * Utility class for generating URLs for DDB API endpoints.
  */
-public class DdbApiUrls {
+public class ApiUrls {
 
-  private static final String API_URL =
+  private static final String DDB_API_URL =
       "https://api.deutsche-digitale-bibliothek.de";
 
   /**
@@ -20,8 +20,8 @@ public class DdbApiUrls {
    * @param apiKey    DDB API key for authentication
    * @return          corresponding URL
    */
-  public static String searchUrl(String query,int startItem, int maxItems,
-    String sort, String apiKey) {
+  public static String searchUrl(String query, int startItem, int maxItems,
+      String sort, String apiKey) {
     query = convertToSolrQuery(query);
     return url(apiKey, "/search",
         "query", query,
@@ -72,7 +72,7 @@ public class DdbApiUrls {
    * @return            corresponding URL
    */
   public static String url(String apiKey, String path, String... queryParams) {
-    String url = API_URL + path;
+    String url = DDB_API_URL + path;
     for (int key = 0; key < queryParams.length; key += 2) {
       url += (key == 0) ? "?" : "&";
       url += queryParams[key] + "=" + queryParams[key + 1];
@@ -91,5 +91,15 @@ public class DdbApiUrls {
   public static String entityUrl(String dnbId, String apiKey) {
     return url(apiKey, "/entities",
         "query", String.format("id:\"%s\"", dnbId));
+  }
+
+  /**
+   * Constructs the DNB URL to the rdf file for an author o a location
+   *
+   * @param dnbUrl of an author or location
+   * @return url to get rdf data
+   */
+  public static String dnbUrl(String dnbUrl) {
+    return dnbUrl + "/about/rdf";
   }
 }

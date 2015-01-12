@@ -3,23 +3,48 @@ package de.ddb.pdc.metadata;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.xml.xpath.Jaxp13XPathTemplate;
+import org.springframework.xml.xpath.XPathOperations;
+import org.w3c.dom.Document;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.dom.DOMSource;
+import java.util.*;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MetaFetcherImplTest {
 
   private MetaFetcherImpl fetcher;
   private RestTemplate rest;
+  private XPathOperations xpathTemplate;
+  private DOMSource domSource;
 
   @Before
   public void setUp() {
     rest = mock(RestTemplate.class);
     fetcher = new MetaFetcherImpl(rest, "authkey");
+
+    Map<String,String> namespaces = new HashMap<String,String>();
+    namespaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    namespaces.put("gndo", "http://d-nb.info/standards/elementset/gnd#");
+    namespaces.put("ctx", "http://www.deutsche-digitale-bibliothek.de/cortex");
+    namespaces.put("ns2", "http://www.deutsche-digitale-bibliothek.de/institution");
+    namespaces.put("ns3", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    namespaces.put("ns4", "http://www.deutsche-digitale-bibliothek.de/item");
+    namespaces.put("ore", "http://www.openarchives.org/ore/terms/");
+    namespaces.put("edm", "http://www.europeana.eu/schemas/edm/");
+    namespaces.put("skos", "http://www.w3.org/2004/02/skos/core#");
+    namespaces.put("dc", "http://purl.org/dc/elements/1.1/" );
+    namespaces.put("dcterms", "http://purl.org/dc/terms/");
+    Jaxp13XPathTemplate jaxp13XPathTemplate = new Jaxp13XPathTemplate();
+    jaxp13XPathTemplate.setNamespaces(namespaces);
+
+    xpathTemplate = mock(jaxp13XPathTemplate.getClass());
+    domSource = mock(DOMSource.class);
   }
 
   @Test
@@ -34,14 +59,8 @@ public class MetaFetcherImplTest {
     resultItems.add(resultItem);
     SearchResults results = mock(SearchResults.class);
     when(results.getResultItems()).thenReturn(resultItems);
-    
-    String url = DdbApiUrls.searchUrl("+testing-the!syntax?right&&now\\",
-      0, 10, "relevance", "authkey");
-    assertEquals("https://api.deutsche-digitale-bibliothek.de/search"
-      + "?query=\\+testing\\-the\\!syntax\\?right\\&&now\\\\&offset=0"
-      + "&rows=10&sort=relevance&oauth_consumer_key=authkey", url);
-  
-    url = DdbApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
+
+    String url = ApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
     DDBItem[] items = fetcher.searchForItems("Titel", 0, 10, "relevance");
@@ -54,47 +73,46 @@ public class MetaFetcherImplTest {
   }
   
   @Test
-  public void fetch() {
-    EntitiesResultItem eri = mock(EntitiesResultItem.class);
-    when(eri.getName()).thenReturn("Johann Wolfgang von Goethe");
-    when(eri.getPlaceOfBirth()).thenReturn("Frankfurt am Main");
-    when(eri.getYearOfBirth()).thenReturn(1749);
-    when(eri.getYearOfDeath()).thenReturn(1832);
+  public void fetch() throws Exception {
+    final String itemId = "UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML";
+    final String authorId = "http://d-nb.info/gnd/118540238";
+    final String placeId = "http://d-nb.info/gnd/4018118-2";
 
-    EntitiesResult er = mock(EntitiesResult.class);
-    when(er.getResultItem()).thenReturn(eri);
-    
-    RDFItem rdf = mock(RDFItem.class);
-    String authorId = "http://d-nb.info/gnd/118540238";
-    List<String> authorIds = new ArrayList<>();
-    authorIds.add(authorId);
-    when(rdf.getAuthorIds()).thenReturn(authorIds);
-    when(rdf.getInstitution()).thenReturn("Deutsche Digitale Bibliothek");
-    when(rdf.getPublishYear()).thenReturn(1946);
-    
-    EDMItem edm = mock(EDMItem.class);
-    when(edm.getRdf()).thenReturn(rdf);
-    
-    ItemAipResult result = mock(ItemAipResult.class);
-    when(result.getRDFItem()).thenReturn(rdf);
-    
-    
-    String url = "https://api.deutsche-digitale-bibliothek.de/items/itemId/aip?oauth_consumer_key=authkey";
-    String url2 = "https://api.deutsche-digitale-bibliothek.de/entities?query=id:\"http://d-nb.info/gnd/118540238\"&oauth_consumer_key=authkey";
-    
-    when(rest.getForObject(url, ItemAipResult.class)).thenReturn(result);
-    
-    when(rest.getForObject(url2, EntitiesResult.class)).thenReturn(er);
-    
-    DDBItem ddbItem = fetcher.fetchMetadata("itemId");
-    
-    assertEquals("Deutsche Digitale Bibliothek",ddbItem.getInstitution());
-    assertEquals(1946,ddbItem.getPublishedYear().get(Calendar.YEAR));
-    assertEquals("http://d-nb.info/gnd/118540238", ddbItem.getAuthors().get(0).getDnbId());
-    Author author = ddbItem.getAuthors().get(0);
-    assertEquals("Johann Wolfgang von Goethe",author.getName());
-    assertEquals(1749, author.getYearOfBirth().get(Calendar.YEAR));
-    assertEquals(1832, author.getYearOfDeath().get(Calendar.YEAR));
-    assertEquals("Frankfurt am Main", author.getPlaceOfBirth());
-  } 
+    String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
+    DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
+    when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
+
+    String authorUrl = ApiUrls.dnbUrl(authorId);
+    DOMSource authorXml = loadDnbXml(authorId);
+    when(rest.getForObject(authorUrl, DOMSource.class)).thenReturn(authorXml);
+
+    String placeUrl = ApiUrls.dnbUrl(placeId);
+    DOMSource placeXml = loadDnbXml(placeId);
+    when(rest.getForObject(placeUrl, DOMSource.class)).thenReturn(placeXml);
+
+    DDBItem item = fetcher.fetchMetadata(itemId);
+    assertEquals("Bayerische Staatsbibliothek", item.getInstitution());
+    assertEquals(1849, item.getPublishedYear().get(Calendar.YEAR));
+    assertEquals(1, item.getAuthors().size());
+
+    Author author = item.getAuthors().get(0);
+    assertEquals("http://d-nb.info/gnd/118540238", author.getDnbId());
+    assertEquals("Goethe, Johann Wolfgang v.", author.getName());
+    assertEquals(new GregorianCalendar(1749, 8, 28), author.getDateOfBirth());
+    assertEquals(new GregorianCalendar(1832, 3, 22), author.getDateOfDeath());
+    assertEquals("de", author.getNationality());
+  }
+
+  private DOMSource loadXml(String path) throws Exception {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document doc = builder.parse(getClass().getResourceAsStream(path + ".xml"));
+    return new DOMSource(doc.getDocumentElement());
+  }
+
+  private DOMSource loadDnbXml(String dnbId) throws Exception {
+    String gndNumber = dnbId.split("/")[4];
+    return loadXml("/dnb/" + gndNumber);
+  }
 }

@@ -1,0 +1,24 @@
+<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:geo="http://www.opengis.net/ont/geosparql#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:sf="http://www.opengis.net/ont/sf#" xmlns:isbd="http://iflastandards.info/ns/isbd/elements/" xmlns:gndo="http://d-nb.info/standards/elementset/gnd#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:marcRole="http://id.loc.gov/vocabulary/relators/" xmlns:lib="http://purl.org/library/" xmlns:umbel="http://umbel.org/umbel#" xmlns:rdau="http://rdaregistry.info/" xmlns:bibo="http://purl.org/ontology/bibo/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+	<rdf:Description rdf:about="http://d-nb.info/gnd/4065105-8">
+		<rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#TerritorialCorporateBodyOrAdministrativeUnit" />
+		<foaf:page rdf:resource="http://de.wikipedia.org/wiki/Weimar" />
+		<gndo:gndIdentifier>4065105-8</gndo:gndIdentifier>
+		<gndo:oldAuthorityNumber>(DE-588)2027981-4</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588b)2027981-4</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588c)4065105-8</gndo:oldAuthorityNumber>
+		<owl:sameAs rdf:resource="http://sws.geonames.org/2812482" />
+		<geo:hasGeometry rdf:parseType="Resource">
+			<rdf:type rdf:resource="http://www.opengis.net/ont/sf#Point" />
+			<geo:asWKT rdf:datatype="http://www.opengis.net/ont/geosparql#wktLiteral">Point ( +011.329029 +050.980299 )</geo:asWKT>
+		</geo:hasGeometry>
+		<gndo:geographicAreaCode rdf:resource="http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE-TH" />
+		<gndo:definition xml:lang="de">Kreisfreie Stadt an der Ilm, 899 urkundl. erwähnt (Burg), um 1250 Stadt (1254 Civitas) gegründet, 1410 Stadtrecht</gndo:definition>
+		<gndo:variantNameForThePlaceOrGeographicName>Weimar &lt;Thüringen&gt;</gndo:variantNameForThePlaceOrGeographicName>
+		<gndo:variantNameForThePlaceOrGeographicName>Vejmar</gndo:variantNameForThePlaceOrGeographicName>
+		<gndo:variantNameForThePlaceOrGeographicName>Kreis Weimar-Stadt</gndo:variantNameForThePlaceOrGeographicName>
+		<gndo:variantNameForThePlaceOrGeographicName>Vinaria</gndo:variantNameForThePlaceOrGeographicName>
+		<gndo:variantNameForThePlaceOrGeographicName>Vimaria</gndo:variantNameForThePlaceOrGeographicName>
+		<gndo:variantNameForThePlaceOrGeographicName>Wimares</gndo:variantNameForThePlaceOrGeographicName>
+		<gndo:preferredNameForThePlaceOrGeographicName>Weimar</gndo:preferredNameForThePlaceOrGeographicName>
+	</rdf:Description>
+</rdf:RDF>

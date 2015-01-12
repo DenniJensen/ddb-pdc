@@ -1,7 +1,6 @@
 package de.ddb.pdc.metadata;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Stores information about an author of an item.
@@ -10,9 +9,9 @@ public class Author {
 
   private final String dnbId;
   private String name;
-  private Calendar yearOfBirth = new GregorianCalendar();
+  private Calendar dateOfBirth = null;
   private String placeOfBirth;
-  private Calendar yearOfDeath = new GregorianCalendar();
+  private Calendar dateOfDeath = null;
   private String nationality;
 
   /**
@@ -29,18 +28,18 @@ public class Author {
    *
    * @param dnbId the ID assigned to the author by the DNB
    * @param name the name of the author
-   * @param yearOfBirth the year the author was born
+   * @param dateOfBirth the date the author was born
    * @param placeOfBirth the place the author was born
-   * @param yearOfDeath the year the author died
+   * @param dateOfDeath the date the author died
    * @param nationality the nationality of the author
    */
-  public Author(String dnbId, String name, Calendar yearOfBirth,
-      String placeOfBirth, Calendar yearOfDeath, String nationality) {
+  public Author(String dnbId, String name, Calendar dateOfBirth,
+      String placeOfBirth, Calendar dateOfDeath, String nationality) {
     this.dnbId = dnbId;
     this.name = name;
-    this.yearOfBirth = yearOfBirth;
+    this.dateOfBirth = dateOfBirth;
     this.placeOfBirth = placeOfBirth;
-    this.yearOfDeath = yearOfDeath;
+    this.dateOfDeath = dateOfDeath;
     this.nationality = nationality;
   }
 
@@ -64,36 +63,26 @@ public class Author {
   }
 
   /**
-   * Returns the year at which the author was born.
+   * Returns the date at which the author was born.
    * If unknown, null is returned.
    */
-  public Calendar getYearOfBirth() {
-    return yearOfBirth;
+  public Calendar getDateOfBirth() {
+    return dateOfBirth;
   }
 
-  void setYearOfBirth(int yearOfBirth) {
-    if (yearOfBirth == -1) {
-      this.yearOfBirth = null;
-    } else {
-      this.yearOfBirth = new GregorianCalendar();
-      this.yearOfBirth.set(Calendar.YEAR, yearOfBirth);
-    }
+  void setDateOfBirth(Calendar dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
   }
 
   /**
-   * Returns the year at which the author died. If unknown, null is returned.
+   * Returns the date at which the author died. If unknown, null is returned.
    */
-  public Calendar getYearOfDeath() {
-    return yearOfDeath;
+  public Calendar getDateOfDeath() {
+    return dateOfDeath;
   }
 
-  void setYearOfDeath(int yearOfDeath) {
-    if (yearOfDeath == -1) {
-      this.yearOfDeath = null;
-    } else {
-      this.yearOfDeath = new GregorianCalendar();
-      this.yearOfDeath.set(Calendar.YEAR, yearOfDeath);
-    }
+  void setDateOfDeath(Calendar dateOfDeath) {
+    this.dateOfDeath = dateOfDeath;
   }
 
   /**

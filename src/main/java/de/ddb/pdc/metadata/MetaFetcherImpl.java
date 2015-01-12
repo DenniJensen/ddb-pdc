@@ -1,7 +1,15 @@
 package de.ddb.pdc.metadata;
 
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.xml.xpath.Jaxp13XPathTemplate;
+import org.springframework.xml.xpath.XPathOperations;
+
+import javax.xml.transform.dom.DOMSource;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Implementation of the {@link MetaFetcher} interface.
@@ -9,10 +17,12 @@ import org.springframework.web.client.RestTemplate;
 public class MetaFetcherImpl implements MetaFetcher {
 
   private static final String URL =
-    "https://www.deutsche-digitale-bibliothek.de";
+      "https://www.deutsche-digitale-bibliothek.de";
 
   private RestTemplate restTemplate;
   private String apiKey;
+
+  private XPathOperations xpathTemplate;
 
   /**
    * Creates a new object of the class MetaFetcherImpl.
@@ -24,7 +34,32 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public MetaFetcherImpl(RestTemplate restTemplate, String apiKey) {
     this.restTemplate = restTemplate;
+    this.restTemplate.getMessageConverters()
+        .add(new Jaxb2RootElementHttpMessageConverter());
     this.apiKey = apiKey;
+
+    initNamespaces();
+  }
+
+  /**
+   * initialize the namespaces for XPath
+   */
+  private void initNamespaces() {
+    Map<String,String> namespaces = new HashMap<String,String>();
+    namespaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    namespaces.put("gndo", "http://d-nb.info/standards/elementset/gnd#");
+    namespaces.put("ctx", "http://www.deutsche-digitale-bibliothek.de/cortex");
+    namespaces.put("ns2", "http://www.deutsche-digitale-bibliothek.de/institution");
+    namespaces.put("ns3", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    namespaces.put("ns4", "http://www.deutsche-digitale-bibliothek.de/item");
+    namespaces.put("ore", "http://www.openarchives.org/ore/terms/");
+    namespaces.put("edm", "http://www.europeana.eu/schemas/edm/");
+    namespaces.put("skos", "http://www.w3.org/2004/02/skos/core#");
+    namespaces.put("dc", "http://purl.org/dc/elements/1.1/" );
+    namespaces.put("dcterms", "http://purl.org/dc/terms/");
+    Jaxp13XPathTemplate jaxp13XPathTemplate = new Jaxp13XPathTemplate();
+    jaxp13XPathTemplate.setNamespaces(namespaces);
+    this.xpathTemplate = jaxp13XPathTemplate;
   }
 
   /**
@@ -32,7 +67,7 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem[] searchForItems(String query, int startItem, int maxCount,
       String sort) throws RestClientException {
-    String url = DdbApiUrls.searchUrl(query,startItem, maxCount, sort, apiKey);
+    String url = ApiUrls.searchUrl(query, startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
@@ -47,6 +82,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     int idx = 0;
     for (SearchResultItem rsi : results.getResultItems()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
+      ddbItem.setMaxResults(results.getNumberOfResults());
       ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
       ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
       ddbItem.setImageUrl(URL + rsi.getThumbnail());
@@ -69,21 +105,20 @@ public class MetaFetcherImpl implements MetaFetcher {
    */
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
-    String url = DdbApiUrls.itemAipUrl(itemId, apiKey);
-    ItemAipResult result = restTemplate.getForObject(url, ItemAipResult.class);
-    if (result.getRDFItem() != null) {
-      fillDDBItem(ddbItem, result);
+    String url = ApiUrls.itemAipUrl(itemId, apiKey);
+    DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
+    if (domSource != null) {
+      fillDDBItem(ddbItem, domSource);
       fetchAuthorMetadata(ddbItem);
     }
     return ddbItem;
   }
 
-  private void fillDDBItem(DDBItem item, ItemAipResult result) {
-    RDFItem rdf = result.getRDFItem();
-    item.setPublishedYear(rdf.getPublishYear());
-    item.setInstitution(rdf.getInstitution());
-
-    for (String authorId : rdf.getAuthorIds()) {
+  private void fillDDBItem(DDBItem item, DOMSource result) {
+    ItemAipXml itemAipXml = new ItemAipXml(result, xpathTemplate);
+    item.setPublishedYear(itemAipXml.getPublishedYear());
+    item.setInstitution(itemAipXml.getInstitution());
+    for (String authorId : itemAipXml.getAuthorUrls()) {
       Author author = new Author(authorId);
       item.addAuthor(author);
     }
@@ -91,21 +126,38 @@ public class MetaFetcherImpl implements MetaFetcher {
 
   private void fetchAuthorMetadata(DDBItem item) {
     for (Author author : item.getAuthors()) {
-      String entityUrl = DdbApiUrls.entityUrl(author.getDnbId(), apiKey);
-      EntitiesResult result = restTemplate.getForObject(entityUrl,
-          EntitiesResult.class);
-      fillAuthor(author, result);
-
+      String dnbUrl = ApiUrls.dnbUrl(author.getDnbId());
+      DOMSource domSource = restTemplate.getForObject(dnbUrl, DOMSource.class);
+      fillAuthor(author, domSource);
     }
   }
 
-  private void fillAuthor(Author author, EntitiesResult result) {
-    EntitiesResultItem entity = result.getResultItem();
-    if (entity != null) {
-      author.setName(entity.getName());
-      author.setYearOfBirth(entity.getYearOfBirth());
-      author.setYearOfDeath(entity.getYearOfDeath());
-      author.setPlaceOfBirth(entity.getPlaceOfBirth());
+  private void fillAuthor(Author author, DOMSource domSource) {
+    if (domSource != null) {
+      ItemDnbAuthorXml idax = new ItemDnbAuthorXml(domSource, xpathTemplate);
+      author.setName(idax.getName());
+      author.setDateOfBirth(idax.getDateOfBirth());
+      author.setDateOfDeath(idax.getDateOfDeath());
+
+      DOMSource location = null;
+      String dnbLocationUrl;
+      String placeOfBirth = idax.getPlaceOfBirth();
+      if (placeOfBirth == null || placeOfBirth.equals("")) {
+        String placeOfDeath = idax.getPlaceOfDeath();
+        if (placeOfDeath != null || !placeOfDeath.equals("")) {
+          dnbLocationUrl = ApiUrls.dnbUrl(placeOfDeath);
+          location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
+        }
+      } else {
+        dnbLocationUrl = ApiUrls.dnbUrl(placeOfBirth);
+        location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
+      }
+
+      if (location != null) {
+        ItemDnbLocationXml idlx = new ItemDnbLocationXml(location,
+            xpathTemplate);
+        author.setNationality(idlx.getIso2CountryCode());
+      }
     }
   }
 }

@@ -21,4 +21,8 @@ class SearchResults {
     }
     return results.get(0).getDocs();
   }
+
+  public int getNumberOfResults() {
+    return this.numberOfResults;
+  }
 }
