@@ -24,12 +24,25 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
       this.note = "No author(s) are known.";
       return Answer.UNKNOWN;
     }
+    boolean result = true;
+    this.note = "";
     for (Author author : authors) {
       if (!EEAMembers.isMember(author.getNationality())) {
-        return Answer.NO;
+        result = false;
+        this.note += "Author " + author.getName() + " is from "
+            + author.getNationality() + " which is not part of the EU. ";
+      } else {
+        this.note += "Author " + author.getName() + " is from " 
+            + author.getNationality() + " which is part of the EU. ";
       }
     }
-    return Answer.YES;
+    
+    this.note = this.note.substring(0, this.note.length() - 1);
+    if (result) {
+      return Answer.YES;
+    } else {
+      return Answer.NO;
+    }
   }
 
 
