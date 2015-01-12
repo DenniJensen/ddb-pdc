@@ -28,6 +28,27 @@ public class ItemAipXml {
   }
 
   /**
+   * Returns the title of the item.
+   */
+  public String getTitle() {
+    return xpath.evaluateAsString("//ctx:preview/ctx:title", domSource);
+  }
+
+  /**
+   * Returns the subtitle of the item.
+   */
+  public String getSubtitle() {
+    return xpath.evaluateAsString("//ctx:preview/ctx:subtitle", domSource);
+  }
+
+  /**
+   * Returns url to thumbnail of the item.
+   */
+  public String getThumbnail() {
+    return xpath.evaluateAsString("//ctx:preview/ctx:thumbnail/@href", domSource);
+  }
+
+  /**
    * Returns the published year.
    */
   public int getPublishedYear() {
