@@ -69,13 +69,13 @@ public class PublicDomainCalculatorImplTest {
     birthYear.set(1920, 10, 10);
     Calendar deathYear = new GregorianCalendar();
     deathYear.set(1995, 10, 10);
-    Author author = new Author("321", "Dummy Author", birthYear, "GERMANY",
-        deathYear, "CHINA");
-    ddbItem.addAuthor(author);
+    //Author author = new Author("321", "Dummy Author", birthYear, "GERMANY",
+    //    deathYear, "CHINA");
+    //ddbItem.addAuthor(author);
     ddbItem.setPublishedYear(1955);
 
     PDCResult result = publicDomainCalculatorImlp.calculate("de", ddbItem);
-    // because Nationality of Auhtor is "CHINA"
+    // because No Author is known
     assertNull(result.isPublicDomain());
   }
 }

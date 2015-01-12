@@ -29,22 +29,38 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
+    
+    this.note = "Not all death dates known. Will assume some authors are "
+        + "still living. Death dates unknown for ";
+    boolean unknown = false;
+    String authorDeaths = "";
     for (Author author : authors) {
       Calendar deathYearCalendar = author.getDateOfDeath();
       if (deathYearCalendar == null) {
-        this.note = "Not all death dates known. Will assume some authors "
-            + "are still living.";
-        return Answer.ASSUMED_NO;
+        this.note += author.getName() + ", ";
+        unknown = true;
+      } else {
+        authorDeaths += author.getName() + " died in " 
+            + author.getDateOfDeath().get(Calendar.YEAR) + ", ";
       }
 
       authorDeathYear = Math.max(authorDeathYear,
           deathYearCalendar.get(Calendar.YEAR));
     }
+
+    if (unknown) {
+      this.note = this.note.substring(0, this.note.length() - 2);
+      return Answer.ASSUMED_NO;
+    }
+    authorDeaths = authorDeaths.substring(0, authorDeaths.length() - 2) + ".";
+    
     if (currentYear - authorDeathYear > 70) {
-      this.note = "All authors died before or in " + authorDeathYear;
+      this.note = "All authors died before or in " + authorDeathYear + ": "
+          + authorDeaths;
       return Answer.YES;
     } else {
-      this.note = "At least one author died in " + authorDeathYear;
+      this.note = "At least one author died in " + authorDeathYear + ": "
+          + authorDeaths;
       return Answer.NO;
     }
   }

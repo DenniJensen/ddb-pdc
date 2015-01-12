@@ -103,16 +103,19 @@ public class PdcIntegrationTest {
 
     Map result = getForObject("/pdc/" + itemId, Map.class);
 
-    assertEquals(null, result.get("publicDomain"));
+    assertEquals(true, result.get("publicDomain"));
+
     List trace = (List) result.get("trace");
-    assertEquals(9, trace.size());
+    assertEquals(10, trace.size());
 
     Map question1 = (Map) trace.get(0);
     assertEquals("Is the work any kind of work which the official body " +
         "publishing it intends to be generally received?",
         question1.get("question"));
     assertEquals("assumed no", question1.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. An official work that "
+        + "is intended to be generally received by the public is always in the "
+        + "public domain without further limitations.",
         question1.get("note"));
 
     Map question2 = (Map) trace.get(1);
@@ -120,7 +123,9 @@ public class PdcIntegrationTest {
         "discussion formula?",
         question2.get("question"));
     assertEquals("assumed no", question2.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. A court decision or "
+        + "decision formula would fall into public domain without further "
+        + "limitations.",
         question2.get("note"));
 
     Map question3 = (Map) trace.get(2);
@@ -128,14 +133,16 @@ public class PdcIntegrationTest {
         "parliamentary process?",
         question3.get("question"));
     assertEquals("assumed no", question3.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. An act of parliament "
+        + "always falls into the public domain without further limitations.",
         question3.get("note"));
 
     Map question4 = (Map) trace.get(3);
     assertEquals("Is the work a government directive?",
         question4.get("question"));
     assertEquals("assumed no", question4.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. A government decision "
+        + "would fall into the public domain without further limitations.",
         question4.get("note"));
 
     Map question5 = (Map) trace.get(4);
@@ -143,7 +150,9 @@ public class PdcIntegrationTest {
         "public authority?",
         question5.get("question"));
     assertEquals("assumed no", question5.get("answer"));
-    assertEquals("The answer is always assumed to be no.",
+    assertEquals("The answer is always assumed to be no. An announcement by a "
+        + "public authority always falls into the public domain without further"
+        + " limitations.",
         question5.get("note"));
 
     Map question6 = (Map) trace.get(5);
@@ -156,23 +165,36 @@ public class PdcIntegrationTest {
     assertEquals("Is the nationality or place of residence of the author " +
         "the European Economic Area?",
         question7.get("question"));
-    assertEquals("no", question7.get("answer"));
-    assertEquals(null, question7.get("note"));
+    assertEquals("yes", question7.get("answer"));
+    assertEquals("Author Goethe, Johann Wolfgang v. is from de which is part of"
+        + " the EU.", 
+        question7.get("note"));
 
     Map question8 = (Map) trace.get(7);
-    assertEquals("Is the country of origin the European Economic Area?",
+    assertEquals("Has the work been published or communicated to the public?",
         question8.get("question"));
-    assertEquals("no", question8.get("answer"));
-    assertEquals(null, question8.get("note"));
+    assertEquals("assumed yes", question8.get("answer"));
+    assertEquals("The work is known, therefore it is assumed to be published.", 
+        question8.get("note"));
 
     Map question9 = (Map) trace.get(8);
-    assertEquals("Is the country of origin the Berne TRIPTIS WCT?",
+    assertEquals("Was the work published within 70 years of the death of the "
+        + "last surviving author?",
         question9.get("question"));
-    assertEquals("assumed yes", question9.get("answer"));
-    assertEquals("The answer is always assumed to be yes.",
+    assertEquals("yes", question9.get("answer"));
+    assertEquals("The work was published in 1849. The longest surviving author"
+        + " died in 1832 which is a difference of 17 years.",
         question9.get("note"));
-  }
 
+    Map question10 = (Map) trace.get(9);
+    assertEquals("Did the last surviving author die more than 70 years ago?",
+        question10.get("question"));
+    assertEquals("yes", question10.get("answer"));
+    assertEquals("All authors died before or in 1832: Goethe, Johann Wolfgang "
+        + "v. died in 1832.",
+        question10.get("note"));
+  }
+  
   private void mockDdbApiRequest(String url, String resourcePath)
       throws Exception {
     String escapedUrl = escapeUrl(url);

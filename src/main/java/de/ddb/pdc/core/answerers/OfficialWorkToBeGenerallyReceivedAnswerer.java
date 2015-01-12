@@ -24,7 +24,9 @@ class OfficialWorkToBeGenerallyReceivedAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be no.";
+    return "The answer is always assumed to be no. An official work that is "
+        + "intended to be generally received by the public is always in the "
+        + "public domain without further limitations.";
   }
 
 }
