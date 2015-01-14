@@ -11,6 +11,9 @@ import java.util.List;
 public class PDCResult {
 
   private final String itemId;
+  private final String title;
+  private final String subtitle;
+  private final String imageUrl;
   private final Boolean publicDomain;
   private final List<AnsweredQuestion> trace;
   private final String itemCategory;
@@ -28,6 +31,9 @@ public class PDCResult {
       DDBItem metadata) {
 
     this.itemId = metadata.getId();
+    this.title = metadata.getTitle();
+    this.subtitle = metadata.getSubtitle();
+    this.imageUrl = metadata.getImageUrl();
     this.publicDomain = publicDomain;
     this.trace = trace;
     this.itemCategory = metadata.getCategory();
@@ -43,6 +49,9 @@ public class PDCResult {
    */
   public PDCResult(StoredPDCResult storedPDCResult) {
     this.itemId = storedPDCResult.getItemId();
+    this.title = storedPDCResult.getTitle();
+    this.subtitle = storedPDCResult.getSubtitle();
+    this.imageUrl = storedPDCResult.getImageUrl();
     this.publicDomain = storedPDCResult.isPublicDomain();
     this.trace = storedPDCResult.getTrace();
     this.itemCategory = storedPDCResult.getItemCategory();
@@ -57,6 +66,27 @@ public class PDCResult {
     return this.itemId;
   }
 
+  /**
+   * @return the title of the cultural good.
+   */
+  public String getTitle() {
+    return this.title;
+  }
+  
+  /**
+   * @return the subtitle of the cultural good.
+   */
+  public String getSubtitle() {
+    return this.subtitle;
+  }
+  
+  /**
+   * @return the URL of the image of the cultural good.
+   */
+  public String getImageUrl() {
+    return this.imageUrl;
+  }
+  
   /**
    * Returns true if the item in question is considered public-domain by the
    * calculator, or false if not. Returns null if the status could not be

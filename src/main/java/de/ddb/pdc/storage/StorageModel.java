@@ -16,6 +16,9 @@ public class StorageModel {
   private String id;
 
   private final String itemId;
+  private final String title;
+  private final String subtitle;
+  private final String imageUrl;
   private final String itemCategory;
   private final String institution;
   private final Boolean publicDomain;
@@ -26,10 +29,13 @@ public class StorageModel {
    * Constructor for storing new records.
    * The timestamp is automatically assigned to the current date and time.
    */
-  public StorageModel(String itemId, String itemCategory, String institution,
+  public StorageModel(String itemId, String title, String subtitle,
+          String imageUrl, String itemCategory, String institution,
           Boolean publicDomain, List<AnsweredQuestion> trace) {
-
     this.itemId = itemId;
+    this.title = title;
+    this.subtitle = subtitle;
+    this.imageUrl = imageUrl;
     this.itemCategory = itemCategory;
     this.institution = institution;
     this.publicDomain = publicDomain;
@@ -41,6 +47,18 @@ public class StorageModel {
 
   public String getItemId() {
     return itemId;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+  
+  public String getSubtitle() {
+    return subtitle;
+  }
+  
+  public String getImageUrl() {
+    return imageUrl;
   }
 
   public String getItemCategory() {

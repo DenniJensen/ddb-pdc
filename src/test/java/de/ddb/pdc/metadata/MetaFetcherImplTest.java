@@ -91,6 +91,13 @@ public class MetaFetcherImplTest {
     when(rest.getForObject(placeUrl, DOMSource.class)).thenReturn(placeXml);
 
     DDBItem item = fetcher.fetchMetadata(itemId);
+    String url = "https://www.deutsche-digitale-bibliothek.de";
+    assertEquals("Goethe's Verklärung", item.getTitle());
+    assertEquals(
+      "Goethe, Johann Wolfgang von (1749-1832). - Leipzig : Dederich, ([1849])"
+      , item.getSubtitle());
+    assertEquals(url+"/binary/UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML/list/1.jpg"
+      , item.getImageUrl());
     assertEquals("Bayerische Staatsbibliothek", item.getInstitution());
     assertEquals(1849, item.getPublishedYear().get(Calendar.YEAR));
     assertEquals(1, item.getAuthors().size());
