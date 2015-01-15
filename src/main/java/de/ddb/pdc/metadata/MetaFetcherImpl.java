@@ -82,7 +82,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     int idx = 0;
     for (SearchResultItem rsi : results.getResultItems()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
-      ddbItem.setMaxResults(results.getNumberOfResults());
       ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
       ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
       ddbItem.setImageUrl(URL + rsi.getThumbnail());
