@@ -105,6 +105,7 @@ public class MetaFetcherImpl implements MetaFetcher {
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
     String url = ApiUrls.itemAipUrl(itemId, apiKey);
+    System.out.println(url);
     DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
     if (domSource != null) {
       fillDDBItem(ddbItem, domSource);
@@ -146,7 +147,7 @@ public class MetaFetcherImpl implements MetaFetcher {
       String placeOfBirth = idax.getPlaceOfBirth();
       if (placeOfBirth == null || placeOfBirth.equals("")) {
         String placeOfDeath = idax.getPlaceOfDeath();
-        if (!placeOfDeath.equals("")) {
+        if (placeOfDeath != null && !placeOfDeath.equals("")) {
           dnbLocationUrl = ApiUrls.dnbUrl(placeOfDeath);
           location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
         }
