@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import de.ddb.pdc.metadata.SearchItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,8 +149,9 @@ public class CrawlerSchedule extends Thread {
     LOG.info(String.format("Running fetch phase from item %d to item %d",
         offset, offset + fetchSize));
     try {
-      DDBItem[] results = searchController.search("*", fetchSize, offset);
-      for (DDBItem result : results) {
+
+      SearchItem searchItem = searchController.search("*", fetchSize, offset);
+      for (DDBItem result : searchItem.getDdbItems()) {
         fetchedResults.add(result);
       }
     } catch (Exception e) {
