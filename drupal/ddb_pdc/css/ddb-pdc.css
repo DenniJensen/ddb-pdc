@@ -23,7 +23,7 @@
 .item-summary {
 	float: left;
 	margin-right: 10px;
-	width: 440px;
+	width: 415px;
 }
 .item-title a{
 	font-weight: bold;
@@ -95,17 +95,40 @@
 	text-decoration:none;
 }
 .item-license{
-	padding:8px 20px;
+	display:block;
+	overflow:hidden;	
+}
+.item-license-text{
+	text-align:center;	
+	font-size:17px;
+	float:right;
+	margin-left: 20px;
+}
+.notpublicdomain .item-license-text{
+	line-height:44px;
+	color:#C00;	
+	padding-right:21px;
+}
+.publicdomain .item-license-text{
+	line-height:44px;
+	color:#690;	
+	padding-right:21px;
+}
+.unknownpublicdomain .item-license-text{
+	color:#3b3b3b;	
+}
+.item-license-img{
+	padding:14px 20px 8px;
 	border-radius:5px;
 	float:right;	
 }
-.notpublicdomain .item-license{
+.notpublicdomain .item-license-img{
 	background-color:#f9dcdf;	
 }
-.publicdomain .item-license{
+.publicdomain .item-license-img{
 	background-color:#ddf2d5;	
 }
-.unknownpublicdomain .item-license{
+.unknownpublicdomain .item-license-img{
 	background-color:#e5e5e5;	
 }
 .pdc-questions-wrapper{
@@ -121,7 +144,9 @@
 	padding:11px;	
 }
 .pdc-answer{
-	padding:11px;		
+	padding:11px;
+	display: block;
+    overflow: hidden;		
 }
 .unknown .pdc-question{
 	background-color:#e5e5e5;	
@@ -142,8 +167,17 @@
 	background-color:#ffede2;	
 }
 .notes{
-	color: #acacac;
-	float: right;	
+	color: #666666;
+	margin-top:15px;	
+}
+.notes img{
+	color: #666666;
+	margin-right:13px;	
+	float:left;
+}
+.notes .note{
+	display:block;	
+	overflow:hidden;
 }
 .positive .pdc-question{
 	background-color:#ddf2d5;	
@@ -281,4 +315,37 @@
 }
 .paginationCurrent{
 	background:url(../images/pagination/page_active.png) no-repeat;	
+}
+#accordion{
+	margin-bottom:25px;
+}
+#accordion a{
+	color:#ffffff;
+}
+.accordion-content{
+	border:none !important;
+	padding-right:0 !important;
+	padding-left:0 !important;
+	padding-bottom:0 !important;		
+}
+#accordion .ui-state-default, #accordion .ui-widget-content .ui-state-default, #accordion .ui-widget-header .ui-state-default {
+    background: url(../images/layout/accordion-default.png) repeat-x scroll 50% 50% #1b998e;
+	border:none !important;
+	border-radius:0px !important;
+    color: #fff;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+	background: url(../images/layout/accordion-hover.png) repeat-x scroll 50% 50% #21abab !important;
+	border:none !important;
+	border-radius:0px !important;
+	color:#fff;
+}
+#accordion .ui-corner-top{
+	border-radius:0px !important;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background: url(../images/layout/accordion-default.png) repeat-x scroll 50% 50% #1b998e;
+	border:none !important;
+	border-radius:0px !important;
+    color: #fff;
 }
