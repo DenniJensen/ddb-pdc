@@ -65,16 +65,16 @@ public class MetaFetcherImpl implements MetaFetcher {
   /**
    * {@inheritDoc}
    */
-  public DDBItem[] searchForItems(String query, int startItem, int maxCount,
+  public SearchItem searchForItems(String query, int startItem, int maxCount,
       String sort) throws RestClientException {
     String url = ApiUrls.searchUrl(query, startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
 
-  private DDBItem[] getDDBItems(SearchResults results) {
+  private SearchItem getDDBItems(SearchResults results) {
     if (results.getResultItems() == null) {
-      return new DDBItem[0];
+      return new SearchItem(0, new DDBItem[0]);
     }
     int numItems = results.getResultItems().size();
     DDBItem[] ddbItems = new DDBItem[numItems];
@@ -93,7 +93,7 @@ public class MetaFetcherImpl implements MetaFetcher {
       idx++;
     }
 
-    return ddbItems;
+    return new SearchItem(results.getNumberOfResults(), ddbItems);
   }
 
   private static String deleteMatchTags(String string) {
@@ -147,7 +147,7 @@ public class MetaFetcherImpl implements MetaFetcher {
       String placeOfBirth = idax.getPlaceOfBirth();
       if (placeOfBirth == null || placeOfBirth.equals("")) {
         String placeOfDeath = idax.getPlaceOfDeath();
-        if (placeOfDeath != null || !placeOfDeath.equals("")) {
+        if (!placeOfDeath.equals("")) {
           dnbLocationUrl = ApiUrls.dnbUrl(placeOfDeath);
           location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
         }
@@ -160,6 +160,8 @@ public class MetaFetcherImpl implements MetaFetcher {
         ItemDnbLocationXml idlx = new ItemDnbLocationXml(location,
             xpathTemplate);
         author.setNationality(idlx.getIso2CountryCode());
+      } else {
+        author.setNationality(null);
       }
     }
   }
