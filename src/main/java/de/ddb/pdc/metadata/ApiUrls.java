@@ -23,6 +23,7 @@ public class ApiUrls {
   public static String searchUrl(String query, int startItem, int maxItems,
       String sort, String apiKey) {
     query = convertToSolrQuery(query);
+    query = convertGermanChars(query);
     return url(apiKey, "/search",
         "query", query,
         "offset", Integer.toString(startItem),
@@ -38,6 +39,14 @@ public class ApiUrls {
         query = query.replace(chars, "\\" + chars);
       }
     }
+    return query;
+  }
+
+  private static String convertGermanChars(String query) {
+    query.replaceAll("ä", "ae");
+    query.replaceAll("ö", "oe");
+    query.replaceAll("ü", "ue");
+    query.replaceAll("ß", "ss");
     return query;
   }
 
