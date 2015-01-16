@@ -86,6 +86,9 @@ public class ItemDnbAuthorXml {
       try {
         int year = Integer.parseInt(sections[0]);
         int month = Integer.parseInt(sections[1]);
+        if (month > 0) {
+          month--;
+        }
         int day = Integer.parseInt(sections[2]);
         return new GregorianCalendar(year, month, day);
       } catch (NumberFormatException e) {
