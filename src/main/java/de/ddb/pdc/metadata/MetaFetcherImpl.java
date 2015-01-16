@@ -42,7 +42,7 @@ public class MetaFetcherImpl implements MetaFetcher {
   }
 
   /**
-   * initialize the namespaces for XPath
+   * initialize the namespaces for xpath
    */
   private void initNamespaces() {
     Map<String,String> namespaces = new HashMap<String,String>();
@@ -105,7 +105,6 @@ public class MetaFetcherImpl implements MetaFetcher {
   public DDBItem fetchMetadata(String itemId) throws RestClientException {
     DDBItem ddbItem = new DDBItem(itemId);
     String url = ApiUrls.itemAipUrl(itemId, apiKey);
-    System.out.println(url);
     DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
     if (domSource != null) {
       fillDDBItem(ddbItem, domSource);
