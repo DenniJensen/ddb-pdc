@@ -13,6 +13,12 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
 
+  /* 
+   * assume authors that are missing a death date
+   * dead when they are older than 150 years
+   */
+  private static final int assumeDeathAge = 150;
+  
   private String note;
 
   /**
@@ -33,10 +39,21 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
           || !author.getDateOfDeath().isSet(Calendar.YEAR)) {
         this.note = "Not every authors' year of death is known. Assuming "
             + "at least one author is still alive.";
-        return Answer.ASSUMED_NO;
+        if (author.getDateOfBirth() != null && author.getDateOfBirth().
+            isSet(Calendar.YEAR)) {
+          int birthYear = author.getDateOfBirth().get(Calendar.YEAR);
+          int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+          int age = currentYear - birthYear;
+          if (age < assumeDeathAge) {
+            return Answer.ASSUMED_NO;
+          }
+          authorDeathYear = Math.max(authorDeathYear, birthYear
+              + assumeDeathAge);
+        }
+      } else {
+        int theYearOfDeath = author.getDateOfDeath().get(Calendar.YEAR);
+        authorDeathYear = Math.max(authorDeathYear, theYearOfDeath);
       }
-      int theYearOfDeath = author.getDateOfDeath().get(Calendar.YEAR);
-      authorDeathYear = Math.max(authorDeathYear, theYearOfDeath);
     }
 
     this.note = null;
@@ -48,7 +65,8 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
     }
 
 
-    int diff = metaData.getPublishedYear().get(Calendar.YEAR) - authorDeathYear;
+    int diff = Math.abs(metaData.getPublishedYear().get(Calendar.YEAR)
+        - authorDeathYear);
     this.note = "The work was published in "
         + metaData.getPublishedYear().get(Calendar.YEAR)
         + ". The longest surviving author died in " + authorDeathYear
