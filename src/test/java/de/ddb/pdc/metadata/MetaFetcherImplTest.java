@@ -63,8 +63,8 @@ public class MetaFetcherImplTest {
     String url = ApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
-    SearchItem searchItem = fetcher.searchForItems("Titel", 0, 10, "relevance");
-    DDBItem[] items = searchItem.getDdbItems();
+    SearchItems searchItems = fetcher.searchForItems("Titel", 0, 10, "relevance");
+    DDBItem[] items = searchItems.getDdbItems();
     assertEquals(1, items.length);
     assertEquals("abcde", items[0].getId());
     assertEquals("Titel", items[0].getTitle());

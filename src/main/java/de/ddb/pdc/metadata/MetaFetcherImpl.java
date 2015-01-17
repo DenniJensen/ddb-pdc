@@ -65,16 +65,16 @@ public class MetaFetcherImpl implements MetaFetcher {
   /**
    * {@inheritDoc}
    */
-  public SearchItem searchForItems(String query, int startItem, int maxCount,
+  public SearchItems searchForItems(String query, int startItem, int maxCount,
       String sort) throws RestClientException {
     String url = ApiUrls.searchUrl(query, startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
 
-  private SearchItem getDDBItems(SearchResults results) {
+  private SearchItems getDDBItems(SearchResults results) {
     if (results.getResultItems() == null) {
-      return new SearchItem(0, new DDBItem[0]);
+      return new SearchItems(0, new DDBItem[0]);
     }
     int numItems = results.getResultItems().size();
     DDBItem[] ddbItems = new DDBItem[numItems];
@@ -92,7 +92,7 @@ public class MetaFetcherImpl implements MetaFetcher {
       idx++;
     }
 
-    return new SearchItem(results.getNumberOfResults(), ddbItems);
+    return new SearchItems(results.getNumberOfResults(), ddbItems);
   }
 
   private static String deleteMatchTags(String string) {
