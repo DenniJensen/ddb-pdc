@@ -16,8 +16,8 @@ public class ItemAipXml {
   private XPathOperations xpath;
 
   /**
-   * Create new ItemAipXml Object for every DomSource
-   * The class is need to operate with xpath on the dom
+   * Create new ItemAipXml Object for every DomSource.
+   * The class is need to operate with xpath on the dom.
    *
    * @param domSource xml source in a dom
    * @param xpath use for xpath operations
