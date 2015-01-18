@@ -15,6 +15,12 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
 
+  /* 
+   * assume authors that are missing a death date
+   * dead when they are older than 150 years
+   */
+  private static final int assumeDeathAge = 150;
+  
   private String note;
 
   /**
@@ -24,6 +30,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
+      this.note = "no author(s) are known";
       return Answer.UNKNOWN;
     }
     Calendar calendar = Calendar.getInstance();
@@ -37,15 +44,31 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     for (Author author : authors) {
       Calendar deathYearCalendar = author.getDateOfDeath();
       if (deathYearCalendar == null) {
-        this.note += author.getName() + ", ";
-        unknown = true;
+        if (author.getDateOfBirth() != null && author.getDateOfBirth()
+            .isSet(Calendar.YEAR)) {
+          int birthYear = author.getDateOfBirth().get(Calendar.YEAR);
+          if (currentYear - birthYear > assumeDeathAge) {
+            int diedIn = currentYear - birthYear + assumeDeathAge;
+
+            authorDeaths += author.getName() + " died in " + diedIn + ", ";
+
+            authorDeathYear = Math.max(authorDeathYear, diedIn);
+            
+          } else {
+            this.note += author.getName() + ", ";
+            unknown = true;
+          }
+        } else {
+          this.note += author.getName() + ", ";
+          unknown = true;
+        }
       } else {
         authorDeaths += author.getName() + " died in " 
             + author.getDateOfDeath().get(Calendar.YEAR) + ", ";
-      }
 
-      authorDeathYear = Math.max(authorDeathYear,
-          deathYearCalendar.get(Calendar.YEAR));
+        authorDeathYear = Math.max(authorDeathYear,
+            deathYearCalendar.get(Calendar.YEAR));
+      }
     }
 
     if (unknown) {
