@@ -1,6 +1,7 @@
 package de.ddb.pdc.web;
 
 
+import de.ddb.pdc.metadata.SearchItems;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -14,8 +15,9 @@ public class SearchControllerTest {
   public void search() {
     MetaFetcher fetcher = Mockito.mock(MetaFetcher.class);
     DDBItem[] result = new DDBItem[0];
-    Mockito.when(fetcher.searchForItems("foo", 0, 10, "relevance")).thenReturn(result);
+    SearchItems searchItems = new SearchItems(0, result);
+    Mockito.when(fetcher.searchForItems("foo", 0, 10, "relevance")).thenReturn(searchItems);
     SearchController controller = new SearchController(fetcher);
-    Assert.assertSame(result, controller.search("foo", 10, null));
+    Assert.assertSame(searchItems, controller.search("foo", 10, null));
   }
 }

@@ -63,7 +63,8 @@ public class MetaFetcherImplTest {
     String url = ApiUrls.searchUrl("Titel", 0, 10, "relevance", "authkey");
     when(rest.getForObject(url, SearchResults.class)).thenReturn(results);
 
-    DDBItem[] items = fetcher.searchForItems("Titel", 0, 10, "relevance");
+    SearchItems searchItems = fetcher.searchForItems("Titel", 0, 10, "relevance");
+    DDBItem[] items = searchItems.getDdbItems();
     assertEquals(1, items.length);
     assertEquals("abcde", items[0].getId());
     assertEquals("Titel", items[0].getTitle());
@@ -105,8 +106,8 @@ public class MetaFetcherImplTest {
     Author author = item.getAuthors().get(0);
     assertEquals("http://d-nb.info/gnd/118540238", author.getDnbId());
     assertEquals("Goethe, Johann Wolfgang v.", author.getName());
-    assertEquals(new GregorianCalendar(1749, 8, 28), author.getDateOfBirth());
-    assertEquals(new GregorianCalendar(1832, 3, 22), author.getDateOfDeath());
+    assertEquals(new GregorianCalendar(1749, 7, 28), author.getDateOfBirth());
+    assertEquals(new GregorianCalendar(1832, 2, 22), author.getDateOfDeath());
     assertEquals("de", author.getNationality());
   }
 

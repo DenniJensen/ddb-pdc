@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -52,35 +53,39 @@ public class PdcIntegrationTest {
   public void search() throws Exception {
     String url = ApiUrls.searchUrl("goethe", 0, 3, "relevance", dbbApiKey);
     mockDdbApiRequest(url, "/ddb_search/goethe3.json");
-    List results = getForObject("/search?q=goethe&max=3", List.class);
 
-    assertEquals(3, results.size());
+    Map result = getForObject("/search?q=goethe&max=3", Map.class);
+    assertEquals(8756, result.get("maxSearchResults"));
+
+    List items = (List) result.get("ddbItems");
+    assertNotNull(items);
+    assertEquals(3, items.size());
 
     String totalUrl;
     String urlSearch;
-    Map result1 = (Map) results.get(0);
-    assertEquals("TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK", result1.get("id"));
-    assertEquals("Goethe", result1.get("title"));
-    assertEquals("Druckgraphik", result1.get("subtitle"));
+    Map item1 = (Map) items.get(0);
+    assertEquals("TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK", item1.get("id"));
+    assertEquals("Goethe", item1.get("title"));
+    assertEquals("Druckgraphik", item1.get("subtitle"));
     urlSearch = "/binary/TNPFDKO2VDGBZ72RWC6RKDNZYZQZP3XK/list/1.jpg";
     totalUrl = DDB_DOMAIN + urlSearch;
-    assertEquals(totalUrl, result1.get("imageUrl"));
+    assertEquals(totalUrl, item1.get("imageUrl"));
 
-    Map result2 = (Map) results.get(1);
-    assertEquals("ILL7O3BSG7ZXIZMX6RT23AR7FDT3NUPK", result2.get("id"));
-    assertEquals("Goethe", result2.get("title"));
-    assertEquals("Zeichnung", result2.get("subtitle"));
+    Map item2 = (Map) items.get(1);
+    assertEquals("ILL7O3BSG7ZXIZMX6RT23AR7FDT3NUPK", item2.get("id"));
+    assertEquals("Goethe", item2.get("title"));
+    assertEquals("Zeichnung", item2.get("subtitle"));
     urlSearch = "/binary/ILL7O3BSG7ZXIZMX6RT23AR7FDT3NUPK/list/1.jpg";
     totalUrl = DDB_DOMAIN + urlSearch;
-    assertEquals(totalUrl, result2.get("imageUrl"));
+    assertEquals(totalUrl, item2.get("imageUrl"));
 
-    Map result3 = (Map) results.get(2);
-    assertEquals("4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22", result3.get("id"));
-    assertEquals("Cornelie Goethe", result3.get("title"));
-    assertEquals("Druckgraphik", result3.get("subtitle"));
+    Map item3 = (Map) items.get(2);
+    assertEquals("4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22", item3.get("id"));
+    assertEquals("Cornelie Goethe", item3.get("title"));
+    assertEquals("Druckgraphik", item3.get("subtitle"));
     urlSearch =  "/binary/4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22/list/1.jpg";
     totalUrl = DDB_DOMAIN + urlSearch;
-    assertEquals(totalUrl, result3.get("imageUrl"));
+    assertEquals(totalUrl, item3.get("imageUrl"));
   }
 
   private <T> T getForObject(String path, Class<T> resultClass) {

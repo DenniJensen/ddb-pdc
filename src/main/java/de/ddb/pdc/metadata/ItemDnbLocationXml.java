@@ -13,7 +13,7 @@ public class ItemDnbLocationXml {
   private XPathOperations xpath;
 
   /**
-   * Create a new ItemDnbLocationXml Object for every Dnb location request
+   * Create a new ItemDnbLocationXml Object for every Dnb location request.
    * Need to operate with xpath on the dom.
    *
    * @param domSource source on the xml dom

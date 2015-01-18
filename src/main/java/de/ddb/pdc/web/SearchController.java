@@ -1,7 +1,7 @@
 package de.ddb.pdc.web;
 
-import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
+import de.ddb.pdc.metadata.SearchItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +40,7 @@ public class SearchController {
    * @return           found items
    */
   @RequestMapping("/search")
-  public DDBItem[] search(
+  public SearchItems search(
       @RequestParam(value = "q", required = true) String query,
       @RequestParam(value = "max", required = true) int maxResults,
       @RequestParam(value = "start", required = false) Integer start) {

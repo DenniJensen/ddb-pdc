@@ -30,8 +30,12 @@ public class ItemDnbAuthorXml {
    * Returns name of the author.
    */
   public String getName() {
-    return xpath.evaluateAsString(
+    String name = xpath.evaluateAsString(
         "//gndo:variantNameForThePerson", domSource);
+    if (name.equals("")) {
+      return null;
+    }
+    return name;
   }
 
   /**
@@ -56,16 +60,24 @@ public class ItemDnbAuthorXml {
    * Returns DNB URL to place of birth.
    */
   public String getPlaceOfBirth() {
-    return xpath.evaluateAsString(
+    String pob = xpath.evaluateAsString(
         "//gndo:placeOfBirth/rdf:Description/@rdf:about", domSource);
+    if (pob.equals("")) {
+      return null;
+    }
+    return pob;
   }
 
   /**
    * Returns DNB URL to place of death.
    */
   public String getPlaceOfDeath() {
-    return xpath.evaluateAsString(
+    String pod = xpath.evaluateAsString(
         "//gndo:placeOfDeath/rdf:Description/@rdf:about", domSource);
+    if (pod.equals("")) {
+      return null;
+    }
+    return pod;
   }
 
   private Calendar formatStringToDate(String date) {
@@ -74,6 +86,9 @@ public class ItemDnbAuthorXml {
       try {
         int year = Integer.parseInt(sections[0]);
         int month = Integer.parseInt(sections[1]);
+        if (month > 0) {
+          month--;
+        }
         int day = Integer.parseInt(sections[2]);
         return new GregorianCalendar(year, month, day);
       } catch (NumberFormatException e) {

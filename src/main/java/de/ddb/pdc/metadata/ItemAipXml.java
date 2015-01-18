@@ -16,8 +16,8 @@ public class ItemAipXml {
   private XPathOperations xpath;
 
   /**
-   * Create new ItemAipXml Object for every DomSource
-   * The class is need to operate with xpath on the dom
+   * Create new ItemAipXml Object for every DomSource.
+   * The class is need to operate with xpath on the dom.
    *
    * @param domSource xml source in a dom
    * @param xpath use for xpath operations
@@ -31,21 +31,35 @@ public class ItemAipXml {
    * Returns the title of the item.
    */
   public String getTitle() {
-    return xpath.evaluateAsString("//ctx:preview/ctx:title", domSource);
+    String title = xpath.evaluateAsString("//ctx:preview/ctx:title", domSource);
+    if (title.equals("")) {
+      return null;
+    }
+    return title;
   }
 
   /**
    * Returns the subtitle of the item.
    */
   public String getSubtitle() {
-    return xpath.evaluateAsString("//ctx:preview/ctx:subtitle", domSource);
+    String subtitle = xpath.evaluateAsString("//ctx:preview/ctx:subtitle"
+        , domSource);
+    if (subtitle.equals("")) {
+      return null;
+    }
+    return subtitle;
   }
 
   /**
    * Returns url to thumbnail of the item.
    */
   public String getThumbnail() {
-    return xpath.evaluateAsString("//ctx:preview/ctx:thumbnail/@href", domSource);
+    String thumbnail = xpath.evaluateAsString("//ctx:preview/ctx:thumbnail/@href"
+        , domSource);
+    if (thumbnail.equals("")) {
+      return null;
+    }
+    return thumbnail;
   }
 
   /**
@@ -64,7 +78,12 @@ public class ItemAipXml {
    * Returns name of the institution.
    */
   public String getInstitution() {
-    return xpath.evaluateAsString("//edm:dataProvider[1]", domSource);
+    String institution = xpath.evaluateAsString("//edm:dataProvider[1]"
+        , domSource);
+    if (institution.equals("")) {
+      return null;
+    }
+    return institution;
   }
 
   /**

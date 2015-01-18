@@ -1,7 +1,5 @@
 package de.ddb.pdc.crawler;
 
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,20 +10,16 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import de.ddb.pdc.metadata.SearchItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.sun.org.apache.xpath.internal.FoundIndex;
 
 import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
-import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.Question;
 import de.ddb.pdc.metadata.DDBItem;
-import de.ddb.pdc.metadata.MetaFetcher;
 import de.ddb.pdc.web.PDCController;
 import de.ddb.pdc.web.SearchController;
 
@@ -148,8 +142,9 @@ public class CrawlerSchedule extends Thread {
     LOG.info(String.format("Running fetch phase from item %d to item %d",
         offset, offset + fetchSize));
     try {
-      DDBItem[] results = searchController.search("*", fetchSize, offset);
-      for (DDBItem result : results) {
+
+      SearchItems searchItems = searchController.search("*", fetchSize, offset);
+      for (DDBItem result : searchItems.getDdbItems()) {
         fetchedResults.add(result);
       }
     } catch (Exception e) {

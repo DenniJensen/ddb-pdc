@@ -42,7 +42,7 @@ public class MetaFetcherImpl implements MetaFetcher {
   }
 
   /**
-   * initialize the namespaces for XPath
+   * initialize the namespaces for xpath
    */
   private void initNamespaces() {
     Map<String,String> namespaces = new HashMap<String,String>();
@@ -65,16 +65,16 @@ public class MetaFetcherImpl implements MetaFetcher {
   /**
    * {@inheritDoc}
    */
-  public DDBItem[] searchForItems(String query, int startItem, int maxCount,
+  public SearchItems searchForItems(String query, int startItem, int maxCount,
       String sort) throws RestClientException {
     String url = ApiUrls.searchUrl(query, startItem, maxCount, sort, apiKey);
     SearchResults results = restTemplate.getForObject(url, SearchResults.class);
     return getDDBItems(results);
   }
 
-  private DDBItem[] getDDBItems(SearchResults results) {
+  private SearchItems getDDBItems(SearchResults results) {
     if (results.getResultItems() == null) {
-      return new DDBItem[0];
+      return new SearchItems(0, new DDBItem[0]);
     }
     int numItems = results.getResultItems().size();
     DDBItem[] ddbItems = new DDBItem[numItems];
@@ -82,7 +82,6 @@ public class MetaFetcherImpl implements MetaFetcher {
     int idx = 0;
     for (SearchResultItem rsi : results.getResultItems()) {
       DDBItem ddbItem = new DDBItem(rsi.getId());
-      ddbItem.setMaxResults(results.getNumberOfResults());
       ddbItem.setTitle(deleteMatchTags(rsi.getTitle()));
       ddbItem.setSubtitle(deleteMatchTags(rsi.getSubtitle()));
       ddbItem.setImageUrl(URL + rsi.getThumbnail());
@@ -93,7 +92,7 @@ public class MetaFetcherImpl implements MetaFetcher {
       idx++;
     }
 
-    return ddbItems;
+    return new SearchItems(results.getNumberOfResults(), ddbItems);
   }
 
   private static String deleteMatchTags(String string) {
@@ -147,7 +146,7 @@ public class MetaFetcherImpl implements MetaFetcher {
       String placeOfBirth = idax.getPlaceOfBirth();
       if (placeOfBirth == null || placeOfBirth.equals("")) {
         String placeOfDeath = idax.getPlaceOfDeath();
-        if (placeOfDeath != null || !placeOfDeath.equals("")) {
+        if (placeOfDeath != null && !placeOfDeath.equals("")) {
           dnbLocationUrl = ApiUrls.dnbUrl(placeOfDeath);
           location = restTemplate.getForObject(dnbLocationUrl, DOMSource.class);
         }
@@ -160,6 +159,8 @@ public class MetaFetcherImpl implements MetaFetcher {
         ItemDnbLocationXml idlx = new ItemDnbLocationXml(location,
             xpathTemplate);
         author.setNationality(idlx.getIso2CountryCode());
+      } else {
+        author.setNationality(null);
       }
     }
   }
