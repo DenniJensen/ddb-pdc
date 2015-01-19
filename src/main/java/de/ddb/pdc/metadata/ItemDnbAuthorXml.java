@@ -82,14 +82,18 @@ public class ItemDnbAuthorXml {
 
   private Calendar formatStringToDate(String date) {
     String[] sections = date.split("-");
-    if (sections.length == 3) {
+    if (sections.length > 0) {
       try {
         int year = Integer.parseInt(sections[0]);
-        int month = Integer.parseInt(sections[1]);
-        if (month > 0) {
-          month--;
+        int month = 0;
+        int day = 1;
+        if (sections.length > 2) {
+          month = Integer.parseInt(sections[1]);
+          if (month > 0) {
+            month--;
+          }
+          day = Integer.parseInt(sections[2]);
         }
-        int day = Integer.parseInt(sections[2]);
         return new GregorianCalendar(year, month, day);
       } catch (NumberFormatException e) {
         return null;
