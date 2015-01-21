@@ -1,3 +1,0 @@
-object(stdClass)#5 (2) { 
-["code"]=> int(-10061) 
-["error"]=> string(94) "Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte." } 
