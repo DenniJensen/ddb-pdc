@@ -171,7 +171,7 @@ public class PdcIntegrationTest {
         "the European Economic Area?",
         question7.get("question"));
     assertEquals("yes", question7.get("answer"));
-    assertEquals("Author Goethe, Johann Wolfgang v. is from de which is part of"
+    assertEquals("Author Goethe, Johann Wolfgang von is from de which is part of"
         + " the EU.", 
         question7.get("note"));
 
@@ -196,7 +196,7 @@ public class PdcIntegrationTest {
         question10.get("question"));
     assertEquals("yes", question10.get("answer"));
     assertEquals("All authors died before or in 1832: Goethe, Johann Wolfgang "
-        + "v. died in 1832.",
+        + "von died in 1832.",
         question10.get("note"));
   }
   
