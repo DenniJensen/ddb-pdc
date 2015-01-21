@@ -93,24 +93,13 @@ public class ItemAipXml {
     List<String> authorUrls = new ArrayList<String>();
     String xpathFacetRole =
         "//ctx:facet[@name='affiliate_fct_role_normdata']/ctx:value";
-    String xpathFacet =
-        "//ctx:facet[@name='affiliate_fct_normdata']/ctx:value";
     List<Node> nodes = xpath.evaluateAsNodeList(xpathFacetRole, domSource);
     for (Node node : nodes) {
       String value = node.getFirstChild().getTextContent();
-      if (value.endsWith("_1_affiliate_fct_subject")
-          || value.endsWith("_1_affiliate_fct_involved")) {
+      if (value.endsWith("_1_affiliate_fct_involved")) {
         authorUrls.add(value.split("_")[0]);
-      }
-    }
-    if (authorUrls.size() == 0) {
-      nodes = xpath.evaluateAsNodeList(xpathFacet, domSource);
-      for (Node node : nodes) {
-        authorUrls.add(node.getFirstChild().getTextContent());
       }
     }
     return  authorUrls;
   }
-
-
 }

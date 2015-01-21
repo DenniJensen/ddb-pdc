@@ -105,7 +105,7 @@ public class MetaFetcherImplTest {
 
     Author author = item.getAuthors().get(0);
     assertEquals("http://d-nb.info/gnd/118540238", author.getDnbId());
-    assertEquals("Goethe, Johann Wolfgang v.", author.getName());
+    assertEquals("Goethe, Johann Wolfgang von", author.getName());
     assertEquals(new GregorianCalendar(1749, 7, 28), author.getDateOfBirth());
     assertEquals(new GregorianCalendar(1832, 2, 22), author.getDateOfDeath());
     assertEquals("de", author.getNationality());

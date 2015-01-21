@@ -31,7 +31,7 @@ public class ItemDnbAuthorXml {
    */
   public String getName() {
     String name = xpath.evaluateAsString(
-        "//gndo:variantNameForThePerson", domSource);
+        "//gndo:preferredNameForThePerson", domSource);
     if (name.equals("")) {
       return null;
     }
