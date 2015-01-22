@@ -87,6 +87,25 @@ public class ItemAipXml {
   }
 
   /**
+   * Returns number of creative commons license 1.0, 2.0, 2.5 , 3.0 or 4.0
+   */
+  public int getCCLicense() {
+    String license = xpath.evaluateAsString(
+        "//ore:Aggregation/edm:rights/@ns3:resource", domSource);
+    if (license.isEmpty() || license.equals("")) {
+      return 0;
+    } else {
+      String[] temp = license.split("/");
+      temp = temp[temp.length - 1].split("\\.");
+      try {
+        return Integer.parseInt(temp[0]) * 10 + Integer.parseInt(temp[1]);
+      } catch (NumberFormatException e) {
+        return 0;
+      }
+    }
+  }
+
+  /**
    * Returns a list with the authors dnb urls.
    */
   public List<String> getAuthorUrls() {
