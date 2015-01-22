@@ -87,7 +87,7 @@ public class ItemAipXml {
   }
 
   /**
-   * Returns number of creative commons license 1.0, 2.0, 2.5 , 3.0 or 4.0
+   * Returns label of creative commons license.
    */
   public String getCCLicense() {
     String license = xpath.evaluateAsString(

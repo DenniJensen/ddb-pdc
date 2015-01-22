@@ -185,9 +185,7 @@ public class DDBItem {
   }
 
   /**
-   * Returns the int of creative common license 10 = 1.0, 20 = 2.0, 25 = 2.5
-   * 30 = 3.0 and 40 = 4.4.
-   * If no set than 0.
+   * Returns the label of creative common license.
    */
   public String getCclicense() {
     return cclicense;
