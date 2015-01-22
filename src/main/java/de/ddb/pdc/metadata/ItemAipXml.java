@@ -89,20 +89,16 @@ public class ItemAipXml {
   /**
    * Returns number of creative commons license 1.0, 2.0, 2.5 , 3.0 or 4.0
    */
-  public int getCCLicense() {
+  public String getCCLicense() {
     String license = xpath.evaluateAsString(
         "//ore:Aggregation/edm:rights/@ns3:resource", domSource);
-    if (license.isEmpty() || license.equals("")) {
-      return 0;
-    } else {
+    if (license != null) {
       String[] temp = license.split("/");
-      temp = temp[temp.length - 1].split("\\.");
-      try {
-        return Integer.parseInt(temp[0]) * 10 + Integer.parseInt(temp[1]);
-      } catch (NumberFormatException e) {
-        return 0;
+      if ( temp.length == 6 && temp[2].equals("creativecommons.org")) {
+        return temp[4];
       }
     }
+    return null;
   }
 
   /**

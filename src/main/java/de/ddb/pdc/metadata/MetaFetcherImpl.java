@@ -108,7 +108,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
     if (domSource != null) {
       fillDDBItem(ddbItem, domSource);
-      if (ddbItem.getCclicense() == 0) {
+      if (ddbItem.getCclicense() == null) {
         fetchAuthorMetadata(ddbItem);
       }
     }
