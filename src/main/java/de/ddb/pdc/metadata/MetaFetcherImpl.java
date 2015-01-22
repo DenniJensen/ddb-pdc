@@ -108,7 +108,9 @@ public class MetaFetcherImpl implements MetaFetcher {
     DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
     if (domSource != null) {
       fillDDBItem(ddbItem, domSource);
-      fetchAuthorMetadata(ddbItem);
+      if (ddbItem.getCclicense() == 0) {
+        fetchAuthorMetadata(ddbItem);
+      }
     }
     return ddbItem;
   }
@@ -120,6 +122,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     item.setImageUrl(URL + itemAipXml.getThumbnail());
     item.setPublishedYear(itemAipXml.getPublishedYear());
     item.setInstitution(itemAipXml.getInstitution());
+    item.setCclicense(itemAipXml.getCCLicense());
     for (String authorId : itemAipXml.getAuthorUrls()) {
       Author author = new Author(authorId);
       item.addAuthor(author);
