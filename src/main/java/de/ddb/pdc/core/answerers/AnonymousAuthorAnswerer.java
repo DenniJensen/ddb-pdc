@@ -24,10 +24,11 @@ class AnonymousAuthorAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
-      note = "No author is known. Therefore an anonymous author is assumed.";
+      note = "Kein Autor ist bekannt. Deshalb wird davon ausgegangen, dass es "
+          + "sich um einen anonymen Autor handelt.";
       return Answer.YES;
     } else {
-      this.note = "The following authors have been found: ";
+      this.note = "Folgende Autoren wurden gefunden: ";
       for (Author author : authors) {
         this.note += author.getName() + ", ";
       }

@@ -15,12 +15,12 @@ import de.ddb.pdc.metadata.DDBItem;
  */
 class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
 
-  /* 
+  /*
    * assume authors that are missing a death date
    * dead when they are older than 150 years
    */
   private static final int assumeDeathAge = 150;
-  
+
   private String note;
 
   /**
@@ -30,15 +30,16 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
-      this.note = "no author(s) are known";
+      this.note = "Kein(e) Autor(en) bekannt.";
       return Answer.UNKNOWN;
     }
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
     int authorDeathYear = 0;
-    
-    this.note = "Not all death dates known. Will assume some authors are "
-        + "still living. Death dates unknown for ";
+
+    this.note = "Nicht alle Sterbedaten sind bekannt. Es wird davon "
+        + "ausgegangen, dass manche Autoren noch am Leben sind. Sterbedaten "
+        + "unbekannt für ";
     boolean unknown = false;
     String authorDeaths = "";
     for (Author author : authors) {
@@ -50,10 +51,10 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
           if (currentYear - birthYear > assumeDeathAge) {
             int diedIn = currentYear - birthYear + assumeDeathAge;
 
-            authorDeaths += author.getName() + " died in " + diedIn + ", ";
+            authorDeaths += author.getName() + " starb " + diedIn + ", ";
 
             authorDeathYear = Math.max(authorDeathYear, diedIn);
-            
+
           } else {
             this.note += author.getName() + ", ";
             unknown = true;
@@ -63,7 +64,7 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
           unknown = true;
         }
       } else {
-        authorDeaths += author.getName() + " died in " 
+        authorDeaths += author.getName() + " starb "
             + author.getDateOfDeath().get(Calendar.YEAR) + ", ";
 
         authorDeathYear = Math.max(authorDeathYear,
@@ -76,13 +77,13 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
       return Answer.ASSUMED_NO;
     }
     authorDeaths = authorDeaths.substring(0, authorDeaths.length() - 2) + ".";
-    
+
     if (currentYear - authorDeathYear > 70) {
-      this.note = "All authors died before or in " + authorDeathYear + ": "
+      this.note = "Alle Autoren starben vor oder in " + authorDeathYear + ": "
           + authorDeaths;
       return Answer.YES;
     } else {
-      this.note = "At least one author died in " + authorDeathYear + ": "
+      this.note = "Mindestens ein Autor starb in " + authorDeathYear + ": "
           + authorDeaths;
       return Answer.NO;
     }

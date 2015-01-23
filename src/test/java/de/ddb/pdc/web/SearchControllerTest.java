@@ -1,6 +1,5 @@
 package de.ddb.pdc.web;
 
-
 import de.ddb.pdc.metadata.SearchItems;
 import org.junit.Assert;
 import org.junit.Test;

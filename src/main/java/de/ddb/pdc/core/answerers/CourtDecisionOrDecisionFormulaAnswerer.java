@@ -24,8 +24,9 @@ class CourtDecisionOrDecisionFormulaAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be no. A court decision or decision"
-        + " formula would fall into public domain without further limitations.";
+    return "Es wird immer davon ausgegangen, dass die Antwort nein ist. "
+        + "Ein Gerichtsurteil oder ein Beschluss ist ohne weitere "
+        + "Beschränkungen öffentlich zugänglich.";
   }
 
 }

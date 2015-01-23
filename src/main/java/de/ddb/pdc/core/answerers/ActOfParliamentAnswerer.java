@@ -24,7 +24,8 @@ class ActOfParliamentAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be no. An act of parliament always"
-        + " falls into the public domain without further limitations.";
+    return "Es wird immer davon ausgegangen, dass die Antwort nein ist. Ein "
+        + "vom Parlament beschlossenes Gesetz ist ohne weitere "
+        + "Beschränkungen öffentlich zugänglich.";
   }
 }
