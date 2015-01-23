@@ -21,7 +21,8 @@ public class DDBItem {
   private ArrayList<Author> authors = null;
   private String institution = null;
   private Calendar publishedYear = null;
-  private String cclicense = null;
+  private String ccLicense = null;
+  private boolean publicDomain = false;
  
   /**
    * Creates a new DDBItem.
@@ -187,14 +188,28 @@ public class DDBItem {
   /**
    * Returns the label of creative common license.
    */
-  public String getCclicense() {
-    return cclicense;
+  public String getCcLicense() {
+    return ccLicense;
   }
 
   /**
-   * Set creative common license.
+   * Sets creative common license.
    */
-  public void setCclicense(String cclicense) {
-    this.cclicense = cclicense;
+  public void setCcLicense(String ccLicense) {
+    this.ccLicense = ccLicense;
+  }
+
+  /**
+   * Returns if item labeled as public domain.
+   */
+  public boolean isPublicDomain() {
+    return publicDomain;
+  }
+
+  /**
+   * Sets if label is public domain,
+   */
+  public void setPublicDomain(boolean publicDomain) {
+    this.publicDomain = publicDomain;
   }
 }
