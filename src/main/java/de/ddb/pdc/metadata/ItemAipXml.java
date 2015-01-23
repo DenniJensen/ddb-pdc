@@ -4,6 +4,8 @@ import org.springframework.xml.xpath.XPathOperations;
 import org.w3c.dom.Node;
 
 import javax.xml.transform.dom.DOMSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,13 +94,28 @@ public class ItemAipXml {
   public String getCCLicense() {
     String license = xpath.evaluateAsString(
         "//ore:Aggregation/edm:rights/@ns3:resource", domSource);
-    if (license != null) {
+    if (isCCUri(license)) {
       String[] temp = license.split("/");
-      if ( temp.length == 6 && temp[2].equals("creativecommons.org")) {
+      if ( temp.length > 4) {
+        if (temp[3].equals("publicdomain")) {
+          return "true";
+        }
         return temp[4];
       }
     }
     return null;
+  }
+
+  private boolean isCCUri(String uri) {
+    if (uri.isEmpty()) {
+      return false;
+    }
+    try {
+      URI ccUri = new URI(uri);
+      return ccUri.getHost().equals("creativecommons.org");
+    } catch (URISyntaxException e) {
+      return false;
+    }
   }
 
   /**
