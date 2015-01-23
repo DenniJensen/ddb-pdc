@@ -21,7 +21,7 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
-      this.note = "No author(s) are known.";
+      this.note = "Kein(e) Autor(en) bekannt.";
       return Answer.UNKNOWN;
     }
     boolean result = true;
@@ -29,14 +29,14 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
     for (Author author : authors) {
       if (!EEAMembers.isMember(author.getNationality())) {
         result = false;
-        this.note += "Author " + author.getName() + " is from "
-            + author.getNationality() + " which is not part of the EU. ";
+        this.note += "Autor " + author.getName() + " ist aus "
+            + author.getNationality() + ", welches nicht Teil der EU ist. ";
       } else {
-        this.note += "Author " + author.getName() + " is from " 
-            + author.getNationality() + " which is part of the EU. ";
+        this.note += "Autor " + author.getName() + " ist aus "
+            + author.getNationality() + ", welches Teil der EU ist. ";
       }
     }
-    
+
     this.note = this.note.substring(0, this.note.length() - 1);
     if (result) {
       return Answer.YES;
@@ -44,7 +44,6 @@ class AuthorFromEuropeanEconomicAreaAnswerer implements Answerer {
       return Answer.NO;
     }
   }
-
 
   /**
    * {@inheritDoc}

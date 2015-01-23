@@ -24,7 +24,7 @@ class AuthorNaturalPersonAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be yes.";
+    return "Es wird immer davon ausgegangen, dass die Antwort ja ist.";
   }
 
 }

@@ -21,7 +21,7 @@ class AuthorFromTriptisAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
-      this.note = "No author(s) are known.";
+      this.note = "Kein(e) Autor(en) bekannt.";
       return Answer.UNKNOWN;
     }
     boolean result = true;
@@ -29,25 +29,24 @@ class AuthorFromTriptisAnswerer implements Answerer {
     for (Author author : authors) {
       if (!BerneTriptisMembers.isMember(author.getNationality())) {
         result = false;
-        this.note += "Author " + author.getName() + " is from "
-            + author.getNationality() + " which is not part of the Berne "
-            + "Triptis WCT. ";
+        this.note += "Autor " + author.getName() + " ist aus "
+            + author.getNationality() + ", welches nicht Teil der Berne "
+            + "Triptis WCT ist. ";
       } else {
-        this.note += "Author " + author.getName() + " is from " 
-            + author.getNationality() + " which is part of the Berne Triptis "
-            + "WCT. ";
+        this.note += "Autor " + author.getName() + " ist aus "
+            + author.getNationality() + ", welches Teil der Berne Triptis "
+            + "WCT ist. ";
       }
     }
-    
+
     this.note = this.note.substring(0, this.note.length() - 1);
-    
+
     if (result) {
       return Answer.YES;
     } else {
       return Answer.NO;
     }
   }
-
 
   /**
    * {@inheritDoc}

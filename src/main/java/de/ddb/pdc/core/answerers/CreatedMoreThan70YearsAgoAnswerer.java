@@ -26,9 +26,9 @@ class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
     }
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR);
-    this.note = "Assuming the publishing year ("
+    this.note = "Es wird angenommen, dass das Jahr der Veröffentlichung ("
         + publishedYear.get(Calendar.YEAR)
-        + ") is also the work's year of creation.";
+        + ") auch das Jahr der Erstellung ist.";
     if (currentYear - publishedYear.get(Calendar.YEAR) > 70) {
       return Answer.YES;
     } else {

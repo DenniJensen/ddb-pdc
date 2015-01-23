@@ -11,7 +11,7 @@ import de.ddb.pdc.metadata.DDBItem;
  * Answers the COUNTRY_OF_ORIGIN_TRIPTIS question.
  */
 class CountryOfOriginTriptisAnswerer implements Answerer {
-  
+
   private String note;
 
   /**
@@ -25,17 +25,17 @@ class CountryOfOriginTriptisAnswerer implements Answerer {
     // FIXME wrong nationality used here
     List<Author> authors = metaData.getAuthors();
     if (authors == null || authors.isEmpty()) {
-      this.note = "No authors are known";
+      this.note = "Kein(e) Autor(en) bekannt";
       return Answer.UNKNOWN;
     }
-    
+
     boolean result = true;
-    this.note = "Country of origin is one ore multiple of the following: ";
+    this.note = "Herkunftsland ist eins oder mehrere der folgendenden: ";
     for (Author author : authors) {
       if (BerneTriptisMembers.isMember(author.getNationality())) {
-        this.note += author.getNationality() + " (member), ";
+        this.note += author.getNationality() + " (Mitglied), ";
       } else {
-        this.note += author.getNationality() + " (no member), ";
+        this.note += author.getNationality() + " (kein Mitglied), ";
         result = false;
       }
     }
