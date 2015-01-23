@@ -120,7 +120,12 @@ port configured through the `server.port` option (8080 by default).
 For Ubuntu, this repository contains a
 [Upstart](http://upstart.ubuntu.com/) job file that lets you run the
 backend as a background service. Simply copy `extras/ddb-pdc.conf` to
-`/etc/init` and adapt it to suit your needs.
+`/etc/init` and adapt it to suit your needs. After this is done, you
+can control the backend server like any other Upstart job:
+
+    sudo start ddb-pdc
+    sudo restart ddb-pdc
+    sudo stop ddb-pdc
 
 ### Installing the Drupal Module
 
