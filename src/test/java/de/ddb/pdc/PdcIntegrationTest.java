@@ -10,6 +10,7 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration
+@ActiveProfiles({"test"})
 @IntegrationTest("server.port:0")
 public class PdcIntegrationTest {
 

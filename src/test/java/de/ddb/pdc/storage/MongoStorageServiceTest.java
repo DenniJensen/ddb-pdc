@@ -1,5 +1,6 @@
 package de.ddb.pdc.storage;
 
+import de.ddb.pdc.Main;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
@@ -11,13 +12,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=TestConfiguration.class,
-    loader = AnnotationConfigContextLoader.class)
+@SpringApplicationConfiguration(classes = Main.class)
+@ActiveProfiles({"test"})
 public class MongoStorageServiceTest {
 
   @Autowired
