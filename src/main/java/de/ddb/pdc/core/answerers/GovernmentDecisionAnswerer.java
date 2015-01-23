@@ -24,8 +24,9 @@ class GovernmentDecisionAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The answer is always assumed to be no. A government decision would"
-        + " fall into the public domain without further limitations.";
+    return "Es wird immer davon ausgegangen, dass die Antwort nein ist. "
+        + "Ein Regierungsbeschluss ist ohne weitere Beschränkungen öffentlich "
+        + "zugänglich.";
   }
 
 }

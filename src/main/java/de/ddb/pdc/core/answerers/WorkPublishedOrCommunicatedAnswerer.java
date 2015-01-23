@@ -24,7 +24,8 @@ class WorkPublishedOrCommunicatedAnswerer implements Answerer {
    */
   @Override
   public String getNoteForLastQuestion() {
-    return "The work is known, therefore it is assumed to be published.";
+    return "Es wird davon ausgegangen, dass das Werk öffentlich zugänglich "
+        + "ist, da es bekannt ist.";
   }
 
 }
