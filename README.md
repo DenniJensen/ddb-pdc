@@ -164,3 +164,13 @@ You can run the backend server from the command line during development with
 The configuration in `config/application.properties` will be used. Of
 course, you can also run the server from your IDE as normal (the main
 class is `de.ddb.pdc.Main`).
+
+### Coding Style
+
+All code is written according the
+[Google Java Style Guide](https://google-styleguide.googlecode.com/svn/trunk/javaguide.html). To
+enforce this, a matching
+[Checkstyle](http://checkstyle.sourceforge.net/) configuration is
+included in this repository. To check the code for style violations, run
+
+    mvn checkstyle:checkstyle
