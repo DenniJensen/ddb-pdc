@@ -38,13 +38,18 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
   @Override
   public PDCResult calculate(String country, DDBItem metadata) {
     // Check if an item already has a public domain license.
-    if (metadata.isPublicDomain() || metadata.getCcLicense() != null) {
+    if (metadata.hasCcLicense()) {
+      String cc = metadata.getCcLicense();
+      String link = "https://creativecommons.org/licenses/" + cc;
+      if (cc.equals("zero")) {
+        link += "/1.0/";
+      } else {
+        link += "/4.0/";
+      }
       List<AnsweredQuestion> trace = new LinkedList<AnsweredQuestion>();
       trace.add(new AnsweredQuestion(Question.IS_PUBLIC_DOMAIN, 
           Answer.YES, "Das Werk steht bereits unter einer CC Lizenz"
-          + ": CC-" + metadata.getCcLicense() 
-          + ". Lizenzinformationen unter: https://creativecommons.org/licenses/" 
-          + metadata.getCcLicense() + "/4.0/"));
+          + ": CC-" + cc + ". Lizenzinformationen unter: " + link));
       PDCResult result = new PDCResult(true, trace, metadata);
       return result;
     }
