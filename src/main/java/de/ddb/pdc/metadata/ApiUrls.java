@@ -32,14 +32,7 @@ public class ApiUrls {
   }
   
   private static String convertToSolrQuery(String query) {
-    String[] specialChars = {"\\", "+", "-", "&&", "||", "!", "(", ")",
-      "{", "}", "[", "]", "^", "\"", "~", "*", "?", ":", "/"};
-    for (String chars : specialChars) {
-      if (query.contains(chars)) {
-        query = query.replace(chars, "\\" + chars);
-      }
-    }
-    return query;
+    return query.trim().replaceAll("\\s+", " OR ");
   }
 
   private static String convertGermanChars(String query) {
