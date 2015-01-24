@@ -13,6 +13,8 @@ import javax.xml.transform.dom.DOMSource;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -109,6 +111,55 @@ public class MetaFetcherImplTest {
     assertEquals(new GregorianCalendar(1749, 7, 28), author.getDateOfBirth());
     assertEquals(new GregorianCalendar(1832, 2, 22), author.getDateOfDeath());
     assertEquals("de", author.getNationality());
+  }
+
+  @Test
+  public void fetchPublicDomain() throws Exception {
+    final String itemId = "NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR";
+
+    String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
+    DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
+    when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
+
+    DDBItem item = fetcher.fetchMetadata(itemId);
+
+    String url = "https://www.deutsche-digitale-bibliothek.de";
+    assertEquals("XI. * * *", item.getTitle());
+    assertEquals(
+        "Erschienen in: Beyträge zur Naturgeschichte; 1", item.getSubtitle());
+    assertEquals(url+"/binary/NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR/list/1.jpg"
+        , item.getImageUrl());
+    assertEquals(
+        "Niedersächsische Staats- und Universitätsbibliothek Göttingen"
+        , item.getInstitution());
+    assertEquals(null, item.getPublishedYear());
+    assertTrue(item.hasCcLicense());
+    assertEquals(0, item.getAuthors().size());
+  }
+
+  @Test
+  public void fetchLicense() throws Exception {
+    final String itemId = "YKBEBZPUJRKHO2ZONVJZOWR4G2DMGEJE";
+
+    String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
+    DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
+    when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
+
+    DDBItem item = fetcher.fetchMetadata(itemId);
+
+    String url = "https://www.deutsche-digitale-bibliothek.de";
+    assertEquals("Lettre XLII. A la Comtesse de * * *", item.getTitle());
+    assertEquals(
+        "Erschienen in: Lettres De Mde Wortley Montague, Ecrites pendant ses " +
+            "Voyages en Europe, en Asie & en Afrique &c.", item.getSubtitle());
+    assertEquals(url+"/binary/YKBEBZPUJRKHO2ZONVJZOWR4G2DMGEJE/list/1.jpg"
+        , item.getImageUrl());
+    assertEquals(
+        "Sächsische Landesbibliothek - Staats- und Universitätsbibliothek Dresden"
+        , item.getInstitution());
+    assertEquals(null, item.getPublishedYear());
+    assertEquals("by-nc-nd", item.getCcLicense());
+    assertEquals(0, item.getAuthors().size());
   }
 
   private DOMSource loadXml(String path) throws Exception {

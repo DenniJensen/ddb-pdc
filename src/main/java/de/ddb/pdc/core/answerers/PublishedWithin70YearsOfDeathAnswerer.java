@@ -29,14 +29,16 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
     List<Author> authors = metaData.getAuthors();
     Calendar publishedYear = metaData.getPublishedYear();
     if (authors == null || authors.isEmpty() || publishedYear == null
-        || !publishedYear.isSet(Calendar.YEAR)) {
+        || !publishedYear.isSet(Calendar.YEAR)
+        || publishedYear.get(Calendar.YEAR) == 0) {
       return Answer.UNKNOWN;
     }
 
     int authorDeathYear = 0;
     for (Author author : authors) {
       if (author.getDateOfDeath() == null
-          || !author.getDateOfDeath().isSet(Calendar.YEAR)) {
+          || !author.getDateOfDeath().isSet(Calendar.YEAR)
+          || author.getDateOfDeath().get(Calendar.YEAR) == 0) {
         this.note = "Nicht jedes Sterbedatum der Autoren ist bekannt. Es wird "
             + "angenommen, dass mindestens einer der Autoren noch am Leben "
             + "ist.";

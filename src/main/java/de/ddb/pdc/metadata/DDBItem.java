@@ -21,6 +21,7 @@ public class DDBItem {
   private ArrayList<Author> authors = null;
   private String institution = null;
   private Calendar publishedYear = null;
+  private String ccLicense = null;
  
   /**
    * Creates a new DDBItem.
@@ -183,4 +184,24 @@ public class DDBItem {
     }
   }
 
+  /**
+   * Returns the label of creative common license.
+   */
+  public String getCcLicense() {
+    return ccLicense;
+  }
+
+  /**
+   * Sets creative common license.
+   */
+  public void setCcLicense(String ccLicense) {
+    this.ccLicense = ccLicense;
+  }
+
+  /**
+   * Returns if item has a cc license
+   */
+  public boolean hasCcLicense() {
+    return this.ccLicense != null;
+  }
 }
