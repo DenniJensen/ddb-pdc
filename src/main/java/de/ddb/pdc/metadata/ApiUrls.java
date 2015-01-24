@@ -43,11 +43,11 @@ public class ApiUrls {
   }
 
   private static String convertGermanChars(String query) {
-    query.replaceAll("ä", "ae");
-    query.replaceAll("ö", "oe");
-    query.replaceAll("ü", "ue");
-    query.replaceAll("ß", "ss");
-    return query;
+    return query
+        .replaceAll("ä", "ae")
+        .replaceAll("ö", "oe")
+        .replaceAll("ü", "ue")
+        .replaceAll("ß", "ss");
   }
 
   /**
