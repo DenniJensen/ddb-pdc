@@ -22,10 +22,8 @@ public class ApiUrls {
    */
   public static String searchUrl(String query, int startItem, int maxItems,
       String sort, String apiKey) {
-    query = convertToSolrQuery(query);
-    query = convertGermanChars(query);
     return url(apiKey, "/search",
-        "query", query,
+        "query", convertToSolrQuery(query),
         "offset", Integer.toString(startItem),
         "rows", Integer.toString(maxItems),
         "sort", sort); //"relevance"
@@ -33,14 +31,6 @@ public class ApiUrls {
   
   private static String convertToSolrQuery(String query) {
     return query.trim().replaceAll("\\s+", " OR ");
-  }
-
-  private static String convertGermanChars(String query) {
-    return query
-        .replaceAll("ä", "ae")
-        .replaceAll("ö", "oe")
-        .replaceAll("ü", "ue")
-        .replaceAll("ß", "ss");
   }
 
   /**
