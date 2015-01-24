@@ -167,6 +167,10 @@ based on [JUnit](http://junit.org/). To run them, execute
 Running `mvn verify` will also generate a code coverage report with
 [JaCoCo](http://jacoco.org/) and save it to `target/site/jacoco/`.
 
+By default, the tests for the PDC result database are skipped so that
+running the test suite doesn't require a running MongoDB. To enable
+them, set `ddb.storage.enable` to `true` in `application-test.properties`.
+
 ### Running
 
 You can run the backend server from the command line during development with
