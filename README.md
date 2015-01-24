@@ -23,7 +23,7 @@ The following sections describe how to set up both the DDB-PDC backend
 and Drupal module on a server. Both were mainly tested on Ubuntu
 Server, but are likely to work on any other Unix-based system.
 
-### Prerequsites
+### Prerequisites
 
 Installing and running the DDB-PDC backend requires the following:
 
@@ -33,16 +33,16 @@ Installing and running the DDB-PDC backend requires the following:
 
 * Java 7 or newer. For being able to build the code, install the full
   JDK. [Maven](http://maven.apache.org/) is also required for
-  building. On Ubutu, install both with the following command:
+  building. On Ubuntu, install both with the following command:
 
   ```
   sudo apt-get install openjdk-7-jdk maven
   ```
 
 * [MongoDB](http://www.mongodb.com/) if you want to use the PDC result
-  cache (see
-  [Configuring the PDC Result Database](#configuring-the-pdc-result-database)). This
-  is entirely optional. Install it on Ubuntu as follows:
+  database (see
+  [Configuring the PDC Result Database](#configuring-the-pdc-result-database)).
+  This is entirely optional. Install it on Ubuntu as follows:
 
   ```
   sudo apt-get install mongodb-server
@@ -87,7 +87,7 @@ public-domain calculation - including a trace explaining why a work
 was considered public-domain or not - to a MongoDB database. If the
 same work is queried afterwards, the backend will serve the result
 directly from the database instead of hitting the DDB API and
-recalculating the public-domain status. (If the cached result is
+re-calculating the public-domain status. (If the stored result is
 outdated because it is from an earlier year, it is re-calculated
 anyway.)
 
@@ -100,7 +100,8 @@ To enable the result database, set `ddb.storage.enable=true` in
 `application.properties` and configure the database connection
 parameters:
 
-    ddb.storage.enable=truenspring.data.mongodb.host=127.0.0.1
+    ddb.storage.enable=true
+    spring.data.mongodb.host=127.0.0.1
     spring.data.mongodb.port=27017
     spring.data.mongodb.database=pdc
     spring.data.mongodb.collection=pdc_results
