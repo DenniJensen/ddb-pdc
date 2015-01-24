@@ -108,7 +108,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     DOMSource domSource = restTemplate.getForObject(url, DOMSource.class);
     if (domSource != null) {
       fillDDBItem(ddbItem, domSource);
-      if (!ddbItem.isPublicDomain() || ddbItem.getCcLicense() == null) {
+      if (!ddbItem.hasCcLicense()) {
         fetchAuthorMetadata(ddbItem);
       }
     }
@@ -124,8 +124,8 @@ public class MetaFetcherImpl implements MetaFetcher {
     item.setInstitution(itemAipXml.getInstitution());
     String license = itemAipXml.getCCLicense();
     if (license != null) {
-      if (license.equals("true")) {
-        item.setPublicDomain(true);
+      if (license.equals("cc-0")) {
+        item.setCcLicense("zero");
       } else {
         item.setCcLicense(itemAipXml.getCCLicense());
       }

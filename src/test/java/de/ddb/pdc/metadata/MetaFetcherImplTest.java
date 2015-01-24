@@ -133,7 +133,7 @@ public class MetaFetcherImplTest {
         "Niedersächsische Staats- und Universitätsbibliothek Göttingen"
         , item.getInstitution());
     assertEquals(null, item.getPublishedYear());
-    assertTrue(item.isPublicDomain());
+    assertTrue(item.hasCcLicense());
     assertEquals(0, item.getAuthors().size());
   }
 

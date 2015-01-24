@@ -22,7 +22,6 @@ public class DDBItem {
   private String institution = null;
   private Calendar publishedYear = null;
   private String ccLicense = null;
-  private boolean publicDomain = false;
  
   /**
    * Creates a new DDBItem.
@@ -200,16 +199,9 @@ public class DDBItem {
   }
 
   /**
-   * Returns if item labeled as public domain.
+   * Returns if item has a cc license
    */
-  public boolean isPublicDomain() {
-    return publicDomain;
-  }
-
-  /**
-   * Sets if label is public domain,
-   */
-  public void setPublicDomain(boolean publicDomain) {
-    this.publicDomain = publicDomain;
+  public boolean hasCcLicense() {
+    return this.ccLicense != null;
   }
 }

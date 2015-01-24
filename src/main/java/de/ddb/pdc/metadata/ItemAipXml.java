@@ -98,7 +98,7 @@ public class ItemAipXml {
       String[] temp = license.split("/");
       if ( temp.length > 4) {
         if (temp[3].equals("publicdomain")) {
-          return "true";
+          return "cc-0";
         }
         return temp[4];
       }
