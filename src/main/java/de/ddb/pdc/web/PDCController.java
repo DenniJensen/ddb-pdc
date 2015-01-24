@@ -86,7 +86,7 @@ public class PDCController {
 
   /**
    * Retrieves or calculates a public-domain evaluation of a DDB item by first
-   * using the {@link StorageService} to fetch a stored and up toS date
+   * using the {@link StorageService} to fetch a stored and up to date
    * evaluation result if it exists.
    * If the evaluation result does not exist in storage then the evaluation
    * is calculated and stored. If the result exists but it is outdated, then
