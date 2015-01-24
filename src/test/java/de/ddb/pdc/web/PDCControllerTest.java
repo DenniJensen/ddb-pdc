@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Main.class)
-@ActiveProfiles({"test"})
+@ActiveProfiles({ "test" })
 public class PDCControllerTest {
 
   @Test

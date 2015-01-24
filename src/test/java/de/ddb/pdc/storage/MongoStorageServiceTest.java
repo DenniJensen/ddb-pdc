@@ -21,7 +21,7 @@ import static org.junit.Assume.assumeTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Main.class)
-@ActiveProfiles({"test"})
+@ActiveProfiles({ "test" })
 public class MongoStorageServiceTest {
 
   @Value("${ddb.storage.enable}")

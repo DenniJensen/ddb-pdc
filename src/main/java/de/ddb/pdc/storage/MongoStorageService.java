@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-@ConditionalOnProperty({"ddb.storage.enable"})
+@ConditionalOnProperty({ "ddb.storage.enable" })
 public class MongoStorageService implements StorageService {
 
   private final MongoTemplate mongoTemplate;
