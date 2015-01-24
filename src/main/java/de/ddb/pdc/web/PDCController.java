@@ -25,8 +25,7 @@ public class PDCController {
 
   private final PublicDomainCalculator calculator;
   private final MetaFetcher metaFetcher;
-  private final StorageService storageService;
-  private final boolean storageEnabled;
+  private StorageService storageService;
 
   /**
    * Creates a PDCController.
@@ -34,19 +33,24 @@ public class PDCController {
    * @param metaFetcher {@link MetaFetcher} to use for DBB API calls
    * @param calculator  to decide the public domain problem on an item for
    *                    a given country
-   * @param storageService to access previously calculated item information
-   * @param storageEnabledProperty  to control whether the storage service will
-   *                                be used
    */
   @Autowired
-  public PDCController(MetaFetcher metaFetcher,
-      PublicDomainCalculator calculator, StorageService storageService,
-      @Value("${ddb.storage.enable:true}") String storageEnabledProperty) {
-
+  public PDCController(
+      MetaFetcher metaFetcher,
+      PublicDomainCalculator calculator) {
     this.metaFetcher = metaFetcher;
     this.calculator = calculator;
+  }
+
+  /**
+   * Tells the controller to use the passed {@link StorageService} to
+   * save calculated public-domain results.
+   *
+   * @param storageService {@link StorageService} to use
+   */
+  @Autowired(required = false)
+  public void setStorageService(StorageService storageService) {
     this.storageService = storageService;
-    this.storageEnabled = Boolean.parseBoolean(storageEnabledProperty);
   }
 
   /**
@@ -72,21 +76,17 @@ public class PDCController {
    * @return PDCResult serialized to standard JSON
    */
   @RequestMapping("/pdc/{itemId}")
-  public PDCResult determinePublicDomain(@PathVariable String itemId)
-      throws Exception {
-
-    PDCResult pdcResult;
-    if (storageEnabled) {
-      pdcResult = determineWithStorageService(itemId);
+  public PDCResult determinePublicDomain(@PathVariable String itemId) {
+    if (storageService != null) {
+      return determineWithStorageService(itemId);
     } else {
-      pdcResult = determineWithoutStorageService(itemId);
+      return determineWithoutStorageService(itemId);
     }
-    return pdcResult;
   }
 
   /**
    * Retrieves or calculates a public-domain evaluation of a DDB item by first
-   * using the {@link StorageService} to fetch a stored and up to date
+   * using the {@link StorageService} to fetch a stored and up toS date
    * evaluation result if it exists.
    * If the evaluation result does not exist in storage then the evaluation
    * is calculated and stored. If the result exists but it is outdated, then
