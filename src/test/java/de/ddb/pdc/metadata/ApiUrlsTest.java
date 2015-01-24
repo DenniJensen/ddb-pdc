@@ -17,10 +17,10 @@ public class ApiUrlsTest {
   }
 
   @Test
-  public void complexSearchUrl() {
-    String query = "+testing-the!syntax?right&&now\\";
+  public void searchUrlWithSpaces() {
+    String query = "foo bar";
     assertEquals(API_URL_PREFIX +
-        "/search?query=\\+testing\\-the\\!syntax\\?right\\&&now\\\\" +
+        "/search?query=foo OR bar" +
         "&offset=0&rows=10&sort=relevance&oauth_consumer_key=key",
         ApiUrls.searchUrl(query, 0, 10, "relevance", "key"));
 
