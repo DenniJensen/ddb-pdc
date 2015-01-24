@@ -245,7 +245,16 @@ public enum Question {
       "Is the rights holder a national or resident of an European Economic "
           + "Area Sate?"),
 
-
+  /**
+   * Fake question for special case: calculation failed, inform front-end
+   */
+  CALCULATION_FAILED("Die Berechnung is fehlgeschlagen."),
+  
+  /**
+   * Fake question for special case: item is already public domain
+   */
+  IS_PUBLIC_DOMAIN("Das Werk ist bereits freigegeben."),
+  
   ;
 
   /**
