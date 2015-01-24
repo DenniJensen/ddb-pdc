@@ -37,7 +37,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
    */
   @Override
   public PDCResult calculate(String country, DDBItem metadata) {
-    // check if item already has public domain license
+    // Check if an item already has a public domain license.
     if (metadata.isPublicDomain() || metadata.getCcLicense() != null) {
       List<AnsweredQuestion> trace = new LinkedList<AnsweredQuestion>();
       trace.add(new AnsweredQuestion(Question.IS_PUBLIC_DOMAIN, 
@@ -57,7 +57,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
     answerQuestions(questionnaire, metadata);
     PDCResult result = questionnaire.getResult();
     
-    // if the result is unknown only deliver one trace entry
+    // If the result is unknown, only deliver one trace entry
     // to the front-end with the reason for the fail.
     if (result.isPublicDomain() == null) {
       List<AnsweredQuestion> trace = result.getTrace();

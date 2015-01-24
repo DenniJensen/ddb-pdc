@@ -25,8 +25,8 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
       Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
       Answer answer = answerer.answerQuestionForItem(metadata);
 
-      // country of origin is always Germany (hard coded)
-      // as of request of the customer
+      // The country of origin is always Germany (hard coded)
+      // as of request of the customer.
       assertEquals(Answer.ASSUMED_YES, answer);
     }
   }
@@ -43,8 +43,8 @@ public class CountryOfOriginEuropeanEconomicAreaAnswererTest {
     Answerer answerer = new CountryOfOriginEuropeanEconomicAreaAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
 
-    // country of origin is always Germany (hard coded)
-    // as of request of the customer
+    // The country of origin is always Germany (hard coded)
+    // as of request of the customer.
     assertEquals(Answer.ASSUMED_YES, answer);
   }
 

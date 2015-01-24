@@ -1,18 +1,14 @@
 package de.ddb.pdc.core.answerers;
 
-import java.util.List;
 
 import de.ddb.pdc.core.Answerer;
 import de.ddb.pdc.core.Answer;
-import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 
 /**
  * Answers the COUNTRY_OF_ORIGIN_EEA question.
  */
 class CountryOfOriginEuropeanEconomicAreaAnswerer implements Answerer {
-
-  private String note;
 
   /**
    * Country of origin is always Germany as requested by the customer
