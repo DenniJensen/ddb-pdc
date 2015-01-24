@@ -12,27 +12,23 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assume.assumeNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Main.class)
 @ActiveProfiles({ "test" })
 public class MongoStorageServiceTest {
 
-  @Value("${ddb.storage.enable}")
-  private boolean storageEnabled;
-
-  @Autowired
+  @Autowired(required = false)
   private StorageService storageService;
 
   @Test
   public void testStoreAndFetch() {
-    assumeTrue(storageEnabled);
+    assumeNotNull(storageService);
 
     final String itemID = "156987";
     final String title = "Title";
@@ -66,7 +62,7 @@ public class MongoStorageServiceTest {
 
   @Test
   public void testStoreAndUpdate(){
-    assumeTrue(storageEnabled);
+    assumeNotNull(storageService);
 
     final String itemID = "8963254";
     final String title = "Title";
@@ -112,7 +108,7 @@ public class MongoStorageServiceTest {
 
   @Test
   public void testDeleteAll() {
-    assumeTrue(storageEnabled);
+    assumeNotNull(storageService);
 
     List <PDCResult> entriesBefore = storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
