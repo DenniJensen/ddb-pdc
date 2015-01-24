@@ -33,19 +33,31 @@ Installing and running the DDB-PDC backend requires the following:
 
 * Java 7 or newer. For being able to build the code, install the full
   JDK. [Maven](http://maven.apache.org/) is also required for
-  building. On Ubuntu, install both with the following command:
+  building. For Mac users you need [homebrew](http://brew.sh/) to install
+  packages via command line.
 
+  #### Ubuntu
   ```
   sudo apt-get install openjdk-7-jdk maven
   ```
+  #### Mac
+  ```
+  brew install maven
+  ```
+  [Oracle Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+  can be used instead of openjdk
 
 * [MongoDB](http://www.mongodb.com/) if you want to use the PDC result
   database (see
   [Configuring the PDC Result Database](#configuring-the-pdc-result-database)).
-  This is entirely optional. Install it on Ubuntu as follows:
-
+  This is entirely optional.
+  ####Ubuntu
   ```
   sudo apt-get install mongodb-server
+  ```
+  ####Mac
+  ```
+  brew install mongodb
   ```
 
 The Drupal module merely needs an existing installation of Drupal 7 or
