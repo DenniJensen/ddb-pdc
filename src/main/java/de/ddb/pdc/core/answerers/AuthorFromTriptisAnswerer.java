@@ -27,7 +27,10 @@ class AuthorFromTriptisAnswerer implements Answerer {
     boolean result = true;
     this.note = "";
     for (Author author : authors) {
-      if (!BerneTriptisMembers.isMember(author.getNationality())) {
+      if (author.getNationality() == null) {
+        this.note += "Die Nationalität von " + author.getName()
+            + " ist unbekannt. Nehme Deutschland an. ";
+      } else if (!BerneTriptisMembers.isMember(author.getNationality())) {
         result = false;
         this.note += "Autor " + author.getName() + " ist aus "
             + author.getNationality() + ", welches nicht Teil der Berne "

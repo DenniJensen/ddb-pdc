@@ -44,7 +44,8 @@ class AuthorDiedMoreThan70YearsAgoAnswerer implements Answerer {
     String authorDeaths = "";
     for (Author author : authors) {
       Calendar deathYearCalendar = author.getDateOfDeath();
-      if (deathYearCalendar == null) {
+      if (deathYearCalendar == null 
+          || deathYearCalendar.get(Calendar.YEAR) == 0) {
         if (author.getDateOfBirth() != null && author.getDateOfBirth()
             .isSet(Calendar.YEAR)) {
           int birthYear = author.getDateOfBirth().get(Calendar.YEAR);
