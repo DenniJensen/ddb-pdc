@@ -22,32 +22,15 @@ public class ApiUrls {
    */
   public static String searchUrl(String query, int startItem, int maxItems,
       String sort, String apiKey) {
-    query = convertToSolrQuery(query);
-    query = convertGermanChars(query);
     return url(apiKey, "/search",
-        "query", query,
+        "query", convertToSolrQuery(query),
         "offset", Integer.toString(startItem),
         "rows", Integer.toString(maxItems),
         "sort", sort); //"relevance"
   }
   
   private static String convertToSolrQuery(String query) {
-    String[] specialChars = {"\\", "+", "-", "&&", "||", "!", "(", ")",
-      "{", "}", "[", "]", "^", "\"", "~", "*", "?", ":", "/"};
-    for (String chars : specialChars) {
-      if (query.contains(chars)) {
-        query = query.replace(chars, "\\" + chars);
-      }
-    }
-    return query;
-  }
-
-  private static String convertGermanChars(String query) {
-    return query
-        .replaceAll("ä", "ae")
-        .replaceAll("ö", "oe")
-        .replaceAll("ü", "ue")
-        .replaceAll("ß", "ss");
+    return query.trim().replaceAll("\\s+", " OR ");
   }
 
   /**
