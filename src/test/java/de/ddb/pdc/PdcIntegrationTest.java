@@ -116,8 +116,8 @@ public class PdcIntegrationTest {
     assertEquals(10, trace.size());
 
     Map question1 = (Map) trace.get(0);
-    assertEquals("Is the work any kind of work which the official body " +
-        "publishing it intends to be generally received?",
+    assertEquals("Ist dieses Werk in irgendeiner Art von der amtlichen Stelle "
+          + "beabsichtigt worden öffentlich zugänglich zu sein?",
         question1.get("question"));
     assertEquals("assumed no", question1.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -126,8 +126,7 @@ public class PdcIntegrationTest {
         question1.get("note"));
 
     Map question2 = (Map) trace.get(1);
-    assertEquals("Is the work a court decision or officially issued " +
-        "discussion formula?",
+    assertEquals("Ist das Werk ein Gerichtsurteil oder ein Beschluss?",
         question2.get("question"));
     assertEquals("assumed no", question2.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -136,8 +135,7 @@ public class PdcIntegrationTest {
         question2.get("note"));
 
     Map question3 = (Map) trace.get(2);
-    assertEquals("Is the work an act of parliament which has entered the " +
-        "parliamentary process?",
+    assertEquals("Ist dieses Werk ein vom parlament beschlossenes Gesetz?",
         question3.get("question"));
     assertEquals("assumed no", question3.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -146,7 +144,7 @@ public class PdcIntegrationTest {
         question3.get("note"));
 
     Map question4 = (Map) trace.get(3);
-    assertEquals("Is the work a government directive?",
+    assertEquals("Ist das Werk ein Regierungsbeschluss?",
         question4.get("question"));
     assertEquals("assumed no", question4.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -155,8 +153,8 @@ public class PdcIntegrationTest {
         question4.get("note"));
 
     Map question5 = (Map) trace.get(4);
-    assertEquals("Is the work an official decision or announcement by a " +
-        "public authority?",
+    assertEquals("Ist dieses Werk eine offizielle Entscheidung oder eine Bekanntgabe einer"
+        + " öffentlichen Autorität?",
         question5.get("question"));
     assertEquals("assumed no", question5.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -165,14 +163,15 @@ public class PdcIntegrationTest {
         question5.get("note"));
 
     Map question6 = (Map) trace.get(5);
-    assertEquals("Is the author natural person?", question6.get("question"));
+    assertEquals("Ist der Autor eine natürliche Person?",
+        question6.get("question"));
     assertEquals("assumed yes", question6.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort ja ist.",
         question6.get("note"));
 
     Map question7 = (Map) trace.get(6);
-    assertEquals("Is the nationality or place of residence of the author " +
-        "the European Economic Area?",
+    assertEquals("Ist die Staatsangehörigkeit oder der Wohnort des Autors der "
+        + "Europäische Wirtschaftsraum?",
         question7.get("question"));
     assertEquals("yes", question7.get("answer"));
     assertEquals("Autor Goethe, Johann Wolfgang von ist aus de, welches Teil "
@@ -180,7 +179,7 @@ public class PdcIntegrationTest {
         question7.get("note"));
 
     Map question8 = (Map) trace.get(7);
-    assertEquals("Has the work been published or communicated to the public?",
+    assertEquals("Wurde das Werk veröffentlicht?",
         question8.get("question"));
     assertEquals("assumed yes", question8.get("answer"));
     assertEquals("Es wird davon ausgegangen, dass das Werk öffentlich "
@@ -188,8 +187,8 @@ public class PdcIntegrationTest {
         question8.get("note"));
 
     Map question9 = (Map) trace.get(8);
-    assertEquals("Was the work published within 70 years of the death of the "
-        + "last surviving author?",
+    assertEquals("Wurde dieses Werk innerhalb von 70 Jahren nach dem Tod des "
+        + "letzten überlebenden Autor veröffentlicht?",
         question9.get("question"));
     assertEquals("yes", question9.get("answer"));
     assertEquals("Das Werk wurde 1849 veröffentlicht. Der Autor, der am "
@@ -198,7 +197,7 @@ public class PdcIntegrationTest {
         question9.get("note"));
 
     Map question10 = (Map) trace.get(9);
-    assertEquals("Did the last surviving author die more than 70 years ago?",
+    assertEquals("Ist der letzte überlebende Autor seit mehr als 70 Jahre tot?",
         question10.get("question"));
     assertEquals("yes", question10.get("answer"));
     assertEquals("Alle Autoren starben vor oder in 1832: Goethe, Johann "
