@@ -22,6 +22,7 @@ class CreatedMoreThan70YearsAgoAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     Calendar publishedYear = metaData.getPublishedYear();
     if (publishedYear == null || !publishedYear.isSet(Calendar.YEAR)) {
+      this.note = "Das Veröffentlichungsdatum ist unbekannt.";
       return Answer.UNKNOWN;
     }
     Calendar calendar = Calendar.getInstance();

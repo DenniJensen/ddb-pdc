@@ -28,9 +28,13 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
     Calendar publishedYear = metaData.getPublishedYear();
-    if (authors == null || authors.isEmpty() || publishedYear == null
-        || !publishedYear.isSet(Calendar.YEAR)
+    if (authors == null || authors.isEmpty()) {
+      this.note = "Kein(e) Autor(en) bekannt.";
+      return Answer.UNKNOWN;
+    }
+    if (publishedYear == null || !publishedYear.isSet(Calendar.YEAR)
         || publishedYear.get(Calendar.YEAR) == 0) {
+      this.note = "Das Veröffentlichungsdatum ist unbekannt.";
       return Answer.UNKNOWN;
     }
 
