@@ -21,9 +21,9 @@
 <?php if (isset($error_message)): ?>
   <div class="ddb_pdc_form">
     <?php 
-      drupal_get_messages();
-      drupal_set_message(t($error_message), 'error');
-      print $searchform;
+    drupal_get_messages();
+    drupal_set_message(t($error_message), 'error');
+    print $searchform;
     ?>
   </div>
 <?php else: ?>
@@ -42,69 +42,59 @@
       </div>
     </div>
     <div class="item-license">
-      <span class="item-license-img">
+      <div class="item-license-img">
         <img src="<?php print $imagespath . 'icons/' . $publicdomain . '.png" title="' . $resultImgAlt; ?>"/>
-        <span class="item-license-text">
-          <?php print $publicdomainText; ?>
-        </span>
-      </span> 
+      </div>
+      <div class="item-license-text">
+        <?php print $publicdomainText; ?>
+      </div> 
     </div>
   </div>      
   <div class="pdc-questions-wrapper">
-    <div id="accordion">
-      <h3 class="accordion-title">
-        <a href="#">General Assumptions</a>
-      </h3>
-      <div class="accordion-content">
-        <?php 
-        $counter = 0;
-        foreach ($json_pdcresult->trace as $question): 
-          $counter++;
-          switch ($question->answer) {
-            case "yes":
-                $questionResult      = "positive";
-                $questionResultTrace = "Yes";
-                break;
-            
-            case "assumed yes":
-                $questionResult      = "positiveAssumed";
-                $questionResultTrace = "Yes (assumed)";
-                break;
-            
-            case "no":
-                $questionResult      = "negative";
-                $questionResultTrace = "No";
-                break;
-            
-            case "assumed no":
-                $questionResult      = "negativeAssumed";
-                $questionResultTrace = "No (assumed)";
-                break;
-            
-            default:
-                $questionResult      = "unknown";
-                $questionResultTrace = "Unknown";
-                break;
-          }
-        ?>                
-          <div class="pdc-questions <?php print $questionResult; ?>">
+    <?php foreach ($resultTrace as $question): ?>
+      <div class="pdc-questions <?php print $question['questionResult']; ?>">
+        <div class="pdc-question">
+          <img src="<?php print $imagespath . 'icons/' . 'question_' . $question['questionResult'] . '.png'; ?>" alt="" />
+          <?php print $question['question']; ?>
+        </div>
+        <div class="pdc-answer">
+          <img src="<?php print $imagespath . 'icons/' . 'answer_' . $question['questionResult'] . '.png'; ?>" alt="" />
+          <?php print $question['questionResultTrace']; ?>
+          <div class="notes">
+            <img src="<?php print $imagespath . 'icons/' . 'notes.png'; ?>" alt="" />
+            <div class="note">
+              <?php print $question['notes']; ?>
+            </div>
+          </div>
+        </div>    
+      </div>
+    <?php endforeach; ?>  
+    <?php if(!empty($generalAssumptions)): ?>
+      <div id="accordion">
+        <h3 class="accordion-title">
+          <a href="#">Allgemeine Annahmen</a>
+        </h3>
+        <div class="accordion-content">
+          <?php foreach ($generalAssumptions as $question): ?>
+            <div class="pdc-questions <?php print $question['questionResult']; ?>">
               <div class="pdc-question">
-                  <img src="<?php print $imagespath . 'icons/' . 'question_' . $questionResult . '.png'; ?>" alt="" />
-                  <?php print $question->question; ?>
+                <img src="<?php print $imagespath . 'icons/' . 'question_' . $question['questionResult'] . '.png'; ?>" alt="" />
+                <?php print $question['question']; ?>
               </div>
               <div class="pdc-answer">
-                  <img src="<?php print $imagespath . 'icons/' . 'answer_' . $questionResult . '.png'; ?>" alt="" />
-                  <?php print $questionResultTrace; ?>
-                  <div class="notes">
-                      <img src="<?php print $imagespath . 'icons/' . 'notes.png'; ?>" alt="" />
-                      <div class="note">
-											  <?php print $question->note; ?>
-                      </div>
-                  </div>
-              </div>    
-          </div>
-                  
-          <?php if ($counter == 5) { echo "</div></div>"; } // putting the first 5 questions to the accordion ?>
-        <?php endforeach; ?>  
-  </div>
+                <img src="<?php print $imagespath . 'icons/' . 'answer_' . $question['questionResult'] . '.png'; ?>" alt="" />
+                <?php print $question['questionResultTrace']; ?>
+                <div class="notes">
+                  <img src="<?php print $imagespath . 'icons/' . 'notes.png'; ?>" alt="" />
+                  <div class="note">
+                   <?php print $question['notes']; ?>
+                 </div>
+               </div>
+             </div>
+           </div>
+         <?php endforeach; ?>
+       </div>
+     </div>
+   <?php endif;?>
+ </div>
 <?php endif; ?>

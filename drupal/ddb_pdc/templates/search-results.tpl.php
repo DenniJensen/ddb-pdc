@@ -19,9 +19,9 @@
 <?php if (isset($error_message)): ?>
   <div class="ddb_pdc_form">
     <?php 
-      drupal_get_messages();
-      drupal_set_message(t($error_message), 'error');
-      print $searchform;
+    drupal_get_messages();
+    drupal_set_message(t($error_message), 'error');
+    print $searchform;
     ?>
   </div>
 <?php else: ?>
@@ -59,7 +59,7 @@
       <div class="item-calculate">
         <div class="item-calculate-button">
           <a href="<?php print $base_url.'/pdc-result/' . $item->id; ?>">
-            <img src="<?php print $imagespath .'icons/calculate.png'; ?>"/> Calculate!
+            <img src="<?php print $imagespath .'icons/calculate.png'; ?>"/> Berechne!
           </a>
         </div>
       </div>
