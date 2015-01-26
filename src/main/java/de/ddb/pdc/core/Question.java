@@ -25,7 +25,8 @@ public enum Question {
    * Is the work a court decision or officially issued discussion formula?
    */
   COURT_DECISION_OR_DECISION_FORMULA(
-      "Ist das Werk ein Gerichtsurteil oder ein Beschluss?"),
+      "Ist das Werk ein Gerichtsurteil oder ein offiziell veröffentlichter "
+          + "Beschluss?"),
 
   /**
    * Is the work an act of parliament which has entered the parliamentary
