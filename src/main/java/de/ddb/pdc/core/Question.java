@@ -33,12 +33,13 @@ public enum Question {
    * process?
    */
   ACT_OF_PARLIAMENT(
-      "Ist dieses Werk ein vom parlament beschlossenes Gesetz?"),
+      "Ist dieses Werk ein Gesetz, dass sich im parlamentarischen "
+          + "Entscheidungsprozess befindet?"),
 
   /**
    * Is the work a government directive?
    */
-  GOVERNMENT_DIRECTIVE("Ist das Werk ein Regierungsbeschluss?"),
+  GOVERNMENT_DIRECTIVE("Ist das Werk eine Anordnung?"),
 
   /**
    * Is the work an official decision or announcement by a public authority?

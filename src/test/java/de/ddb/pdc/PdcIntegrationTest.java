@@ -146,7 +146,7 @@ public class PdcIntegrationTest {
         question3.get("note"));
 
     Map question4 = (Map) trace.get(3);
-    assertEquals("Ist das Werk ein Regierungsbeschluss?",
+    assertEquals("Ist das Werk eine Anordnung?",
         question4.get("question"));
     assertEquals("assumed no", question4.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
