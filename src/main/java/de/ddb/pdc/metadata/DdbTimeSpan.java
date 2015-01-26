@@ -1,6 +1,9 @@
 package de.ddb.pdc.metadata;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Represents a year range as defined in the DDB time vocabulary.
