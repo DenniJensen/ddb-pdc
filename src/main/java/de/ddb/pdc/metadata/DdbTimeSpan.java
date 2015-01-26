@@ -24,6 +24,15 @@ public class DdbTimeSpan {
   }
 
   /**
+   * Creates a DdbTimeSpan consisting of a single year.
+   *
+   * @param year lower and upper bound
+   */
+  public DdbTimeSpan(int year) {
+    this(year, year);
+  }
+
+  /**
    * Returns the lower bound of the time span.
    *
    * @return least recent year in time span

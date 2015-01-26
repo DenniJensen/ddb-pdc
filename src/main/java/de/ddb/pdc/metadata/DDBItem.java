@@ -168,14 +168,6 @@ public class DDBItem {
   }
 
   /**
-   * Returns the published year of the work.
-   * If no published year found, null is returned
-   */
-  public Calendar getPublishedYear() {
-    return publishedYear;
-  }
-
-  /**
    * Returns the year range within which the item was published. This can
    * be very precise (the exact publishing year is known) or very vague
    * (e.g., some year in the 19th century).

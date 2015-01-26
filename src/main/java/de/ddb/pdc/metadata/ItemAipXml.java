@@ -66,26 +66,23 @@ public class ItemAipXml {
   }
 
   /**
-   * Returns the published year.
+   * Extracts the value for {@link DDBItem#getPublishingYearRange()}.
    */
-  public int getPublishedYear() {
+  public DdbTimeSpan getPublishingYearRange() {
+    int concreteYear = getConcretePublishingYear();
+    if (concreteYear != -1) {
+      return new DdbTimeSpan(concreteYear);
+    } else {
+      return parseTimeSpanElements();
+    }
+  }
+
+  private int getConcretePublishingYear() {
     String date = xpath.evaluateAsString("//dcterms:issued", domSource);
     try {
       return Integer.parseInt(MetadataUtils.useRegex(date,"\\d{4}" ));
     } catch (NumberFormatException e) {
       return -1;
-    }
-  }
-
-  /**
-   * Extracts the value for {@link DDBItem#getPublishingYearRange()}.
-   */
-  public DdbTimeSpan getPublishingYearRange() {
-    int concreteYear = getPublishedYear();
-    if (concreteYear != -1) {
-      return new DdbTimeSpan(concreteYear, concreteYear);
-    } else {
-      return parseTimeSpanElements();
     }
   }
 

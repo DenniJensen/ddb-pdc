@@ -5,6 +5,8 @@ import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import de.ddb.pdc.metadata.DdbTimeSpan;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,7 +28,7 @@ public class PublicDomainCalculatorImplTest {
     Author author = new Author("321", "Dummy Author", birthYear, "GERMANY",
         deathYear, "GERMANY");
     ddbItem.addAuthor(author);
-    ddbItem.setPublishedYear(1925);
+    ddbItem.setPublishingYearRange(new DdbTimeSpan(1925));
 
     PDCResult result = publicDomainCalculatorImlp.calculate("de", ddbItem);
     // because AUTHOR_DIED_MORE_THAN_70_YEARS_AGO is YES
@@ -49,7 +51,7 @@ public class PublicDomainCalculatorImplTest {
     Author author = new Author("321", "Dummy Author", birthYear, "GERMANY",
         deathYear, "GERMANY");
     ddbItem.addAuthor(author);
-    ddbItem.setPublishedYear(1955);
+    ddbItem.setPublishingYearRange(new DdbTimeSpan(1955));
 
     PDCResult result = publicDomainCalculatorImlp.calculate("de", ddbItem);
     // because AUTHOR_DIED_MORE_THAN_70_YEARS_AGO is NO
@@ -72,7 +74,8 @@ public class PublicDomainCalculatorImplTest {
     //Author author = new Author("321", "Dummy Author", birthYear, "GERMANY",
     //    deathYear, "CHINA");
     //ddbItem.addAuthor(author);
-    ddbItem.setPublishedYear(1955);
+    ddbItem.setPublishingYearRange(new DdbTimeSpan(1955));
+    ddbItem.setPublishingYearRange(new DdbTimeSpan(1955));
 
     PDCResult result = publicDomainCalculatorImlp.calculate("de", ddbItem);
     // because No Author is known

@@ -192,9 +192,9 @@ public class PdcIntegrationTest {
         + "letzten überlebenden Autor veröffentlicht?",
         question9.get("question"));
     assertEquals("yes", question9.get("answer"));
-    assertEquals("Das Werk wurde 1849 veröffentlicht. Der Autor, der am "
-        + "längsten überlebt hat, starb 1832. Dies bedeutet, dass 17 Jahre "
-        + "vergangen sind.",
+    assertEquals("Das Werk wurde (spätestens) 1849 veröffentlicht. Der Autor, "
+        + "der am längsten überlebt hat, starb 1832. Es sind als 17 Jahre "
+        + "vergangen.",
         question9.get("note"));
 
     Map question10 = (Map) trace.get(9);
