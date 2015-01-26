@@ -3,8 +3,6 @@ package de.ddb.pdc.metadata;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.xml.xpath.Jaxp13XPathTemplate;
-import org.springframework.xml.xpath.XPathOperations;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,7 +11,6 @@ import javax.xml.transform.dom.DOMSource;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -22,31 +19,11 @@ public class MetaFetcherImplTest {
 
   private MetaFetcherImpl fetcher;
   private RestTemplate rest;
-  private XPathOperations xpathTemplate;
-  private DOMSource domSource;
 
   @Before
   public void setUp() {
     rest = mock(RestTemplate.class);
     fetcher = new MetaFetcherImpl(rest, "authkey");
-
-    Map<String,String> namespaces = new HashMap<String,String>();
-    namespaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-    namespaces.put("gndo", "http://d-nb.info/standards/elementset/gnd#");
-    namespaces.put("ctx", "http://www.deutsche-digitale-bibliothek.de/cortex");
-    namespaces.put("ns2", "http://www.deutsche-digitale-bibliothek.de/institution");
-    namespaces.put("ns3", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-    namespaces.put("ns4", "http://www.deutsche-digitale-bibliothek.de/item");
-    namespaces.put("ore", "http://www.openarchives.org/ore/terms/");
-    namespaces.put("edm", "http://www.europeana.eu/schemas/edm/");
-    namespaces.put("skos", "http://www.w3.org/2004/02/skos/core#");
-    namespaces.put("dc", "http://purl.org/dc/elements/1.1/" );
-    namespaces.put("dcterms", "http://purl.org/dc/terms/");
-    Jaxp13XPathTemplate jaxp13XPathTemplate = new Jaxp13XPathTemplate();
-    jaxp13XPathTemplate.setNamespaces(namespaces);
-
-    xpathTemplate = mock(jaxp13XPathTemplate.getClass());
-    domSource = mock(DOMSource.class);
   }
 
   @Test
@@ -77,33 +54,31 @@ public class MetaFetcherImplTest {
   
   @Test
   public void fetch() throws Exception {
-    final String itemId = "UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML";
-    final String authorId = "http://d-nb.info/gnd/118540238";
-    final String placeId = "http://d-nb.info/gnd/4018118-2";
+    mockItemAipRequest("UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML");
+    mockDnbEntityRequest("http://d-nb.info/gnd/118540238");
+    mockDnbEntityRequest("http://d-nb.info/gnd/4018118-2");
 
-    String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
-    DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
-    when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
-
-    String authorUrl = ApiUrls.dnbUrl(authorId);
-    DOMSource authorXml = loadDnbXml(authorId);
-    when(rest.getForObject(authorUrl, DOMSource.class)).thenReturn(authorXml);
-
-    String placeUrl = ApiUrls.dnbUrl(placeId);
-    DOMSource placeXml = loadDnbXml(placeId);
-    when(rest.getForObject(placeUrl, DOMSource.class)).thenReturn(placeXml);
-
-    DDBItem item = fetcher.fetchMetadata(itemId);
+    DDBItem item = fetcher.fetchMetadata("UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML");
     String url = "https://www.deutsche-digitale-bibliothek.de";
-    assertEquals("Goethe's Verklärung", item.getTitle());
+
     assertEquals(
-      "Goethe, Johann Wolfgang von (1749-1832). - Leipzig : Dederich, ([1849])"
-      , item.getSubtitle());
-    assertEquals(url+"/binary/UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML/list/1.jpg"
-      , item.getImageUrl());
-    assertEquals("Bayerische Staatsbibliothek", item.getInstitution());
-    assertEquals(1849, item.getPublishedYear().get(Calendar.YEAR));
-    assertEquals(1, item.getAuthors().size());
+        "Goethe's Verklärung",
+        item.getTitle());
+    assertEquals(
+      "Goethe, Johann Wolfgang von (1749-1832). - Leipzig : Dederich, ([1849])",
+        item.getSubtitle());
+    assertEquals(
+        "https://www.deutsche-digitale-bibliothek.de/binary/UGTZDTFHRNELDDLG2BGYKJMSVIB4XSML/list/1.jpg",
+        item.getImageUrl());
+    assertEquals(
+        "Bayerische Staatsbibliothek",
+        item.getInstitution());
+    assertEquals(
+        1849,
+        item.getPublishedYear().get(Calendar.YEAR));
+    assertEquals(
+        1,
+        item.getAuthors().size());
 
     Author author = item.getAuthors().get(0);
     assertEquals("http://d-nb.info/gnd/118540238", author.getDnbId());
@@ -115,51 +90,24 @@ public class MetaFetcherImplTest {
 
   @Test
   public void fetchPublicDomain() throws Exception {
-    final String itemId = "NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR";
-
-    String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
-    DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
-    when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
-
-    DDBItem item = fetcher.fetchMetadata(itemId);
-
-    String url = "https://www.deutsche-digitale-bibliothek.de";
-    assertEquals("XI. * * *", item.getTitle());
-    assertEquals(
-        "Erschienen in: Beyträge zur Naturgeschichte; 1", item.getSubtitle());
-    assertEquals(url+"/binary/NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR/list/1.jpg"
-        , item.getImageUrl());
-    assertEquals(
-        "Niedersächsische Staats- und Universitätsbibliothek Göttingen"
-        , item.getInstitution());
-    assertEquals(null, item.getPublishedYear());
+    mockItemAipRequest("NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR");
+    DDBItem item = fetcher.fetchMetadata("NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR");
     assertTrue(item.hasCcLicense());
-    assertEquals(0, item.getAuthors().size());
+    assertEquals("zero", item.getCcLicense());
   }
 
-  @Test
-  public void fetchLicense() throws Exception {
-    final String itemId = "YKBEBZPUJRKHO2ZONVJZOWR4G2DMGEJE";
-
+  private void mockItemAipRequest(String itemId) throws Exception {
     String itemUrl = ApiUrls.itemAipUrl(itemId, "authkey");
     DOMSource itemXml = loadXml("/ddb_items_aip/" + itemId);
     when(rest.getForObject(itemUrl, DOMSource.class)).thenReturn(itemXml);
+  }
 
-    DDBItem item = fetcher.fetchMetadata(itemId);
-
-    String url = "https://www.deutsche-digitale-bibliothek.de";
-    assertEquals("Lettre XLII. A la Comtesse de * * *", item.getTitle());
-    assertEquals(
-        "Erschienen in: Lettres De Mde Wortley Montague, Ecrites pendant ses " +
-            "Voyages en Europe, en Asie & en Afrique &c.", item.getSubtitle());
-    assertEquals(url+"/binary/YKBEBZPUJRKHO2ZONVJZOWR4G2DMGEJE/list/1.jpg"
-        , item.getImageUrl());
-    assertEquals(
-        "Sächsische Landesbibliothek - Staats- und Universitätsbibliothek Dresden"
-        , item.getInstitution());
-    assertEquals(null, item.getPublishedYear());
-    assertEquals("by-nc-nd", item.getCcLicense());
-    assertEquals(0, item.getAuthors().size());
+  private void mockDnbEntityRequest(String dnbUri) throws Exception {
+    String dnbRequestUrl = ApiUrls.dnbUrl(dnbUri);
+    String dnbId = dnbUri.split("/")[4];
+    DOMSource authorXml = loadXml("/dnb/" + dnbId);
+    when(rest.getForObject(dnbRequestUrl, DOMSource.class))
+        .thenReturn(authorXml);
   }
 
   private DOMSource loadXml(String path) throws Exception {
@@ -168,10 +116,5 @@ public class MetaFetcherImplTest {
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document doc = builder.parse(getClass().getResourceAsStream(path + ".xml"));
     return new DOMSource(doc.getDocumentElement());
-  }
-
-  private DOMSource loadDnbXml(String dnbId) throws Exception {
-    String gndNumber = dnbId.split("/")[4];
-    return loadXml("/dnb/" + gndNumber);
   }
 }
