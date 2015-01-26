@@ -73,13 +73,11 @@ public class MetaFetcherImplTest {
     assertEquals(
         "Bayerische Staatsbibliothek",
         item.getInstitution());
-    assertEquals(
-        1849,
-        item.getPublishedYear().get(Calendar.YEAR));
-    assertEquals(
-        1,
-        item.getAuthors().size());
 
+    assertEquals(1849, item.getPublishingYearRange().getMinYear());
+    assertEquals(1849, item.getPublishingYearRange().getMaxYear());
+
+    assertEquals(1,item.getAuthors().size());
     Author author = item.getAuthors().get(0);
     assertEquals("http://d-nb.info/gnd/118540238", author.getDnbId());
     assertEquals("Goethe, Johann Wolfgang von", author.getName());
@@ -94,6 +92,16 @@ public class MetaFetcherImplTest {
     DDBItem item = fetcher.fetchMetadata("NF42ZIDML4FWIBPEUEZDW6QDBSJIV7VR");
     assertTrue(item.hasCcLicense());
     assertEquals("zero", item.getCcLicense());
+  }
+
+  @Test
+  public void fetchImprecisePublishingYear() throws Exception {
+    mockItemAipRequest("4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22");
+    mockDnbEntityRequest("http://d-nb.info/gnd/118592343");
+    mockDnbEntityRequest("http://d-nb.info/gnd/117466034");
+    DDBItem item = fetcher.fetchMetadata("4XUDMRWXBMC7O3FPLATAK2HLCMLBBO22");
+    assertEquals(1851, item.getPublishingYearRange().getMinYear());
+    assertEquals(1900, item.getPublishingYearRange().getMaxYear());
   }
 
   private void mockItemAipRequest(String itemId) throws Exception {

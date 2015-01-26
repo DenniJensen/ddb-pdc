@@ -7,6 +7,7 @@ import javax.xml.transform.dom.DOMSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -74,6 +75,30 @@ public class ItemAipXml {
     } catch (NumberFormatException e) {
       return -1;
     }
+  }
+
+  /**
+   * Extracts the value for {@link DDBItem#getPublishingYearRange()}.
+   */
+  public DdbTimeSpan getPublishingYearRange() {
+    int concreteYear = getPublishedYear();
+    if (concreteYear != -1) {
+      return new DdbTimeSpan(concreteYear, concreteYear);
+    } else {
+      return parseTimeSpanElements();
+    }
+  }
+
+  private DdbTimeSpan parseTimeSpanElements() {
+    final String path = "//ctx:facet[@name='time_fct']/ctx:value";
+    List<Node> timeSpanNodes = xpath.evaluateAsNodeList(path, domSource);
+
+    Collection<String> timeSpanIds = new ArrayList<>();
+    for (Node node : timeSpanNodes) {
+      timeSpanIds.add(node.getFirstChild().getTextContent());
+    }
+
+    return timeSpanIds.isEmpty() ? null : DdbTimeSpan.fromIds(timeSpanIds);
   }
 
   /**

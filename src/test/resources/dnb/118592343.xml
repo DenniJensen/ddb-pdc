@@ -1,0 +1,102 @@
+<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:geo="http://www.opengis.net/ont/geosparql#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:sf="http://www.opengis.net/ont/sf#" xmlns:isbd="http://iflastandards.info/ns/isbd/elements/" xmlns:gndo="http://d-nb.info/standards/elementset/gnd#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:marcRole="http://id.loc.gov/vocabulary/relators/" xmlns:lib="http://purl.org/library/" xmlns:umbel="http://umbel.org/umbel#" xmlns:rdau="http://rdaregistry.info/Elements/u/" xmlns:bibo="http://purl.org/ontology/bibo/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+	<rdf:Description rdf:about="http://d-nb.info/gnd/118592343">
+		<rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#DifferentiatedPerson" />
+		<foaf:page rdf:resource="http://de.wikipedia.org/wiki/Friedrich_Pecht" />
+		<owl:sameAs rdf:resource="http://viaf.org/viaf/74645438" />
+		<gndo:gndIdentifier>118592343</gndo:gndIdentifier>
+		<gndo:oldAuthorityNumber>(DE-588a)118592343</gndo:oldAuthorityNumber>
+		<gndo:oldAuthorityNumber>(DE-588c)4044996-8</gndo:oldAuthorityNumber>
+		<gndo:variantNameForThePerson>Pecht, August F.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>August F.</gndo:forename>
+			<gndo:surname>Pecht</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Pecht, August Friedrich</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>August Friedrich</gndo:forename>
+			<gndo:surname>Pecht</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:variantNameForThePerson>Pecht, Fr.</gndo:variantNameForThePerson>
+		<gndo:variantNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Fr.</gndo:forename>
+			<gndo:surname>Pecht</gndo:surname>
+		</gndo:variantNameEntityForThePerson>
+		<gndo:preferredNameForThePerson>Pecht, Friedrich</gndo:preferredNameForThePerson>
+		<gndo:preferredNameEntityForThePerson rdf:parseType="Resource">
+			<gndo:forename>Friedrich</gndo:forename>
+			<gndo:surname>Pecht</gndo:surname>
+		</gndo:preferredNameEntityForThePerson>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4053309-8">
+				<gndo:preferredNameForTheSubjectHeading>Schriftsteller</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4037215-7">
+				<gndo:preferredNameForTheSubjectHeading>Maler</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4398813-1">
+				<gndo:preferredNameForTheSubjectHeading>Lithograph</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4200345-3">
+				<gndo:preferredNameForTheSubjectHeading>Zeichner</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:professionOrOccupation>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4166037-7">
+				<gndo:preferredNameForTheSubjectHeading>Kunstkritiker</gndo:preferredNameForTheSubjectHeading>
+			</rdf:Description>
+		</gndo:professionOrOccupation>
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#13.4p" />
+		<gndo:gndSubjectCategory rdf:resource="http://d-nb.info/standards/vocab/gnd/gnd-sc#13.1bp" />
+		<gndo:geographicAreaCode rdf:resource="http://d-nb.info/standards/vocab/gnd/geographic-area-code#XA-DE" />
+		<gndo:publication>Pecht, Friedrich: Kunst und Kunstindustrie auf der Weltausstellung von 1867. - 1867</gndo:publication>
+		<gndo:publication>Pecht, Friedrich: Südfrüchte</gndo:publication>
+		<gndo:publication>Pecht, Friedrich: Sechs Monate in Rom. - 1859</gndo:publication>
+		<gndo:publication>Pecht, Friedrich: Ein Winter in Venedig. - 1859</gndo:publication>
+		<gndo:publication>Devrient, Eduard: Das Passionsschauspiel in Oberammergau und seine Bedeutung für die ne*. - 1851</gndo:publication>
+		<gndo:biographicalOrHistoricalInformation xml:lang="de">Dt. Maler und Kunstschriftsteller; Künstler</gndo:biographicalOrHistoricalInformation>
+		<gndo:placeOfBirth>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4032215-4">
+				<gndo:preferredNameForThePlaceOrGeographicName>Konstanz</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfBirth>
+		<gndo:placeOfDeath>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4127793-4">
+				<gndo:preferredNameForThePlaceOrGeographicName>München</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfDeath>
+		<gndo:placeOfActivity>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4012995-0">
+				<gndo:preferredNameForThePlaceOrGeographicName>Dresden</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfActivity>
+		<gndo:placeOfActivity>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4035206-7">
+				<gndo:preferredNameForThePlaceOrGeographicName>Leipzig</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfActivity>
+		<gndo:placeOfActivity>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4044660-8">
+				<gndo:preferredNameForThePlaceOrGeographicName>Paris</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfActivity>
+		<gndo:placeOfActivity>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4032215-4">
+				<gndo:preferredNameForThePlaceOrGeographicName>Konstanz</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfActivity>
+		<gndo:placeOfActivity>
+			<rdf:Description rdf:about="http://d-nb.info/gnd/4127793-4">
+				<gndo:preferredNameForThePlaceOrGeographicName>München</gndo:preferredNameForThePlaceOrGeographicName>
+			</rdf:Description>
+		</gndo:placeOfActivity>
+		<gndo:gender rdf:resource="http://d-nb.info/standards/vocab/gnd/Gender#male" />
+		<gndo:dateOfBirth rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1814-10-02</gndo:dateOfBirth>
+		<gndo:dateOfDeath rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1903-04-24</gndo:dateOfDeath>
+	</rdf:Description>
+</rdf:RDF>
