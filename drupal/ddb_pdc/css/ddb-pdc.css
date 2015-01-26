@@ -97,39 +97,39 @@
 .item-license{
 	display:block;
 	overflow:hidden;	
+	text-align: center;
 }
 .item-license-text{
 	text-align:center;	
 	font-size:17px;
-	float:right;
-	margin-left: 20px;
+	margin: 0 auto;
+	padding:7px;
+	width:180px;
+	border-radius:5px;
 }
 .notpublicdomain .item-license-text{
-	line-height:44px;
+	background-color:#f9dcdf;	
 	color:#C00;	
-	padding-right:21px;
 }
 .publicdomain .item-license-text{
-	line-height:44px;
+	background-color:#ddf2d5;	
 	color:#690;	
-	padding-right:21px;
 }
 .unknownpublicdomain .item-license-text{
-	color:#3b3b3b;	
+	color:#3b3b3b;
+	background-color:#ffe26f;	
 }
 .item-license-img{
 	padding:14px 20px 8px;
-	border-radius:5px;
-	float:right;	
 }
 .notpublicdomain .item-license-img{
-	background-color:#f9dcdf;	
+
 }
 .publicdomain .item-license-img{
-	background-color:#ddf2d5;	
+	
 }
 .unknownpublicdomain .item-license-img{
-	background-color:#e5e5e5;	
+	
 }
 .pdc-questions-wrapper{
 	margin-top:30px;	
@@ -320,7 +320,8 @@
 	margin-bottom:25px;
 }
 #accordion a{
-	color:#ffffff;
+	color:#636363;
+	border: 1px solid #d1d1d1;
 }
 .accordion-content{
 	border:none !important;
@@ -329,7 +330,7 @@
 	padding-bottom:0 !important;		
 }
 #accordion .ui-state-default, #accordion .ui-widget-content .ui-state-default, #accordion .ui-widget-header .ui-state-default {
-    background: url(../images/layout/accordion-default.png) repeat-x scroll 50% 50% #1b998e;
+    background: url(../images/layout/accordion-default.png) repeat-x scroll 50% 50%;
 	border:none !important;
 	border-radius:0px !important;
     color: #fff;
