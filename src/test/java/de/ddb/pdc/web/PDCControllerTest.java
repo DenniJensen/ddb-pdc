@@ -4,11 +4,9 @@
 package de.ddb.pdc.web;
 
 import de.ddb.pdc.Main;
-import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.core.PublicDomainCalculator;
 import de.ddb.pdc.core.AnsweredQuestion;
 import de.ddb.pdc.core.PDCResult;
-import de.ddb.pdc.core.Question;
 import de.ddb.pdc.metadata.DDBItem;
 import de.ddb.pdc.metadata.MetaFetcher;
 import de.ddb.pdc.storage.StorageService;
@@ -17,156 +15,69 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Main.class)
-@ActiveProfiles({"test"})
+@ActiveProfiles({ "test" })
 public class PDCControllerTest {
 
-  @Autowired
-  private StorageService storageService;
-
   @Test
-  public void determinePublicDomainWhenItemNotInDB() throws Exception{
+  public void determinePublicDomain() throws Exception{
+    MetaFetcher fetcher = mock(MetaFetcher.class);
+    DDBItem item = new DDBItem("123");
+    when(fetcher.fetchMetadata("123")).thenReturn(item);
 
-    MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
-    DDBItem ddbItemfromMetaFetcher = new DDBItem("123");
-    Mockito.when(mfetcher.fetchMetadata("123")).
-        thenReturn(ddbItemfromMetaFetcher);
+    PublicDomainCalculator calculator = mock(PublicDomainCalculator.class);
+    List<AnsweredQuestion> trace = new ArrayList<>();
+    PDCResult pdcResult = new PDCResult(true, trace, item);
+    when(calculator.calculate(null, item)).thenReturn(pdcResult);
 
-    PublicDomainCalculator ansService = Mockito.
-        mock(PublicDomainCalculator.class);
-    List<AnsweredQuestion> trace = new ArrayList<AnsweredQuestion>();
-    PDCResult pdcResult = new PDCResult(true, trace, ddbItemfromMetaFetcher);
-    // country is null
-    Mockito.when(ansService.calculate(null, mfetcher.fetchMetadata("123"))).
-        thenReturn(pdcResult);
-
-    StorageService storageServiceMock = Mockito.mock(StorageService.class);
-    String enableStorageProperty = "true";
-
-    PDCController pdcController = new PDCController(
-        mfetcher, ansService, storageServiceMock, enableStorageProperty
-    );
-
-    Assert.assertSame(pdcResult, pdcController.determinePublicDomain("123"));
+    PDCController controller = new PDCController(fetcher, calculator);
+    Assert.assertSame(pdcResult, controller.determinePublicDomain("123"));
   }
 
   @Test
-  public void determinePublicDomainWhenItemIsInDB() throws Exception{
+  public void determinePublicDomainWithDB_notYetStored() throws Exception {
+    MetaFetcher fetcher = mock(MetaFetcher.class);
+    DDBItem item = new DDBItem("123");
+    when(fetcher.fetchMetadata("123")).thenReturn(item);
 
-    final String itemID = "8963254";
-    final String title = "Title";
-    final String subtitle = "Subtitle";
-    final String imageUrl = "/image";
-    final String category = "Movies";
-    final String institution = "Insti";
-    final boolean publicDomain = false;
-    final List<AnsweredQuestion> trace = new ArrayList<>();
-    AnsweredQuestion answeredQuestionA = new AnsweredQuestion(
-        Question.COUNTRY_OF_ORIGIN_EEA, Answer.YES, null
-    );
-    AnsweredQuestion answeredQuestionB = new AnsweredQuestion(
-        Question.AUTHOR_DIED_MORE_THAN_70_YEARS_AGO, Answer.NO, null
-    );
-    trace.add(answeredQuestionA);
-    trace.add(answeredQuestionB);
+    PublicDomainCalculator calculator = mock(PublicDomainCalculator.class);
+    List<AnsweredQuestion> trace = new ArrayList<>();
+    PDCResult pdcResult = new PDCResult(true, trace, item);
+    when(calculator.calculate(null, item)).thenReturn(pdcResult);
 
-    DDBItem metadata = new DDBItem(itemID);
-    metadata.setTitle(title);
-    metadata.setSubtitle(subtitle);
-    metadata.setImageUrl(imageUrl);
-    metadata.setCategory(category);
-    metadata.setInstitution(institution);
+    StorageService storage = mock(StorageService.class);
+    PDCController controller = new PDCController(fetcher, calculator);
+    controller.setStorageService(storage);
 
-    PDCResult expectedPdcResult = new PDCResult(publicDomain, trace, metadata);
-    storageService.store(expectedPdcResult);
-
-    MetaFetcher mfetcher = Mockito.mock(MetaFetcher.class);
-    PublicDomainCalculator ansService = Mockito.
-        mock(PublicDomainCalculator.class);
-    String enableStorageProperty = "true";
-
-    PDCController pdcController = new PDCController(
-        mfetcher, ansService, storageService, enableStorageProperty
-    );
-
-    PDCResult realPdcResult = pdcController.determinePublicDomain(itemID);
-
-    Assert.assertTrue(compareTwoPDCResults(expectedPdcResult, realPdcResult));
-
-    storageService.deleteAll();
-
+    Assert.assertSame(pdcResult, controller.determinePublicDomain("123"));
+    verify(storage).store(pdcResult);
   }
 
-  /**
-   * Compares two Objects from type PDCResult and return true if these have
-   * the same values.
-   *
-   * @param pdc1
-   * @param pdc2
-   *
-   * @return true if Objects are equal
-   */
-  private boolean compareTwoPDCResults(PDCResult pdc1, PDCResult pdc2){
-    if (pdc1.isPublicDomain() != pdc2.isPublicDomain()){
-      return false;
-    }
-    if (!pdc1.getTitle().equals(pdc2.getTitle())){
-      return false;
-    }
-    if (!pdc1.getSubtitle().equals(pdc2.getSubtitle())){
-      return false;
-    }
-    if (!pdc1.getImageUrl().equals(pdc2.getImageUrl())){
-      return false;
-    }
-    if (pdc1.getTrace().size() == pdc2.getTrace().size()){
-      // both traces must have the same order
-      for(int i = 0; i < pdc1.getTrace().size(); i++){
-        if (!compareTwoAnsweredQuestions(pdc1.getTrace().get(i),
-            pdc2.getTrace().get(i))){
-          return false;
-        }
-      }
-    } else {
-      return false;
-    }
-    return true;
-  }
+  @Test
+  public void determinePublicDomainWithDB_alreadyStored() throws Exception {
+    MetaFetcher fetcher = mock(MetaFetcher.class);
+    DDBItem item = new DDBItem("123");
+    when(fetcher.fetchMetadata("123")).thenReturn(item);
 
-  /**
-   * Compares two Objects from type AnsweredQuestion and return true if these
-   * have the same values.
-   *
-   * @param ansQ1
-   * @param ansQ2
-   *
-   * @return true if Objects are equal
-   */
-  private boolean compareTwoAnsweredQuestions(AnsweredQuestion ansQ1,
-          AnsweredQuestion ansQ2){
-    if (!(ansQ1.getQuestion().equals(ansQ2.getQuestion())) ||
-        !(ansQ1.getAnswer().equals(ansQ2.getAnswer()))){
-      return false;
-    }
-    if ((ansQ1.getNote() == null && ansQ2.getNote() != null) ||
-        (ansQ2.getNote() == null && ansQ1.getNote() != null)){
-      return false;
-    }
-    else {
-      if ((ansQ1.getNote() != null && ansQ2.getNote() != null) &&
-          (!ansQ1.getNote().equals(ansQ2.getNote()))){
-        return false;
-      }
-    }
-    return true;
-  }
+    PublicDomainCalculator calculator = mock(PublicDomainCalculator.class);
+    List<AnsweredQuestion> trace = new ArrayList<>();
+    PDCResult pdcResult = new PDCResult(true, trace, item);
+    when(calculator.calculate(null, item)).thenReturn(pdcResult);
 
+    StorageService storage = mock(StorageService.class);
+    when(storage.fetch("123")).thenReturn(pdcResult);
+    PDCController controller = new PDCController(fetcher, calculator);
+    controller.setStorageService(storage);
+
+    Assert.assertSame(pdcResult, controller.determinePublicDomain("123"));
+    verifyZeroInteractions(fetcher);
+    verifyZeroInteractions(calculator);
+  }
 }

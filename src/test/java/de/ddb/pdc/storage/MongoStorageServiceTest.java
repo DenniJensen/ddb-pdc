@@ -16,16 +16,20 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assume.assumeNotNull;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Main.class)
-@ActiveProfiles({"test"})
+@ActiveProfiles({ "test" })
 public class MongoStorageServiceTest {
 
-  @Autowired
+  @Autowired(required = false)
   private StorageService storageService;
 
   @Test
   public void testStoreAndFetch() {
+    assumeNotNull(storageService);
+
     final String itemID = "156987";
     final String title = "Title";
     final String subtitle = "Subtitle";
@@ -58,6 +62,7 @@ public class MongoStorageServiceTest {
 
   @Test
   public void testStoreAndUpdate(){
+    assumeNotNull(storageService);
 
     final String itemID = "8963254";
     final String title = "Title";
@@ -103,6 +108,8 @@ public class MongoStorageServiceTest {
 
   @Test
   public void testDeleteAll() {
+    assumeNotNull(storageService);
+
     List <PDCResult> entriesBefore = storageService.fetchAll();
     Assert.assertEquals(false, entriesBefore.isEmpty());
     storageService.deleteAll();
