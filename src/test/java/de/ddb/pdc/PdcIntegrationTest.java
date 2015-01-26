@@ -126,7 +126,8 @@ public class PdcIntegrationTest {
         question1.get("note"));
 
     Map question2 = (Map) trace.get(1);
-    assertEquals("Ist das Werk ein Gerichtsurteil oder ein Beschluss?",
+    assertEquals("Ist das Werk ein Gerichtsurteil oder ein offiziell "
+            + "veröffentlichter Beschluss?",
         question2.get("question"));
     assertEquals("assumed no", question2.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -135,7 +136,8 @@ public class PdcIntegrationTest {
         question2.get("note"));
 
     Map question3 = (Map) trace.get(2);
-    assertEquals("Ist dieses Werk ein vom parlament beschlossenes Gesetz?",
+    assertEquals("Ist dieses Werk ein Gesetz, dass sich im parlamentarischen "
+        + "Entscheidungsprozess befindet?",
         question3.get("question"));
     assertEquals("assumed no", question3.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
