@@ -172,18 +172,12 @@ function ddb_pdc_result($ddbid) {
   if (is_null($json_pdcresult->publicDomain)){
     $publicdomain     = "unknownpublicdomain";
     $publicdomainText = "Ergebnis konnte nicht<br>ermittelt werden.";
+  } elseif($json_pdcresult->publicDomain){
+    $publicdomain     = "publicdomain";
+    $publicdomainText = "Öffentlich zugänglich";
   } else{
-    switch ($json_pdcresult->publicDomain) {
-      case false:
-      $publicdomain     = "notpublicdomain";
-      $publicdomainText = "urheberrechtlich geschützt";
-      break;
-      
-      case true:
-      $publicdomain     = "publicdomain";
-      $publicdomainText = "Öffentlich zugänglich";
-      break;
-    }
+    $publicdomain     = "notpublicdomain";
+    $publicdomainText = "urheberrechtlich geschützt";
   }
   
   $generalAssumptions = array();
