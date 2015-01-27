@@ -120,7 +120,7 @@ public class MetaFetcherImpl implements MetaFetcher {
     item.setTitle(itemAipXml.getTitle());
     item.setSubtitle(itemAipXml.getSubtitle());
     item.setImageUrl(URL + itemAipXml.getThumbnail());
-    item.setPublishedYear(itemAipXml.getPublishedYear());
+    item.setPublishingYearRange(itemAipXml.getPublishingYearRange());
     item.setInstitution(itemAipXml.getInstitution());
     String license = itemAipXml.getCCLicense();
     if (license != null) {

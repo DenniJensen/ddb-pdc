@@ -7,6 +7,7 @@ import javax.xml.transform.dom.DOMSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -65,15 +66,36 @@ public class ItemAipXml {
   }
 
   /**
-   * Returns the published year.
+   * Extracts the value for {@link DDBItem#getPublishingYearRange()}.
    */
-  public int getPublishedYear() {
+  public DdbTimeSpan getPublishingYearRange() {
+    int concreteYear = getConcretePublishingYear();
+    if (concreteYear != -1) {
+      return new DdbTimeSpan(concreteYear);
+    } else {
+      return parseTimeSpanElements();
+    }
+  }
+
+  private int getConcretePublishingYear() {
     String date = xpath.evaluateAsString("//dcterms:issued", domSource);
     try {
       return Integer.parseInt(MetadataUtils.useRegex(date,"\\d{4}" ));
     } catch (NumberFormatException e) {
       return -1;
     }
+  }
+
+  private DdbTimeSpan parseTimeSpanElements() {
+    final String path = "//ctx:facet[@name='time_fct']/ctx:value";
+    List<Node> timeSpanNodes = xpath.evaluateAsNodeList(path, domSource);
+
+    Collection<String> timeSpanIds = new ArrayList<>();
+    for (Node node : timeSpanNodes) {
+      timeSpanIds.add(node.getFirstChild().getTextContent());
+    }
+
+    return timeSpanIds.isEmpty() ? null : DdbTimeSpan.fromIds(timeSpanIds);
   }
 
   /**

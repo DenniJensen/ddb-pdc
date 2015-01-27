@@ -5,6 +5,7 @@ import java.util.Calendar;
 import de.ddb.pdc.core.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.DDBItem;
+import de.ddb.pdc.metadata.DdbTimeSpan;
 
 /**
  * Answers the PUBLISHED_MORE_THAN_25_YEARS_AGO question.
@@ -18,17 +19,26 @@ class PublishedMoreThan25YearsAgoAnswerer implements Answerer {
    */
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
-    Calendar publishedYear = metaData.getPublishedYear();
-    if (publishedYear == null || !publishedYear.isSet(Calendar.YEAR)) {
+    DdbTimeSpan publishingYearRange = metaData.getPublishingYearRange();
+    if (publishingYearRange == null) {
       this.note = "Das Veröffentlichungsdatum ist unbekannt.";
       return Answer.UNKNOWN;
     }
-    Calendar calendar = Calendar.getInstance();
-    int currentYear = calendar.get(Calendar.YEAR);
-    this.note = "Das Werk wurde "
-        + publishedYear.get(Calendar.YEAR)
-        + " veröffentlicht.";
-    if (currentYear - publishedYear.get(Calendar.YEAR) > 25) {
+
+    if (publishingYearRange.getMinYear() == publishingYearRange.getMaxYear()) {
+      this.note = "Das Werk wurde "
+          + publishingYearRange.getMaxYear()
+          + " veröffentlicht.";
+    } else {
+      this.note = "Das Werk wurde zwischen "
+          + publishingYearRange.getMinYear()
+          + " und "
+          + publishingYearRange.getMaxYear()
+          + " veröffentlicht.";
+    }
+
+    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+    if (currentYear - publishingYearRange.getMaxYear() > 25) {
       return Answer.YES;
     } else {
       return Answer.NO;

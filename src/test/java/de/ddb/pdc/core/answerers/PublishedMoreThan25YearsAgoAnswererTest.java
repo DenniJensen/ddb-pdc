@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
 
+import de.ddb.pdc.metadata.DdbTimeSpan;
 import org.junit.Test;
 
 import de.ddb.pdc.core.Answerer;
@@ -17,7 +18,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
   public void currentYearTest() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    metadata.setPublishedYear(currentYear);
+    metadata.setPublishingYearRange(new DdbTimeSpan(currentYear));
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
@@ -29,7 +30,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
   public void year24Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    metadata.setPublishedYear(currentYear-24);
+    metadata.setPublishingYearRange(new DdbTimeSpan(currentYear - 24));
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
@@ -41,7 +42,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
   public void year25Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    metadata.setPublishedYear(currentYear-25);
+    metadata.setPublishingYearRange(new DdbTimeSpan(currentYear - 25));
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);
@@ -53,7 +54,7 @@ public class PublishedMoreThan25YearsAgoAnswererTest {
   public void year26Test() {
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     DDBItem metadata = new DDBItem("test-id");
-    metadata.setPublishedYear(currentYear-26);
+    metadata.setPublishingYearRange(new DdbTimeSpan(currentYear - 26));
 
     Answerer answerer = new PublishedMoreThan25YearsAgoAnswerer();
     Answer answer = answerer.answerQuestionForItem(metadata);

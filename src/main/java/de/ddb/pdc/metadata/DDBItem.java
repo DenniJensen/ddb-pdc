@@ -21,6 +21,7 @@ public class DDBItem {
   private ArrayList<Author> authors = null;
   private String institution = null;
   private Calendar publishedYear = null;
+  private DdbTimeSpan publishingYearRange = null;
   private String ccLicense = null;
  
   /**
@@ -167,11 +168,23 @@ public class DDBItem {
   }
 
   /**
-   * Returns the published year of the work.
-   * If no published year found, null is returned
+   * Returns the year range within which the item was published. This can
+   * be very precise (the exact publishing year is known) or very vague
+   * (e.g., some year in the 19th century).
+   *
+   * @return range of possible publishing years, or null if unknown
    */
-  public Calendar getPublishedYear() {
-    return publishedYear;
+  public DdbTimeSpan getPublishingYearRange() {
+    return publishingYearRange;
+  }
+
+  /**
+   * Sets the range of possible publishing years for the item.
+   *
+   * @param publishingYearRange range of possible publishing years
+   */
+  public void setPublishingYearRange(DdbTimeSpan publishingYearRange) {
+    this.publishingYearRange = publishingYearRange;
   }
 
   /**

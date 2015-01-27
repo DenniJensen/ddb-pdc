@@ -7,6 +7,7 @@ import de.ddb.pdc.core.Answerer;
 import de.ddb.pdc.core.Answer;
 import de.ddb.pdc.metadata.Author;
 import de.ddb.pdc.metadata.DDBItem;
+import de.ddb.pdc.metadata.DdbTimeSpan;
 
 /**
  * Answers the PUBLISHED_WITHIN_70_YEARS_OF_DEATH question.
@@ -27,13 +28,13 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
   @Override
   public Answer answerQuestionForItem(DDBItem metaData) {
     List<Author> authors = metaData.getAuthors();
-    Calendar publishedYear = metaData.getPublishedYear();
     if (authors == null || authors.isEmpty()) {
       this.note = "Kein(e) Autor(en) bekannt.";
       return Answer.UNKNOWN;
     }
-    if (publishedYear == null || !publishedYear.isSet(Calendar.YEAR)
-        || publishedYear.get(Calendar.YEAR) == 0) {
+
+    DdbTimeSpan publishingYearRange = metaData.getPublishingYearRange();
+    if (publishingYearRange == null) {
       this.note = "Das Veröffentlichungsdatum ist unbekannt.";
       return Answer.UNKNOWN;
     }
@@ -63,25 +64,15 @@ class PublishedWithin70YearsOfDeathAnswerer implements Answerer {
       }
     }
 
-    this.note = null;
-
-    if (metaData.getPublishedYear() == null
-        || !metaData.getPublishedYear().isSet(Calendar.YEAR)) {
-      this.note = "Das jahr der Veröffentlichung ist unbekannt.";
-      return Answer.UNKNOWN;
-    }
-
-
-    int diff = Math.abs(metaData.getPublishedYear().get(Calendar.YEAR)
-        - authorDeathYear);
-    this.note = "Das Werk wurde "
-        + metaData.getPublishedYear().get(Calendar.YEAR)
+    int maxPublishingYear = publishingYearRange.getMaxYear();
+    int diff = Math.abs(maxPublishingYear - authorDeathYear);
+    this.note = "Das Werk wurde (spätestens) "
+        + maxPublishingYear
         + " veröffentlicht. Der Autor, der am längsten überlebt hat, starb "
         + authorDeathYear
-        + ". Dies bedeutet, dass " + diff + " Jahre vergangen sind.";
+        + ". Es sind also " + diff + " Jahre vergangen.";
 
-    if (metaData.getPublishedYear().get(Calendar.YEAR)
-        <= authorDeathYear + 70) {
+    if (maxPublishingYear <= authorDeathYear + 70) {
       return Answer.YES;
     } else {
       return Answer.NO;
