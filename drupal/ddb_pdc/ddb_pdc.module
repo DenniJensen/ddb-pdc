@@ -173,13 +173,13 @@ function ddb_pdc_result($item_id) {
 
   if ($pdc_result) {
     if (is_null($pdc_result->publicDomain)) {
-      $public_domain_status = 'unknownpublicdomain';
+      $public_domain_status = 'unknown';
       $public_domain_text = 'Konnte nicht ermittelt werden';
     } elseif ($pdc_result->publicDomain) {
-      $public_domain_status = 'publicdomain';
-      $public_domain_text = 'Öffentlich zugänglich';
+      $public_domain_status = 'public_domain';
+      $public_domain_text = 'Gemeinfrei';
     } else {
-      $public_domain_status = 'notpublicdomain';
+      $public_domain_status = 'not_public_domain';
       $public_domain_text = 'Urheberrechtlich geschützt';
     }
 
@@ -194,7 +194,7 @@ function ddb_pdc_result($item_id) {
       );
     }
 
-    if ($public_domain_status == 'unknownpublicdomain') {
+    if ($public_domain_status == 'unknown') {
       // Only show the last trace item because it explains why
       // the calculation couldn't be completed.
       $pdc_result->trace = array(end($pdc_result->trace));

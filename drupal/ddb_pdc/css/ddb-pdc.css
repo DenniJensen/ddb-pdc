@@ -121,18 +121,22 @@ a.item:hover .item-title {
   width:180px;
   border-radius:5px;
 }
-.notpublicdomain .item-license-text{
-  background-color:#f9dcdf;
-  color:#C00;
+
+.ddb-pdc-result.public_domain .item-license-text {
+  background-color: #ddf2d5;
+  color: #690;
 }
-.publicdomain .item-license-text{
-  background-color:#ddf2d5;
-  color:#690;
+
+.ddb-pdc-result.not_public_domain .item-license-text {
+  background-color: #f9dcdf;
+  color: #c00;
 }
-.unknownpublicdomain .item-license-text{
+
+.ddb-pdc-result.unknown .item-license-text {
   color:#3b3b3b;
   background-color:#ffe26f;
 }
+
 .item-license-img{
   padding:14px 20px 8px;
 }
@@ -181,19 +185,19 @@ a.item:hover .item-title {
   background-color: #eaf6e6;
 }
 
-.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-question {
+.ddb-pdc-trace.not-public-domain .pdc-trace-item:last-child .pdc-question {
   background-color: #f9dcdf;
 }
 
-.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-answer {
+.ddb-pdc-trace.not-public-domain .pdc-trace-item:last-child .pdc-answer {
   background-color: #f9e8ea;
 }
 
-.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-question {
+.ddb-pdc-trace.not-public-domain .pdc-trace-item:last-child .pdc-question {
   background-color: #f9dcdf;
 }
 
-.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-answer {
+.ddb-pdc-trace.not-public-domain .pdc-trace-item:last-child .pdc-answer {
   background-color: #f9e8ea;
 }
 

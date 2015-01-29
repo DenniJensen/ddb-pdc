@@ -7,7 +7,7 @@
   drupal_set_message($error_message, 'error');
 ?>
 
-<div class="item <?php print $public_domain_status; ?>" >
+<div class="item ddb-pdc-result <?php print $public_domain_status; ?>" >
   <div class="item-image">
     <?php if ($pdc_result->imageUrl): ?>
       <img src="<?php print $pdc_result->imageUrl; ?>"/>
@@ -25,7 +25,7 @@
 
   <div class="item-license">
     <div class="item-license-img">
-      <img src="<?php print $icon_path . $public_domain_status . ".png"; ?>"">
+      <img src="<?php print $icon_path . 'status_' . $public_domain_status . ".png"; ?>"">
     </div>
     <div class="item-license-text">
       <?php print $public_domain_text; ?>
