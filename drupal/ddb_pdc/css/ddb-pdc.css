@@ -2,20 +2,34 @@
 /* CSS Document */
 
 .item {
-  padding: 5px;
+  display: block;
+  color: inherit;
   overflow: hidden;
   width: 100%;
-  padding:30px 0 30px 0;
+  padding: 15px 0;
   border-bottom: 1px solid #efebe8;
 }
+
+a.item:hover {
+  background-color: #a5003b;
+  color: white;
+}
+
+a.item:hover .item-title {
+  color: white;
+}
+
 .pdc-questions img{
-  vertical-align:middle;  
+  vertical-align:middle;
   margin-right:10px;
 }
+
 .item-image {
   float: left;
-  padding-right:15px;
+  padding: 0 15px;
+  width: 105px;
 }
+
 .item-image img {
   max-height: 105px;
   max-width: 105px;
@@ -69,7 +83,7 @@
   background-image: linear-gradient(top, #e90d3b 0%, #ab053b 100%) !important;
 }
 .item-calculate-button{
-  display:inline-block; 
+  display:inline-block;
 }
 .item-calculate:hover {
   background-color: #fdd6df;
@@ -96,11 +110,11 @@
 }
 .item-license{
   display:block;
-  overflow:hidden;  
+  overflow:hidden;
   text-align: center;
 }
 .item-license-text{
-  text-align:center;  
+  text-align:center;
   font-size:17px;
   margin: 0 auto;
   padding:7px;
@@ -108,89 +122,115 @@
   border-radius:5px;
 }
 .notpublicdomain .item-license-text{
-  background-color:#f9dcdf; 
-  color:#C00; 
+  background-color:#f9dcdf;
+  color:#C00;
 }
 .publicdomain .item-license-text{
-  background-color:#ddf2d5; 
-  color:#690; 
+  background-color:#ddf2d5;
+  color:#690;
 }
 .unknownpublicdomain .item-license-text{
   color:#3b3b3b;
-  background-color:#ffe26f; 
+  background-color:#ffe26f;
 }
 .item-license-img{
   padding:14px 20px 8px;
 }
-.notpublicdomain .item-license-img{
 
+.ddb-pdc-general-assumptions .pdc-question {
+  background-color: #e5e5e5;
 }
-.publicdomain .item-license-img{
-  
+
+.ddb-pdc-general-assumptions .pdc-answer {
+  background-color: #f4f4f4;
 }
-.unknownpublicdomain .item-license-img{
-  
+
+.pdc-trace {
+  margin-top: 30px;
 }
-.pdc-questions-wrapper{
-  margin-top:30px;  
+
+.pdc-trace-item {
+  border-radius: 5px;
+  margin-bottom: 25px;
+  overflow: hidden;
+  font-size: 15px;
 }
-.pdc-questions{
-  border-radius:5px;  
-  margin-bottom:25px;
-  overflow:hidden;
-  font-size:15px;
+
+.pdc-question {
+  line-height: 24px;
+  padding: 8px;
 }
-.pdc-question{
-  padding:11px; 
+
+.pdc-question img,
+.pdc-answer img {
+  vertical-align: middle;
 }
+
+
 .pdc-answer{
-  padding:11px;
+  padding: 11px;
   display: block;
-  overflow: hidden;   
+  overflow: hidden;
 }
-.unknown .pdc-question{
-  background-color:#e5e5e5; 
+
+.ddb-pdc-trace .pdc-question {
+  background-color: #ddf2d5;
 }
-.unknown .pdc-answer{
-  background-color:#f4f4f4; 
+
+.ddb-pdc-trace .pdc-answer {
+  background-color: #eaf6e6;
 }
-.negative .pdc-question{
-  background-color:#f9dcdf; 
+
+.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-question {
+  background-color: #f9dcdf;
 }
-.negative .pdc-answer{
-  background-color:#F9E8EA; 
+
+.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-answer {
+  background-color: #f9e8ea;
 }
-.negativeAssumed .pdc-question{
-  background-color:#ffdcc6; 
+
+.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-question {
+  background-color: #f9dcdf;
 }
-.negativeAssumed .pdc-answer{
-  background-color:#ffede2; 
+
+.ddb-pdc-trace.notpublicdomain .pdc-trace-item:last-child .pdc-answer {
+  background-color: #f9e8ea;
 }
+
+.ddb-pdc-trace.unknownpublicdomain .pdc-trace-item:last-child .pdc-question {
+  background-color: #ffe26f;
+}
+
+.ddb-pdc-trace.unknownpublicdomain .pdc-trace-item:last-child .pdc-answer {
+  background-color: #ffffd7;
+}
+
 .notes{
   color: #666666;
-  margin-top:15px;  
+  margin-top:15px;
 }
 .notes img{
   color: #666666;
-  margin-right:13px;  
+  margin-right:13px;
   float:left;
 }
 .notes .note{
-  display:block;  
+  display:block;
   overflow:hidden;
 }
 .positive .pdc-question{
-  background-color:#ddf2d5; 
+  background-color:#ddf2d5;
 }
 .positive .pdc-answer{
-  background-color:#eaf6e6; 
+  background-color:#eaf6e6;
 }
 .positiveAssumed .pdc-question{
-  background-color:#ffffc0; 
+  background-color:#ffffc0;
 }
 .positiveAssumed .pdc-answer{
-  background-color:#ffffd7; 
+  background-color:#ffffd7;
 }
+
 #ddb-pdc-form .form-submit{
   background: #292929;
   background-color: #fdd6df;
@@ -229,26 +269,30 @@
 
 /* Pagination Top */
 
-.wrapper-dropdown {
+.items-per-page-selector {
   margin-bottom:21px;
   display:block;
   overflow:hidden;
 }
-.dropdown li{
-  list-style:none;
-  float:right;
-  padding:0 7px;  
+
+.items-per-page-selector li{
+  list-style: none;
+  float: right;
+  padding:0 7px;
   border-right: 1px solid #666;
 }
-.dropdown li a{
+
+.items-per-page-selector li a{
   color:#ab053b;
 }
-.dropdown li.first{
-  padding:0 0 0 7px;  
+
+.items-per-page-selector li:first-child {
+  padding:0 0 0 7px;
   border-right:none;
 }
-.dropdown li.last{
-  padding:0 7px 0 0;  
+
+.items-per-page-selector li:last-child {
+  padding:0 7px 0 0;
 }
 
 /* Pagination Bottom */
@@ -256,7 +300,7 @@
 .paginationWrapper{
   display:block;
   overflow:hidden;
-  text-align:center;  
+  text-align:center;
 }
 .pagination {
   display: inline-block;
@@ -282,11 +326,11 @@
   text-align:center;
   font-family:Arial, Helvetica, sans-serif;
   font-size:15px;
-  font-weight:600;  
+  font-weight:600;
 }
 .pagination li a:hover{
   text-decoration:none;
-  color:#ff0053;  
+  color:#ff0053;
 }
 .paginationCurrent{
   display:block;
@@ -297,7 +341,7 @@
   text-align:center;
   font-family:Arial, Helvetica, sans-serif;
   font-size:15px;
-  font-weight:600;  
+  font-weight:600;
 }
 .paginationElipses{
   display:block;
@@ -308,13 +352,13 @@
   text-align:center;
   font-family:Arial, Helvetica, sans-serif;
   font-size:15px;
-  font-weight:bold; 
+  font-weight:bold;
 }
 .paginationPage, .paginationElipses{
-  background:url(../images/pagination/page.png) no-repeat;  
+  background:url(../images/pagination/page.png) no-repeat;
 }
 .paginationCurrent{
-  background:url(../images/pagination/page_active.png) no-repeat; 
+  background:url(../images/pagination/page_active.png) no-repeat;
 }
 #accordion{
   margin-bottom:25px;
@@ -327,7 +371,7 @@
   border:none !important;
   padding-right:0 !important;
   padding-left:0 !important;
-  padding-bottom:0 !important;    
+  padding-bottom:0 !important;
 }
 #accordion .ui-state-default, #accordion .ui-widget-content .ui-state-default, #accordion .ui-widget-header .ui-state-default {
   background: url(../images/layout/accordion-default.png) repeat-x scroll 50% 50%;
