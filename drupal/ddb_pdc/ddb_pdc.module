@@ -154,13 +154,11 @@ function ddb_pdc_search_results($search_term) {
       'search_term' => $search_term,
       'items' => $search_results->ddbItems,
       'total_num_results' => $search_results->maxSearchResults,
-      'pagination' => $pagination
     );
   } else {
     $error_message =
       'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
     $template_options = array(
-      'search_form' => $search_form,
       'error_message' => $error_message
     );
   }
@@ -190,7 +188,8 @@ function ddb_pdc_result($item_id) {
     } else {
       $general_assumptions = array_splice(
         $pdc_result->trace,
-        0, DDB_PDC_NUM_GENERAL_ASSUMPTIONS
+        0,
+        DDB_PDC_NUM_GENERAL_ASSUMPTIONS
       );
     }
 
@@ -218,18 +217,6 @@ function ddb_pdc_result($item_id) {
 
 function ddb_pdc_preprocess_pdc_result() {
   drupal_add_library('system', 'ui.accordion');
-  drupal_add_js(<<<EOT
-jQuery(document).ready(function() {
-  jQuery('#accordion').accordion({
-    collapsible: true,
-    active: false,
-    heightStyle: 'content',
-    autoHeight: false,
-    clearStyle: true
-  });
-});
-EOT
-  , 'inline');
 }
 
 function ddb_pdc_http_request($path, $query_params = NULL) {
@@ -251,7 +238,7 @@ function ddb_pdc_admin() {
       '#type' => 'textfield',
       '#title' => 'Backend-Adresse',
       '#default_value' => $current_server_address,
-      '#description' => 'Addresse zum Erreichen des DDB-PDC-Backends.',
+      '#description' => 'Adresse zum Erreichen des DDB-PDC-Backends.',
       '#required' => TRUE
     )
   );

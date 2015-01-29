@@ -62,3 +62,14 @@
     </div>
   </div>
 <?php endif; ?>
+<script>
+  jQuery(document).ready(function() {
+    jQuery('#accordion').accordion({
+      collapsible: true,
+      active: false,
+      heightStyle: 'content',
+      autoHeight: false,
+      clearStyle: true
+    });
+  });
+</script>
