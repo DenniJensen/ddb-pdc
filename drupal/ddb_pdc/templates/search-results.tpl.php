@@ -27,7 +27,7 @@
   <p>Keine Ergebnisse.</p>
 <?php else: ?>
 
-  <ul class="items-per-page-selector">
+  <ul class="ddb-pdc-items-per-page-selector">
     <?php foreach(array(100, 50, 30, 10) as $items_per_page): ?>
       <li>
         <?php
@@ -48,21 +48,24 @@
   </ul>
 
   <?php foreach($items as $item): ?>
-    <a class="item" href="<?php print url('pdc-result/' . $item->id); ?>">
-      <div class="item-image">
+    <a class="ddb-pdc-item"
+       href="<?php print url('pdc-result/' . $item->id); ?>">
+
+      <div class="ddb-pdc-item-image">
         <?php if ($item->imageUrl): ?>
           <img src="<?php print $item->imageUrl; ?>"/>
         <?php endif; ?>
       </div>
 
-      <div class="item-summary">
-        <div class="item-title">
+      <div class="ddb-pdc-item-summary">
+        <div class="ddb-pdc-item-title">
           <?php print htmlspecialchars($item->title); ?>
         </div>
-        <div class="item-subtitle">
+        <div class="ddb-pdc-item-subtitle">
           <?php print htmlspecialchars($item->subtitle); ?>
         </div>
       </div>
+
     </a>
   <?php endforeach; ?>
 

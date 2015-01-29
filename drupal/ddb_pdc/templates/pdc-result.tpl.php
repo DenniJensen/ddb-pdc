@@ -7,27 +7,27 @@
   drupal_set_message($error_message, 'error');
 ?>
 
-<div class="item ddb-pdc-result <?php print $public_domain_status; ?>" >
-  <div class="item-image">
+<div class="ddb-pdc-item ddb-pdc-result <?php print $public_domain_status; ?>" >
+  <div class="ddb-pdc-item-image">
     <?php if ($pdc_result->imageUrl): ?>
       <img src="<?php print $pdc_result->imageUrl; ?>"/>
     <?php endif; ?>
   </div>
 
-  <div class="item-summary">
-    <div class="item-title">
+  <div class="ddb-pdc-item-summary">
+    <div class="ddb-pdc-item-title">
       <?php print htmlspecialchars($pdc_result->title); ?>
     </div>
-    <div class="item-subtitle">
+    <div class="ddb-pdc-item-subtitle">
       <?php print htmlspecialchars($pdc_result->subtitle); ?>
     </div>
   </div>
 
-  <div class="item-license">
-    <div class="item-license-img">
+  <div class="ddb-pdc-item-license">
+    <div class="ddb-pdc-item-license-image">
       <img src="<?php print $icon_path . 'status_' . $public_domain_status . ".png"; ?>"">
     </div>
-    <div class="item-license-text">
+    <div class="ddb-pdc-item-license-text">
       <?php print $public_domain_text; ?>
     </div>
   </div>
@@ -42,7 +42,7 @@
 </div>
 
 <?php if ($general_assumptions): ?>
-  <div class="pdc-general-assumptions">
+  <div class="ddb-pdc-general-assumptions">
     <div id="accordion" class="ddb-pdc-general-assumptions">
       <h3 class="accordion-title">
         <a href="#">Grundannahmen</a>

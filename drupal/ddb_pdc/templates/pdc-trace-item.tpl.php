@@ -14,15 +14,15 @@
 $icon_path = $directory . '/images/icons/';
 ?>
 
-<div class="pdc-trace-item">
+<div class="ddb-pdc-trace-item">
 
-  <div class="pdc-question">
+  <div class="ddb-pdc-question">
     <img src="<?php print $icon_path . 'question.png'; ?>"
          alt="">
     <?php print htmlspecialchars($trace_item->question); ?>
   </div>
 
-  <div class="pdc-answer">
+  <div class="ddb-pdc-answer">
     <img src="<?php print $icon_path . 'answer_' . $trace_item->answer . '.png'; ?>"
          alt="" />
 
@@ -46,9 +46,9 @@ $icon_path = $directory . '/images/icons/';
       }
     ?>
 
-    <div class="notes">
+    <div class="ddb-pdc-notes">
       <img src="<?php print $icon_path . 'notes.png'; ?>" alt="">
-      <div class="note">
+      <div class="ddb-pdc-note-text">
         <?php print $trace_item->note; ?>
       </div>
     </div>
