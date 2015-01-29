@@ -118,7 +118,7 @@ public class PdcIntegrationTest {
     Map question1 = (Map) trace.get(0);
     assertEquals("Ist das Werk zur öffentlichen Verbreitung bestimmt?",
         question1.get("question"));
-    assertEquals("assumed no", question1.get("answer"));
+    assertEquals("assumed_no", question1.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
         + "Ein offizielles Werk, das für die Öffentlichkeit bestimmt ist, ist "
         + "immer ohne Beschränkungen öffentlich zugänglich.",
@@ -128,7 +128,7 @@ public class PdcIntegrationTest {
     assertEquals("Ist das Werk ein Gerichtsurteil oder ein offiziell "
             + "veröffentlichter Beschluss?",
         question2.get("question"));
-    assertEquals("assumed no", question2.get("answer"));
+    assertEquals("assumed_no", question2.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
         + "Ein Gerichtsurteil oder ein Beschluss ist ohne weitere "
         + "Beschränkungen öffentlich zugänglich.",
@@ -138,7 +138,7 @@ public class PdcIntegrationTest {
     assertEquals("Ist dieses Werk ein Gesetz, dass sich im parlamentarischen "
         + "Entscheidungsprozess befindet?",
         question3.get("question"));
-    assertEquals("assumed no", question3.get("answer"));
+    assertEquals("assumed_no", question3.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
         + "Ein vom Parlament beschlossenes Gesetz ist ohne weitere "
         + "Beschränkungen öffentlich zugänglich.",
@@ -147,7 +147,7 @@ public class PdcIntegrationTest {
     Map question4 = (Map) trace.get(3);
     assertEquals("Ist das Werk eine Anordnung?",
         question4.get("question"));
-    assertEquals("assumed no", question4.get("answer"));
+    assertEquals("assumed_no", question4.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
         + "Ein Regierungsbeschluss ist ohne weitere Beschränkungen öffentlich "
         + "zugänglich.",
@@ -157,7 +157,7 @@ public class PdcIntegrationTest {
     assertEquals("Ist dieses Werk eine offizielle Entscheidung oder eine Bekanntgabe einer"
         + " öffentlichen Autorität?",
         question5.get("question"));
-    assertEquals("assumed no", question5.get("answer"));
+    assertEquals("assumed_no", question5.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
         + "Eine Bekanntgabe einer öffentlichen Autorität ist ohne "
         + "weitere Beschränkungen öffentlich zugänglich.",
@@ -166,7 +166,7 @@ public class PdcIntegrationTest {
     Map question6 = (Map) trace.get(5);
     assertEquals("Ist der Autor eine natürliche Person?",
         question6.get("question"));
-    assertEquals("assumed yes", question6.get("answer"));
+    assertEquals("assumed_yes", question6.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort ja ist.",
         question6.get("note"));
 
@@ -182,7 +182,7 @@ public class PdcIntegrationTest {
     Map question8 = (Map) trace.get(7);
     assertEquals("Wurde das Werk veröffentlicht?",
         question8.get("question"));
-    assertEquals("assumed yes", question8.get("answer"));
+    assertEquals("assumed_yes", question8.get("answer"));
     assertEquals("Es wird davon ausgegangen, dass das Werk öffentlich "
         + "zugänglich ist, da es bekannt ist.",
         question8.get("note"));
