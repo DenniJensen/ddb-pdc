@@ -67,6 +67,13 @@ public class PDCResult {
   }
 
   /**
+   * @return the DDB portal URL of the item.
+   */
+  public String getItemUrl() {
+    return "https://www.deutsche-digitale-bibliothek.de/item/" + this.itemId;
+  }
+
+  /**
    * @return the title of the cultural good.
    */
   public String getTitle() {
