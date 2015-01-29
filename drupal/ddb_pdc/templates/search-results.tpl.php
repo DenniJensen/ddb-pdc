@@ -1,70 +1,68 @@
 <?php
 /**
  * @file
- * Search results theme implementation to display a list of all items found by the PDC.
- * All items have an image, a title, a subtitle and a link to the page about if it is public domain or not.
- * 
+ * Displays the DDB items matching a search query on the PDC start page.
+ *
  * Available variables:
- * - $searchterm
- * - $searchform: The rendered search form to show it also after an error message.
- * - $imagespath: The relative link to the images folder of the module.
- * - $json_searchresults (array): The list of all items found by the PDC.
- * - $ddbResultsAmount: The amount of all found items to calculate pagination.
- *
- * @see ddb_pdc_search_results()
- *
+ * - $search_term: The term that the user searched for.
+ * - $items: The items to display.
+ * - $total_num_results: The total number of items matching the search term,
+ *   for pagination purposes.
  */
- global $base_url;
 ?>
-<?php if (isset($error_message)): ?>
-  <div class="ddb_pdc_form">
-    <?php 
-    drupal_get_messages();
-    drupal_set_message(t($error_message), 'error');
-    print $searchform;
-    ?>
-  </div>
+
+<?php
+drupal_get_messages();
+drupal_set_message($error_message, 'error');
+?>
+
+<div id="ddb-pdc-form">
+  <?php
+  print theme('ddb_pdc_search_form', array('search_term' => $search_term));
+  ?>
+</div>
+
+
+<?php if (empty($items)): ?>
+  <p>Keine Ergebnisse.</p>
 <?php else: ?>
-  <div id="rows" class="wrapper-dropdown">
-    <ul class="dropdown">
-      <li class="first">
-        <a href="<?php print $base_url.'/search-results/' . $searchterm . '?start=0&max=100&page=1&limit=100'; ?>">100</a>
-      </li>
+
+  <ul class="ddb-pdc-items-per-page-selector">
+    <?php foreach (array(100, 50, 30, 10) as $items_per_page): ?>
       <li>
-        <a href="<?php print $base_url.'/search-results/' . $searchterm . '?start=0&max=50&page=1&limit=50'; ?>">50</a>
+        <?php
+        $url = url('search-results/' . $search_term, array('query' => array('start' => 0, 'max' => $items_per_page, 'page' => 1, 'limit' => $items_per_page)));
+        ?>
+        <a href="<?php print $url; ?>">
+          <?php print $items_per_page; ?>
+        </a>
       </li>
-      <li>
-        <a href="<?php print $base_url.'/search-results/' . $searchterm . '?start=0&max=30&page=1&limit=30'; ?>">30</a>
-      </li>
-      <li class="last">
-        <a href="<?php print $base_url.'/search-results/' . $searchterm . '?start=0&max=10&page=1&limit=10'; ?>">10</a>
-      </li>
-    </ul>
-  </div>
-  <?php foreach($ddbItems as $item): ?>
-    <div class="item">
-      <?php if (@GetImageSize($item->imageUrl)): ?>
-        <div class="item-image">
+    <?php endforeach; ?>
+  </ul>
+
+  <?php foreach ($items as $item): ?>
+    <a class="ddb-pdc-item"
+       href="<?php print url('pdc-result/' . $item->id); ?>">
+
+      <div class="ddb-pdc-item-image">
+        <?php if ($item->imageUrl): ?>
           <img src="<?php print $item->imageUrl; ?>"/>
+        <?php endif; ?>
+      </div>
+
+      <div class="ddb-pdc-item-summary">
+        <div class="ddb-pdc-item-title">
+          <?php print htmlspecialchars($item->title); ?>
         </div>
-      <?php endif; ?>
-      <div class="item-summary">
-        <div class="item-title">
-          <?php print $item->title; ?>
-        </div>
-        <div class="item-subtitle">
-          <?php print $item->subtitle; ?>
+        <div class="ddb-pdc-item-subtitle">
+          <?php print htmlspecialchars($item->subtitle); ?>
         </div>
       </div>
-      <div class="item-calculate">
-        <div class="item-calculate-button">
-          <a href="<?php print $base_url.'/pdc-result/' . $item->id; ?>">
-            <img src="<?php print $imagespath .'icons/calculate.png'; ?>"/> Berechne!
-          </a>
-        </div>
-      </div>
-    </div>
-    <div style="clear:both;"></div>
+
+    </a>
   <?php endforeach; ?>
-  <?php print $pagination; ?>  
+
+  <?php
+  print theme('pagination', array('searchterm' => $search_term, 'imagespath' => $directory . '/images', 'ddbResultsAmount' => $total_num_results));
+  ?>
 <?php endif; ?>

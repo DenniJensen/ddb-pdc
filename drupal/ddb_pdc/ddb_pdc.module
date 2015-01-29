@@ -1,35 +1,38 @@
 <?php
-$serveradress = variable_get("ddb_pdc_serveradress", 'http://localhost:8080');
-define("PDC_SERVERADRESS", $serveradress);
+$serveradress = variable_get('ddb_pdc_serveradress', 'http://localhost:8080');
+define('PDC_SERVERADRESS', $serveradress);
 
+define('DDB_PDC_NUM_GENERAL_ASSUMPTIONS', 6);
+
+/**
+ * Implements hook_menu().
+ */
 function ddb_pdc_menu() {
   $items = array();
 
-  $items['public-domain-calculator'] = array( // creates a link for the PDC search form
-    'title' => 'Public Domain Calculator', // page title
-    'description' => 'Deutsche Digitale Bibliothek - Public Domain Calculator', // page description
-    'page callback' => 'drupal_get_form', // function that creates a (form) content for this page
-    'page arguments' => array('ddb_pdc_form'), // function that provides input for the drupal_get_form function - eg. drupal_get_form(ddb_pdc_form);
-    'menu_name' => 'main-menu', // remove this line, to add the link to the Navigation menu
-    'access callback' => TRUE // permission
-    );
+  $items['public-domain-calculator'] = array(
+    'title' => 'Public Domain Calculator',
+    'description' => 'Deutsche Digitale Bibliothek - Public Domain Calculator',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ddb_pdc_form'),
+    'menu_name' => 'main-menu',
+    'access callback' => TRUE
+  );
 
-  $items['search-results/%'] = // % will be replaced by page arguments
-  array(
+  $items['search-results/%'] = array(
     'page callback' => 'ddb_pdc_search_results',
     'access callback' => TRUE,
     'page arguments' => array(1),
     'type' => MENU_CALLBACK
-    );
+  );
 
-  $items['pdc-result/%'] = // % will be replaced by page arguments
-  array(
+  $items['pdc-result/%'] = array(
     'title' => 'Resultat der Evaluierung',
     'page callback' => 'ddb_pdc_result',
     'access callback' => TRUE,
     'page arguments' => array(1),
     'type' => MENU_CALLBACK
-    );
+  );
 
   $items['admin/config/ddb_pdc'] = array(
     'title' => 'DDB-PDC Konfiguration',
@@ -38,219 +41,32 @@ function ddb_pdc_menu() {
     'page arguments' => array('ddb_pdc_admin'),
     'access arguments' => array('administer ddb_pdc settings'),
     'type' => MENU_NORMAL_ITEM
-    );
+  );
 
   return $items;
 }
 
-function ddb_pdc_form($form, &$form_state, $vars = "") {
-  $form = array();
-  $form['#redirect'] = 'public-domain-calculator-results';
-
-  $form['ddb_title'] = array(
-    '#type' => 'textfield',
-    '#label' => 'Geben Sie hier den Titel ein!',
-    '#default_value' => $vars,
-    '#required' => TRUE
-    );
-
-  $form['submit_button'] = array(
-    '#type' => 'submit',
-    '#value' => t('Suche')
-    );
-
-  return $form;
-}
-
-function ddb_pdc_form_validate($form, &$form_state) {
-  if (empty($form_state['values']['ddb_title'])) {
-    form_error($form, t('Bitte geben Sie einen Suchbegriff ein!'));
-  }
-}
-
-function ddb_pdc_form_submit($form, &$form_state) {
-
-  $input = $form_state['values']['ddb_title'];
-
-  $regexDDBID = '/^[A-Z0-9]+$/';
-  if (preg_match($regexDDBID, $input)) {
-    drupal_goto('pdc-result/' . $input);
-  } else {
-    $options = array(
-      'query' => array(
-        'start' => '0',
-        'max' => '10',
-        'page' => '1',
-        'limit' => '10'
-        )
-      );
-    drupal_goto('search-results/' . $input, $options);
-  }
-}
-
-function ddb_pdc_search_results($searchterm) {
-
-  $module_path = drupal_get_path('module', 'ddb_pdc');
-  $imagespath  = base_path() . $module_path . '/images/';
-
-  $start = $_GET['start'];
-  $max   = $_GET['max'];
-
-  $form       = drupal_get_form('ddb_pdc_form', $searchterm);
-  $searchform = drupal_render($form);
-
-  $ddbsearchresults = ddb_pdc_http_request('/search', array('q' => $searchterm, 'start' => $start, 'max' => $max)); // HTTP Request to the PDC with the searchterm
-    //var_dump($ddbsearchresults);
-  $json_searchresults = json_decode($ddbsearchresults->data); // Get json data from the request and decode it
-
-  switch ($ddbsearchresults->code) {
-    case "500":
-    return theme('search-results', array(
-      'searchform' => $searchform,
-      'error_message' => 'Es ist leider ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Eingabe!'
-      ));
-    break;
-
-    case "200":
-    $ddbResultsAmount = $json_searchresults->maxSearchResults;
-    $ddbItems = $json_searchresults->ddbItems;
-    $pagination       = "";
-    $pagination .= theme('pagination', array(
-      'searchterm' => $searchterm,
-      'imagespath' => $imagespath,
-      'ddbResultsAmount' => $ddbResultsAmount
-      ));
-
-    if ($ddbResultsAmount == 0) {
-      return theme('search-results', array(
-        'searchform' => $searchform,
-        'error_message' => 'Ihre Suche ergab leider keine Treffer. Bitte überprüfen Sie Ihre Eingabe!'
-        ));
-      break;
-    } else {
-
-      return theme('search-results', array(
-        'searchterm' => $searchterm,
-        'searchform' => $searchform,
-        'imagespath' => $imagespath,
-        'ddbItems' => $ddbItems,
-        'pagination' => $pagination
-        ));
-      break;
-    }
-
-    case -10061:
-    return theme('search-results', array(
-      'searchform' => $searchform,
-      'error_message' => 'Es konnte leider keine Verbindung mit dem Server hergestellt werden.'
-      ));
-    break;
-
-    default:
-    return theme('search-results', array(
-      'searchform' => $searchform
-      ));
-  }
-}
-
-function ddb_pdc_result($ddbid) {
-
-  $module_path = drupal_get_path('module', 'ddb_pdc');
-  $imagespath  = base_path() . $module_path . '/images/';
-
-  $pdcresult   = ddb_pdc_http_request('/pdc/' . $ddbid); // HTTP Request to the PDC with the DDB ID
-
-  $json_pdcresult = json_decode($pdcresult->data);
-
-  $imageURL = $json_pdcresult->imageUrl;
-  $title    = $json_pdcresult->title;
-  $subtitle = $json_pdcresult->subtitle;
-
-  $form       = drupal_get_form('ddb_pdc_form');
-  $searchform = drupal_render($form);
-
-  if (is_null($json_pdcresult->publicDomain)){
-    $publicdomain     = "unknownpublicdomain";
-    $publicdomainText = "Ergebnis konnte nicht<br>ermittelt werden.";
-  } elseif($json_pdcresult->publicDomain){
-    $publicdomain     = "publicdomain";
-    $publicdomainText = "Öffentlich zugänglich";
-  } else{
-    $publicdomain     = "notpublicdomain";
-    $publicdomainText = "urheberrechtlich geschützt";
-  }
-
-  $generalAssumptions = array();
-  $resultTrace = array();
-
-  foreach ($json_pdcresult->trace as $question){
-    if($question->answer == "assumed yes"){
-      $generalAssumptions[] = array("question" => $question->question, "answer" => $question->answer, "notes" => $question->note,
-        "questionResult" => "positiveAssumed", "questionResultTrace" => "Ja (Annahme)");
-    } elseif($question->answer == "assumed no"){
-      $generalAssumptions[] = array("question" => $question->question, "answer" => $question->answer, "notes" => $question->note,
-        "questionResult" => "negativeAssumed", "questionResultTrace" => "Nein (Annahme)");
-    } elseif($question->answer == "yes"){
-      $resultTrace[] = array("question" => $question->question, "answer" => $question->answer, "notes" => $question->note,
-        "questionResult" => "positive", "questionResultTrace" => "Ja");
-    } elseif($question->answer == "no"){
-      $resultTrace[] = array("question" => $question->question, "answer" => $question->answer, "notes" => $question->note,
-        "questionResult" => "negative", "questionResultTrace" => "Nein");
-    } elseif($question->answer == "unknown"){
-      $resultTrace[] = array("question" => $question->question, "answer" => $question->answer, "notes" => $question->note,
-        "questionResult" => "unknown", "questionResultTrace" => "Unbekannt");
-    }
-  }
-
-  switch ($pdcresult->code) {
-    case "500":
-    return theme('pdc_result', array(
-      'searchform' => $searchform,
-      'error_message' => 'Unter der angegebenen ID wurden keine Ergebnisse gefunden. Bitte überprüfen Sie Ihre Eingabe!'
-      ));
-    break;
-
-    case "200":
-    return theme('pdc_result', array(
-      'title' => $title,
-      'subtitle' => $subtitle,
-      'imageURL' => $imageURL,
-      'imagespath' => $imagespath,
-      'publicdomain' => $publicdomain,
-      'publicdomainText' => $publicdomainText,
-      'generalAssumptions' => $generalAssumptions,
-      'resultTrace' => $resultTrace
-      ));
-    break;
-
-    case -10061:
-    return theme('pdc_result', array(
-      'searchform' => $searchform,
-      'error_message' => 'Es konnte leider keine Verbindung mit dem Server hergestellt werden.'
-      ));
-    break;
-
-    default:
-    return theme('pdc_result', array(
-      'searchform' => $searchform
-      ));
-  }
-}
-
+/**
+ * Implements hook_theme().
+ */
 function ddb_pdc_theme() {
   return array(
+    'ddb_pdc_search_form' => array(
+      'function' => 'ddb_pdc_render_search_form'
+    ),
+    'ddb_pdc_trace_item' => array(
+      'template' => 'templates/pdc-trace-item'
+    ),
     'search-results' => array(
-      'variables' => array(
-        'searchterm' => NULL,
-        'searchform' => NULL,
-        'imagespath' => NULL,
-        'ddbItems' => NULL,
-        'error_message' => NULL,
-        'pagination' => NULL
-        ),
       'render element' => 'element',
-      'template' => 'templates/search-results'
-      ),
+      'template' => 'templates/search-results',
+      'variables' => array(
+        'search_term' => '',
+        'items' => array(),
+        'total_num_results' => 0,
+        'error_message' => NULL
+      )
+    ),
     'pdc_result' => array(
       'variables' => array(
         'title' => NULL,
@@ -261,47 +77,217 @@ function ddb_pdc_theme() {
         'publicdomainText' => NULL,
         'generalAssumptions' => NULL,
         'resultTrace' => NULL
-        ),
+      ),
       'render element' => 'element',
       'template' => 'templates/pdc-result'
-      ),
+    ),
     'pagination' => array(
       'variables' => array(
         'searchterm' => NULL,
         'imagespath' => NULL,
         'ddbResultsAmount' => NULL
-        ),
+      ),
       'template' => 'templates/pagination'
+    )
+  );
+}
+
+/**
+ * Implements hook_form().
+ *
+ * Builds the form for searching for DDB items.
+ */
+function ddb_pdc_form($form, &$form_state, $vars = '') {
+  $form = array();
+  $form['#redirect'] = 'public-domain-calculator-results';
+
+  $form['search_input'] = array(
+    '#type' => 'textfield',
+    '#default_value' => $vars,
+    '#required' => TRUE
+  );
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => 'Suche'
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_validate().
+ */
+function ddb_pdc_form_validate($form, &$form_state) {
+  if (empty($form_state['values']['search_input'])) {
+    form_error($form, 'Bitte geben Sie einen Suchbegriff ein.');
+  }
+}
+
+/**
+ * Implements hook_form_submit().
+ */
+function ddb_pdc_form_submit($form, &$form_state) {
+  $input = $form_state['values']['search_input'];
+
+  if (ddb_pdc_is_item_id($input)) {
+    $path = 'pdc-result/' . $input;
+    $options = NULL;
+  } else {
+    $path = 'search-results/' . $input;
+    $options = array(
+      'query' => array(
+        'start' => '0',
+        'max' => '10',
+        'page' => '1',
+        'limit' => '10'
       )
     );
+  }
+
+  drupal_goto($path, $options);
 }
 
+function ddb_pdc_is_item_id($input) {
+  return preg_match('/^[A-Z0-9]{32}$/', $input);
+}
+
+/**
+ * Implements theme('ddb_pdc_form'). This allows the form to be
+ * included into the search results page with
+ *
+ * <?php print theme('ddb_pdc_form', ...); ?>
+ */
+function ddb_pdc_render_search_form($variables) {
+  $search_term = $variables['search_term'];
+  $form = drupal_get_form('ddb_pdc_form', $search_term);
+  return drupal_render($form);
+}
+
+/**
+ * Renders the DBB item search results page.
+ */
+function ddb_pdc_search_results($search_term) {
+  $search_results = ddb_pdc_http_request('/search', array(
+      'q' => $search_term,
+      'start' => $_GET['start'],
+      'max' => $_GET['max']
+    )
+  );
+
+  if ($search_results) {
+    $template_options = array(
+      'search_term' => $search_term,
+      'items' => $search_results->ddbItems,
+      'total_num_results' => $search_results->maxSearchResults,
+    );
+  } else {
+    $error_message =
+      'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+    $template_options = array(
+      'error_message' => $error_message
+    );
+  }
+
+  return theme('search-results', $template_options);
+}
+
+/**
+ * Renders the page which presents the result of a public
+ * domain calculation.
+ */
+function ddb_pdc_result($item_id) {
+  $pdc_result = ddb_pdc_http_request('/pdc/' . $item_id);
+
+  if ($pdc_result) {
+    if (is_null($pdc_result->publicDomain)) {
+      $public_domain_status = 'unknown';
+      $public_domain_text = 'Konnte nicht ermittelt werden';
+    } elseif ($pdc_result->publicDomain) {
+      $public_domain_status = 'public_domain';
+      $public_domain_text = 'Gemeinfrei';
+    } else {
+      $public_domain_status = 'not_public_domain';
+      $public_domain_text = 'Urheberrechtlich geschützt';
+    }
+
+    if (count($pdc_result->trace) == 1) {
+      // The work is already public domain (or under a CC license).
+      // There are no general assumptions to be made.
+      $general_assumptions = NULL;
+    } else {
+      $general_assumptions = array_splice(
+        $pdc_result->trace,
+        0,
+        DDB_PDC_NUM_GENERAL_ASSUMPTIONS
+      );
+    }
+
+    if ($public_domain_status == 'unknown') {
+      // Only show the last trace item because it explains why
+      // the calculation couldn't be completed.
+      $pdc_result->trace = array(end($pdc_result->trace));
+    }
+
+    $variables = array(
+      'pdc_result' => $pdc_result,
+      'public_domain_status' => $public_domain_status,
+      'public_domain_text' => $public_domain_text,
+      'general_assumptions' => $general_assumptions,
+      'error_message' => NULL
+    );
+  } else {
+    $variables = array(
+      'error_message' => 'Es ist ein interner Fehler aufgetreten.'
+    );
+  }
+
+  return theme('pdc_result', $variables);
+}
+
+/**
+ * Preprocess hook for the public-domain result page.
+ */
 function ddb_pdc_preprocess_pdc_result() {
-
   drupal_add_library('system', 'ui.accordion');
-  drupal_add_js('jQuery(document).ready(function() {jQuery("#accordion").accordion(
-    {collapsible: true,active: false,heightStyle: "content",autoHeight: false,clearStyle: true});});', 'inline');
 }
 
+/**
+ * Issues a GET request to the configured DDB-PDC backend.
+ *
+ * @param string $path
+ *   The request path relative to the backend root URL.
+ * @param array $query_params
+ *   The URL's query path as key-value pairs.
+ * @return string
+ *   The parsed JSON result.
+ */
 function ddb_pdc_http_request($path, $query_params = NULL) {
   $url = PDC_SERVERADRESS . $path;
   if ($query_params) {
     $url .= '?' . drupal_http_build_query($query_params);
   }
-  return drupal_http_request($url);
+
+  $response = drupal_http_request($url);
+  return ($response->code == 200) ? json_decode($response->data) : NULL;
 }
 
+/**
+ * Implements hook_admin().
+ */
 function ddb_pdc_admin() {
+  $current_server_address =
+    variable_get('ddb_pdc_serveradress','http://localhost:8080');
 
-  $form = array();
-
-  $form['ddb_pdc_serveradress'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Serveradress'),
-    '#default_value' => variable_get('ddb_pdc_serveradress', 'http://localhost:8080'),
-    '#description' => t("Serveradress, like http://localhost:8080"),
-    '#required' => TRUE
-    );
+  $form = array(
+    'ddb_pdc_serveraddress' => array(
+      '#type' => 'textfield',
+      '#title' => 'Backend-Adresse',
+      '#default_value' => $current_server_address,
+      '#description' => 'Adresse zum Erreichen des DDB-PDC-Backends.',
+      '#required' => TRUE
+    )
+  );
 
   return system_settings_form($form);
 }

@@ -52,15 +52,16 @@ public enum Answer {
       case YES:
         return "yes";
       case ASSUMED_YES:
-        return "assumed yes";
+        return "assumed_yes";
       case NO:
         return "no";
       case ASSUMED_NO:
-        return "assumed no";
+        return "assumed_no";
       case UNKNOWN:
         return "unknown";
       default:
-        return "";
+        // Should not happen
+        throw new IllegalStateException();
     }
   }
 }
