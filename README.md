@@ -59,9 +59,13 @@ Installing and running the DDB-PDC backend requires the following:
   brew install mongodb
   ```
 
-The Drupal module merely needs an existing installation of Drupal 7 or
-higher. See the
-[Drupal Installation Guide](https://www.drupal.org/documentation/install).
+The Drupal module needs Drupal 7 or higher; see the
+[Drupal Installation Guide](https://www.drupal.org/documentation/install)
+for setup instructions. You also need to have the following modules
+installed:
+
+* [Colorbox](https://www.drupal.org/project/colorbox)
+* [Libraries API](https://www.drupal.org/project/libraries)
 
 ### Building the Backend
 
@@ -144,8 +148,9 @@ can control the backend server like any other Upstart job:
 The Drupal module is contained in `drupal/ddb_pdc/`. An accompanying
 example theme is located in `drupal/ddb_fuberlin/`. To install these,
 copy both directories to the `sites/<your site>/modules` directory of
-your Drupal installation. You can then enable and configure the theme
-and module in the Drupal admin interface.
+your Drupal installation. After installing all
+[required depdencies](#prerequisites), you can then enable and configure
+the theme and the module through the Drupal admin controls.
 
 ## Development
 
