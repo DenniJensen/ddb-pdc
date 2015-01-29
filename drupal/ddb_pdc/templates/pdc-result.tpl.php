@@ -21,6 +21,10 @@
     <div class="ddb-pdc-item-subtitle">
       <?php print htmlspecialchars($pdc_result->subtitle); ?>
     </div>
+    <div class="ddb-pdc-item-subtitle">
+      <b>Institution:</b>
+      <?php print htmlspecialchars($pdc_result->institution); ?>
+    </div>
   </div>
 
   <div class="ddb-pdc-item-license">
