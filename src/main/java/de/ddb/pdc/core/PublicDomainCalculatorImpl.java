@@ -60,26 +60,7 @@ public class PublicDomainCalculatorImpl implements PublicDomainCalculator {
         country, category, metadata
     );
     answerQuestions(questionnaire, metadata);
-    PDCResult result = questionnaire.getResult();
-    
-    // If the result is unknown, only deliver one trace entry
-    // to the front-end with the reason for the fail.
-    if (result.isPublicDomain() == null) {
-      List<AnsweredQuestion> trace = result.getTrace();
-      List<AnsweredQuestion> actualTrace = new LinkedList<AnsweredQuestion>();
-      int index = trace.size() - 1;
-      if (trace.get(index).hasNote()) {
-        actualTrace.add(new AnsweredQuestion(Question.CALCULATION_FAILED, 
-            Answer.UNKNOWN, trace.get(index).getNote()));
-      } else {
-        actualTrace.add(new AnsweredQuestion(Question.CALCULATION_FAILED, 
-            Answer.UNKNOWN, "Der Grund ist unbekannt."));
-      }
-      PDCResult actualResult = new PDCResult(null, actualTrace, metadata);
-      return actualResult;
-    }
-    
-    return result;
+    return questionnaire.getResult();
   }
 
   private void answerQuestions(Questionnaire questionnaire, DDBItem metadata) {
