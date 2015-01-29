@@ -4,6 +4,9 @@ define('PDC_SERVERADRESS', $serveradress);
 
 define('DDB_PDC_NUM_GENERAL_ASSUMPTIONS', 6);
 
+/**
+ * Implements hook_menu().
+ */
 function ddb_pdc_menu() {
   $items = array();
 
@@ -43,6 +46,9 @@ function ddb_pdc_menu() {
   return $items;
 }
 
+/**
+ * Implements hook_theme().
+ */
 function ddb_pdc_theme() {
   return array(
     'ddb_pdc_search_form' => array(
@@ -86,6 +92,11 @@ function ddb_pdc_theme() {
   );
 }
 
+/**
+ * Implements hook_form().
+ *
+ * Builds the form for searching for DDB items.
+ */
 function ddb_pdc_form($form, &$form_state, $vars = '') {
   $form = array();
   $form['#redirect'] = 'public-domain-calculator-results';
@@ -104,12 +115,18 @@ function ddb_pdc_form($form, &$form_state, $vars = '') {
   return $form;
 }
 
+/**
+ * Implements hook_form_validate().
+ */
 function ddb_pdc_form_validate($form, &$form_state) {
   if (empty($form_state['values']['search_input'])) {
     form_error($form, 'Bitte geben Sie einen Suchbegriff ein.');
   }
 }
 
+/**
+ * Implements hook_form_submit().
+ */
 function ddb_pdc_form_submit($form, &$form_state) {
   $input = $form_state['values']['search_input'];
 
@@ -135,12 +152,21 @@ function ddb_pdc_is_item_id($input) {
   return preg_match('/^[A-Z0-9]{32}$/', $input);
 }
 
+/**
+ * Implements theme('ddb_pdc_form'). This allows the form to be
+ * included into the search results page with
+ *
+ * <?php print theme('ddb_pdc_form', ...); ?>
+ */
 function ddb_pdc_render_search_form($variables) {
   $search_term = $variables['search_term'];
   $form = drupal_get_form('ddb_pdc_form', $search_term);
   return drupal_render($form);
 }
 
+/**
+ * Renders the DBB item search results page.
+ */
 function ddb_pdc_search_results($search_term) {
   $search_results = ddb_pdc_http_request('/search', array(
       'q' => $search_term,
@@ -166,6 +192,10 @@ function ddb_pdc_search_results($search_term) {
   return theme('search-results', $template_options);
 }
 
+/**
+ * Renders the page which presents the result of a public
+ * domain calculation.
+ */
 function ddb_pdc_result($item_id) {
   $pdc_result = ddb_pdc_http_request('/pdc/' . $item_id);
 
@@ -215,10 +245,23 @@ function ddb_pdc_result($item_id) {
   return theme('pdc_result', $variables);
 }
 
+/**
+ * Preprocess hook for the public-domain result page.
+ */
 function ddb_pdc_preprocess_pdc_result() {
   drupal_add_library('system', 'ui.accordion');
 }
 
+/**
+ * Issues a GET request to the configured DDB-PDC backend.
+ *
+ * @param string $path
+ *   The request path relative to the backend root URL.
+ * @param array $query_params
+ *   The URL's query path as key-value pairs.
+ * @return string
+ *   The parsed JSON result.
+ */
 function ddb_pdc_http_request($path, $query_params = NULL) {
   $url = PDC_SERVERADRESS . $path;
   if ($query_params) {
@@ -229,6 +272,9 @@ function ddb_pdc_http_request($path, $query_params = NULL) {
   return ($response->code == 200) ? json_decode($response->data) : NULL;
 }
 
+/**
+ * Implements hook_admin().
+ */
 function ddb_pdc_admin() {
   $current_server_address =
     variable_get('ddb_pdc_serveradress','http://localhost:8080');
