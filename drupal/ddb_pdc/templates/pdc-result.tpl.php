@@ -16,7 +16,9 @@
 
   <div class="ddb-pdc-item-summary">
     <div class="ddb-pdc-item-title">
-      <?php print htmlspecialchars($pdc_result->title); ?>
+      <a href="<?php print $pdc_result->itemUrl ?>">
+        <?php print htmlspecialchars($pdc_result->title); ?>
+      </a>
     </div>
     <div class="ddb-pdc-item-subtitle">
       <?php print htmlspecialchars($pdc_result->subtitle); ?>

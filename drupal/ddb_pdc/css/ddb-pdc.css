@@ -121,6 +121,10 @@ a.ddb-pdc-item:hover .ddb-pdc-item-title {
  * pdc-result.tpl.php
  */
 
+.ddb-pdc-result .ddb-pdc-item-title a {
+  color: inherit;
+}
+
 .ddb-pdc-item-license {
   display: block;
   overflow: hidden;
