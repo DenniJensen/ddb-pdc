@@ -11,7 +11,8 @@
  *   - $trace_item->note: A note explaining the answer.
  */
 
-$icon_path = $directory . '/images/icons/';
+global $base_path;
+$icon_path = $base_path . $directory . '/images/icons/';
 ?>
 
 <div class="ddb-pdc-trace-item">
