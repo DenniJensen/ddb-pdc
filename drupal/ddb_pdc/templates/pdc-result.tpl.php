@@ -1,4 +1,22 @@
 <?php
+/**
+ * @file
+ * Displays the page which presents the result of a public-domain calculation.
+ *
+ * Available variables:
+ * - $public_domain_status: One of "public_domain", "not_public_domain" and
+ *   "unknown" (calculation could not be completed due to missing metadata).
+ * - $public_domain_text: German equivalent of the public-domain status
+ *   (e.g. "Gemeinfrei").
+ * - $pdc_result: An array containing several bits of result information.
+ *   - $pdc_result->title: The checked item's title.
+ *   - $pdc_result->subtitle: The checked item's subtitle.
+ *   - $pdc_result->imageUrl: Thumbnail image URL for the checked item.
+ *   - $pdc_result->institution: The name of the institution which archived
+ *     the item.
+ *   - $pdc_result->trace: The trace of all considered legal questions and
+ *     how they were answered by the public domain calculator.
+ */
   global $base_path;
   $icon_path = $base_path . $directory . '/images/icons/';
 ?>
