@@ -132,7 +132,7 @@ function ddb_pdc_form_submit($form, &$form_state) {
 
   if (ddb_pdc_is_item_id($input)) {
     $path = 'pdc-result/' . $input;
-    $options = NULL;
+    $options = array();
   } else {
     $path = 'search-results/' . $input;
     $options = array(
