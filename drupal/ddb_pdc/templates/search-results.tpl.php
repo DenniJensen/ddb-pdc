@@ -9,19 +9,20 @@
  * - $total_num_results: The total number of items matching the search term,
  *   for pagination purposes.
  */
+
+global $base_path;
 ?>
 
 <?php
-drupal_get_messages();
-drupal_set_message($error_message, 'error');
+  drupal_get_messages();
+  drupal_set_message($error_message, 'error');
 ?>
 
 <div id="ddb-pdc-form">
   <?php
-  print theme('ddb_pdc_search_form', array('search_term' => $search_term));
+    print theme('ddb_pdc_search_form', array('search_term' => $search_term));
   ?>
 </div>
-
 
 <?php if (empty($items)): ?>
   <p>Keine Ergebnisse.</p>
@@ -31,7 +32,14 @@ drupal_set_message($error_message, 'error');
     <?php foreach (array(100, 50, 30, 10) as $items_per_page): ?>
       <li>
         <?php
-        $url = url('search-results/' . $search_term, array('query' => array('start' => 0, 'max' => $items_per_page, 'page' => 1, 'limit' => $items_per_page)));
+          $url = url('search-results/' . $search_term, array(
+            'query' => array(
+              'start' => 0,
+              'max' => $items_per_page,
+              'page' => 1,
+              'limit' => $items_per_page
+            )
+          ));
         ?>
         <a href="<?php print $url; ?>">
           <?php print $items_per_page; ?>
@@ -45,6 +53,7 @@ drupal_set_message($error_message, 'error');
        href="<?php print url('pdc-result/' . $item->id); ?>">
 
       <div class="ddb-pdc-item-image">
+
         <?php if ($item->imageUrl): ?>
           <img src="<?php print $item->imageUrl; ?>"/>
         <?php endif; ?>
@@ -63,6 +72,10 @@ drupal_set_message($error_message, 'error');
   <?php endforeach; ?>
 
   <?php
-  print theme('pagination', array('searchterm' => $search_term, 'imagespath' => $directory . '/images', 'ddbResultsAmount' => $total_num_results));
+    print theme('pagination', array(
+      'searchterm' => $search_term,
+      'imagespath' => $base_path . $directory . '/images',
+      'ddbResultsAmount' => $total_num_results
+    ));
   ?>
 <?php endif; ?>

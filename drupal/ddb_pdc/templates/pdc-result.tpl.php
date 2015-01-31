@@ -1,5 +1,6 @@
 <?php
-  $icon_path = $directory . '/images/icons/';
+  global $base_path;
+  $icon_path = $base_path . $directory . '/images/icons/';
 ?>
 
 <?php
