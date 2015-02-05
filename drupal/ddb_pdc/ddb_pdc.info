@@ -1,6 +1,5 @@
 core = "7.x"
 description = "Deutsche Digitale Bibliothek - Public Domain Calculator"
 name = "Public Domain Calculator"
-dependencies[] = colorbox (>=7.x-2.8)
 stylesheets[all][] = css/ddb-pdc.css
 configure = admin/config/ddb_pdc
