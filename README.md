@@ -61,11 +61,7 @@ Installing and running the DDB-PDC backend requires the following:
 
 The Drupal module needs Drupal 7 or higher; see the
 [Drupal Installation Guide](https://www.drupal.org/documentation/install)
-for setup instructions. You also need to have the following modules
-installed:
-
-* [Colorbox](https://www.drupal.org/project/colorbox)
-* [Libraries API](https://www.drupal.org/project/libraries)
+for setup instructions.
 
 ### Building the Backend
 
@@ -145,12 +141,17 @@ can control the backend server like any other Upstart job:
 
 ### Installing the Drupal Module
 
-The Drupal module is contained in `drupal/ddb_pdc/`. An accompanying
-example theme is located in `drupal/ddb_fuberlin/`. To install these,
-copy both directories to the `sites/<your site>/modules` directory of
-your Drupal installation. After installing all
-[required depdencies](#prerequisites), you can then enable and configure
-the theme and the module through the Drupal admin controls.
+The Drupal module is contained in `drupal/ddb_pdc/`. To install it,
+copy the directory to `sites/all/modules` or
+`sites/<your_site>/modules/` in your Drupal installation. An
+accompanying example theme is available in `drupal/ddb_fuberlin/` and
+can be installed by copying it to `sites/all/themes/` or
+`sites/<your_site>/themes/`. After that, enable everything through the
+Drupal admin controls as usual.
+
+The `ddb_pdc` module needs to know where to find the backend service.
+By default, it looks for it at `http://localhost:8000`. To change this
+URL in the module's configuration.
 
 ## Development
 
