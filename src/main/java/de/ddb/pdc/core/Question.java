@@ -18,7 +18,8 @@ public enum Question {
    * to be generally received?
    */
   OFFICIAL_WORK_INTENDED_TO_BE_GENERALLY_RECEIVED(
-      "Ist das Werk zur öffentlichen Verbreitung bestimmt?"),
+      "Wurde das Werk von dem veröffentlichenden Institut für die "
+         + "uneingeschränkte Verbreitung zur Verfügung gestellt?"),
 
   /**
    * Is the work a court decision or officially issued discussion formula?
