@@ -116,7 +116,8 @@ public class PdcIntegrationTest {
     assertEquals(10, trace.size());
 
     Map question1 = (Map) trace.get(0);
-    assertEquals("Ist das Werk zur öffentlichen Verbreitung bestimmt?",
+    assertEquals("Wurde das Werk von dem veröffentlichenden Institut für die "
+          +"uneingeschränkte Verbreitung zur Verfügung gestellt?",
         question1.get("question"));
     assertEquals("assumed_no", question1.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
