@@ -187,19 +187,11 @@ a.ddb-pdc-item:hover .ddb-pdc-item-title {
   background-color: #eaf6e6;
 }
 
-.ddb-pdc-trace.not-public-domain .ddb-pdc-trace-item:last-child .ddb-pdc-question {
+.ddb-pdc-trace.not_public_domain .ddb-pdc-trace-item:last-child .ddb-pdc-question {
   background-color: #f9dcdf;
 }
 
-.ddb-pdc-trace.not-public-domain .ddb-pdc-trace-item:last-child .ddb-pdc-answer {
-  background-color: #f9e8ea;
-}
-
-.ddb-pdc-trace.not-public-domain .ddb-pdc-trace-item:last-child .ddb-pdc-question {
-  background-color: #f9dcdf;
-}
-
-.ddb-pdc-trace.not-public-domain .ddb-pdc-trace-item:last-child .ddb-pdc-answer {
+.ddb-pdc-trace.not_public_domain .ddb-pdc-trace-item:last-child .ddb-pdc-answer {
   background-color: #f9e8ea;
 }
 
