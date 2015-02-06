@@ -25,28 +25,28 @@ public enum Question {
    * Is the work a court decision or officially issued discussion formula?
    */
   COURT_DECISION_OR_DECISION_FORMULA(
-      "Ist das Werk ein Gerichtsurteil oder ein offiziell veröffentlichter "
-          + "Beschluss?"),
+      "Ist das Werk ein Gerichtsurteil oder eine offiziell veröffentlichte "
+          + "Auslegungsrichtlinie?"),
 
   /**
    * Is the work an act of parliament which has entered the parliamentary
    * process?
    */
   ACT_OF_PARLIAMENT(
-      "Ist dieses Werk ein Gesetz, dass sich im parlamentarischen "
-          + "Entscheidungsprozess befindet?"),
+      "Ist dieses Werk ein Gesetz oder eine Verordnung, die in den "
+          + "parlamentarischen Entscheidungsprozess eingebracht wurde?"),
 
   /**
    * Is the work a government directive?
    */
-  GOVERNMENT_DIRECTIVE("Ist das Werk eine Anordnung?"),
+  GOVERNMENT_DIRECTIVE("Ist das Werk ein amtlicher Erlass?"),
 
   /**
    * Is the work an official decision or announcement by a public authority?
    */
   ANNOUNCEMENT_BY_AUTHORITY(
-      "Ist dieses Werk eine offizielle Entscheidung oder eine Bekanntgabe einer"
-          + " öffentlichen Autorität?"),
+      "Ist dieses Werk eine offizielle Entscheidung oder Bekanntmachung einer"
+          + " amtlichen Instanz?"),
 
   /**
    * Is the author natural person?
@@ -73,7 +73,7 @@ public enum Question {
    */
   PUBLISHED_WITHIN_70_YEARS_OF_DEATH(
       "Wurde dieses Werk innerhalb von 70 Jahren nach dem Tod des letzten "
-          + "überlebenden Autor veröffentlicht?"),
+          + "überlebenden Autors veröffentlicht?"),
 
   /**
    * Did the last surviving author die more than 70 years ago?
@@ -86,25 +86,26 @@ public enum Question {
    * ago?
    */
   PUBLISHED_MORE_THAN_25_YEARS_AGO(
-      "Ist das Werk schon mehr als 25 Jahre veröffentlicht worden?"),
+      "Ist das Werk vor mehr als 25 Jahren veröffentlicht worden?"),
 
   /**
    * Was the work published or communicated to the public more than 50 years
    * ago?
    */
   PUBLISHED_MORE_THAN_50_YEARS_AGO(
-      "Ist das Werk schon mehr als 50 Jahre veröffentlicht worden?"),
+      "Ist das Werk vor mehr als 50 Jahren veröffentlicht worden?"),
 
   /**
    * Is the country of origin the European Economic Area?
    */
-  COUNTRY_OF_ORIGIN_EEA("Ist das Herkunftsland der Europäische "
+  COUNTRY_OF_ORIGIN_EEA("Ist das Herkunftsland des Werks der Europäische "
       + "Wirtschaftsraum?"),
 
   /**
    * Is the country of origin the Berne TRIPTIS WCT?
    */
-  COUNTRY_OF_ORIGIN_TRIPTIS("Ist das Herkunftsland das Berne TRIPTIS WCT?"),
+  COUNTRY_OF_ORIGIN_TRIPTIS("Ist das Herkunftsland des Werks das "
+      + "Berne TRIPTIS WCT?"),
 
   /**
    * Is the nationality or place of residence of the author the Berne TRIPTIS

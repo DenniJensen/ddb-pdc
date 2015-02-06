@@ -126,8 +126,8 @@ public class PdcIntegrationTest {
         question1.get("note"));
 
     Map question2 = (Map) trace.get(1);
-    assertEquals("Ist das Werk ein Gerichtsurteil oder ein offiziell "
-            + "veröffentlichter Beschluss?",
+    assertEquals("Ist das Werk ein Gerichtsurteil oder eine offiziell "
+            + "veröffentlichte Auslegungsrichtlinie?",
         question2.get("question"));
     assertEquals("assumed_no", question2.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -136,8 +136,8 @@ public class PdcIntegrationTest {
         question2.get("note"));
 
     Map question3 = (Map) trace.get(2);
-    assertEquals("Ist dieses Werk ein Gesetz, dass sich im parlamentarischen "
-        + "Entscheidungsprozess befindet?",
+    assertEquals("Ist dieses Werk ein Gesetz oder eine Verordnung, die in "
+        + "den parlamentarischen Entscheidungsprozess eingebracht wurde?",
         question3.get("question"));
     assertEquals("assumed_no", question3.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -146,7 +146,7 @@ public class PdcIntegrationTest {
         question3.get("note"));
 
     Map question4 = (Map) trace.get(3);
-    assertEquals("Ist das Werk eine Anordnung?",
+    assertEquals("Ist das Werk ein amtlicher Erlass?",
         question4.get("question"));
     assertEquals("assumed_no", question4.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -155,8 +155,8 @@ public class PdcIntegrationTest {
         question4.get("note"));
 
     Map question5 = (Map) trace.get(4);
-    assertEquals("Ist dieses Werk eine offizielle Entscheidung oder eine Bekanntgabe einer"
-        + " öffentlichen Autorität?",
+    assertEquals("Ist dieses Werk eine offizielle Entscheidung oder "
+        + "Bekanntmachung einer amtlichen Instanz?",
         question5.get("question"));
     assertEquals("assumed_no", question5.get("answer"));
     assertEquals("Es wird immer davon ausgegangen, dass die Antwort nein ist. "
@@ -190,7 +190,7 @@ public class PdcIntegrationTest {
 
     Map question9 = (Map) trace.get(8);
     assertEquals("Wurde dieses Werk innerhalb von 70 Jahren nach dem Tod des "
-        + "letzten überlebenden Autor veröffentlicht?",
+        + "letzten überlebenden Autors veröffentlicht?",
         question9.get("question"));
     assertEquals("yes", question9.get("answer"));
     assertEquals("Das Werk wurde (spätestens) 1849 veröffentlicht. Der Autor, "
