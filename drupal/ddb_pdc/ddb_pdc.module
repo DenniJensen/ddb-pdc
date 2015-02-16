@@ -2,6 +2,9 @@
 $serveradress = variable_get('ddb_pdc_serveradress', 'http://localhost:8080');
 define('PDC_SERVERADRESS', $serveradress);
 
+$usermanual = variable_get('ddb_pdc_usermanual', '1');
+define('PDC_USERMANUAL', $usermanual);
+
 define('DDB_PDC_NUM_GENERAL_ASSUMPTIONS', 6);
 
 /**
@@ -13,8 +16,7 @@ function ddb_pdc_menu() {
   $items['public-domain-calculator'] = array(
     'title' => 'Public Domain Calculator',
     'description' => 'Deutsche Digitale Bibliothek - Public Domain Calculator',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('ddb_pdc_form'),
+    'page callback' => 'ddb_pdc_public_domain_calculator',
     'menu_name' => 'main-menu',
     'access callback' => TRUE
   );
@@ -88,6 +90,12 @@ function ddb_pdc_theme() {
         'ddbResultsAmount' => NULL
       ),
       'template' => 'templates/pagination'
+    ),
+    'public-domain-calculator' => array(
+      'variables' => array(
+        'usermanual' => NULL
+      ),
+      'template' => 'templates/public-domain-calculator'
     )
   );
 }
@@ -99,6 +107,7 @@ function ddb_pdc_theme() {
  */
 function ddb_pdc_form($form, &$form_state, $vars = '') {
   $form = array();
+
   $form['#redirect'] = 'public-domain-calculator-results';
 
   $form['search_input'] = array(
@@ -159,9 +168,20 @@ function ddb_pdc_is_item_id($input) {
  * <?php print theme('ddb_pdc_form', ...); ?>
  */
 function ddb_pdc_render_search_form($variables) {
-  $search_term = $variables['search_term'];
+  $search_term = isset($variables['search_term']) ? $variables['search_term'] : '';
   $form = drupal_get_form('ddb_pdc_form', $search_term);
   return drupal_render($form);
+}
+
+/**
+ * Renders the search form with the video tutorial.
+ */
+function ddb_pdc_public_domain_calculator() {
+  $template_options = array(
+    'usermanual' => node_view(node_load(PDC_USERMANUAL)),
+  );
+
+  return theme('public-domain-calculator', $template_options);
 }
 
 /**
@@ -279,12 +299,22 @@ function ddb_pdc_admin() {
   $current_server_address =
     variable_get('ddb_pdc_serveradress','http://localhost:8080');
 
+  $current_usermanual =
+    variable_get('ddb_pdc_usermanual','1');
+
   $form = array(
     'ddb_pdc_serveraddress' => array(
       '#type' => 'textfield',
       '#title' => 'Backend-Adresse',
       '#default_value' => $current_server_address,
       '#description' => 'Adresse zum Erreichen des DDB-PDC-Backends.',
+      '#required' => TRUE
+    ),
+    'ddb_pdc_usermanual' => array(
+      '#type' => 'textfield',
+      '#title' => 'Artikel-ID der Bedienungsanleitung',
+      '#default_value' => $current_usermanual,
+      '#description' => 'ID des als Bedienungsanleitung unter dem Suchformular anzuzeigenden Artikels in der Artikelliste.',
       '#required' => TRUE
     )
   );
